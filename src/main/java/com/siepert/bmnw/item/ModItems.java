@@ -1,13 +1,20 @@
 package com.siepert.bmnw.item;
 
 import com.siepert.bmnw.block.ModBlocks;
+import com.siepert.bmnw.effect.ModEffects;
 import com.siepert.bmnw.item.custom.*;
 import com.siepert.bmnw.radiation.UnitConvertor;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
+
+import java.util.List;
+import java.util.Optional;
 
 public class ModItems {
     private static final DeferredRegister.Items ITEMS = DeferredRegister.createItems("bmnw");
@@ -95,7 +102,12 @@ public class ModItems {
     public static final DeferredItem<SimpleRadioactiveBlockItem> IRRADIATED_PLANT = ITEMS.register("irradiated_plant",
             () -> new SimpleRadioactiveBlockItem(ModBlocks.IRRADIATED_PLANT.get(), new Item.Properties(), UnitConvertor.fromPico(2)));
     public static final DeferredItem<SimpleRadioactiveItem> IRRADIATED_PLANT_FIBERS = ITEMS.register("irradiated_plant_fibers",
-            () -> new SimpleRadioactiveItem(new Item.Properties(), UnitConvertor.fromPico(2)));
+            () -> new SimpleRadioactiveItem(new Item.Properties().food(
+                    new FoodProperties(1, 0, false,
+                            0.1f, Optional.empty(), List.of(new FoodProperties.PossibleEffect(
+                            () -> new MobEffectInstance(ModEffects.CONTAMINATION, 10, 0), 1
+                    )))
+            ), UnitConvertor.fromPico(2)));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
