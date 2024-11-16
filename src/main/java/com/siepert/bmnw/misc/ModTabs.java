@@ -21,7 +21,41 @@ public class ModTabs {
                     .title(Component.translatable("itemGroup.bmnw.main"))
                     .icon(() -> new ItemStack(PLAYSTATION.get()))
                     .displayItems((parameters, output) -> {
+                        output.accept(STEEL_INGOT);
+                        output.accept(STEEL_BLOCK);
+
+                        output.accept(IRON_PLATE);
+                        output.accept(COPPER_PLATE);
+                        output.accept(GOLD_PLATE);
+                        output.accept(STEEL_PLATE);
+
+                        output.accept(IRON_WIRE);
+                        output.accept(COPPER_WIRE);
+                        output.accept(GOLD_WIRE);
+                        output.accept(STEEL_WIRE);
+
+                        output.accept(URANIUM_ORE);
+                        output.accept(THORIUM_ORE);
+                        output.accept(DEEPSLATE_URANIUM_ORE);
+                        output.accept(DEEPSLATE_THORIUM_ORE);
+                        output.accept(RAW_URANIUM);
+                        output.accept(RAW_THORIUM);
+                        output.accept(RAW_URANIUM_BLOCK);
+                        output.accept(RAW_THORIUM_BLOCK);
+                        output.accept(URANIUM_INGOT);
+                        output.accept(THORIUM_INGOT);
+                        output.accept(URANIUM_BLOCK);
+                        output.accept(THORIUM_BLOCK);
+
                         output.accept(GEIGER_COUNTER);
+                        output.accept(DECONTAMINATOR);
+
+                        output.accept(DETONATOR);
+                        output.accept(NUCLEAR_CHARGE);
+
+                        output.accept(BLAZING_NUCLEAR_REMAINS);
+                        output.accept(NUCLEAR_REMAINS);
+                        output.accept(SLAKED_NUCLEAR_REMAINS);
 
                         output.accept(CHARRED_LOG);
                         output.accept(CHARRED_PLANKS);

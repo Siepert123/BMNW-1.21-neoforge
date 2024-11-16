@@ -5,5 +5,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
 public interface IRadioactiveBlock {
-    long radioactivity(Level level, BlockPos pos, BlockState state);
+    default long radioactivity(Level level, BlockPos pos, BlockState state) {
+        return radioactivity();
+    }
+    long radioactivity();
 }

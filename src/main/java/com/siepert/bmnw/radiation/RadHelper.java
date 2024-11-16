@@ -1,8 +1,10 @@
 package com.siepert.bmnw.radiation;
 
+import com.siepert.bmnw.block.ModBlocks;
 import com.siepert.bmnw.interfaces.IRadioactiveBlock;
 import com.siepert.bmnw.misc.ModAttachments;
 import com.siepert.bmnw.misc.ModStateProperties;
+import com.siepert.bmnw.misc.ModTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.LivingEntity;
@@ -51,7 +53,7 @@ public class RadHelper {
                     BlockState state = level.getBlockState(pos);
 
                     if (state.getBlock() instanceof IRadioactiveBlock block) {
-                        calculatedFemtoRads += block.radioactivity(level, pos, state);
+                        calculatedFemtoRads += getInsertedRadiation(level, pos, block.radioactivity(level, pos, state));
                     }
                 }
             }
@@ -65,8 +67,12 @@ public class RadHelper {
         Level level = chunk.getLevel();
 
         int rad_level = getRadiationLevelForFemtoRads(chunk.getData(ModAttachments.RADIATION));
-        if (rad_level < 0) return;
+        if (rad_level < 1) return;
         if (rad_level > 3) return;
+
+        final BlockState grass = ModBlocks.IRRADIATED_GRASS_BLOCK.get().defaultBlockState().setValue(ModStateProperties.RAD_LEVEL, rad_level);
+        final BlockState leaves = ModBlocks.IRRADIATED_LEAVES.get().defaultBlockState().setValue(ModStateProperties.RAD_LEVEL, rad_level);
+        final BlockState plant = ModBlocks.IRRADIATED_PLANT.get().defaultBlockState().setValue(ModStateProperties.RAD_LEVEL, rad_level);
 
         for (int y = level.getMinBuildHeight(); y < level.getMaxBuildHeight(); y++) {
             if (chunk.isYSpaceEmpty(y, y)) continue;
@@ -83,11 +89,11 @@ public class RadHelper {
                                 Math.max(state.getValue(ModStateProperties.RAD_LEVEL), rad_level)), 3);
                     } else {
                         if (irradiatableLeaves(state)) {
-
+                            level.setBlock(pos, leaves, 3);
                         } else if (irradiatableGrass(state)) {
-
+                            level.setBlock(pos, grass, 3);
                         } else if (irradiatablePlant(state)) {
-
+                            level.setBlock(pos, plant, 3);
                         }
                     }
                 }
@@ -95,16 +101,27 @@ public class RadHelper {
         }
     }
     public static boolean irradiatableLeaves(BlockState state) {
-        return false;
+        return state.is(ModTags.Blocks.IRRADIATABLE_LEAVES);
     }
     public static boolean irradiatableGrass(BlockState state) {
-        return false;
+        return state.is(ModTags.Blocks.IRRADIATABLE_GRASS_BLOCKS);
     }
     public static boolean irradiatablePlant(BlockState state) {
-        return false;
+        return state.is(ModTags.Blocks.IRRADIATABLE_PLANTS);
     }
 
     public static long getChunkRadiation(ChunkAccess chunk) {
         return chunk.getData(ModAttachments.RADIATION);
+    }
+    public static void addChunkRadiation(ChunkAccess chunk, long femtoRads) {
+        chunk.setData(ModAttachments.RADIATION, chunk.getData(ModAttachments.RADIATION) + femtoRads);
+    }
+
+    public static void insertRadiation(Level level, BlockPos pos, long femtoRads) {
+        addChunkRadiation(level.getChunk(pos), getInsertedRadiation(level, pos, femtoRads));
+    }
+
+    public static long getInsertedRadiation(Level level, BlockPos pos, long femtoRads) {
+        return Math.round(ShieldingValues.getShieldingModifierForPosition(level, pos) * femtoRads);
     }
 }

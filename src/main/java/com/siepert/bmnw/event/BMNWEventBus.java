@@ -3,6 +3,7 @@ package com.siepert.bmnw.event;
 import com.siepert.bmnw.interfaces.IItemHazard;
 import com.siepert.bmnw.misc.ModAttachments;
 import com.siepert.bmnw.radiation.RadHelper;
+import com.siepert.bmnw.radiation.UnitConvertor;
 import net.minecraft.server.level.ChunkHolder;
 import net.minecraft.server.level.ChunkMap;
 import net.minecraft.server.level.ServerLevel;
@@ -60,7 +61,25 @@ public class BMNWEventBus {
 
         @SubscribeEvent
         public static void serverTickEventPost(ServerTickEvent.Post event) {
+            try {
+                for (ServerLevel level : event.getServer().getAllLevels()) {
+                    if (level == null) continue;
+                    Iterable<ChunkHolder> chunkHolders = (Iterable<ChunkHolder>)
+                            ObfuscationReflectionHelper.findMethod(ChunkMap.class, "getChunks")
+                                    .invoke(level.getChunkSource().chunkMap);
+                    if (chunkHolders == null) continue;
 
+                    for (ChunkHolder chunkHolder : chunkHolders) {
+                        LevelChunk chunk = chunkHolder.getTickingChunk();
+                        if (chunk == null) continue;
+                        long femtoRads = RadHelper.getChunkRadiation(chunk);
+
+                        if (UnitConvertor.toNormal(femtoRads) > 5 && level.random.nextInt(50) == 0) RadHelper.createChunkRadiationEffects(chunk);
+                    }
+                }
+            } catch (Exception ignored) {
+
+            }
         }
 
         @SubscribeEvent
