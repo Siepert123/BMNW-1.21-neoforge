@@ -105,7 +105,7 @@ public class ModItems {
             () -> new SimpleRadioactiveItem(new Item.Properties().food(
                     new FoodProperties(1, 0, false,
                             0.1f, Optional.empty(), List.of(new FoodProperties.PossibleEffect(
-                            () -> new MobEffectInstance(ModEffects.CONTAMINATION, 10, 0), 1
+                            () -> new MobEffectInstance(ModEffects.CONTAMINATION, 100, 0), 1
                     )))
             ), UnitConvertor.fromPico(2)));
 
