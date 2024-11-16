@@ -107,7 +107,8 @@ public class ModItems {
                             0.1f, Optional.empty(), List.of(new FoodProperties.PossibleEffect(
                             () -> new MobEffectInstance(ModEffects.CONTAMINATION, 100, 0), 1
                     )))
-            ), UnitConvertor.fromPico(2)));
+            ), UnitConvertor.fromPico(2))
+    );
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);

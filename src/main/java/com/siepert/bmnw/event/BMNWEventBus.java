@@ -2,8 +2,11 @@ package com.siepert.bmnw.event;
 
 import com.siepert.bmnw.interfaces.IItemHazard;
 import com.siepert.bmnw.misc.ModAttachments;
+import com.siepert.bmnw.misc.ModDamageSources;
 import com.siepert.bmnw.radiation.RadHelper;
+import com.siepert.bmnw.radiation.ShieldingValues;
 import com.siepert.bmnw.radiation.UnitConvertor;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ChunkHolder;
 import net.minecraft.server.level.ChunkMap;
 import net.minecraft.server.level.ServerLevel;
@@ -12,6 +15,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -87,20 +91,73 @@ public class BMNWEventBus {
         @SubscribeEvent
         public static void entityTickEventPre(EntityTickEvent.Pre event) {
             if (event.getEntity() instanceof LivingEntity entity) {
+                if (entity instanceof Player player && player.isCreative()) return;
+                CompoundTag nbt = entity.getPersistentData();
 
+                ChunkAccess chunk = entity.level().getChunk(entity.getOnPos());
+
+                RadHelper.addEntityRadiation(entity,
+                        (long) (RadHelper.getChunkRadiation(chunk) * ShieldingValues.getShieldingModifierForPosition(entity.level(), entity.getOnPos()))
+                );
+
+                long entityFemtoRads = nbt.getLong(RadHelper.RAD_NBT_TAG);
+
+                nbt.putLong(RadHelper.RAD_NBT_TAG, (long) (entityFemtoRads * 0.9999));
             }
         }
 
         @SubscribeEvent
         public static void entityTickEventPost(EntityTickEvent.Post event) {
             if (event.getEntity() instanceof LivingEntity entity) {
+                if (entity instanceof Player player && player.isCreative()) return;
+                CompoundTag nbt = entity.getPersistentData();
 
+                long entityFemtoRads = nbt.getLong(RadHelper.RAD_NBT_TAG);
+
+                long normalized = UnitConvertor.toNormal(entityFemtoRads);
+
+                if (normalized > 1000) {
+                    if (entity.level().getGameTime() % 20 == 0) {
+                        entity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 100, 1));
+                        entity.hurt(ModDamageSources.radiation(entity.level()), 8);
+                    }
+                }
+                if (normalized > 800) {
+                    if (entity.getRandom().nextInt(250) == 0) {
+                        entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100, 1));
+                        entity.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 100, 1));
+                        entity.addEffect(new MobEffectInstance(MobEffects.POISON, 100, 1));
+                        entity.addEffect(new MobEffectInstance(MobEffects.HUNGER, 100, 1));
+                    }
+                }
+                if (normalized > 600) {
+                    if (entity.getRandom().nextInt(1000) == 0) {
+                        entity.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 100, 0));
+                        entity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200, 1));
+                    }
+                    if (entity.getRandom().nextInt(500) == 0) {
+                        entity.addEffect(new MobEffectInstance(MobEffects.POISON, 100, 0));
+                    }
+                }
+                if (normalized > 200) {
+                    if (entity.getRandom().nextInt(1000) == 0) {
+                        entity.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 100, 0));
+                        entity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200, 1));
+                    }
+                }
+                if (normalized > 100) {
+                    if (entity.getRandom().nextInt(1000) == 0) {
+                        entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100));
+                        entity.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 100));
+                    }
+                }
             }
         }
 
         @SubscribeEvent
         public static void playerTickEventPre(PlayerTickEvent.Pre event) {
             Player player = event.getEntity();
+            if (player.isCreative()) return;
             for (ItemStack stack : player.getInventory().items) {
                 if (stack.getItem() instanceof IItemHazard itemHazard) {
                     if (itemHazard.radioactivity() > 0L) {
