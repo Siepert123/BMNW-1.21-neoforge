@@ -23,6 +23,10 @@ public class ModAttachments {
             "source_radioactivity", () -> AttachmentType.builder(() -> 0L).serialize(Codec.LONG).build()
     );
 
+    public static final Supplier<AttachmentType<Boolean>> SOURCED_RADIOACTIVITY_THIS_TICK = ATTACHMENTS.register(
+            "sourced_radioactivity_this_tick", () -> AttachmentType.builder(() -> false).serialize(Codec.BOOL).build()
+    );
+
 
     public static void register(IEventBus eventBus) {
         ATTACHMENTS.register(eventBus);

@@ -48,6 +48,8 @@ public class BMNWEventBus {
                     for (ChunkHolder chunkHolder : chunkHolders) {
                         LevelChunk chunk = chunkHolder.getTickingChunk();
                         if (chunk == null) continue;
+                        if (chunk.getData(ModAttachments.SOURCED_RADIOACTIVITY_THIS_TICK)) chunk.setData(ModAttachments.SOURCED_RADIOACTIVITY_THIS_TICK, false);
+
                         long femtoRads = chunk.getData(ModAttachments.RADIATION);
                         chunk.setData(ModAttachments.RADIATION, (long)(femtoRads * radiationRemoveRate));
 
@@ -72,6 +74,10 @@ public class BMNWEventBus {
                     for (ChunkHolder chunkHolder : chunkHolders) {
                         LevelChunk chunk = chunkHolder.getTickingChunk();
                         if (chunk == null) continue;
+
+                        chunk.setData(ModAttachments.RADIATION, chunk.getData(ModAttachments.RADIATION) + chunk.getData(ModAttachments.QUEUED_RADIATION));
+                        chunk.setData(ModAttachments.QUEUED_RADIATION, 0L);
+
                         long femtoRads = RadHelper.getChunkRadiation(chunk);
 
                         if (UnitConvertor.toNormal(femtoRads) > 5 && level.random.nextInt(50) == 0) RadHelper.createChunkRadiationEffects(chunk);

@@ -39,6 +39,7 @@ public class RadHelper {
         nbt.putLong(RAD_NBT_TAG, Math.max(0, original - femtoRads));
     }
     public static long recalculateChunkRadioactivity(@Nonnull ChunkAccess chunk) {
+        if (chunk.getData(ModAttachments.SOURCED_RADIOACTIVITY_THIS_TICK)) return chunk.getData(ModAttachments.SOURCE_RADIOACTIVITY);
         Level level = chunk.getLevel();
         if (level == null || level.isClientSide()) return 0L;
 
@@ -60,6 +61,7 @@ public class RadHelper {
         }
 
         chunk.setData(ModAttachments.SOURCE_RADIOACTIVITY, calculatedFemtoRads);
+        chunk.setData(ModAttachments.SOURCED_RADIOACTIVITY_THIS_TICK, true);
         return calculatedFemtoRads;
     }
     public static void createChunkRadiationEffects(@Nonnull ChunkAccess chunk) {
