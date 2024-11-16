@@ -8,6 +8,7 @@ import com.siepert.bmnw.misc.ModTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
@@ -125,5 +126,49 @@ public class RadHelper {
 
     public static long getInsertedRadiation(Level level, BlockPos pos, long femtoRads) {
         return Math.round(ShieldingValues.getShieldingModifierForPosition(level, pos) * femtoRads);
+    }
+
+    private static final double disperse_mod = 0.1;
+    public static void disperseChunkRadiation(ChunkAccess chunk) {
+        long rads = getChunkRadiation(chunk);
+        ChunkPos pos = chunk.getPos();
+
+        long dispersion = Math.round(rads * disperse_mod);
+
+        Level level = chunk.getLevel();
+        if (level == null) return;
+        if (level.hasChunk(pos.x+1, pos.z)) {
+            ChunkAccess _chunk = level.getChunk(pos.x+1, pos.z);
+            if (getChunkRadiation(_chunk) < rads * 0.5) {
+                queueChunkRadiation(_chunk, dispersion);
+                rads -= dispersion;
+            }
+        }
+        if (level.hasChunk(pos.x, pos.z+1)) {
+            ChunkAccess _chunk = level.getChunk(pos.x, pos.z+1);
+            if (getChunkRadiation(_chunk) < rads * 0.5) {
+                queueChunkRadiation(_chunk, dispersion);
+                rads -= dispersion;
+            }
+        }
+        if (level.hasChunk(pos.x-1, pos.z)) {
+            ChunkAccess _chunk = level.getChunk(pos.x-1, pos.z);
+            if (getChunkRadiation(_chunk) < rads * 0.5) {
+                queueChunkRadiation(_chunk, dispersion);
+                rads -= dispersion;
+            }
+        }
+        if (level.hasChunk(pos.x, pos.z-1)) {
+            ChunkAccess _chunk = level.getChunk(pos.x, pos.z-1);
+            if (getChunkRadiation(_chunk) < rads * 0.5) {
+                queueChunkRadiation(_chunk, dispersion);
+                rads -= dispersion;
+            }
+        }
+        chunk.setData(ModAttachments.RADIATION, rads);
+    }
+
+    public static void queueChunkRadiation(ChunkAccess chunk, long femtoRads) {
+        chunk.setData(ModAttachments.QUEUED_RADIATION, chunk.getData(ModAttachments.QUEUED_RADIATION) + femtoRads);
     }
 }

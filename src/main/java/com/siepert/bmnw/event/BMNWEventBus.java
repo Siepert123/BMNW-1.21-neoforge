@@ -38,12 +38,6 @@ public class BMNWEventBus {
                             ObfuscationReflectionHelper.findMethod(ChunkMap.class, "getChunks")
                                     .invoke(level.getChunkSource().chunkMap);
                     if (chunkHolders == null) continue;
-                    if (false && level.getGameTime() % 10 == 0) {
-                        for (ChunkHolder chunkHolder : chunkHolders) {
-                            if (chunkHolder.getTickingChunk() == null) continue;
-                            RadHelper.recalculateChunkRadioactivity(chunkHolder.getTickingChunk());
-                        }
-                    }
 
                     for (ChunkHolder chunkHolder : chunkHolders) {
                         LevelChunk chunk = chunkHolder.getTickingChunk();
@@ -54,6 +48,8 @@ public class BMNWEventBus {
                         chunk.setData(ModAttachments.RADIATION, (long)(femtoRads * radiationRemoveRate));
 
                         chunk.setData(ModAttachments.RADIATION, chunk.getData(ModAttachments.RADIATION) + chunk.getData(ModAttachments.SOURCE_RADIOACTIVITY));
+
+                        if (RadHelper.getChunkRadiation(chunk) > UnitConvertor.fromMilli(1)) RadHelper.disperseChunkRadiation(chunk);
                     }
                 }
             } catch (Exception ignored) {
