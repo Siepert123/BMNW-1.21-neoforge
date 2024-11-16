@@ -38,10 +38,10 @@ public class ModBlocks {
             () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE)));
     public static final DeferredBlock<NuclearRemainsBlock> NUCLEAR_REMAINS = BLOCKS.register("nuclear_remains",
             () -> new NuclearRemainsBlock(BlockBehaviour.Properties.ofFullCopy(SLAKED_NUCLEAR_REMAINS.get()).randomTicks(),
-                    UnitConvertor.fromMicro(1), SLAKED_NUCLEAR_REMAINS.get().defaultBlockState()));
+                    UnitConvertor.fromMicro(5), SLAKED_NUCLEAR_REMAINS.get().defaultBlockState()));
     public static final DeferredBlock<NuclearRemainsBlock> BLAZING_NUCLEAR_REMAINS = BLOCKS.register("blazing_nuclear_remains",
             () -> new NuclearRemainsBlock(BlockBehaviour.Properties.ofFullCopy(SLAKED_NUCLEAR_REMAINS.get()).randomTicks(),
-                    UnitConvertor.fromNormal(1), NUCLEAR_REMAINS.get().defaultBlockState()));
+                    UnitConvertor.fromMicro(25), NUCLEAR_REMAINS.get().defaultBlockState()));
 
     public static final DeferredBlock<RotatedPillarBlock> CHARRED_LOG = BLOCKS.register("charred_log",
             () -> new RotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LOG)));

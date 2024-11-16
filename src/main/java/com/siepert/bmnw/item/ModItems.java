@@ -85,14 +85,17 @@ public class ModItems {
             () -> new BlockItem(ModBlocks.CHARRED_LOG.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> CHARRED_PLANKS = ITEMS.register("charred_planks",
             () -> new BlockItem(ModBlocks.CHARRED_PLANKS.get(), new Item.Properties()));
+
     public static final DeferredItem<SimpleRadioactiveBlockItem> IRRADIATED_GRASS_BLOCK = ITEMS.register("irradiated_grass_block",
-            () -> new SimpleRadioactiveBlockItem(ModBlocks.IRRADIATED_GRASS_BLOCK.get(), new Item.Properties(), UnitConvertor.fromPico(1)));
+            () -> new SimpleRadioactiveBlockItem(ModBlocks.IRRADIATED_GRASS_BLOCK.get(), new Item.Properties(), UnitConvertor.fromPico(2)));
     public static final DeferredItem<SimpleRadioactiveBlockItem> IRRADIATED_LEAVES = ITEMS.register("irradiated_leaves",
-            () -> new SimpleRadioactiveBlockItem(ModBlocks.IRRADIATED_LEAVES.get(), new Item.Properties(), UnitConvertor.fromPico(1)));
+            () -> new SimpleRadioactiveBlockItem(ModBlocks.IRRADIATED_LEAVES.get(), new Item.Properties(), UnitConvertor.fromPico(2)));
     public static final DeferredItem<SimpleRadioactiveBlockItem> IRRADIATED_LEAF_PILE = ITEMS.register("irradiated_leaf_pile",
-            () -> new SimpleRadioactiveBlockItem(ModBlocks.IRRADIATED_LEAF_PILE.get(), new Item.Properties(), UnitConvertor.fromPico(1)));
+            () -> new SimpleRadioactiveBlockItem(ModBlocks.IRRADIATED_LEAF_PILE.get(), new Item.Properties(), UnitConvertor.fromPico(2)));
     public static final DeferredItem<SimpleRadioactiveBlockItem> IRRADIATED_PLANT = ITEMS.register("irradiated_plant",
-            () -> new SimpleRadioactiveBlockItem(ModBlocks.IRRADIATED_PLANT.get(), new Item.Properties(), UnitConvertor.fromPico(1)));
+            () -> new SimpleRadioactiveBlockItem(ModBlocks.IRRADIATED_PLANT.get(), new Item.Properties(), UnitConvertor.fromPico(2)));
+    public static final DeferredItem<SimpleRadioactiveItem> IRRADIATED_PLANT_FIBERS = ITEMS.register("irradiated_plant_fibers",
+            () -> new SimpleRadioactiveItem(new Item.Properties(), UnitConvertor.fromPico(2)));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);

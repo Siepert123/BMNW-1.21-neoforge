@@ -128,7 +128,7 @@ public class NuclearChargeBlockEntity extends BlockEntity {
             }
         }
 
-        RadHelper.insertRadiation(level, worldPosition, UnitConvertor.toKilo(1));
+        RadHelper.insertRadiation(level, worldPosition, UnitConvertor.fromKilo(1000));
     }
     private void dry() {
         final int dryingRadius = radius * 2;

@@ -63,6 +63,7 @@ public class ModTabs {
                         output.accept(IRRADIATED_LEAVES);
                         output.accept(IRRADIATED_LEAF_PILE);
                         output.accept(IRRADIATED_PLANT);
+                        output.accept(IRRADIATED_PLANT_FIBERS);
                     })
                     .build()
     );

@@ -32,26 +32,26 @@ public class UnitConvertor {
         return femtoRads;
     }
 
-    public static long fromMega(long femtoRads) {
-        return addZeroes(femtoRads, 21);
+    public static long fromMega(long megaRads) {
+        return addZeroes(megaRads, 21);
     }
-    public static long fromKilo(long femtoRads) {
-        return addZeroes(femtoRads, 18);
+    public static long fromKilo(long kiloRads) {
+        return addZeroes(kiloRads, 18);
     }
-    public static long fromNormal(long femtoRads) {
-        return addZeroes(femtoRads, 15);
+    public static long fromNormal(long rads) {
+        return addZeroes(rads, 15);
     }
-    public static long fromMilli(long femtoRads) {
-        return addZeroes(femtoRads, 12);
+    public static long fromMilli(long milliRads) {
+        return addZeroes(milliRads, 12);
     }
-    public static long fromMicro(long femtoRads) {
-        return addZeroes(femtoRads, 9);
+    public static long fromMicro(long microRads) {
+        return addZeroes(microRads, 9);
     }
-    public static long fromNano(long femtoRads) {
-        return addZeroes(femtoRads, 6);
+    public static long fromNano(long nanoRads) {
+        return addZeroes(nanoRads, 6);
     }
-    public static long fromPico(long femtoRads) {
-        return addZeroes(femtoRads, 3);
+    public static long fromPico(long picoRads) {
+        return addZeroes(picoRads, 3);
     }
     public static long fromFemto(long femtoRads) {
         return femtoRads;
@@ -69,6 +69,7 @@ public class UnitConvertor {
         if (toMilli(femtoRads) != 0) return toMilli(femtoRads) + " m";
         if (toMicro(femtoRads) != 0) return toMicro(femtoRads) + " μ";
         if (toNano(femtoRads) != 0) return toNano(femtoRads) + " n";
+        if (toPico(femtoRads) != 0) return toPico(femtoRads) + " p";
         return toFemto(femtoRads) + " f";
     }
 }
