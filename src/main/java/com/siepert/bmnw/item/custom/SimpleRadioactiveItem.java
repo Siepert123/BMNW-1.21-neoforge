@@ -18,7 +18,7 @@ public class SimpleRadioactiveItem extends Item implements IItemHazard {
     public SimpleRadioactiveItem(Properties properties, long femtoRads) {
         super(properties);
         this.femtoRads = femtoRads;
-        tooltip = Component.translatable("tooltip.bmnw.radioactive").append(" - ").append(UnitConvertor.display(femtoRads)).append("RAD/t");
+        tooltip = Component.translatable("tooltip.bmnw.radioactive").append(" - ").append(UnitConvertor.display(femtoRads)).append("RAD/t").withColor(0x00dd00);
     }
 
     @Override

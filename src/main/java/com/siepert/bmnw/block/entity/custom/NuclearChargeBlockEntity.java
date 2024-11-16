@@ -171,6 +171,7 @@ public class NuclearChargeBlockEntity extends BlockEntity {
         }
     }
     private void inflammate() {
+        if (level.isClientSide()) return;
         final int fireRadius = radius * 3;
         final BlockState fire = Blocks.FIRE.defaultBlockState();
         for (int x = -fireRadius; x <= fireRadius; x++) {

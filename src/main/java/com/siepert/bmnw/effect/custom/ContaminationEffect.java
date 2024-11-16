@@ -13,7 +13,7 @@ public class ContaminationEffect extends MobEffect {
 
     @Override
     public boolean applyEffectTick(LivingEntity entity, int amplifier) {
-        RadHelper.addEntityRadiation(entity, UnitConvertor.fromMicro(amplifier+1));
+        RadHelper.addEntityRadiation(entity, UnitConvertor.fromMilli((amplifier+1)*100L));
         return true;
     }
 

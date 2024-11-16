@@ -35,8 +35,6 @@ public class NuclearRemainsBlock extends SimpleRadioactiveBlock {
 
     @Override
     protected void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-        if (random.nextInt(decayChanceTo0) == 0) {
-            level.setBlock(pos, decay, 3);
-        }
+        level.setBlock(pos, decay, 3);
     }
 }
