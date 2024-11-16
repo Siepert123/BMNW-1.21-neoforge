@@ -141,7 +141,7 @@ public class BMNWEventBus {
                 }
                 if (normalized > 200) {
                     if (entity.getRandom().nextInt(1000) == 0) {
-                        entity.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 100, 0));
+                        entity.addEffect(new MobEffectInstance(MobEffects.HUNGER, 100, 2));
                         entity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200, 1));
                     }
                 }
