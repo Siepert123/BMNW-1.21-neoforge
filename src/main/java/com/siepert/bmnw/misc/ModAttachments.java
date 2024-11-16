@@ -1,13 +1,26 @@
 package com.siepert.bmnw.misc;
 
+import com.mojang.serialization.Codec;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
+import java.util.function.Supplier;
+
 public class ModAttachments {
     private static final DeferredRegister<AttachmentType<?>> ATTACHMENTS = DeferredRegister.create(
             NeoForgeRegistries.ATTACHMENT_TYPES, "bmnw"
+    );
+
+    public static final Supplier<AttachmentType<Long>> RADIATION = ATTACHMENTS.register(
+            "radiation", () -> AttachmentType.builder(() -> 0L).serialize(Codec.LONG).build()
+    );
+    public static final Supplier<AttachmentType<Long>> QUEUED_RADIATION = ATTACHMENTS.register(
+            "queued_radiation", () -> AttachmentType.builder(() -> 0L).serialize(Codec.LONG).build()
+    );
+    public static final Supplier<AttachmentType<Long>> SOURCE_RADIOACTIVITY = ATTACHMENTS.register(
+            "source_radioactivity", () -> AttachmentType.builder(() -> 0L).serialize(Codec.LONG).build()
     );
 
 
