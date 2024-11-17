@@ -18,6 +18,7 @@ import net.minecraft.world.level.block.SupportType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
+import net.neoforged.neoforge.common.Tags;
 
 import java.util.List;
 
@@ -107,6 +108,8 @@ public class NuclearChargeEntity extends BombEntity {
     private void irradiate() {
         final int nuclearRemainsRadius = (int) (radius * 1.5);
         final BlockState remains = ModBlocks.NUCLEAR_REMAINS.get().defaultBlockState();
+        final BlockState diamond = Blocks.DIAMOND_ORE.defaultBlockState();
+        final BlockState emerald = Blocks.EMERALD_ORE.defaultBlockState();
         for (int x = -nuclearRemainsRadius; x <= nuclearRemainsRadius; x++) {
             for (int z = -nuclearRemainsRadius; z <= nuclearRemainsRadius; z++) {
                 for (int y = nuclearRemainsRadius; y >= -nuclearRemainsRadius; y--) {
@@ -119,8 +122,16 @@ public class NuclearChargeEntity extends BombEntity {
                         BlockHitResult hitResult = level().clip(new ClipContext(convertVec3i(worldPosition), convertVec3i(pos),
                                 ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, this));
                         BlockState state = level().getBlockState(hitResult.getBlockPos());
-                        if (state.getBlock().getExplosionResistance() <= str) {
-                            level().setBlock(hitResult.getBlockPos(), remains, 3);
+                        if (state.is(Tags.Blocks.ORES_COAL)) {
+                            if (level().random.nextFloat() > 0.95) {
+                                level().setBlock(hitResult.getBlockPos(), emerald, 3);
+                            } else if (level().random.nextFloat() > 0.05) {
+                                level().setBlock(hitResult.getBlockPos(), diamond, 3);
+                            }
+                        } else if (state.getBlock().getExplosionResistance() <= str) {
+                            if (!state.is(ModTags.Blocks.NUCLEAR_REMAINS_BLACKLIST)) {
+                                level().setBlock(hitResult.getBlockPos(), remains, 3);
+                            }
                         }
                     } else {
                         if (level().getBlockState(pos).getBlock().getExplosionResistance() >= nuclearRemainsRadius - sqrt)
