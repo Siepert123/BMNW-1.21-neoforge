@@ -82,6 +82,7 @@ public class NuclearChargeEntity extends BombEntity {
             LOGGER.info("Irradiate!");
             irradiate();
             LOGGER.info("Inflammate!");
+            recalcPos();
             inflammate();
             level().explode(null, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), 5, Level.ExplosionInteraction.TNT);
             LOGGER.info("Kill!");
@@ -187,7 +188,7 @@ public class NuclearChargeEntity extends BombEntity {
         }
     }
     private void inflammate() {
-        if (level().isClientSide()) return;
+        //if (level().isClientSide()) return;
         final int fireRadius = radius * 3;
         final BlockState fire = Blocks.FIRE.defaultBlockState();
         for (int x = -fireRadius; x <= fireRadius; x++) {

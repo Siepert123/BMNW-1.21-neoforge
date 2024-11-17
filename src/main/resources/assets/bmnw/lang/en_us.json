@@ -30,6 +30,8 @@
   "effect.bmnw.vomiting": "Vomiting",
   "death.attack.radiation": "%s suffered acute radiation poisoning  ",
   "entity.bmnw.nuclear_charge": "Nuclear Charge Explosion",
+  "item.bmnw.uranium_sandwich": "Uranium Sandwich",
+  "item.bmnw.proemevlaai": "Proemevlaai",
   "item.bmnw.copper_plate": "Copper Plate",
   "item.bmnw.copper_wire": "Copper Wire",
   "item.bmnw.detonator": "Remote Detonator",

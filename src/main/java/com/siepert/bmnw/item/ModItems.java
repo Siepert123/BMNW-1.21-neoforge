@@ -124,6 +124,12 @@ public class ModItems {
                     )))
             ), UnitConvertor.fromPico(2))
     );
+    public static final DeferredItem<SimpleRadioactiveItem> URANIUM_SANDWICH = ITEMS.register("uranium_sandwich",
+            () -> new SimpleRadioactiveItem(new Item.Properties().food(new FoodProperties(19, 100, true,
+                    4.0f, Optional.empty(), List.of(new FoodProperties.PossibleEffect(
+                    () -> new MobEffectInstance(ModEffects.CONTAMINATION, 100, 1), 0.5f
+            )))), UnitConvertor.fromNano(69))
+    );
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
