@@ -6,6 +6,9 @@ import com.siepert.bmnw.entity.renderer.NuclearChargeRenderer;
 import com.siepert.bmnw.interfaces.IItemHazard;
 import com.siepert.bmnw.misc.ModAttachments;
 import com.siepert.bmnw.misc.ModDamageSources;
+import com.siepert.bmnw.particle.ModParticleTypes;
+import com.siepert.bmnw.particle.custom.FireSmokeParticleProvider;
+import com.siepert.bmnw.particle.custom.VomitParticleProvider;
 import com.siepert.bmnw.radiation.RadHelper;
 import com.siepert.bmnw.radiation.ShieldingValues;
 import com.siepert.bmnw.radiation.UnitConvertor;
@@ -14,6 +17,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ChunkHolder;
 import net.minecraft.server.level.ChunkMap;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -23,16 +27,19 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.LevelChunk;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.util.ObfuscationReflectionHelper;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.Random;
 import java.util.function.Supplier;
 
 @SuppressWarnings("unchecked")
@@ -147,6 +154,17 @@ public class BMNWEventBus {
                     if (entity.getRandom().nextInt(500) == 0) {
                         entity.addEffect(new MobEffectInstance(MobEffects.POISON, 100, 0));
                     }
+                    if (entity.getRandom().nextInt(500) == 0) {
+                        entity.addEffect(new MobEffectInstance(MobEffects.HUNGER, 100, 4));
+                        Vec3 look = entity.getLookAngle();
+                        RandomSource rand = entity.getRandom();
+                        for (int i = 0; i < 50; i++) {
+                            Vec3 vec = look.xRot(rand.nextFloat()).yRot(rand.nextFloat()).zRot(rand.nextFloat());
+                            entity.level().addParticle(ModParticleTypes.VOMIT.get(),
+                                    entity.getX(), entity.getEyeY(), entity.getZ(),
+                                    vec.x(), vec.y(), vec.z());
+                        }
+                    }
                 }
                 if (normalized > 200) {
                     if (entity.getRandom().nextInt(1000) == 0) {
@@ -203,6 +221,12 @@ public class BMNWEventBus {
         public static void entityRenderersEventRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
             registerBlockEntityRenderers(event);
             registerEntityRenderers(event);
+        }
+
+        @SubscribeEvent
+        public static void registerParticleProvidersEvent(RegisterParticleProvidersEvent event) {
+            event.registerSpriteSet(ModParticleTypes.VOMIT.get(), VomitParticleProvider::new);
+            event.registerSpriteSet(ModParticleTypes.FIRE_SMOKE.get(), FireSmokeParticleProvider::new);
         }
     }
 }

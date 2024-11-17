@@ -66,4 +66,14 @@ public class BombEntity extends Entity {
     public boolean canUsePortal(boolean allowPassengers) {
         return false;
     }
+
+    @Override
+    public boolean shouldRender(double x, double y, double z) {
+        return true;
+    }
+
+    @Override
+    public boolean shouldRenderAtSqrDistance(double distance) {
+        return true;
+    }
 }

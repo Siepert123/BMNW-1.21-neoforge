@@ -5,6 +5,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.siepert.bmnw.entity.custom.NuclearChargeEntity;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EnderDragonRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -36,16 +37,17 @@ public class NuclearChargeRenderer extends EntityRenderer<NuclearChargeEntity> {
         float f = (entity.progress + partialTick) / 200f;
         poseStack.pushPose();
         poseStack.translate(0, -1, 0);
-        renderRays(poseStack, f, buffer.getBuffer(RenderType.dragonRays()));
-        renderRays(poseStack, f, buffer.getBuffer(RenderType.dragonRaysDepth()));
+        renderRays(poseStack, f, buffer.getBuffer(RenderType.dragonRays()), 10);
+        renderRays(poseStack, f, buffer.getBuffer(RenderType.dragonRaysDepth()), 10);
         poseStack.popPose();
     }
-
-    private static void renderRays(PoseStack poseStack, float dragonDeathCompletion, VertexConsumer buffer) {
+    protected static void renderRays(PoseStack poseStack, float dragonDeathCompletion, VertexConsumer buffer) {
+        renderRays(poseStack, dragonDeathCompletion, buffer, 1);
+    }
+    protected static void renderRays(PoseStack poseStack, float dragonDeathCompletion, VertexConsumer buffer, float sizeMultiplier) {
         poseStack.pushPose();
         float f = Math.min(dragonDeathCompletion > 0.8F ? (dragonDeathCompletion - 0.8F) / 0.2F : 0.0F, 1.0F);
         int i = FastColor.ARGB32.colorFromFloat(1.0F - f, 1.0F, 1.0F, 1.0F);
-        int j = 16711935;
         RandomSource randomsource = RandomSource.create(432L);
         Vector3f vector3f = new Vector3f();
         Vector3f vector3f1 = new Vector3f();
@@ -68,19 +70,19 @@ public class NuclearChargeRenderer extends EntityRenderer<NuclearChargeEntity> {
             poseStack.mulPose(quaternionf);
             float f1 = randomsource.nextFloat() * 20.0F + 5.0F + f * 10.0F;
             float f2 = randomsource.nextFloat() * 2.0F + 1.0F + f * 2.0F;
-            vector3f1.set(-HALF_SQRT_3 * f2, f1, -0.5F * f2);
-            vector3f2.set(HALF_SQRT_3 * f2, f1, -0.5F * f2);
-            vector3f3.set(0.0F, f1, f2);
+            vector3f1.set(-HALF_SQRT_3 * f2*sizeMultiplier, f1*sizeMultiplier, -0.5F * f2*sizeMultiplier);
+            vector3f2.set(HALF_SQRT_3 * f2*sizeMultiplier, f1*sizeMultiplier, -0.5F * f2*sizeMultiplier);
+            vector3f3.set(0.0F, f1*sizeMultiplier, f2*sizeMultiplier);
             PoseStack.Pose posestack$pose = poseStack.last();
             buffer.addVertex(posestack$pose, vector3f).setColor(i);
-            buffer.addVertex(posestack$pose, vector3f1).setColor(16711935);
-            buffer.addVertex(posestack$pose, vector3f2).setColor(16711935);
+            buffer.addVertex(posestack$pose, vector3f1).setColor(0xff00ff);
+            buffer.addVertex(posestack$pose, vector3f2).setColor(0xff00ff);
             buffer.addVertex(posestack$pose, vector3f).setColor(i);
-            buffer.addVertex(posestack$pose, vector3f2).setColor(16711935);
-            buffer.addVertex(posestack$pose, vector3f3).setColor(16711935);
+            buffer.addVertex(posestack$pose, vector3f2).setColor(0xff00ff);
+            buffer.addVertex(posestack$pose, vector3f3).setColor(0xff00ff);
             buffer.addVertex(posestack$pose, vector3f).setColor(i);
-            buffer.addVertex(posestack$pose, vector3f3).setColor(16711935);
-            buffer.addVertex(posestack$pose, vector3f1).setColor(16711935);
+            buffer.addVertex(posestack$pose, vector3f3).setColor(0xff00ff);
+            buffer.addVertex(posestack$pose, vector3f1).setColor(0xff00ff);
         }
 
         poseStack.popPose();
@@ -89,5 +91,10 @@ public class NuclearChargeRenderer extends EntityRenderer<NuclearChargeEntity> {
     @Override
     public ResourceLocation getTextureLocation(NuclearChargeEntity entity) {
         return DRAGON_LOCATION;
+    }
+
+    @Override
+    public boolean shouldRender(NuclearChargeEntity livingEntity, Frustum camera, double camX, double camY, double camZ) {
+        return true;
     }
 }

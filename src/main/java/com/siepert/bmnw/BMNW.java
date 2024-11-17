@@ -9,6 +9,7 @@ import com.siepert.bmnw.item.components.ModDataComponents;
 import com.siepert.bmnw.misc.ModAttachments;
 import com.siepert.bmnw.misc.ModSounds;
 import com.siepert.bmnw.misc.ModTabs;
+import com.siepert.bmnw.particle.ModParticleTypes;
 import com.siepert.bmnw.radiation.ShieldingValues;
 import org.slf4j.Logger;
 
@@ -50,6 +51,7 @@ public class BMNW {
         ModAttachments.register(modEventBus);
         ModEntityTypes.register(modEventBus);
         ModEffects.register(modEventBus);
+        ModParticleTypes.register(modEventBus);
         ModSounds.register(modEventBus);
 
         NeoForge.EVENT_BUS.register(this);
