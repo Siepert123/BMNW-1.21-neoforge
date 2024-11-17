@@ -1,5 +1,6 @@
 package com.siepert.bmnw.event;
 
+import com.siepert.bmnw.effect.ModEffects;
 import com.siepert.bmnw.entity.ModEntityTypes;
 import com.siepert.bmnw.entity.renderer.EmptyEntityRenderer;
 import com.siepert.bmnw.entity.renderer.NuclearChargeRenderer;
@@ -156,14 +157,7 @@ public class BMNWEventBus {
                     }
                     if (entity.getRandom().nextInt(500) == 0) {
                         entity.addEffect(new MobEffectInstance(MobEffects.HUNGER, 100, 4));
-                        Vec3 look = entity.getLookAngle();
-                        RandomSource rand = entity.getRandom();
-                        for (int i = 0; i < 50; i++) {
-                            Vec3 vec = look.xRot(rand.nextFloat()).yRot(rand.nextFloat()).zRot(rand.nextFloat());
-                            entity.level().addParticle(ModParticleTypes.VOMIT.get(),
-                                    entity.getX(), entity.getEyeY(), entity.getZ(),
-                                    vec.x(), vec.y(), vec.z());
-                        }
+                        entity.addEffect(new MobEffectInstance(ModEffects.VOMITING, 20));
                     }
                 }
                 if (normalized > 200) {
