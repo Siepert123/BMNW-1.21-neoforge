@@ -53,6 +53,13 @@ public class ModTabs {
                         output.accept(DETONATOR);
                         output.accept(NUCLEAR_CHARGE);
 
+                        output.accept(CONCRETE);
+                        output.accept(CONCRETE_SLAB);
+                        output.accept(CONCRETE_STAIRS);
+                        output.accept(CONCRETE_BRICKS);
+                        output.accept(CONCRETE_BRICKS_SLAB);
+                        output.accept(CONCRETE_BRICKS_STAIRS);
+
                         output.accept(BLAZING_NUCLEAR_REMAINS);
                         output.accept(NUCLEAR_REMAINS);
                         output.accept(SLAKED_NUCLEAR_REMAINS);

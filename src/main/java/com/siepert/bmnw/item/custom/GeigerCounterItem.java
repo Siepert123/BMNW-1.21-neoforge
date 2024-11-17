@@ -56,7 +56,7 @@ public class GeigerCounterItem extends Item {
         if (!level.isClientSide() && entity instanceof Player player) {
             ChunkAccess myChunk = level.getChunk(entity.getOnPos());
 
-            if (RadHelper.geigerTick(RadHelper.getChunkRadiation(myChunk) + invRads(player), RANDOM)) {
+            if (RadHelper.geigerTick(RadHelper.getAdjustedRadiation(player.level(), player.getOnPos()) + invRads(player), RANDOM)) {
                 level.playSound(null, entity.getX(), entity.getY(), entity.getZ(),
                         ModSounds.GEIGER_CLICK, SoundSource.NEUTRAL, 1.0f, 1.0f);
             }

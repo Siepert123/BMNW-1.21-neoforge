@@ -18,7 +18,7 @@ public class DecontaminatorBlock extends Block {
     @Override
     public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity) {
         if (entity instanceof LivingEntity living) {
-            RadHelper.removeEntityRadiation(living, UnitConvertor.fromMilli(100));
+            RadHelper.removeEntityRadiation(living, UnitConvertor.fromNormal(1));
 
             if (living.hasEffect(ModEffects.CONTAMINATION)) {
                 living.removeEffect(ModEffects.CONTAMINATION);

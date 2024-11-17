@@ -81,6 +81,19 @@ public class ModItems {
     public static final DeferredItem<DetonatorItem> DETONATOR = ITEMS.register("detonator",
             () -> new DetonatorItem(new Item.Properties()));
 
+    public static final DeferredItem<BlockItem> CONCRETE = ITEMS.register("concrete",
+            () -> new BlockItem(ModBlocks.CONCRETE.get(), new Item.Properties()));
+    public static final DeferredItem<BlockItem> CONCRETE_SLAB = ITEMS.register("concrete_slab",
+            () -> new BlockItem(ModBlocks.CONCRETE_SLAB.get(), new Item.Properties()));
+    public static final DeferredItem<BlockItem> CONCRETE_STAIRS = ITEMS.register("concrete_stairs",
+            () -> new BlockItem(ModBlocks.CONCRETE_STAIRS.get(), new Item.Properties()));
+    public static final DeferredItem<BlockItem> CONCRETE_BRICKS = ITEMS.register("concrete_bricks",
+            () -> new BlockItem(ModBlocks.CONCRETE_BRICKS.get(), new Item.Properties()));
+    public static final DeferredItem<BlockItem> CONCRETE_BRICKS_SLAB = ITEMS.register("concrete_bricks_slab",
+            () -> new BlockItem(ModBlocks.CONCRETE_BRICKS_SLAB.get(), new Item.Properties()));
+    public static final DeferredItem<BlockItem> CONCRETE_BRICKS_STAIRS = ITEMS.register("concrete_bricks_stairs",
+            () -> new BlockItem(ModBlocks.CONCRETE_BRICKS_STAIRS.get(), new Item.Properties()));
+
     public static final DeferredItem<BlockItem> SLAKED_NUCLEAR_REMAINS = ITEMS.register("slaked_nuclear_remains",
             () -> new BlockItem(ModBlocks.SLAKED_NUCLEAR_REMAINS.get(), new Item.Properties()));
     public static final DeferredItem<NuclearRemainsBlockItem> NUCLEAR_REMAINS = ITEMS.register("nuclear_remains",

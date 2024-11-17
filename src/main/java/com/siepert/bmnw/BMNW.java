@@ -3,6 +3,7 @@ package com.siepert.bmnw;
 import com.siepert.bmnw.block.ModBlocks;
 import com.siepert.bmnw.block.entity.ModBlockEntities;
 import com.siepert.bmnw.effect.ModEffects;
+import com.siepert.bmnw.entity.ModEntityTypes;
 import com.siepert.bmnw.item.ModItems;
 import com.siepert.bmnw.item.components.ModDataComponents;
 import com.siepert.bmnw.misc.ModAttachments;
@@ -47,10 +48,9 @@ public class BMNW {
         ModTabs.register(modEventBus);
         ModDataComponents.register(modEventBus);
         ModAttachments.register(modEventBus);
+        ModEntityTypes.register(modEventBus);
         ModEffects.register(modEventBus);
         ModSounds.register(modEventBus);
-
-        ShieldingValues.initialize();
 
         NeoForge.EVENT_BUS.register(this);
 
@@ -58,7 +58,7 @@ public class BMNW {
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
-
+        ShieldingValues.initialize();
     }
 
     // Add the example block item to the building blocks tab

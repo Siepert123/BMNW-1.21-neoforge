@@ -16,6 +16,16 @@ public class ModSounds {
             () -> SoundEvent.createFixedRangeEvent(ResourceLocation.fromNamespaceAndPath("bmnw", "geiger_click"), 8)
     );
 
+    public static final DeferredHolder<SoundEvent, SoundEvent> LARGE_EXPLOSION = SOUND_EVENTS.register(
+            "large_explosion",
+            () -> SoundEvent.createFixedRangeEvent(ResourceLocation.fromNamespaceAndPath("bmnw", "large_explosion"), 128)
+    );
+
+    public static final DeferredHolder<SoundEvent, SoundEvent> SMALL_EXPLOSION = SOUND_EVENTS.register(
+            "small_explosion",
+            () -> SoundEvent.createFixedRangeEvent(ResourceLocation.fromNamespaceAndPath("bmnw", "small_explosion"), 64)
+    );
+
     public static void register(IEventBus eventBus) {
         SOUND_EVENTS.register(eventBus);
     }

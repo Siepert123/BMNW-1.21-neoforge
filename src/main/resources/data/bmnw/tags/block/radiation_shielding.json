@@ -13,6 +13,7 @@
     "minecraft:stone_brick_slab",
     "minecraft:stone_brick_stairs",
     "minecraft:iron_door",
-    "minecraft:iron_trapdoor"
+    "minecraft:iron_trapdoor",
+    "#bmnw:concrete"
   ]
 }

@@ -1,5 +1,6 @@
 package com.siepert.bmnw.radiation;
 
+import com.siepert.bmnw.block.ModBlocks;
 import com.siepert.bmnw.misc.ModTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Tuple;
@@ -16,9 +17,9 @@ public class ShieldingValues {
     public static final int default_shielding_distance = 5;
     public static final float default_shielding_modifier = 0.75f;
 
-    private static final Map<Block, Tuple<Integer, Float>> shielding_map = new HashMap<>();
+    private static final Map<Block, Tuple<Integer, Double>> shielding_map = new HashMap<>();
 
-    public static void addShielding(Block block, int distance, float modifier) {
+    public static void addShielding(Block block, int distance, double modifier) {
         if (distance > max_shielding_distance) max_shielding_distance = distance;
         shielding_map.put(block, new Tuple<>(distance, modifier));
     }
@@ -29,7 +30,7 @@ public class ShieldingValues {
             else return default_shielding_distance;
         } else return 0;
     }
-    public static float getShieldingModifier(BlockState block) {
+    public static double getShieldingModifier(BlockState block) {
         if (shields(block)) {
             if (shielding_map.containsKey(block.getBlock())) return shielding_map.get(block.getBlock()).getB();
             else return default_shielding_modifier;
@@ -56,16 +57,23 @@ public class ShieldingValues {
     public static void initialize() {
         if (initialized) return;
 
-        addShielding(Blocks.BEDROCK, 5, 0);
-        addShielding(Blocks.BARRIER, 5, 0);
-        addShielding(Blocks.IRON_BLOCK,5, 0.5f);
+        addShielding(Blocks.BEDROCK, 10, 0);
+        addShielding(Blocks.BARRIER, 10, 0);
+        addShielding(Blocks.IRON_BLOCK,5, 0.5);
         addShielding(Blocks.GOLD_BLOCK,5, 0.5f);
-        addShielding(Blocks.NETHERITE_BLOCK,5, 0.25f);
-        addShielding(Blocks.STONE_BRICKS, 3, 0.95f);
-        addShielding(Blocks.STONE_BRICK_SLAB, 3, 0.95f);
-        addShielding(Blocks.STONE_BRICK_STAIRS, 3, 0.95f);
-        addShielding(Blocks.IRON_DOOR, 5, 0.5f);
-        addShielding(Blocks.IRON_TRAPDOOR, 5, 0.5f);
+        addShielding(Blocks.NETHERITE_BLOCK,5, 0.25);
+        addShielding(Blocks.STONE_BRICKS, 3, 0.95);
+        addShielding(Blocks.STONE_BRICK_SLAB, 3, 0.95);
+        addShielding(Blocks.STONE_BRICK_STAIRS, 3, 0.95);
+        addShielding(Blocks.IRON_DOOR, 5, 0.5);
+        addShielding(Blocks.IRON_TRAPDOOR, 5, 0.5);
+
+        addShielding(ModBlocks.CONCRETE.get(), 10, 0);
+        addShielding(ModBlocks.CONCRETE_SLAB.get(), 10, 0);
+        addShielding(ModBlocks.CONCRETE_STAIRS.get(), 10, 0);
+        addShielding(ModBlocks.CONCRETE_BRICKS.get(), 10, 0);
+        addShielding(ModBlocks.CONCRETE_BRICKS_SLAB.get(), 10, 0);
+        addShielding(ModBlocks.CONCRETE_BRICKS_STAIRS.get(), 10, 0);
 
         initialized = true;
     }

@@ -128,6 +128,10 @@ public class RadHelper {
         return Math.round(ShieldingValues.getShieldingModifierForPosition(level, pos) * femtoRads);
     }
 
+    public static long getAdjustedRadiation(Level level, BlockPos pos) {
+        return Math.round(ShieldingValues.getShieldingModifierForPosition(level, pos) * getChunkRadiation(level.getChunk(pos)));
+    }
+
     private static final double disperse_mod = 0.1;
     public static void disperseChunkRadiation(ChunkAccess chunk) {
         long rads = getChunkRadiation(chunk);

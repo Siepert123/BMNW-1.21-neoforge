@@ -1,17 +1,23 @@
 package com.siepert.bmnw.event;
 
+import com.siepert.bmnw.entity.ModEntityTypes;
+import com.siepert.bmnw.entity.renderer.EmptyEntityRenderer;
+import com.siepert.bmnw.entity.renderer.NuclearChargeRenderer;
 import com.siepert.bmnw.interfaces.IItemHazard;
 import com.siepert.bmnw.misc.ModAttachments;
 import com.siepert.bmnw.misc.ModDamageSources;
 import com.siepert.bmnw.radiation.RadHelper;
 import com.siepert.bmnw.radiation.ShieldingValues;
 import com.siepert.bmnw.radiation.UnitConvertor;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ChunkHolder;
 import net.minecraft.server.level.ChunkMap;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -20,11 +26,14 @@ import net.minecraft.world.level.chunk.LevelChunk;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.util.ObfuscationReflectionHelper;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.util.function.Supplier;
 
 @SuppressWarnings("unchecked")
 public class BMNWEventBus {
@@ -80,6 +89,8 @@ public class BMNWEventBus {
 
                         long femtoRads = RadHelper.getChunkRadiation(chunk);
 
+                        if (UnitConvertor.toNormal(femtoRads) > 15000 || femtoRads < 0) chunk.setData(ModAttachments.RADIATION, UnitConvertor.fromKilo(15));
+
                         if (UnitConvertor.toNormal(femtoRads) > 5 && level.random.nextInt(50) == 0) RadHelper.createChunkRadiationEffects(chunk);
                     }
                 }
@@ -96,9 +107,7 @@ public class BMNWEventBus {
 
                 ChunkAccess chunk = entity.level().getChunk(entity.getOnPos());
 
-                RadHelper.addEntityRadiation(entity,
-                        (long) (RadHelper.getChunkRadiation(chunk) * ShieldingValues.getShieldingModifierForPosition(entity.level(), entity.getOnPos()))
-                );
+                RadHelper.addEntityRadiation(entity, RadHelper.getAdjustedRadiation(entity.level(), entity.getOnPos()));
 
                 long entityFemtoRads = nbt.getLong(RadHelper.RAD_NBT_TAG);
 
@@ -176,8 +185,24 @@ public class BMNWEventBus {
         }
     }
 
-    //@EventBusSubscriber(modid = "bmnw", bus = EventBusSubscriber.Bus.MOD)
+    @EventBusSubscriber(modid = "bmnw", bus = EventBusSubscriber.Bus.MOD)
     public static class ModEventBus {
+        private static <T extends Entity, V extends T> void registerEntityRenderingHandler(EntityRenderersEvent.RegisterRenderers event,
+                                                                                           Supplier<EntityType<V>> type,
+                                                                                           EntityRendererProvider<T> renderer) {
+            event.registerEntityRenderer(type.get(), renderer);
+        }
+        private static void registerBlockEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
 
+        }
+        private static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
+            registerEntityRenderingHandler(event, ModEntityTypes.NUCLEAR_CHARGE, NuclearChargeRenderer::new);
+        }
+
+        @SubscribeEvent
+        public static void entityRenderersEventRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
+            registerBlockEntityRenderers(event);
+            registerEntityRenderers(event);
+        }
     }
 }
