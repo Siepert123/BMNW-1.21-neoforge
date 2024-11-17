@@ -78,6 +78,8 @@ public class ModItems {
             () -> new BlockItem(ModBlocks.DECONTAMINATOR.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> NUCLEAR_CHARGE = ITEMS.register("nuclear_charge",
             () -> new BlockItem(ModBlocks.NUCLEAR_CHARGE.get(), new Item.Properties()));
+    public static final DeferredItem<BlockItem> DUD = ITEMS.register("dud",
+            () -> new BlockItem(ModBlocks.DUD.get(), new Item.Properties().stacksTo(1)));
     public static final DeferredItem<DetonatorItem> DETONATOR = ITEMS.register("detonator",
             () -> new DetonatorItem(new Item.Properties()));
 

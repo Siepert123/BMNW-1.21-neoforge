@@ -25,6 +25,7 @@
   "block.bmnw.thorium_ore": "Thorium Ore",
   "block.bmnw.uranium_block": "Block of Uranium",
   "block.bmnw.uranium_ore": "Uranium Ore",
+  "block.bmnw.dud": "Dropped Soulfire Bomb",
   "effect.bmnw.contamination": "Contamination",
   "effect.bmnw.vomiting": "Vomiting",
   "death.attack.radiation": "%s suffered acute radiation poisoning  ",

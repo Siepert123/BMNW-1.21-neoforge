@@ -2,6 +2,7 @@ package com.siepert.bmnw.entity.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.siepert.bmnw.entity.custom.DudEntity;
 import com.siepert.bmnw.entity.custom.NuclearChargeEntity;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -14,7 +15,7 @@ import net.minecraft.util.RandomSource;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
-public class NuclearChargeRenderer extends EntityRenderer<NuclearChargeEntity> {
+public class DudRenderer extends EntityRenderer<DudEntity> {
     public static final ResourceLocation CRYSTAL_BEAM_LOCATION = ResourceLocation.withDefaultNamespace("textures/entity/end_crystal/end_crystal_beam.png");
     private static final ResourceLocation DRAGON_EXPLODING_LOCATION = ResourceLocation.withDefaultNamespace("textures/entity/enderdragon/dragon_exploding.png");
     private static final ResourceLocation DRAGON_LOCATION = ResourceLocation.withDefaultNamespace("textures/entity/enderdragon/dragon.png");
@@ -25,12 +26,12 @@ public class NuclearChargeRenderer extends EntityRenderer<NuclearChargeEntity> {
     private static final RenderType BEAM = RenderType.entitySmoothCutout(CRYSTAL_BEAM_LOCATION);
     private static final float HALF_SQRT_3 = (float)(Math.sqrt(3.0) / 2.0);
 
-    public NuclearChargeRenderer(EntityRendererProvider.Context context) {
+    public DudRenderer(EntityRendererProvider.Context context) {
         super(context);
     }
 
     @Override
-    public void render(NuclearChargeEntity entity, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
+    public void render(DudEntity entity, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
 
         float f = (entity.progress + partialTick) / 200f;
         poseStack.pushPose();
@@ -73,26 +74,26 @@ public class NuclearChargeRenderer extends EntityRenderer<NuclearChargeEntity> {
             vector3f3.set(0.0F, f1*sizeMultiplier, f2*sizeMultiplier);
             PoseStack.Pose posestack$pose = poseStack.last();
             buffer.addVertex(posestack$pose, vector3f).setColor(i);
-            buffer.addVertex(posestack$pose, vector3f1).setColor(0xff00ff);
-            buffer.addVertex(posestack$pose, vector3f2).setColor(0xff00ff);
+            buffer.addVertex(posestack$pose, vector3f1).setColor(0x5555ff);
+            buffer.addVertex(posestack$pose, vector3f2).setColor(0x5555ff);
             buffer.addVertex(posestack$pose, vector3f).setColor(i);
-            buffer.addVertex(posestack$pose, vector3f2).setColor(0xff00ff);
-            buffer.addVertex(posestack$pose, vector3f3).setColor(0xff00ff);
+            buffer.addVertex(posestack$pose, vector3f2).setColor(0x5555ff);
+            buffer.addVertex(posestack$pose, vector3f3).setColor(0x5555ff);
             buffer.addVertex(posestack$pose, vector3f).setColor(i);
-            buffer.addVertex(posestack$pose, vector3f3).setColor(0xff00ff);
-            buffer.addVertex(posestack$pose, vector3f1).setColor(0xff00ff);
+            buffer.addVertex(posestack$pose, vector3f3).setColor(0x5555ff);
+            buffer.addVertex(posestack$pose, vector3f1).setColor(0x5555ff);
         }
 
         poseStack.popPose();
     }
 
     @Override
-    public ResourceLocation getTextureLocation(NuclearChargeEntity entity) {
+    public ResourceLocation getTextureLocation(DudEntity entity) {
         return DRAGON_LOCATION;
     }
 
     @Override
-    public boolean shouldRender(NuclearChargeEntity livingEntity, Frustum camera, double camX, double camY, double camZ) {
+    public boolean shouldRender(DudEntity livingEntity, Frustum camera, double camX, double camY, double camZ) {
         return true;
     }
 }

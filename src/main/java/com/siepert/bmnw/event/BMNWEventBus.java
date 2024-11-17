@@ -2,7 +2,9 @@ package com.siepert.bmnw.event;
 
 import com.siepert.bmnw.effect.ModEffects;
 import com.siepert.bmnw.entity.ModEntityTypes;
+import com.siepert.bmnw.entity.renderer.DudRenderer;
 import com.siepert.bmnw.entity.renderer.EmptyEntityRenderer;
+import com.siepert.bmnw.entity.renderer.MissileRenderer;
 import com.siepert.bmnw.entity.renderer.NuclearChargeRenderer;
 import com.siepert.bmnw.interfaces.IItemHazard;
 import com.siepert.bmnw.misc.ModAttachments;
@@ -34,6 +36,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.util.ObfuscationReflectionHelper;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
+import net.neoforged.neoforge.event.level.ChunkEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
@@ -176,6 +179,13 @@ public class BMNWEventBus {
         }
 
         @SubscribeEvent
+        public static void chunkEventLoad(ChunkEvent.Load event) {
+            if (event.isNewChunk()) {
+                RadHelper.recalculateChunkRadioactivity(event.getChunk());
+            }
+        }
+
+        @SubscribeEvent
         public static void playerTickEventPre(PlayerTickEvent.Pre event) {
             Player player = event.getEntity();
             if (player.isCreative()) return;
@@ -209,6 +219,8 @@ public class BMNWEventBus {
         }
         private static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
             registerEntityRenderingHandler(event, ModEntityTypes.NUCLEAR_CHARGE, NuclearChargeRenderer::new);
+            registerEntityRenderingHandler(event, ModEntityTypes.DUD, DudRenderer::new);
+            registerEntityRenderingHandler(event, ModEntityTypes.MISSILE, MissileRenderer::new);
         }
 
         @SubscribeEvent

@@ -55,6 +55,10 @@ public class ModBlocks {
 
     public static final DeferredBlock<NuclearChargeBlock> NUCLEAR_CHARGE = BLOCKS.register("nuclear_charge",
             () -> new NuclearChargeBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)));
+    public static final DeferredBlock<DudBlock> DUD = BLOCKS.register("dud",
+            () -> new DudBlock(BlockBehaviour.Properties.of()
+                    .strength(-1, Blocks.IRON_BLOCK.getExplosionResistance())
+                    .sound(SoundType.METAL).noLootTable().noOcclusion()));
 
     public static final DeferredBlock<DecontaminatorBlock> DECONTAMINATOR = BLOCKS.register("decontaminator",
             () -> new DecontaminatorBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)));

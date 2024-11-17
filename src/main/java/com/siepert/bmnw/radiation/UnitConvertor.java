@@ -2,10 +2,14 @@ package com.siepert.bmnw.radiation;
 
 public class UnitConvertor {
     public static long addZeroes(long value, int zeroes) {
-        return Math.round(value * Math.pow(10, zeroes));
+        double d = value * Math.pow(10, zeroes);
+        if (d % 1 < 0.8) return (long) d;
+        return (long) d + 1;
     }
     public static long removeZeroes(long value, int zeroes) {
-        return Math.round(value / Math.pow(10, zeroes));
+        double d = value / Math.pow(10, zeroes);
+        if (d % 1 < 0.8) return (long) d;
+        return (long) d + 1;
     }
     public static long toMega(long femtoRads) {
         return removeZeroes(femtoRads, 21);
