@@ -1,0 +1,21 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "bmnw:block/nuclear_waste_barrel"
+      },
+      {
+        "model": "bmnw:block/nuclear_waste_barrel",
+        "y": 90
+      },
+      {
+        "model": "bmnw:block/nuclear_waste_barrel",
+        "y": 180
+      },
+      {
+        "model": "bmnw:block/nuclear_waste_barrel",
+        "y": 270
+      }
+    ]
+  }
+}

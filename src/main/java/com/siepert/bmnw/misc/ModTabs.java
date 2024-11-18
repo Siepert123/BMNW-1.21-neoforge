@@ -74,6 +74,7 @@ public class ModTabs {
                         output.accept(IRRADIATED_LEAF_PILE);
                         output.accept(IRRADIATED_PLANT);
                         output.accept(IRRADIATED_PLANT_FIBERS);
+                        output.accept(NUCLEAR_WASTE_BARREL);
                         output.accept(URANIUM_SANDWICH);
                     })
                     .build()

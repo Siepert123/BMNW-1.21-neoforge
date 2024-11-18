@@ -53,6 +53,9 @@ public class ModBlocks {
     public static final DeferredBlock<IrradiatedPlantBlock> IRRADIATED_PLANT = BLOCKS.register("irradiated_plant",
             () -> new IrradiatedPlantBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SHORT_GRASS)));
 
+    public static final DeferredBlock<SimpleRadioactiveBlock> NUCLEAR_WASTE_BARREL = BLOCKS.register("nuclear_waste_barrel",
+            () -> new SimpleRadioactiveBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).noOcclusion(), UnitConvertor.fromMilli(10)));
+
     public static final DeferredBlock<NuclearChargeBlock> NUCLEAR_CHARGE = BLOCKS.register("nuclear_charge",
             () -> new NuclearChargeBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)));
     public static final DeferredBlock<DudBlock> DUD = BLOCKS.register("dud",

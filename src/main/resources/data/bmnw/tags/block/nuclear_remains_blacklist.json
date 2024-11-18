@@ -5,6 +5,9 @@
     "minecraft:barrier",
     "bmnw:creative_concrete_bricks",
     "bmnw:steel_reinforced_glass",
-    "#c:ores"
+    "#c:ores",
+    "#bmnw:irradiatable_leaves",
+    "bmnw:irradiated_leaf_pile",
+    "#bmnw:irradiatable_plants"
   ]
 }

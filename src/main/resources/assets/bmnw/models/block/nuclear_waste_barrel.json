@@ -1,0 +1,9 @@
+{
+  "parent": "bmnw:block/container_barrel",
+  "textures": {
+    "front": "bmnw:block/nuclear_waste_barrel",
+    "side": "bmnw:block/nuclear_waste_barrel_side",
+    "top": "bmnw:block/nuclear_waste_barrel_top",
+    "bottom": "bmnw:block/nuclear_waste_barrel_bottom"
+  }
+}

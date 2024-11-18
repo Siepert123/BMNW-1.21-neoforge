@@ -129,6 +129,10 @@ public class ModItems {
                     )))
             ), UnitConvertor.fromPico(2))
     );
+
+    public static final DeferredItem<SimpleRadioactiveBlockItem> NUCLEAR_WASTE_BARREL = ITEMS.register("nuclear_waste_barrel",
+            () -> new SimpleRadioactiveBlockItem(ModBlocks.NUCLEAR_WASTE_BARREL.get(), new Item.Properties()));
+
     public static final DeferredItem<SimpleRadioactiveItem> URANIUM_SANDWICH = ITEMS.register("uranium_sandwich",
             () -> new SimpleRadioactiveItem(new Item.Properties().food(new FoodProperties(19, 100, true,
                     4.0f, Optional.empty(), List.of(new FoodProperties.PossibleEffect(
