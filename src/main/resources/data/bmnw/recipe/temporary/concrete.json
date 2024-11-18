@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "#": {
-      "item": "c:buckets/water"
+      "tag": "c:buckets/water"
     },
     "N": {
       "tag": "c:sands"
