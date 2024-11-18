@@ -22,7 +22,10 @@ public class LittleBoyEntity extends BombEntity {
     public void tick() {
         super.tick();
 
-        if (level().isClientSide()) return;
+        if (level().isClientSide()) {
+            progress = entityData.get(PROGRESS_DATA);
+            return;
+        }
         recalcPos();
 
         level().setBlock(worldPosition, Blocks.AIR.defaultBlockState(), 3);
@@ -65,6 +68,7 @@ public class LittleBoyEntity extends BombEntity {
             }
         }
         progress++;
+        entityData.set(PROGRESS_DATA, progress);
         if (progress > radius) {
             LOGGER.info("Burn!");
             burn(radius * 2);

@@ -22,7 +22,7 @@ public class LittleBoyBlock extends Block implements IDetonatable {
     public void detonate(Level level, BlockPos pos) {
         level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
         LittleBoyEntity entity = new LittleBoyEntity(ModEntityTypes.LITTLE_BOY.get(), level);
-        entity.setPos(pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5);
+        entity.setPos(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
         level.addFreshEntity(entity);
     }
 

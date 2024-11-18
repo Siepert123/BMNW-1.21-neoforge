@@ -32,7 +32,7 @@ public class DudRenderer extends EntityRenderer<DudEntity> {
     @Override
     public void render(DudEntity entity, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
 
-        float f = (entity.progress + partialTick) / 200f;
+        float f = (partialTick) / 200f;
         poseStack.pushPose();
         poseStack.translate(0, -1, 0);
         renderRays(poseStack, f, buffer.getBuffer(RenderType.dragonRays()));
@@ -46,7 +46,7 @@ public class DudRenderer extends EntityRenderer<DudEntity> {
         poseStack.pushPose();
         float f = Math.min(dragonDeathCompletion > 0.8F ? (dragonDeathCompletion - 0.8F) / 0.2F : 0.0F, 1.0F);
         int i = FastColor.ARGB32.colorFromFloat(1.0F - f, 1.0F, 1.0F, 1.0F);
-        RandomSource randomsource = RandomSource.create(432L);
+        RandomSource randomsource = RandomSource.create("dud".hashCode());
         Vector3f vector3f = new Vector3f();
         Vector3f vector3f1 = new Vector3f();
         Vector3f vector3f2 = new Vector3f();

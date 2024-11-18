@@ -65,7 +65,7 @@ public abstract class BombEntity extends Entity {
     }
     public static final boolean USE_RAY = true;
     protected void recalcPos() {
-        worldPosition = getOnPos(1f);
+        worldPosition = getOnPos(1f).above();
     }
     protected static final Logger LOGGER = LogManager.getLogger("BMNW Nuclear Bomb");
     public BombEntity(EntityType<?> entityType, Level level) {
@@ -75,7 +75,7 @@ public abstract class BombEntity extends Entity {
 
     @Override
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
-        builder.define(PROGRESS_DATA, progress);
+        builder.define(PROGRESS_DATA, 0);
     }
 
     @Override
@@ -188,7 +188,7 @@ public abstract class BombEntity extends Entity {
 
         for (Entity entity : entities) {
             if (Math.sqrt(entity.distanceToSqr(convertVec3i(worldPosition))) <= radius) {
-                entity.setRemainingFireTicks(100);
+                entity.setRemainingFireTicks(36000);
             }
         }
     }

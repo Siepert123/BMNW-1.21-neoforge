@@ -7,6 +7,9 @@ import com.siepert.bmnw.radiation.RadHelper;
 import com.siepert.bmnw.radiation.UnitConvertor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.Entity;
@@ -39,7 +42,10 @@ public class NuclearChargeEntity extends BombEntity {
 
         this.enableSkyLight();
 
-        if (level().isClientSide()) return;
+        if (level().isClientSide()) {
+            progress = entityData.get(PROGRESS_DATA);
+            return;
+        }
         recalcPos();
 
         level().setBlock(worldPosition, Blocks.AIR.defaultBlockState(), 3);
@@ -83,6 +89,7 @@ public class NuclearChargeEntity extends BombEntity {
             }
         }
         progress++;
+        entityData.set(PROGRESS_DATA, progress);
         if (progress > radius) {
             LOGGER.info("Burn!");
             burn(radius * 2);
