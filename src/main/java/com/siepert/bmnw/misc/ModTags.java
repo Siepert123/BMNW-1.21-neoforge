@@ -41,6 +41,7 @@ public class ModTags {
 
         public static final TagKey<Block> NUCLEAR_REMAINS_BLACKLIST = tag("nuclear_remains_blacklist");
         public static final TagKey<Block> GRANTS_NUKE_ACHIEVEMENT = tag("grants_nuke_achievement");
+        public static final TagKey<Block> CUSHIONS_NUCLEAR_BLAST = tag("cushions_nuclear_blast");
 
         private static TagKey<Block> tag(@Nonnull String name) {
             return TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath("bmnw", name));

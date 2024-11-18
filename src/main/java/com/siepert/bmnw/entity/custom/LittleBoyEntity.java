@@ -78,9 +78,13 @@ public class LittleBoyEntity extends BombEntity {
             irradiate((int) (radius * 1.5), radius * 2, 0, ModBlocks.BLAZING_NUCLEAR_REMAINS.get().defaultBlockState());
             placeRadiation(radius / 16, UnitConvertor.fromKilo(10), DistributionType.CIRCLE);
             LOGGER.info("Inflammate!");
+            effectEntities(radius * 3);
             recalcPos();
             inflammate(radius * 3);
             level().explode(null, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), 5, Level.ExplosionInteraction.TNT);
+
+            blastEntities(radius * 4);
+
             LOGGER.info("Kill!");
             this.kill();
         }

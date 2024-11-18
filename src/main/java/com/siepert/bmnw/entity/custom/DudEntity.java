@@ -85,8 +85,12 @@ public class DudEntity extends BombEntity {
             LOGGER.info("Irradiate!");
             irradiate((int) (radius * 1.5), 0, 0);
             LOGGER.info("Inflammate!");
+            effectEntities(radius * 3);
             inflammate();
             level().explode(null, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), 5, Level.ExplosionInteraction.TNT);
+
+            blastEntities(radius * 4);
+
             LOGGER.info("Kill!");
             this.kill();
         }

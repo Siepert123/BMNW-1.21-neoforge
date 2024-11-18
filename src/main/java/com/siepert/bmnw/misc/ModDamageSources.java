@@ -13,4 +13,10 @@ public class ModDamageSources {
     public static DamageSource radiation(Level level) {
         return new DamageSource(level.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(RADIATION));
     }
+
+    public static final ResourceKey<DamageType> NUCLEAR_BLAST
+            = ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath("bmnw", "nuclear_blast"));
+    public static DamageSource nuclear_blast(Level level) {
+        return new DamageSource(level.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(NUCLEAR_BLAST));
+    }
 }

@@ -153,6 +153,7 @@ public class BMNWEventBus {
                 CompoundTag nbt = entity.getPersistentData();
 
                 long entityFemtoRads = nbt.getLong(RadHelper.RAD_NBT_TAG);
+                if (entityFemtoRads > UnitConvertor.fromKilo(15) || entityFemtoRads < 0) entityFemtoRads = UnitConvertor.fromKilo(15);
 
                 long normalized = UnitConvertor.toNormal(entityFemtoRads);
 

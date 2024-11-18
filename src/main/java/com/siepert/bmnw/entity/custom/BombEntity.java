@@ -2,9 +2,9 @@ package com.siepert.bmnw.entity.custom;
 
 import com.siepert.bmnw.block.ModBlocks;
 import com.siepert.bmnw.misc.DistributionType;
+import com.siepert.bmnw.misc.ModDamageSources;
 import com.siepert.bmnw.misc.ModTags;
 import com.siepert.bmnw.radiation.RadHelper;
-import com.siepert.bmnw.radiation.UnitConvertor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
@@ -17,7 +17,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LightningBolt;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
@@ -25,6 +25,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SupportType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
@@ -149,6 +150,7 @@ public abstract class BombEntity extends Entity {
                 }
             }
         }
+
     }
 
     @Override
@@ -211,8 +213,25 @@ public abstract class BombEntity extends Entity {
         ));
 
         for (Entity entity : entities) {
-            if (Math.sqrt(entity.distanceToSqr(convertVec3i(worldPosition))) <= radius) {
-                entity.setRemainingFireTicks(36000);
+            if (level().getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, entity.getBlockX(), entity.getBlockZ()) <= entity.getBlockY()) {
+                if (Math.sqrt(entity.distanceToSqr(convertVec3i(worldPosition))) <= radius) {
+                    entity.setRemainingFireTicks(36000);
+                }
+            }
+        }
+    }
+
+    protected void blastEntities(int radius) {
+        List<LivingEntity> entities = level().getEntitiesOfClass(LivingEntity.class,
+                new AABB(convertVec3i(worldPosition.offset(-radius, -radius, -radius)), convertVec3i(worldPosition.offset(radius, radius, radius))));
+
+        for (LivingEntity entity : entities) {
+            if (entity.distanceTo(this) < radius) {
+                if (!level().getBlockState(entity.getOnPos()).is(ModTags.Blocks.CUSHIONS_NUCLEAR_BLAST)) {
+                    if (!level().getBlockState(entity.getOnPos()).isAir()) {
+                        entity.hurt(ModDamageSources.nuclear_blast(level()), radius - entity.distanceTo(this));
+                    }
+                }
             }
         }
     }
