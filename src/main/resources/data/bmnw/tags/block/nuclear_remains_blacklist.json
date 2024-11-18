@@ -1,13 +1,10 @@
 {
   "values": [
-    "bmnw:concrete",
-    "bmnw:concrete_slab",
-    "bmnw:concrete_stairs",
-    "bmnw:concrete_bricks",
-    "bmnw:concrete_bricks_slab",
-    "bmnw:concrete_bricks_stairs",
+    "#bmnw:concrete",
     "minecraft:bedrock",
     "minecraft:barrier",
+    "bmnw:creative_concrete_bricks",
+    "bmnw:steel_reinforced_glass",
     "#c:ores"
   ]
 }
