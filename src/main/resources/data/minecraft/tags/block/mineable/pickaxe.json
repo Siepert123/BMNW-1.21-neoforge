@@ -13,7 +13,8 @@
     "bmnw:uranium_ore",
     "bmnw:thorium_ore",
     "bmnw:deepslate_uranium_ore",
-    "bmnw:deepslate_thorium_ore"
+    "bmnw:deepslate_thorium_ore",
+    "#bmnw:concrete"
   ],
   "replace": false
 }

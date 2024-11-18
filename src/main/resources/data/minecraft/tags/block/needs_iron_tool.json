@@ -2,7 +2,8 @@
   "values": [
     "bmnw:decontaminator",
     "bmnw:nuclear_charge",
-    "bmnw:steel_block"
+    "bmnw:steel_block",
+    "#bmnw:concrete"
   ],
   "replace": false
 }

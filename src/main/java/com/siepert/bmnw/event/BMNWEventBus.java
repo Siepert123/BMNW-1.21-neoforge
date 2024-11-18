@@ -1,5 +1,6 @@
 package com.siepert.bmnw.event;
 
+import com.siepert.bmnw.datagen.ModAdvancementGenerator;
 import com.siepert.bmnw.effect.ModEffects;
 import com.siepert.bmnw.entity.ModEntityTypes;
 import com.siepert.bmnw.entity.renderer.DudRenderer;
@@ -16,6 +17,9 @@ import com.siepert.bmnw.radiation.RadHelper;
 import com.siepert.bmnw.radiation.ShieldingValues;
 import com.siepert.bmnw.radiation.UnitConvertor;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ChunkHolder;
 import net.minecraft.server.level.ChunkMap;
@@ -36,6 +40,9 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.util.ObfuscationReflectionHelper;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
+import net.neoforged.neoforge.common.data.AdvancementProvider;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.event.level.ChunkEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
@@ -43,7 +50,9 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.List;
 import java.util.Random;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
 
 @SuppressWarnings("unchecked")
@@ -233,6 +242,22 @@ public class BMNWEventBus {
         public static void registerParticleProvidersEvent(RegisterParticleProvidersEvent event) {
             event.registerSpriteSet(ModParticleTypes.VOMIT.get(), VomitParticleProvider::new);
             event.registerSpriteSet(ModParticleTypes.FIRE_SMOKE.get(), FireSmokeParticleProvider::new);
+        }
+
+        @SubscribeEvent
+        public static void gatherDataEvent(GatherDataEvent event) {
+            DataGenerator generator = event.getGenerator();
+            PackOutput output = generator.getPackOutput();
+            CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
+            ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
+
+            generator.addProvider(
+                    event.includeServer(),
+                    new AdvancementProvider(
+                            output, lookupProvider, existingFileHelper,
+                            List.of(new ModAdvancementGenerator())
+                    )
+            );
         }
     }
 }

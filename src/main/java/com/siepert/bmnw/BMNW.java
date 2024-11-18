@@ -2,6 +2,7 @@ package com.siepert.bmnw;
 
 import com.siepert.bmnw.block.ModBlocks;
 import com.siepert.bmnw.block.entity.ModBlockEntities;
+import com.siepert.bmnw.critereon.ModAdvancementTriggers;
 import com.siepert.bmnw.effect.ModEffects;
 import com.siepert.bmnw.entity.ModEntityTypes;
 import com.siepert.bmnw.item.ModItems;
@@ -57,6 +58,7 @@ public class BMNW {
         ModEffects.register(modEventBus);
         ModParticleTypes.register(modEventBus);
         ModSounds.register(modEventBus);
+        ModAdvancementTriggers.register(modEventBus);
 
         NeoForge.EVENT_BUS.register(this);
 

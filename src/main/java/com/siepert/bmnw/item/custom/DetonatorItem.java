@@ -1,5 +1,6 @@
 package com.siepert.bmnw.item.custom;
 
+import com.siepert.bmnw.critereon.ModAdvancementTriggers;
 import com.siepert.bmnw.interfaces.IDetonatable;
 import com.siepert.bmnw.item.components.ModDataComponents;
 import com.siepert.bmnw.misc.ModTags;
@@ -8,6 +9,7 @@ import net.minecraft.advancements.critereon.DefaultBlockInteractionTrigger;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -37,6 +39,9 @@ public class DetonatorItem extends Item {
             BlockPos target = stack.get(ModDataComponents.TARGET);
 
             if (target != null && level.getBlockState(target).getBlock() instanceof IDetonatable) {
+                if (level.getBlockState(target).is(ModTags.Blocks.GRANTS_NUKE_ACHIEVEMENT) && !level.isClientSide()) {
+                    ModAdvancementTriggers.NUKE.get().trigger((ServerPlayer) player);
+                }
                 ((IDetonatable) level.getBlockState(target).getBlock()).detonate(level, target);
                 if (level.isClientSide()) player.sendSystemMessage(Component.translatable("text.bmnw.detonate_success").withColor(0x00DD00));
                 return InteractionResultHolder.success(stack);
