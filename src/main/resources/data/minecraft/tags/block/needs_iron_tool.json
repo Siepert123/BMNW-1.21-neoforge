@@ -3,7 +3,8 @@
     "bmnw:decontaminator",
     "bmnw:nuclear_charge",
     "bmnw:steel_block",
-    "#bmnw:concrete"
+    "#bmnw:concrete",
+    "bmnw:steel_reinforced_glass"
   ],
   "replace": false
 }

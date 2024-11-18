@@ -59,6 +59,9 @@ public class ModTabs {
                         output.accept(CONCRETE_BRICKS);
                         output.accept(CONCRETE_BRICKS_SLAB);
                         output.accept(CONCRETE_BRICKS_STAIRS);
+                        output.accept(FOUNDATION_CONCRETE);
+                        output.accept(STEEL_REINFORCED_GLASS);
+                        output.accept(CREATIVE_CONCRETE_BRICKS);
 
                         output.accept(BLAZING_NUCLEAR_REMAINS);
                         output.accept(NUCLEAR_REMAINS);

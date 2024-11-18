@@ -74,6 +74,9 @@ public class ShieldingValues {
         addShielding(ModBlocks.CONCRETE_BRICKS.get(), 10, 0);
         addShielding(ModBlocks.CONCRETE_BRICKS_SLAB.get(), 10, 0);
         addShielding(ModBlocks.CONCRETE_BRICKS_STAIRS.get(), 10, 0);
+        addShielding(ModBlocks.FOUNDATION_CONCRETE.get(), 10, 0);
+        addShielding(ModBlocks.STEEL_REINFORCED_GLASS.get(), 10, 0);
+        addShielding(ModBlocks.CREATIVE_CONCRETE_BRICKS.get(), 10, 0);
 
         initialized = true;
     }

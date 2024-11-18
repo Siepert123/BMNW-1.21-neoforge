@@ -14,6 +14,8 @@
     "minecraft:stone_brick_stairs",
     "minecraft:iron_door",
     "minecraft:iron_trapdoor",
-    "#bmnw:concrete"
+    "#bmnw:concrete",
+    "bmnw:steel_reinforced_glass",
+    "bmnw:creative_concrete_bricks"
   ]
 }

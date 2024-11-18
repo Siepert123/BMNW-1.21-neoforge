@@ -94,6 +94,12 @@ public class ModItems {
             () -> new BlockItem(ModBlocks.CONCRETE_BRICKS_SLAB.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> CONCRETE_BRICKS_STAIRS = ITEMS.register("concrete_bricks_stairs",
             () -> new BlockItem(ModBlocks.CONCRETE_BRICKS_STAIRS.get(), new Item.Properties()));
+    public static final DeferredItem<BlockItem> FOUNDATION_CONCRETE = ITEMS.register("foundation_concrete",
+            () -> new BlockItem(ModBlocks.FOUNDATION_CONCRETE.get(), new Item.Properties()));
+    public static final DeferredItem<BlockItem> STEEL_REINFORCED_GLASS = ITEMS.register("steel_reinforced_glass",
+            () -> new BlockItem(ModBlocks.STEEL_REINFORCED_GLASS.get(), new Item.Properties()));
+    public static final DeferredItem<BlockItem> CREATIVE_CONCRETE_BRICKS = ITEMS.register("creative_concrete_bricks",
+            () -> new BlockItem(ModBlocks.CREATIVE_CONCRETE_BRICKS.get(), new Item.Properties()));
 
     public static final DeferredItem<BlockItem> SLAKED_NUCLEAR_REMAINS = ITEMS.register("slaked_nuclear_remains",
             () -> new BlockItem(ModBlocks.SLAKED_NUCLEAR_REMAINS.get(), new Item.Properties()));
