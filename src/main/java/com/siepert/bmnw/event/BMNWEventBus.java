@@ -4,7 +4,6 @@ import com.siepert.bmnw.datagen.ModAdvancementGenerator;
 import com.siepert.bmnw.effect.ModEffects;
 import com.siepert.bmnw.entity.ModEntityTypes;
 import com.siepert.bmnw.entity.renderer.DudRenderer;
-import com.siepert.bmnw.entity.renderer.EmptyEntityRenderer;
 import com.siepert.bmnw.entity.renderer.MissileRenderer;
 import com.siepert.bmnw.entity.renderer.NuclearChargeRenderer;
 import com.siepert.bmnw.interfaces.IItemHazard;
@@ -14,7 +13,6 @@ import com.siepert.bmnw.particle.ModParticleTypes;
 import com.siepert.bmnw.particle.custom.FireSmokeParticleProvider;
 import com.siepert.bmnw.particle.custom.VomitParticleProvider;
 import com.siepert.bmnw.radiation.RadHelper;
-import com.siepert.bmnw.radiation.ShieldingValues;
 import com.siepert.bmnw.radiation.UnitConvertor;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.core.HolderLookup;
@@ -24,7 +22,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ChunkHolder;
 import net.minecraft.server.level.ChunkMap;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -34,7 +31,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.LevelChunk;
-import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.util.ObfuscationReflectionHelper;
@@ -51,7 +47,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
 
@@ -131,7 +126,8 @@ public class BMNWEventBus {
 
                 long entityFemtoRads = nbt.getLong(RadHelper.RAD_NBT_TAG);
 
-                nbt.putLong(RadHelper.RAD_NBT_TAG, (long) (entityFemtoRads * 0.9999));
+                if (UnitConvertor.toKilo(entityFemtoRads) > 15 || entityFemtoRads < 0) nbt.putLong(RadHelper.RAD_NBT_TAG, UnitConvertor.fromKilo(15));
+                else nbt.putLong(RadHelper.RAD_NBT_TAG, (long) (entityFemtoRads * 0.9999));
             }
         }
 

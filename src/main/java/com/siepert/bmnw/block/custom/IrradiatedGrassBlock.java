@@ -6,7 +6,6 @@ import com.siepert.bmnw.radiation.RadHelper;
 import com.siepert.bmnw.radiation.UnitConvertor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;

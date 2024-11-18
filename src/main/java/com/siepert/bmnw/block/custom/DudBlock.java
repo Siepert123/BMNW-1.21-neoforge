@@ -2,7 +2,6 @@ package com.siepert.bmnw.block.custom;
 
 import com.siepert.bmnw.entity.ModEntityTypes;
 import com.siepert.bmnw.entity.custom.DudEntity;
-import com.siepert.bmnw.entity.custom.NuclearChargeEntity;
 import com.siepert.bmnw.interfaces.IDetonatable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;

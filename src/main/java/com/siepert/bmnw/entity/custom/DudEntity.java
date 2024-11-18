@@ -3,8 +3,6 @@ package com.siepert.bmnw.entity.custom;
 import com.siepert.bmnw.block.ModBlocks;
 import com.siepert.bmnw.misc.ModSounds;
 import com.siepert.bmnw.misc.ModTags;
-import com.siepert.bmnw.radiation.RadHelper;
-import com.siepert.bmnw.radiation.UnitConvertor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundSource;

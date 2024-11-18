@@ -1,5 +1,6 @@
 package com.siepert.bmnw;
 
+import com.mojang.logging.LogUtils;
 import com.siepert.bmnw.block.ModBlocks;
 import com.siepert.bmnw.block.entity.ModBlockEntities;
 import com.siepert.bmnw.critereon.ModAdvancementTriggers;
@@ -12,10 +13,6 @@ import com.siepert.bmnw.misc.ModSounds;
 import com.siepert.bmnw.misc.ModTabs;
 import com.siepert.bmnw.particle.ModParticleTypes;
 import com.siepert.bmnw.radiation.ShieldingValues;
-import org.slf4j.Logger;
-
-import com.mojang.logging.LogUtils;
-
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -27,6 +24,7 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
+import org.slf4j.Logger;
 
 import javax.annotation.Nonnull;
 import java.util.Random;

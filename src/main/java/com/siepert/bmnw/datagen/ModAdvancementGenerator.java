@@ -1,14 +1,10 @@
 package com.siepert.bmnw.datagen;
 
-import com.siepert.bmnw.critereon.NukeCritereonTrigger;
-import com.siepert.bmnw.critereon.NukeTriggerInstance;
 import com.siepert.bmnw.item.ModItems;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementType;
-import net.minecraft.advancements.critereon.ContextAwarePredicate;
-import net.minecraft.advancements.critereon.ImpossibleTrigger;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.Component;

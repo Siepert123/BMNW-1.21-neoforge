@@ -5,10 +5,8 @@ import com.siepert.bmnw.interfaces.IDetonatable;
 import com.siepert.bmnw.item.components.ModDataComponents;
 import com.siepert.bmnw.misc.ModTags;
 import net.minecraft.MethodsReturnNonnullByDefault;
-import net.minecraft.advancements.critereon.DefaultBlockInteractionTrigger;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -19,7 +17,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.common.Tags;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;

@@ -1,6 +1,5 @@
 package com.siepert.bmnw.misc;
 
-import com.siepert.bmnw.BMNW;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
