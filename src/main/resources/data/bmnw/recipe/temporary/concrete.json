@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "c:buckets/water"
+    },
+    "N": {
+      "tag": "c:sands"
+    },
+    "M": {
+      "tag": "c:gravels"
+    }
+  },
+  "pattern": [
+    "NMN",
+    "M#M",
+    "NMN"
+  ],
+  "result": {
+    "count": 8,
+    "id": "bmnw:concrete"
+  }
+}
