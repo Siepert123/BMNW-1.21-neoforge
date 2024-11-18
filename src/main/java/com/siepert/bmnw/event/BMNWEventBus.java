@@ -3,9 +3,7 @@ package com.siepert.bmnw.event;
 import com.siepert.bmnw.datagen.ModAdvancementGenerator;
 import com.siepert.bmnw.effect.ModEffects;
 import com.siepert.bmnw.entity.ModEntityTypes;
-import com.siepert.bmnw.entity.renderer.DudRenderer;
-import com.siepert.bmnw.entity.renderer.MissileRenderer;
-import com.siepert.bmnw.entity.renderer.NuclearChargeRenderer;
+import com.siepert.bmnw.entity.renderer.*;
 import com.siepert.bmnw.interfaces.IItemHazard;
 import com.siepert.bmnw.misc.ModAttachments;
 import com.siepert.bmnw.misc.ModDamageSources;
@@ -248,6 +246,8 @@ public class BMNWEventBus {
         private static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
             registerEntityRenderingHandler(event, ModEntityTypes.NUCLEAR_CHARGE, NuclearChargeRenderer::new);
             registerEntityRenderingHandler(event, ModEntityTypes.DUD, DudRenderer::new);
+            registerEntityRenderingHandler(event, ModEntityTypes.LITTLE_BOY, LittleBoyRenderer::new);
+            registerEntityRenderingHandler(event, ModEntityTypes.CASEOH, CaseohRenderer::new);
             registerEntityRenderingHandler(event, ModEntityTypes.MISSILE, MissileRenderer::new);
         }
 

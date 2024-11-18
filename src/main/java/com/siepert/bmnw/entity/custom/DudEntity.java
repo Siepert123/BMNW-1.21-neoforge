@@ -16,6 +16,7 @@ import net.minecraft.world.level.block.SupportType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
+import net.neoforged.neoforge.common.Tags;
 
 import java.util.List;
 
@@ -48,10 +49,10 @@ public class DudEntity extends BombEntity {
                     for (int y = -progress; y <= progress; y++) {
                         if (x == 0 && y == 0 && z == 0) continue;
                         BlockPos pos = worldPosition.offset(x, y, z);
-                        if (Math.sqrt(Math.pow(x, 2) + Math.pow(z, 2)) <= progress) {
+                        final double sqrt = Math.sqrt(Math.pow(x, 2) + Math.pow(z, 2) + Math.pow(y, 2));
+                        if (sqrt <= progress) {
                             if (level().getBlockState(pos).isAir()) continue;
-                            final double sqrt = Math.sqrt(Math.pow(x, 2) + Math.pow(z, 2) + Math.pow(y, 2));
-                            final float str = (radius - progress) * 50;
+                            final float str = getBlastStrength(progress, radius);
                             if (sqrt <= radius) {
                                 if (USE_RAY) {
                                     BlockHitResult hitResult = level().clip(new ClipContext(convertVec3i(worldPosition), convertVec3i(pos),
@@ -77,6 +78,8 @@ public class DudEntity extends BombEntity {
         if (progress > radius) {
             LOGGER.info("Burn!");
             burn();
+            LOGGER.info("Irradiate!");
+            irradiate((int) (radius * 1.5), 0, 0);
             LOGGER.info("Inflammate!");
             inflammate();
             level().explode(null, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), 5, Level.ExplosionInteraction.TNT);
@@ -152,6 +155,44 @@ public class DudEntity extends BombEntity {
                                 level().getBlockState(pos.below()).isFaceSturdy(level(), pos.below(), Direction.UP, SupportType.FULL)) {
                             level().setBlock(pos, fire, 3);
                         }
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    protected void irradiate(int nuclearRadius, int grassRadius, long femtoRadsInserted) {
+        final BlockState remains = ModBlocks.SLAKED_NUCLEAR_REMAINS.get().defaultBlockState();
+        final BlockState diamond = Blocks.DIAMOND_ORE.defaultBlockState();
+        final BlockState emerald = Blocks.EMERALD_ORE.defaultBlockState();
+        for (int x = -nuclearRadius; x <= nuclearRadius; x++) {
+            for (int z = -nuclearRadius; z <= nuclearRadius; z++) {
+                for (int y = nuclearRadius; y >= -nuclearRadius; y--) {
+                    BlockPos pos = worldPosition.offset(x, y, z);
+                    if (level().getBlockState(pos).isAir() || level().getBlockState(pos).canBeReplaced()) continue;
+                    final double sqrt = Math.sqrt(Math.pow(x, 2) + Math.pow(z, 2) + Math.pow(y, 2));
+                    if (sqrt > nuclearRadius) continue;
+                    final float str = 50;
+                    if (USE_RAY) {
+                        BlockHitResult hitResult = level().clip(new ClipContext(convertVec3i(worldPosition), convertVec3i(pos),
+                                ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, this));
+                        BlockState state = level().getBlockState(hitResult.getBlockPos());
+                        if (state.is(Tags.Blocks.ORES_COAL)) {
+                            if (level().random.nextFloat() > 0.95) {
+                                level().setBlock(hitResult.getBlockPos(), emerald, 3);
+                            } else if (level().random.nextFloat() > 0.05) {
+                                level().setBlock(hitResult.getBlockPos(), diamond, 3);
+                            }
+                        } else if (state.getBlock().getExplosionResistance() <= str) {
+                            if (!state.is(ModTags.Blocks.NUCLEAR_REMAINS_BLACKLIST)) {
+                                level().setBlock(hitResult.getBlockPos(), remains, 3);
+                            }
+                        }
+                    } else {
+                        if (level().getBlockState(pos).getBlock().getExplosionResistance() >= nuclearRadius - sqrt)
+                            continue;
+                        level().setBlock(pos, remains, 3);
                     }
                 }
             }

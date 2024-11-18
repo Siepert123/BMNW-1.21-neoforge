@@ -18,7 +18,7 @@ public class NuclearChargeBlock extends Block implements IDetonatable {
     public void detonate(Level level, BlockPos pos) {
         level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
         NuclearChargeEntity entity = new NuclearChargeEntity(ModEntityTypes.NUCLEAR_CHARGE.get(), level);
-        entity.setPos(pos.getX(), pos.getY(), pos.getZ());
+        entity.setPos(pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5);
         level.addFreshEntity(entity);
     }
 

@@ -51,6 +51,8 @@ public class ModTabs {
 
                         output.accept(DETONATOR);
                         output.accept(NUCLEAR_CHARGE);
+                        output.accept(LITTLE_BOY);
+                        output.accept(CASEOH);
                         output.accept(DUD);
 
                         output.accept(CONCRETE);

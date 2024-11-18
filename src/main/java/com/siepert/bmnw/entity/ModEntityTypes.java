@@ -1,8 +1,6 @@
 package com.siepert.bmnw.entity;
 
-import com.siepert.bmnw.entity.custom.DudEntity;
-import com.siepert.bmnw.entity.custom.MissileEntity;
-import com.siepert.bmnw.entity.custom.NuclearChargeEntity;
+import com.siepert.bmnw.entity.custom.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -25,6 +23,18 @@ public class ModEntityTypes {
             () -> EntityType.Builder.of(DudEntity::new, MobCategory.MISC)
                     .sized(1.0f, 1.0f)
                     .build("bmnw:dud")
+    );
+    public static final DeferredHolder<EntityType<?>, EntityType<LittleBoyEntity>> LITTLE_BOY = ENTITY_TYPES.register(
+            "little_boy",
+            () -> EntityType.Builder.of(LittleBoyEntity::new, MobCategory.MISC)
+                    .sized(1.0f, 1.0f)
+                    .build("bmnw:little_boy")
+    );
+    public static final DeferredHolder<EntityType<?>, EntityType<CaseohEntity>> CASEOH = ENTITY_TYPES.register(
+            "caseoh",
+            () -> EntityType.Builder.of(CaseohEntity::new, MobCategory.MISC)
+                    .sized(1.0f, 1.0f)
+                    .build("bmnw:caseoh")
     );
 
     public static final DeferredHolder<EntityType<?>, EntityType<MissileEntity>> MISSILE = ENTITY_TYPES.register(

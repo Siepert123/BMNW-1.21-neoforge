@@ -1,43 +1,26 @@
 package com.siepert.bmnw.entity.custom;
 
-import com.siepert.bmnw.block.ModBlocks;
-import com.siepert.bmnw.misc.ModSounds;
-import com.siepert.bmnw.misc.ModTags;
-import com.siepert.bmnw.radiation.RadHelper;
 import com.siepert.bmnw.radiation.UnitConvertor;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.SupportType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
-import net.neoforged.neoforge.common.Tags;
 
-import java.util.List;
-
-public class NuclearChargeEntity extends BombEntity {
-    public final int radius = 32;
-
-    public NuclearChargeEntity(EntityType<?> entityType, Level level) {
+public class CaseohEntity extends BombEntity {
+    public final int radius = 128;
+    public CaseohEntity(EntityType<?> entityType, Level level) {
         super(entityType, level);
-        this.noCulling = true;
-        this.noPhysics = true;
+        setThunderSFXInterval(5);
+        setExplosionSFXInterval(10);
+        shouldLightSky = true;
     }
 
     @Override
     public void tick() {
         super.tick();
-
-        this.enableSkyLight();
 
         if (level().isClientSide()) return;
         recalcPos();
@@ -45,7 +28,6 @@ public class NuclearChargeEntity extends BombEntity {
         level().setBlock(worldPosition, Blocks.AIR.defaultBlockState(), 3);
 
         if (progress == 0) {
-            level().playSound(null, worldPosition, ModSounds.LARGE_EXPLOSION.get(), SoundSource.MASTER, 1.0f, 1.0f);
             LOGGER.info("Dry!");
             dry(radius * 2);
             LOGGER.info("Effect entities!");

@@ -8,6 +8,10 @@
     "#c:ores",
     "#bmnw:irradiatable_leaves",
     "bmnw:irradiated_leaf_pile",
-    "#bmnw:irradiatable_plants"
+    "#bmnw:irradiatable_plants",
+    "bmnw:dud",
+    "bmnw:nuclear_charge",
+    "bmnw:little_boy",
+    "bmnw:caseoh"
   ]
 }
