@@ -11,11 +11,13 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SupportType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.neoforged.neoforge.common.Tags;
@@ -27,11 +29,15 @@ public class NuclearChargeEntity extends BombEntity {
 
     public NuclearChargeEntity(EntityType<?> entityType, Level level) {
         super(entityType, level);
+        this.noCulling = true;
+        this.noPhysics = true;
     }
 
     @Override
     public void tick() {
         super.tick();
+
+        this.enableSkyLight();
 
         if (level().isClientSide()) return;
         recalcPos();
