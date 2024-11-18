@@ -1,7 +1,10 @@
 package com.siepert.bmnw.block.custom;
 
+import com.siepert.bmnw.block.ModBlocks;
 import com.siepert.bmnw.effect.ModEffects;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -35,6 +38,34 @@ public class NuclearRemainsBlock extends SimpleRadioactiveBlock {
 
     @Override
     protected void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-        level.setBlock(pos, decay, 3);
+        if (state.is(ModBlocks.NUCLEAR_REMAINS.get())) {
+            boolean decayable = true;
+            for (Direction direction : Direction.values()) {
+                if (level.getBlockState(pos.offset(direction.getNormal())).is(ModBlocks.BLAZING_NUCLEAR_REMAINS.get())) {
+                    decayable = false;
+                }
+            }
+            if (decayable) {
+                level.setBlock(pos, decay, 3);
+            }
+        } else {
+            level.setBlock(pos, decay, 3);
+        }
+    }
+
+    private static final boolean animate = false;
+    @Override
+    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
+        if (!animate) return;
+        if (state.is(ModBlocks.BLAZING_NUCLEAR_REMAINS.get())) {
+            if (random.nextFloat() > 0.8) {
+                level.addParticle(ParticleTypes.LAVA,
+                        pos.getX() + random.nextFloat(), pos.getY() + 1, pos.getZ() + random.nextFloat(),
+                        0, 0, 0);
+            }
+        }
+        level.addParticle(ParticleTypes.FLAME,
+                pos.getX() + random.nextFloat(), pos.getY() + 1, pos.getZ() + random.nextFloat(),
+                0, 0, 0);
     }
 }

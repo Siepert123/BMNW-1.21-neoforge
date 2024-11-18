@@ -1,6 +1,7 @@
 package com.siepert.bmnw.entity.custom;
 
 import com.siepert.bmnw.block.ModBlocks;
+import com.siepert.bmnw.misc.DistributionType;
 import com.siepert.bmnw.misc.ModTags;
 import com.siepert.bmnw.radiation.RadHelper;
 import com.siepert.bmnw.radiation.UnitConvertor;
@@ -17,6 +18,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -86,6 +88,28 @@ public abstract class BombEntity extends Entity {
     @Override
     protected void addAdditionalSaveData(CompoundTag compound) {
         compound.putInt("progress", progress);
+    }
+
+    protected void placeRadiation(int distance, long femtoRads, DistributionType distribution) {
+        ChunkPos pos = level().getChunk(worldPosition).getPos();
+
+        for (int x = -distance; x <= distance; x++) {
+            for (int z = -distance; z <= distance; z++) {
+                switch (distribution) {
+                    case SQUARE -> RadHelper.addChunkRadiation(level().getChunk(pos.x+x, pos.z+z), femtoRads);
+                    case MANHATTAN -> {
+                        if (x + z <= distance) {
+                            RadHelper.addChunkRadiation(level().getChunk(pos.x+x, pos.z+z), femtoRads);
+                        }
+                    }
+                    case CIRCLE -> {
+                        if ((Math.pow(2, x) + Math.pow(2, z)) <= distance * distance) {
+                            RadHelper.addChunkRadiation(level().getChunk(pos.x+x, pos.z+z), femtoRads);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     @Override
@@ -194,7 +218,9 @@ public abstract class BombEntity extends Entity {
     }
 
     protected void irradiate(int nuclearRadius, int grassRadius, long femtoRadsInserted) {
-        final BlockState remains = ModBlocks.NUCLEAR_REMAINS.get().defaultBlockState();
+        irradiate(nuclearRadius, grassRadius, femtoRadsInserted, ModBlocks.NUCLEAR_REMAINS.get().defaultBlockState());
+    }
+    protected void irradiate(int nuclearRadius, int grassRadius, long femtoRadsInserted, BlockState remains) {
         final BlockState diamond = Blocks.DIAMOND_ORE.defaultBlockState();
         final BlockState emerald = Blocks.EMERALD_ORE.defaultBlockState();
         for (int x = -nuclearRadius; x <= nuclearRadius; x++) {

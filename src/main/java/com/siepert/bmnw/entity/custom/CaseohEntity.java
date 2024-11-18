@@ -1,5 +1,7 @@
 package com.siepert.bmnw.entity.custom;
 
+import com.siepert.bmnw.block.ModBlocks;
+import com.siepert.bmnw.misc.DistributionType;
 import com.siepert.bmnw.radiation.UnitConvertor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.EntityType;
@@ -73,7 +75,8 @@ public class CaseohEntity extends BombEntity {
             LOGGER.info("Burn!");
             burn(radius * 2);
             LOGGER.info("Irradiate!");
-            irradiate((int) (radius * 1.5), radius * 2, UnitConvertor.fromKilo(10));
+            irradiate((int) (radius * 1.5), radius * 2, UnitConvertor.fromKilo(10), ModBlocks.BLAZING_NUCLEAR_REMAINS.get().defaultBlockState());
+            placeRadiation(radius / 16, UnitConvertor.fromKilo(15), DistributionType.CIRCLE);
             LOGGER.info("Inflammate!");
             recalcPos();
             inflammate(radius * 3);
