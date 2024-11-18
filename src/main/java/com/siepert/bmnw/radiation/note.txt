@@ -1,0 +1,5 @@
+radiation is a long, and is measured in femtoRADs (fRAD)
+use UnitConverter to get a different scale (e.g. kilo, milli, nano, etc.)
+Due to pesky 64-bit limits the max amount of radiation is 15 kRAD
+but 1 kRAD is lethal anyway, so it's not that deep
+ok have fun
