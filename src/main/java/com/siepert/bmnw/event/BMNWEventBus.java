@@ -50,12 +50,19 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
 
+/**
+ * BMNWs event bus.
+ */
 @SuppressWarnings("unchecked")
 public class BMNWEventBus {
     private static final Logger LOGGER = LogManager.getLogger();
 
     @EventBusSubscriber(modid = "bmnw", bus = EventBusSubscriber.Bus.GAME)
     public static class GameEventBus {
+        /**
+         * Irradiates chunks based on source radioactivity (calculated seperately).
+         * Could break at any moment, really.
+         */
         @SubscribeEvent
         public static void serverTickEventPre(ServerTickEvent.Pre event) {
             final double radiationRemoveRate = 0.9999;
@@ -85,6 +92,10 @@ public class BMNWEventBus {
             }
         }
 
+        /**
+         * Spreads radiation in chunks.
+         * Could break at any moment, really.
+         */
         @SubscribeEvent
         public static void serverTickEventPost(ServerTickEvent.Post event) {
             try {
@@ -114,6 +125,9 @@ public class BMNWEventBus {
             }
         }
 
+        /**
+         * Handles contamination and decontamination of entities.
+         */
         @SubscribeEvent
         public static void entityTickEventPre(EntityTickEvent.Pre event) {
             if (event.getEntity() instanceof LivingEntity entity) {
@@ -131,6 +145,9 @@ public class BMNWEventBus {
             }
         }
 
+        /**
+         * Handles the negative side effects of radiation on entities.
+         */
         @SubscribeEvent
         public static void entityTickEventPost(EntityTickEvent.Post event) {
             if (event.getEntity() instanceof LivingEntity entity) {
@@ -183,6 +200,9 @@ public class BMNWEventBus {
             }
         }
 
+        /**
+         * Calculates source radioactivity of a chunk when it's generated.
+         */
         @SubscribeEvent
         public static void chunkEventLoad(ChunkEvent.Load event) {
             if (event.isNewChunk()) {
@@ -190,6 +210,9 @@ public class BMNWEventBus {
             }
         }
 
+        /**
+         * Handles evil item effects.
+         */
         @SubscribeEvent
         public static void playerTickEventPre(PlayerTickEvent.Pre event) {
             Player player = event.getEntity();
@@ -228,18 +251,27 @@ public class BMNWEventBus {
             registerEntityRenderingHandler(event, ModEntityTypes.MISSILE, MissileRenderer::new);
         }
 
+        /**
+         * Registers entity renderers.
+         */
         @SubscribeEvent
         public static void entityRenderersEventRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
             registerBlockEntityRenderers(event);
             registerEntityRenderers(event);
         }
 
+        /**
+         * Registers particle providers.
+         */
         @SubscribeEvent
         public static void registerParticleProvidersEvent(RegisterParticleProvidersEvent event) {
             event.registerSpriteSet(ModParticleTypes.VOMIT.get(), VomitParticleProvider::new);
             event.registerSpriteSet(ModParticleTypes.FIRE_SMOKE.get(), FireSmokeParticleProvider::new);
         }
 
+        /**
+         * datagen (ew)
+         */
         @SubscribeEvent
         public static void gatherDataEvent(GatherDataEvent event) {
             DataGenerator generator = event.getGenerator();

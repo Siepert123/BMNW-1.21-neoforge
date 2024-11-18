@@ -6,9 +6,13 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import com.siepert.bmnw.item.custom.SimpleRadioactiveBlockItem;
+import com.siepert.bmnw.item.custom.SimpleRadioactiveItem;
 
 /**
  * Simple radioactive block implementation.
+ * @see SimpleRadioactiveBlockItem
+ * @see SimpleRadioactiveItem
  */
 public class SimpleRadioactiveBlock extends Block implements IRadioactiveBlock {
     private final long femtoRads;

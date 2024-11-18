@@ -14,7 +14,13 @@ import net.minecraft.world.phys.Vec3;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class BombEntity extends Entity {
+/**
+ * Abstract entity class for all entities that represent an explosion.
+ * Contains various utility tools.
+ * @see NuclearChargeEntity
+ * @see DudEntity
+ */
+public abstract class BombEntity extends Entity {
     public static final EntityDataAccessor<Integer> PROGRESS_DATA = SynchedEntityData.defineId(BombEntity.class, EntityDataSerializers.INT);
     public int progress = 0;
     protected BlockPos worldPosition = getOnPos(0.5f);

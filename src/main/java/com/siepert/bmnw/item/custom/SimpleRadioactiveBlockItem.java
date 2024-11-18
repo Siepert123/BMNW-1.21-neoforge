@@ -8,9 +8,15 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.block.Block;
+import com.siepert.bmnw.block.custom.SimpleRadioactiveBlock;
 
 import java.util.List;
 
+/**
+ * Simple radioactive block item implementation.
+ * @see SimpleRadioactiveBlock
+ * @see SimpleRadioactiveItem
+ */
 public class SimpleRadioactiveBlockItem extends BlockItem implements IItemHazard {
     private final long femtoRads;
     private final Component tooltip;

@@ -16,6 +16,9 @@ import net.minecraft.world.level.chunk.ChunkAccess;
 import javax.annotation.Nonnull;
 import java.util.Random;
 
+/**
+ * Utility class for handling radiation related stuff.
+ */
 public class RadHelper {
     public static final String RAD_NBT_TAG = "bmnw_femtoRAD";
     public static int getRadiationLevelForFemtoRads(long femtoRads) {
@@ -39,6 +42,13 @@ public class RadHelper {
         long original = nbt.getLong(RAD_NBT_TAG);
         nbt.putLong(RAD_NBT_TAG, Math.max(0, original - femtoRads));
     }
+
+    /**
+     * Recalculates chunk radioactivity.
+     * Warning: VERY resource heavy, I don't recommend running many at the same time.
+     * @param chunk The chunk to calculate source radioactivity in.
+     * @return The amount of source radioactivity in femtoRADs.
+     */
     public static long recalculateChunkRadioactivity(@Nonnull ChunkAccess chunk) {
         if (chunk.getData(ModAttachments.SOURCED_RADIOACTIVITY_THIS_TICK)) return chunk.getData(ModAttachments.SOURCE_RADIOACTIVITY);
         Level level = chunk.getLevel();
@@ -65,6 +75,11 @@ public class RadHelper {
         chunk.setData(ModAttachments.SOURCED_RADIOACTIVITY_THIS_TICK, true);
         return calculatedFemtoRads;
     }
+
+    /**
+     * Creates radiation effects in a chunk.
+     * @param chunk The chunk to create effects in.
+     */
     public static void createChunkRadiationEffects(@Nonnull ChunkAccess chunk) {
         if (chunk.getLevel() == null || chunk.getLevel().isClientSide()) return;
         Level level = chunk.getLevel();
@@ -133,6 +148,11 @@ public class RadHelper {
     }
 
     private static final double disperse_mod = 0.1;
+
+    /**
+     * Spreads radiation to neighbouring chunks.
+     * @param chunk The chunk to disperse radiation from.
+     */
     public static void disperseChunkRadiation(ChunkAccess chunk) {
         long rads = getChunkRadiation(chunk);
         ChunkPos pos = chunk.getPos();
