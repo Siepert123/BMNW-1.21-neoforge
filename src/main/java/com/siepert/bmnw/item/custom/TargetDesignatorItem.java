@@ -7,8 +7,11 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class TargetDesignatorItem extends Item {
+    private static final Logger LOGGER = LogManager.getLogger();
     public TargetDesignatorItem(Properties properties) {
         super(properties.stacksTo(1));
     }

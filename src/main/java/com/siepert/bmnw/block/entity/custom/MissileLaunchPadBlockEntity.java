@@ -11,9 +11,12 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.energy.IEnergyStorage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.joml.Vector2i;
 
 public class MissileLaunchPadBlockEntity extends BlockEntity implements IEnergyStorage {
+    private static final Logger LOGGER = LogManager.getLogger();
     protected int energyStored;
     protected final int maxEnergyStored = 100000;
     protected final int requiredLaunchEnergy = 0;
@@ -42,6 +45,9 @@ public class MissileLaunchPadBlockEntity extends BlockEntity implements IEnergyS
         super.saveAdditional(tag, registries);
 
         tag.putInt("energyStored", energyStored);
+
+        tag.putInt("targetX", target.getX());
+        tag.putInt("targetZ", target.getZ());
     }
 
     @Override
@@ -49,6 +55,8 @@ public class MissileLaunchPadBlockEntity extends BlockEntity implements IEnergyS
         super.loadAdditional(tag, registries);
 
         energyStored = tag.getInt("energyStored");
+
+        target = new BlockPos(tag.getInt("targetX"), 0, tag.getInt("targetZ"));
     }
 
     @Override

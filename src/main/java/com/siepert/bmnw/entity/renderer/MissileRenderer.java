@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.client.model.data.ModelData;
@@ -37,7 +38,7 @@ public abstract class MissileRenderer extends EntityRenderer<MissileEntity> {
             poseStack.mulPose(new Quaternionf(new AxisAngle4d(Math.toRadians(180), 1, 0, 0)));
             poseStack.translate(-0.5, -0.5, -0.5);
         }
-        poseStack.translate(-0.5, 0, -0.5);
+        poseStack.translate(-0.5, Mth.lerp(partialTick, 0, entity.getSpeed()) - entity.getSpeed(), -0.5);
         Minecraft.getInstance().getBlockRenderer().renderSingleBlock(missileState, poseStack, bufferSource, packedLight, packedLight, ModelData.builder().build(), RenderType.SOLID);
 
         poseStack.popPose();

@@ -20,6 +20,11 @@ import org.joml.Vector2i;
 public abstract class MissileEntity extends Entity {
     protected static final Logger LOGGER = LogManager.getLogger();
 
+    protected float speed = 1;
+    public float getSpeed() {
+        return speed;
+    }
+
     public static final EntityDataAccessor<Boolean> IS_FALLING_DATA = SynchedEntityData.defineId(MissileEntity.class, EntityDataSerializers.BOOLEAN);
 
     protected Vector2i target = new Vector2i(0, 0);
@@ -62,15 +67,15 @@ public abstract class MissileEntity extends Entity {
             level().addParticle(ModParticleTypes.FIRE_SMOKE.get(), true, this.getX(), this.getY(), this.getZ(), 0, falling ? 0.1 : -0.1, 0);
         } else {
             if (falling) {
-                this.move(MoverType.SELF, new Vec3(0, -1, 0));
+                this.move(MoverType.SELF, new Vec3(0, -speed, 0));
 
                 if (this.getY() < -64) this.kill();
             } else {
-                this.move(MoverType.SELF, new Vec3(0, 1, 0));
+                this.move(MoverType.SELF, new Vec3(0, speed, 0));
 
-                if (this.getY() > 256) {
+                if (this.getY() > 320) {
                     falling = true;
-                    this.setPos(0, 256, 0);
+                    this.setPos(target.x(), 320, target.y());
                 }
             }
             if (isFalling()) {
