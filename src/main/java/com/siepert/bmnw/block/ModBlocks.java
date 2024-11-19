@@ -63,10 +63,13 @@ public class ModBlocks {
             () -> new LittleBoyBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).noOcclusion()));
     public static final DeferredBlock<CaseohBlock> CASEOH = BLOCKS.register("caseoh",
             () -> new CaseohBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).noOcclusion()));
+    @SuppressWarnings("deprecation")
     public static final DeferredBlock<DudBlock> DUD = BLOCKS.register("dud",
             () -> new DudBlock(BlockBehaviour.Properties.of()
                     .strength(-1, Blocks.IRON_BLOCK.getExplosionResistance())
                     .sound(SoundType.METAL).noLootTable().noOcclusion()));
+    public static final DeferredBlock<BrickChargeBlock> BRICK_CHARGE = BLOCKS.register("brick_charge",
+            () -> new BrickChargeBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BRICKS)));
 
     public static final DeferredBlock<MissileLaunchPadBlock> MISSILE_LAUNCH_PAD = BLOCKS.register("missile_launch_pad",
             () -> new MissileLaunchPadBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)));
@@ -88,6 +91,7 @@ public class ModBlocks {
             () -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(CONCRETE_BRICKS.get())));
     public static final DeferredBlock<StairBlock> CONCRETE_BRICKS_STAIRS = BLOCKS.register("concrete_bricks_stairs",
             () -> new StairBlock(CONCRETE_BRICKS.get().defaultBlockState(), BlockBehaviour.Properties.ofFullCopy(CONCRETE_BRICKS.get())));
+    @SuppressWarnings("deprecation")
     public static final DeferredBlock<Block> FOUNDATION_CONCRETE = BLOCKS.register("foundation_concrete",
             () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.OBSIDIAN)
                     .strength(Blocks.OBSIDIAN.defaultDestroyTime(), Blocks.OBSIDIAN.getExplosionResistance() * 3)));

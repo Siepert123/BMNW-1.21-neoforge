@@ -12,6 +12,13 @@ public class ModEntityTypes {
     private static final DeferredRegister<EntityType<?>> ENTITY_TYPES =
             DeferredRegister.create(BuiltInRegistries.ENTITY_TYPE, "bmnw");
 
+    public static final DeferredHolder<EntityType<?>, EntityType<BlockDebrisEntity>> BLOCK_DEBRIS = ENTITY_TYPES.register(
+            "block_debris",
+            () -> EntityType.Builder.of(BlockDebrisEntity::new, MobCategory.MISC)
+                    .sized(1.0f, 1.0f)
+                    .build("bmnw:block_debris")
+    );
+
     public static final DeferredHolder<EntityType<?>, EntityType<NuclearChargeEntity>> NUCLEAR_CHARGE = ENTITY_TYPES.register(
             "nuclear_charge",
             () -> EntityType.Builder.of(NuclearChargeEntity::new, MobCategory.MISC)

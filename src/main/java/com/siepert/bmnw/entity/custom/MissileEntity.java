@@ -66,18 +66,6 @@ public abstract class MissileEntity extends Entity {
             falling = entityData.get(IS_FALLING_DATA);
             level().addParticle(ModParticleTypes.FIRE_SMOKE.get(), true, this.getX(), this.getY(), this.getZ(), 0, falling ? 0.1 : -0.1, 0);
         } else {
-            if (falling) {
-                this.move(MoverType.SELF, new Vec3(0, -speed, 0));
-
-                if (this.getY() < -64) this.kill();
-            } else {
-                this.move(MoverType.SELF, new Vec3(0, speed, 0));
-
-                if (this.getY() > 320) {
-                    falling = true;
-                    this.setPos(target.x(), 320, target.y());
-                }
-            }
             if (isFalling()) {
                 if (!level().getBlockState(getOnPos()).isAir()) {
                     this.onImpact();
@@ -90,6 +78,18 @@ public abstract class MissileEntity extends Entity {
                 }
             }
             entityData.set(IS_FALLING_DATA, falling);
+        }
+        if (falling) {
+            this.move(MoverType.SELF, new Vec3(0, -speed, 0));
+
+            if (this.getY() < -64) this.kill();
+        } else {
+            this.move(MoverType.SELF, new Vec3(0, speed, 0));
+
+            if (this.getY() > 320) {
+                falling = true;
+                this.setPos(target.x(), 320, target.y());
+            }
         }
     }
 

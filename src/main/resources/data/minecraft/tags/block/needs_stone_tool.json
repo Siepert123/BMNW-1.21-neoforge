@@ -10,7 +10,8 @@
     "bmnw:thorium_block",
     "bmnw:raw_uranium_block",
     "bmnw:raw_thorium_block",
-    "#bmnw:container_barrels"
+    "#bmnw:container_barrels",
+    "bmnw:brick_charge"
   ],
   "replace": false
 }

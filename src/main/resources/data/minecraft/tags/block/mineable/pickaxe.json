@@ -18,7 +18,8 @@
     "bmnw:steel_reinforced_glass",
     "#bmnw:container_barrels",
     "bmnw:little_boy",
-    "bmnw:caseoh"
+    "bmnw:caseoh",
+    "bmnw:brick_charge"
   ],
   "replace": false
 }

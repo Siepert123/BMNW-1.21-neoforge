@@ -245,6 +245,8 @@ public class BMNWEventBus {
 
         }
         private static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
+            registerEntityRenderingHandler(event, ModEntityTypes.BLOCK_DEBRIS, BlockDebrisRenderer::new);
+
             registerEntityRenderingHandler(event, ModEntityTypes.NUCLEAR_CHARGE, NuclearChargeRenderer::new);
             registerEntityRenderingHandler(event, ModEntityTypes.DUD, DudRenderer::new);
             registerEntityRenderingHandler(event, ModEntityTypes.LITTLE_BOY, LittleBoyRenderer::new);

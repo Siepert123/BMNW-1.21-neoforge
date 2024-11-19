@@ -54,6 +54,7 @@ public class ModTabs {
                         output.accept(LITTLE_BOY);
                         output.accept(CASEOH);
                         output.accept(DUD);
+                        output.accept(BRICK_CHARGE);
 
                         output.accept(MISSILE_LAUNCH_PAD);
                         output.accept(TARGET_DESIGNATOR);

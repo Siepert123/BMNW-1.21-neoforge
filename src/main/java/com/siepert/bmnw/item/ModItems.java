@@ -83,6 +83,8 @@ public class ModItems {
             () -> new BlockItem(ModBlocks.CASEOH.get(), new Item.Properties().stacksTo(1)));
     public static final DeferredItem<BlockItem> DUD = ITEMS.register("dud",
             () -> new BlockItem(ModBlocks.DUD.get(), new Item.Properties().stacksTo(1)));
+    public static final DeferredItem<BlockItem> BRICK_CHARGE = ITEMS.register("brick_charge",
+            () -> new BlockItem(ModBlocks.BRICK_CHARGE.get(), new Item.Properties()));
     public static final DeferredItem<DetonatorItem> DETONATOR = ITEMS.register("detonator",
             () -> new DetonatorItem(new Item.Properties()));
 
