@@ -19,7 +19,8 @@
     "#bmnw:container_barrels",
     "bmnw:little_boy",
     "bmnw:caseoh",
-    "bmnw:brick_charge"
+    "bmnw:brick_charge",
+    "bmnw:example_missile"
   ],
   "replace": false
 }

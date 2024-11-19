@@ -6,7 +6,8 @@
     "#bmnw:concrete",
     "bmnw:steel_reinforced_glass",
     "bmnw:little_boy",
-    "bmnw:caseoh"
+    "bmnw:caseoh",
+    "bmnw:example_missile"
   ],
   "replace": false
 }
