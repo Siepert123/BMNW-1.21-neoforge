@@ -35,7 +35,7 @@ public class BlockDebrisRenderer extends EntityRenderer<BlockDebrisEntity> {
             if (blockstate != level.getBlockState(entity.blockPosition()) && blockstate.getRenderShape() != RenderShape.INVISIBLE) {
                 poseStack.pushPose();
                 BlockPos blockpos = BlockPos.containing(entity.getX(), entity.getBoundingBox().maxY, entity.getZ());
-                poseStack.rotateAround(new Quaternionf(new AxisAngle4d(entity.getX() + entity.getZ(), 0.5f, 0.5f, 0.5f)), 1f, 1f, 1f);
+                poseStack.rotateAround(new Quaternionf(new AxisAngle4d(entity.getX() + entity.getZ() + (entity.getY() / 5), 0.5f, 0.5f, 0.5f)), 1f, 1f, 1f);
                 poseStack.translate(-0.5, 0.0, -0.5);
                 var model = this.dispatcher.getBlockModel(blockstate);
                 for (var renderType : model.getRenderTypes(blockstate, RandomSource.create(blockstate.getSeed(BlockPos.ZERO)), net.neoforged.neoforge.client.model.data.ModelData.EMPTY))

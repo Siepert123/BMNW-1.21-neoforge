@@ -34,11 +34,9 @@ public abstract class MissileRenderer extends EntityRenderer<MissileEntity> {
         poseStack.pushPose();
 
         if (entity.isFalling()) {
-            poseStack.translate(0.5, 0.5, 0.5);
-            poseStack.mulPose(new Quaternionf(new AxisAngle4d(Math.toRadians(180), 1, 0, 0)));
-            poseStack.translate(-0.5, -0.5, -0.5);
+            poseStack.rotateAround(new Quaternionf(new AxisAngle4d(Math.toRadians(180), 1, 0, 0)), 1, 0, 0);
         }
-        poseStack.translate(-0.5, Mth.lerp(partialTick, 0, entity.getSpeed()) - entity.getSpeed(), -0.5);
+        poseStack.translate(-0.5, /*Mth.lerp(partialTick, entity.getSpeed(), 0)*/ 0, -0.5);
         Minecraft.getInstance().getBlockRenderer().renderSingleBlock(missileState, poseStack, bufferSource, packedLight, packedLight, ModelData.builder().build(), RenderType.SOLID);
 
         poseStack.popPose();
