@@ -4,6 +4,7 @@ import com.siepert.bmnw.entity.ModEntityTypes;
 import com.siepert.bmnw.entity.custom.DudEntity;
 import com.siepert.bmnw.interfaces.IDetonatable;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -20,6 +21,12 @@ public class DudBlock extends Block implements IDetonatable {
         DudEntity entity = new DudEntity(ModEntityTypes.DUD.get(), level);
         entity.setPos(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
         level.addFreshEntity(entity);
+    }
+
+    @Override
+    public void onBlockExploded(BlockState state, Level level, BlockPos pos, Explosion explosion) {
+        level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
+        detonate(level, pos);
     }
 
     @Override

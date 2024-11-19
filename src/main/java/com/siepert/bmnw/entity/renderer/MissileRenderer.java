@@ -1,42 +1,51 @@
 package com.siepert.bmnw.entity.renderer;
 
+import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.siepert.bmnw.block.ModBlocks;
 import com.siepert.bmnw.entity.custom.MissileEntity;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.resources.ResourceLocation;
-import org.joml.Vector3f;
+import net.minecraft.world.inventory.InventoryMenu;
+import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.client.model.data.ModelData;
+import org.joml.AxisAngle4d;
+import org.joml.Quaternionf;
 
-public class MissileRenderer extends EntityRenderer<MissileEntity> {
-    public MissileRenderer(EntityRendererProvider.Context context) {
+public abstract class MissileRenderer extends EntityRenderer<MissileEntity> {
+    private BlockState missileState;
+    protected MissileRenderer(EntityRendererProvider.Context context) {
         super(context);
+    }
+    public void setMissileState(BlockState state) {
+        this.missileState = state;
     }
 
     @Override
     public void render(MissileEntity entity, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
+        if (missileState == null) return;
         poseStack.pushPose();
-        Vector3f vector3f = new Vector3f(-0.5f, 0, -0.5f);
-        Vector3f vector3f1 = new Vector3f(0.5f, 0, -0.5f);
-        Vector3f vector3f2 = new Vector3f(0.5f, 0, 0.5f);
-        Vector3f vector3f3 = new Vector3f(-0.5f, 0, 0.5f);
 
-        VertexConsumer buffer = bufferSource.getBuffer(RenderType.CUTOUT);
+        if (entity.isFalling()) {
+            poseStack.translate(0.5, 0.5, 0.5);
+            poseStack.mulPose(new Quaternionf(new AxisAngle4d(Math.toRadians(180), 1, 0, 0)));
+            poseStack.translate(-0.5, -0.5, -0.5);
+        }
+        poseStack.translate(-0.5, 0, -0.5);
+        Minecraft.getInstance().getBlockRenderer().renderSingleBlock(missileState, poseStack, bufferSource, packedLight, packedLight, ModelData.builder().build(), RenderType.SOLID);
 
-        buffer.addVertex(vector3f).setColor(0xffffff).setUv(0, 0).setUv1(0, 0).setUv2(1, 1).setNormal(vector3f.normalize().x, vector3f3.normalize().y, vector3f3.normalize().z);
-        buffer.addVertex(vector3f1).setColor(0xffffff).setUv(0, 0).setUv1(0, 0).setUv2(1, 1).setNormal(vector3f1.normalize().x, vector3f3.normalize().y, vector3f3.normalize().z);
-        buffer.addVertex(vector3f2).setColor(0xffffff).setUv(0, 0).setUv1(0, 0).setUv2(1, 1).setNormal(vector3f2.normalize().x, vector3f3.normalize().y, vector3f3.normalize().z);
-        buffer.addVertex(vector3f3).setColor(0xffffff).setUv(0, 0).setUv1(0, 0).setUv2(1, 1).setNormal(vector3f3.normalize().x, vector3f3.normalize().y, vector3f3.normalize().z);
         poseStack.popPose();
     }
 
     @Override
     public ResourceLocation getTextureLocation(MissileEntity entity) {
-        return TextureAtlas.LOCATION_BLOCKS;
+        return InventoryMenu.BLOCK_ATLAS;
     }
 
     @Override

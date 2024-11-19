@@ -86,6 +86,13 @@ public class ModItems {
     public static final DeferredItem<DetonatorItem> DETONATOR = ITEMS.register("detonator",
             () -> new DetonatorItem(new Item.Properties()));
 
+    public static final DeferredItem<BlockItem> MISSILE_LAUNCH_PAD = ITEMS.register("missile_launch_pad",
+            () -> new BlockItem(ModBlocks.MISSILE_LAUNCH_PAD.get(), new Item.Properties()));
+    public static final DeferredItem<TargetDesignatorItem> TARGET_DESIGNATOR = ITEMS.register("target_designator",
+            () -> new TargetDesignatorItem(new Item.Properties()));
+    public static final DeferredItem<BlockItem> EXAMPLE_MISSILE = ITEMS.register("example_missile",
+            () -> new BlockItem(ModBlocks.EXAMPLE_MISSILE.get(), new Item.Properties().stacksTo(1)));
+
     public static final DeferredItem<BlockItem> CONCRETE = ITEMS.register("concrete",
             () -> new BlockItem(ModBlocks.CONCRETE.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> CONCRETE_SLAB = ITEMS.register("concrete_slab",

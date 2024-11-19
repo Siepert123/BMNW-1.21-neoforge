@@ -55,6 +55,10 @@ public class ModTabs {
                         output.accept(CASEOH);
                         output.accept(DUD);
 
+                        output.accept(MISSILE_LAUNCH_PAD);
+                        output.accept(TARGET_DESIGNATOR);
+                        output.accept(EXAMPLE_MISSILE);
+
                         output.accept(CONCRETE);
                         output.accept(CONCRETE_SLAB);
                         output.accept(CONCRETE_STAIRS);

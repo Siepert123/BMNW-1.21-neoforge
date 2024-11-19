@@ -15,19 +15,25 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.joml.Vector2i;
 
-public class MissileEntity extends Entity {
+public abstract class MissileEntity extends Entity {
     protected static final Logger LOGGER = LogManager.getLogger();
 
     public static final EntityDataAccessor<Boolean> IS_FALLING_DATA = SynchedEntityData.defineId(MissileEntity.class, EntityDataSerializers.BOOLEAN);
 
-    private boolean falling = false;
-    public BlockPos launchPos = getOnPos();
-    public MissileEntity(EntityType<?> entityType, Level level) {
-        super(entityType, level);
+    protected Vector2i target = new Vector2i(0, 0);
+
+    public void setTarget(Vector2i target) {
+        this.target = target;
     }
-    public void setLaunchPos(BlockPos pos) {
-        launchPos = pos;
+
+    private boolean falling = false;
+    public boolean isFalling() {
+        return falling;
+    }
+    protected MissileEntity(EntityType<?> entityType, Level level) {
+        super(entityType, level);
     }
     @Override
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
@@ -37,28 +43,28 @@ public class MissileEntity extends Entity {
     @Override
     protected void readAdditionalSaveData(CompoundTag compound) {
         falling = compound.getBoolean("falling");
+
+        target = new Vector2i(compound.getInt("targetX"), compound.getInt("targetZ"));
     }
 
     @Override
     protected void addAdditionalSaveData(CompoundTag compound) {
         compound.putBoolean("falling", falling);
+
+        compound.putInt("targetX", target.x());
+        compound.putInt("targetZ", target.y());
     }
 
     @Override
     public void baseTick() {
         if (level().isClientSide()) {
             falling = entityData.get(IS_FALLING_DATA);
-            level().addParticle(ModParticleTypes.FIRE_SMOKE.get(), this.getX(), this.getY(), this.getZ(), 0, falling ? 0.1 : -0.1, 0);
+            level().addParticle(ModParticleTypes.FIRE_SMOKE.get(), true, this.getX(), this.getY(), this.getZ(), 0, falling ? 0.1 : -0.1, 0);
         } else {
             if (falling) {
-                if (!level().getBlockState(getOnPos()).isAir()) {
-                    NuclearChargeEntity entity = new NuclearChargeEntity(ModEntityTypes.NUCLEAR_CHARGE.get(), level());
-                    entity.setPos(this.getPosition(0));
-                    level().addFreshEntity(entity);
-                    this.kill();
-                } else {
-                    this.move(MoverType.SELF, new Vec3(0, -1, 0));
-                }
+                this.move(MoverType.SELF, new Vec3(0, -1, 0));
+
+                if (this.getY() < -64) this.kill();
             } else {
                 this.move(MoverType.SELF, new Vec3(0, 1, 0));
 
@@ -67,9 +73,22 @@ public class MissileEntity extends Entity {
                     this.setPos(0, 256, 0);
                 }
             }
+            if (isFalling()) {
+                if (!level().getBlockState(getOnPos()).isAir()) {
+                    this.onImpact();
+                    this.kill();
+                }
+            } else {
+                if (!level().getBlockState(getOnPos().above(2)).isAir()) {
+                    this.onImpact();
+                    this.kill();
+                }
+            }
             entityData.set(IS_FALLING_DATA, falling);
         }
     }
+
+    protected abstract void onImpact();
 
     protected static Vec3 convertVec3i(Vec3i vec) {
         return new Vec3(vec.getX() + 0.5, vec.getY() + 0.5, vec.getZ() + 0.5);

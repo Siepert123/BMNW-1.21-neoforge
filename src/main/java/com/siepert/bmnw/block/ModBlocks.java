@@ -1,6 +1,7 @@
 package com.siepert.bmnw.block;
 
 import com.siepert.bmnw.block.custom.*;
+import com.siepert.bmnw.entity.custom.ExampleMissileEntity;
 import com.siepert.bmnw.radiation.UnitConvertor;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -66,6 +67,11 @@ public class ModBlocks {
             () -> new DudBlock(BlockBehaviour.Properties.of()
                     .strength(-1, Blocks.IRON_BLOCK.getExplosionResistance())
                     .sound(SoundType.METAL).noLootTable().noOcclusion()));
+
+    public static final DeferredBlock<MissileLaunchPadBlock> MISSILE_LAUNCH_PAD = BLOCKS.register("missile_launch_pad",
+            () -> new MissileLaunchPadBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)));
+    public static final DeferredBlock<MissileBlock> EXAMPLE_MISSILE = BLOCKS.register("example_missile",
+            () -> new MissileBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get()), ExampleMissileEntity.class));
 
     public static final DeferredBlock<DecontaminatorBlock> DECONTAMINATOR = BLOCKS.register("decontaminator",
             () -> new DecontaminatorBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)));

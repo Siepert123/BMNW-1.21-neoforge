@@ -249,7 +249,8 @@ public class BMNWEventBus {
             registerEntityRenderingHandler(event, ModEntityTypes.DUD, DudRenderer::new);
             registerEntityRenderingHandler(event, ModEntityTypes.LITTLE_BOY, LittleBoyRenderer::new);
             registerEntityRenderingHandler(event, ModEntityTypes.CASEOH, CaseohRenderer::new);
-            registerEntityRenderingHandler(event, ModEntityTypes.MISSILE, MissileRenderer::new);
+
+            registerEntityRenderingHandler(event, ModEntityTypes.EXAMPLE_MISSILE, ExampleMissileRenderer::new);
         }
 
         /**

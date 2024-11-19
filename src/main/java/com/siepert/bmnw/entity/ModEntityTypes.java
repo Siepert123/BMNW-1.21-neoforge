@@ -37,11 +37,11 @@ public class ModEntityTypes {
                     .build("bmnw:caseoh")
     );
 
-    public static final DeferredHolder<EntityType<?>, EntityType<MissileEntity>> MISSILE = ENTITY_TYPES.register(
-            "missile",
-            () -> EntityType.Builder.of(MissileEntity::new, MobCategory.MISC)
-                    .sized(1.0f, 5.0f)
-                    .build("bmnw:missile")
+    public static final DeferredHolder<EntityType<?>, EntityType<ExampleMissileEntity>> EXAMPLE_MISSILE = ENTITY_TYPES.register(
+            "example_missile",
+            () -> EntityType.Builder.of(ExampleMissileEntity::new, MobCategory.MISC)
+                    .sized(1.0f, 1.0f)
+                    .build("bmnw:example_missile")
     );
 
     public static void register(IEventBus eventBus) {
