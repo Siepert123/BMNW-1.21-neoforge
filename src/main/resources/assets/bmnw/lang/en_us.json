@@ -147,5 +147,6 @@
   "text.bmnw.position_set": "Position set!",
   "tooltip.bmnw.blinding": "[Blinding]",
   "tooltip.bmnw.burning": "[Extremely Hot]",
-  "tooltip.bmnw.radioactive": "[Radioactive]"
+  "tooltip.bmnw.radioactive": "[Radioactive]",
+  "text.bmnw.data_set": "Data set!"
 }

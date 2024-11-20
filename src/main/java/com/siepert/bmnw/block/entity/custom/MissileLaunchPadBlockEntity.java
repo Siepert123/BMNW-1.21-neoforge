@@ -25,7 +25,7 @@ public class MissileLaunchPadBlockEntity extends BlockEntity implements IEnergyS
     }
 
     public boolean canLaunch() {
-        return energyStored >= requiredLaunchEnergy && level.getBlockState(worldPosition.above()).getBlock() instanceof MissileBlock;
+        return level != null && energyStored >= requiredLaunchEnergy && level.getBlockState(worldPosition.above()).getBlock() instanceof MissileBlock && !BlockPos.ZERO.equals(target);
     }
 
     public boolean launch() {
