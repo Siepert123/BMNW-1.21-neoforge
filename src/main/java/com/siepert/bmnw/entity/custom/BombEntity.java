@@ -236,10 +236,10 @@ public abstract class BombEntity extends Entity {
         }
     }
 
-    protected void irradiate(int nuclearRadius, int grassRadius, long femtoRadsInserted) {
-        irradiate(nuclearRadius, grassRadius, femtoRadsInserted, ModBlocks.NUCLEAR_REMAINS.get().defaultBlockState());
+    protected void irradiate(int nuclearRadius, int grassRadius, float insertedRads) {
+        irradiate(nuclearRadius, grassRadius, insertedRads, ModBlocks.NUCLEAR_REMAINS.get().defaultBlockState());
     }
-    protected void irradiate(int nuclearRadius, int grassRadius, long femtoRadsInserted, BlockState remains) {
+    protected void irradiate(int nuclearRadius, int grassRadius, float insertedRads, BlockState remains) {
         final BlockState diamond = Blocks.DIAMOND_ORE.defaultBlockState();
         final BlockState emerald = Blocks.EMERALD_ORE.defaultBlockState();
         for (int x = -nuclearRadius; x <= nuclearRadius; x++) {
@@ -287,7 +287,7 @@ public abstract class BombEntity extends Entity {
             }
         }
 
-        RadHelper.insertRadiation(level(), worldPosition, femtoRadsInserted);
+        RadHelper.insertRadiation(level(), worldPosition, insertedRads);
     }
     protected void dry(int radius) {
         final BlockState air = Blocks.AIR.defaultBlockState();

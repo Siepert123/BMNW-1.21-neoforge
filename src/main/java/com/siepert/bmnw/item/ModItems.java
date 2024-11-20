@@ -171,7 +171,7 @@ public class ModItems {
                             0.1f, Optional.empty(), List.of(new FoodProperties.PossibleEffect(
                             () -> new MobEffectInstance(ModEffects.CONTAMINATION, 100, 0), 1
                     )))
-            ), UnitConvertor.fromPico(2))
+            ), 0.1f)
     );
 
     public static final DeferredItem<SimpleRadioactiveBlockItem> NUCLEAR_WASTE_BARREL = ITEMS.register("nuclear_waste_barrel",
@@ -181,7 +181,7 @@ public class ModItems {
             () -> new SimpleRadioactiveItem(new Item.Properties().food(new FoodProperties(19, 100, true,
                     4.0f, Optional.empty(), List.of(new FoodProperties.PossibleEffect(
                     () -> new MobEffectInstance(ModEffects.CONTAMINATION, 100, 1), 0.5f
-            )))), UnitConvertor.fromNano(69))
+            )))), 69)
     );
 
     public static void register(IEventBus eventBus) {

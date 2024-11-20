@@ -94,7 +94,7 @@ public class NuclearChargeEntity extends BombEntity {
             LOGGER.info("Burn!");
             burn(radius * 2);
             LOGGER.info("Irradiate!");
-            irradiate((int) (radius * 1.5), radius * 2, UnitConvertor.fromKilo(10));
+            irradiate((int) (radius * 1.5), radius * 2, 1_000);
             LOGGER.info("Inflammate!");
             effectEntities(radius * 3);
             recalcPos();

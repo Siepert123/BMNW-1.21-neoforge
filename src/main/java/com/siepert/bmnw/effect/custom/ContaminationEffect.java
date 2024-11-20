@@ -1,7 +1,6 @@
 package com.siepert.bmnw.effect.custom;
 
 import com.siepert.bmnw.radiation.RadHelper;
-import com.siepert.bmnw.radiation.UnitConvertor;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
@@ -13,7 +12,7 @@ public class ContaminationEffect extends MobEffect {
 
     @Override
     public boolean applyEffectTick(LivingEntity entity, int amplifier) {
-        RadHelper.addEntityRadiation(entity, UnitConvertor.fromMilli((amplifier+1)*100L));
+        RadHelper.addEntityRadiation(entity, amplifier+1);
         return true;
     }
 

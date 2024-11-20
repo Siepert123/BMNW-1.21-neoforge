@@ -16,8 +16,8 @@ import net.minecraft.world.level.block.state.BlockState;
 public class NuclearRemainsBlock extends SimpleRadioactiveBlock {
     private static final int decayChanceTo0 = 2;
     private final BlockState decay;
-    public NuclearRemainsBlock(Properties properties, long femtoRads, BlockState decay) {
-        super(properties, femtoRads);
+    public NuclearRemainsBlock(Properties properties, float rads, BlockState decay) {
+        super(properties, rads);
         this.decay = decay;
     }
 

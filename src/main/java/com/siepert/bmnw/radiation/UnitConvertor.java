@@ -1,5 +1,6 @@
 package com.siepert.bmnw.radiation;
 
+@Deprecated
 public class UnitConvertor {
     public static long addZeroes(long value, int zeroes) {
         double d = value * Math.pow(10, zeroes);

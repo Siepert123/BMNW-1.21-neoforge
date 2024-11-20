@@ -30,8 +30,6 @@ public class IrradiatedGrassBlock extends Block {
     @Override
     public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity) {
         if (entity instanceof LivingEntity livingEntity) {
-            RadHelper.addEntityRadiation(livingEntity, UnitConvertor.fromNano(1));
-
             livingEntity.addEffect(new MobEffectInstance(
                     ModEffects.CONTAMINATION,
                     400,

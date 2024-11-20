@@ -11,8 +11,8 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class NuclearWasteBarrelBlock extends SimpleRadioactiveBlock {
-    public NuclearWasteBarrelBlock(Properties properties, long femtoRads) {
-        super(properties, femtoRads);
+    public NuclearWasteBarrelBlock(Properties properties, float rads) {
+        super(properties, rads);
     }
 
     private static final VoxelShape shape = Block.box(2, 0, 2, 14, 16, 14);

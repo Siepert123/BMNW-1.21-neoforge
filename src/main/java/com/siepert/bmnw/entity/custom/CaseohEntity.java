@@ -75,8 +75,7 @@ public class CaseohEntity extends BombEntity {
             LOGGER.info("Burn!");
             burn(radius * 2);
             LOGGER.info("Irradiate!");
-            irradiate((int) (radius * 1.5), radius * 2, UnitConvertor.fromKilo(10), ModBlocks.BLAZING_NUCLEAR_REMAINS.get().defaultBlockState());
-            placeRadiation(radius / 16, UnitConvertor.fromKilo(15), DistributionType.CIRCLE);
+            irradiate((int) (radius * 1.5), radius * 2, 1_000_000, ModBlocks.BLAZING_NUCLEAR_REMAINS.get().defaultBlockState());
             LOGGER.info("Inflammate!");
             effectEntities(radius * 3);
             recalcPos();

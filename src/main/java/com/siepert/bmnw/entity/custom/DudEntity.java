@@ -170,7 +170,7 @@ public class DudEntity extends BombEntity {
     }
 
     @Override
-    protected void irradiate(int nuclearRadius, int grassRadius, long femtoRadsInserted) {
+    protected void irradiate(int nuclearRadius, int grassRadius, float insertedRads) {
         final BlockState remains = ModBlocks.SLAKED_NUCLEAR_REMAINS.get().defaultBlockState();
         final BlockState diamond = Blocks.DIAMOND_ORE.defaultBlockState();
         final BlockState emerald = Blocks.EMERALD_ORE.defaultBlockState();
