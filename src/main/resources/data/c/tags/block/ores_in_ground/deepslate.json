@@ -1,7 +1,9 @@
 {
   "values": [
     "bmnw:deepslate_uranium_ore",
-    "bmnw:deepslate_thorium_ore"
+    "bmnw:deepslate_thorium_ore",
+    "bmnw:deepslate_tungsten_ore",
+    "bmnw:deepslate_titanium_ore"
   ],
   "replace": false
 }

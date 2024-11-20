@@ -18,22 +18,22 @@ import java.util.List;
  * @see SimpleRadioactiveItem
  */
 public class SimpleRadioactiveBlockItem extends BlockItem implements IItemHazard {
-    private final long femtoRads;
+    private final float rads;
     private final Component tooltip;
     public <T extends Block & IRadioactiveBlock> SimpleRadioactiveBlockItem(T block, Properties properties) {
         super(block, properties);
-        this.femtoRads = block.radioactivity();
-        tooltip = Component.translatable("tooltip.bmnw.radioactive").append(" - ").append(UnitConvertor.display(femtoRads)).append("RAD/t").withColor(0x00dd00);
+        this.rads = block.radioactivity();
+        tooltip = Component.translatable("tooltip.bmnw.radioactive").append(" - ").append(String.valueOf(rads)).append("RAD/t").withColor(0x00dd00);
     }
-    public SimpleRadioactiveBlockItem(Block block, Properties properties, long femtoRads) {
+    public SimpleRadioactiveBlockItem(Block block, Properties properties, float rads) {
         super(block, properties);
-        this.femtoRads = femtoRads;
-        tooltip = Component.translatable("tooltip.bmnw.radioactive").append(" - ").append(UnitConvertor.display(femtoRads)).append("RAD/t").withColor(0x00dd00);
+        this.rads = rads;
+        tooltip = Component.translatable("tooltip.bmnw.radioactive").append(" - ").append(String.valueOf(rads)).append("RAD/t").withColor(0x00dd00);
     }
 
     @Override
-    public long radioactivity() {
-        return femtoRads;
+    public float radioactivity() {
+        return rads;
     }
 
     @Override

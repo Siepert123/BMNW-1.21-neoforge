@@ -8,11 +8,13 @@ import com.siepert.bmnw.effect.ModEffects;
 import com.siepert.bmnw.entity.ModEntityTypes;
 import com.siepert.bmnw.item.ModItems;
 import com.siepert.bmnw.item.components.ModDataComponents;
+import com.siepert.bmnw.misc.BMNWConfig;
 import com.siepert.bmnw.misc.ModAttachments;
 import com.siepert.bmnw.misc.ModSounds;
 import com.siepert.bmnw.misc.ModTabs;
 import com.siepert.bmnw.particle.ModParticleTypes;
 import com.siepert.bmnw.radiation.ShieldingValues;
+import eu.midnightdust.lib.config.MidnightConfig;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -57,6 +59,8 @@ public class BMNW {
         ModParticleTypes.register(modEventBus);
         ModSounds.register(modEventBus);
         ModAdvancementTriggers.register(modEventBus);
+
+        MidnightConfig.init("bmnw", BMNWConfig.class);
 
         NeoForge.EVENT_BUS.register(this);
 

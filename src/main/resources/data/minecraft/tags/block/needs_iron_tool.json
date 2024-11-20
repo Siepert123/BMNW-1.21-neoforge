@@ -7,7 +7,9 @@
     "bmnw:steel_reinforced_glass",
     "bmnw:little_boy",
     "bmnw:caseoh",
-    "bmnw:example_missile"
+    "bmnw:example_missile",
+    "bmnw:tungsten_ore",
+    "bmnw:deepslate_tungsten_ore"
   ],
   "replace": false
 }

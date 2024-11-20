@@ -1,6 +1,7 @@
 package com.siepert.bmnw.item.custom;
 
 import com.siepert.bmnw.interfaces.IItemHazard;
+import com.siepert.bmnw.misc.BMNWConfig;
 import com.siepert.bmnw.misc.ModAttachments;
 import com.siepert.bmnw.misc.ModSounds;
 import com.siepert.bmnw.radiation.RadHelper;
@@ -28,27 +29,29 @@ public class GeigerCounterItem extends Item {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand usedHand) {
         if (!level.isClientSide()) {
             ChunkAccess myChunk = level.getChunk(player.getOnPos());
-            long chunkFemtoRads = myChunk.getData(ModAttachments.RADIATION);
-            long playerFemtoRads = player.getPersistentData().getLong(RadHelper.RAD_NBT_TAG);
+            float chunkRads = myChunk.getData(ModAttachments.RADIATION);
+            float playerRads = player.getPersistentData().getFloat(RadHelper.RAD_NBT_TAG);
 
             player.sendSystemMessage(Component.literal(String.format("Chunk radiation: %sRAD\nPlayer radiation: %sRAD",
-                    UnitConvertor.display(chunkFemtoRads),
-                    UnitConvertor.display(playerFemtoRads)
+                    BMNWConfig.radiationSetting.chunk() ? chunkRads : 0,
+                    BMNWConfig.radiationSetting.item() ? playerRads : 0
             )));
 
         }
         return InteractionResultHolder.success(player.getItemInHand(usedHand));
     }
 
-    private long invRads(Player player) {
-        long invFemtoRads = 0;
+    private float invRads(Player player) {
+        if (!BMNWConfig.radiationSetting.item()) return 0.0f;
+
+        float inventoryRads = 0;
 
         for (ItemStack stack : player.getInventory().items) {
             if (stack.getItem() instanceof IItemHazard) {
-                invFemtoRads += (((IItemHazard) stack.getItem()).radioactivity() * stack.getCount());
+                inventoryRads += (((IItemHazard) stack.getItem()).radioactivity() * stack.getCount());
             }
         }
-        return invFemtoRads;
+        return inventoryRads;
     }
 
     @Override
@@ -56,7 +59,8 @@ public class GeigerCounterItem extends Item {
         if (!level.isClientSide() && entity instanceof Player player) {
             ChunkAccess myChunk = level.getChunk(entity.getOnPos());
 
-            if (RadHelper.geigerTick(RadHelper.getAdjustedRadiation(player.level(), player.getOnPos()) + invRads(player), RANDOM)) {
+            if (RadHelper.geigerTick((BMNWConfig.radiationSetting.chunk() ? RadHelper.getAdjustedRadiation(player.level(), player.getOnPos()) : 0)
+                    + invRads(player), RANDOM)) {
                 level.playSound(null, entity.getX(), entity.getY(), entity.getZ(),
                         ModSounds.GEIGER_CLICK, SoundSource.NEUTRAL, 1.0f, 1.0f);
             }

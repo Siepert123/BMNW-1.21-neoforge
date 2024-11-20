@@ -4,7 +4,11 @@
     "bmnw:uranium_block",
     "bmnw:raw_uranium_block",
     "bmnw:thorium_block",
-    "bmnw:raw_thorium_block"
+    "bmnw:raw_thorium_block",
+    "bmnw:tungsten_block",
+    "bmnw:raw_tungsten_block",
+    "bmnw:titanium_block",
+    "bmnw:raw_titanium_block"
   ],
   "replace": false
 }

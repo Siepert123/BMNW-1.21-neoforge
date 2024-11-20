@@ -1,5 +1,6 @@
 package com.siepert.bmnw.misc;
 
+import com.siepert.bmnw.item.ModItems;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
@@ -19,70 +20,90 @@ public class ModTabs {
             () -> CreativeModeTab.builder()
                     .title(Component.translatable("itemGroup.bmnw.main"))
                     .icon(() -> new ItemStack(PLAYSTATION.get()))
-                    .displayItems((parameters, output) -> {
-                        output.accept(STEEL_INGOT);
-                        output.accept(STEEL_BLOCK);
+                    .displayItems((parameters, items) -> {
+                        items.accept(GEIGER_COUNTER);
+                        items.accept(DECONTAMINATOR);
 
-                        output.accept(IRON_PLATE);
-                        output.accept(COPPER_PLATE);
-                        output.accept(GOLD_PLATE);
-                        output.accept(STEEL_PLATE);
+                        items.accept(DETONATOR);
+                        items.accept(NUCLEAR_CHARGE);
+                        items.accept(LITTLE_BOY);
+                        items.accept(CASEOH);
+                        items.accept(DUD);
+                        items.accept(BRICK_CHARGE);
 
-                        output.accept(IRON_WIRE);
-                        output.accept(COPPER_WIRE);
-                        output.accept(GOLD_WIRE);
-                        output.accept(STEEL_WIRE);
+                        items.accept(MISSILE_LAUNCH_PAD);
+                        items.accept(TARGET_DESIGNATOR);
+                        items.accept(EXAMPLE_MISSILE);
 
-                        output.accept(URANIUM_ORE);
-                        output.accept(THORIUM_ORE);
-                        output.accept(DEEPSLATE_URANIUM_ORE);
-                        output.accept(DEEPSLATE_THORIUM_ORE);
-                        output.accept(RAW_URANIUM);
-                        output.accept(RAW_THORIUM);
-                        output.accept(RAW_URANIUM_BLOCK);
-                        output.accept(RAW_THORIUM_BLOCK);
-                        output.accept(URANIUM_INGOT);
-                        output.accept(THORIUM_INGOT);
-                        output.accept(URANIUM_BLOCK);
-                        output.accept(THORIUM_BLOCK);
+                        items.accept(CONCRETE);
+                        items.accept(CONCRETE_SLAB);
+                        items.accept(CONCRETE_STAIRS);
+                        items.accept(CONCRETE_BRICKS);
+                        items.accept(CONCRETE_BRICKS_SLAB);
+                        items.accept(CONCRETE_BRICKS_STAIRS);
+                        items.accept(FOUNDATION_CONCRETE);
+                        items.accept(STEEL_REINFORCED_GLASS);
+                        items.accept(CREATIVE_CONCRETE_BRICKS);
 
-                        output.accept(GEIGER_COUNTER);
-                        output.accept(DECONTAMINATOR);
+                        items.accept(BLAZING_NUCLEAR_REMAINS);
+                        items.accept(NUCLEAR_REMAINS);
+                        items.accept(SLAKED_NUCLEAR_REMAINS);
 
-                        output.accept(DETONATOR);
-                        output.accept(NUCLEAR_CHARGE);
-                        output.accept(LITTLE_BOY);
-                        output.accept(CASEOH);
-                        output.accept(DUD);
-                        output.accept(BRICK_CHARGE);
+                        items.accept(CHARRED_LOG);
+                        items.accept(CHARRED_PLANKS);
+                        items.accept(IRRADIATED_GRASS_BLOCK);
+                        items.accept(IRRADIATED_LEAVES);
+                        items.accept(IRRADIATED_LEAF_PILE);
+                        items.accept(IRRADIATED_PLANT);
+                        items.accept(IRRADIATED_PLANT_FIBERS);
+                        items.accept(NUCLEAR_WASTE_BARREL);
+                        items.accept(URANIUM_SANDWICH);
+                    })
+                    .build()
+    );
 
-                        output.accept(MISSILE_LAUNCH_PAD);
-                        output.accept(TARGET_DESIGNATOR);
-                        output.accept(EXAMPLE_MISSILE);
+    public static final Supplier<CreativeModeTab> MATERIALS = CREATIVE_TABS.register("materials",
+            () -> CreativeModeTab.builder()
+                    .title(Component.translatable("itemGroup.bmnw.materials"))
+                    .icon(() -> new ItemStack(URANIUM_INGOT.get()))
+                    .displayItems((parameters, items) -> {
+                        items.accept(STEEL_INGOT);
+                        items.accept(STEEL_BLOCK);
 
-                        output.accept(CONCRETE);
-                        output.accept(CONCRETE_SLAB);
-                        output.accept(CONCRETE_STAIRS);
-                        output.accept(CONCRETE_BRICKS);
-                        output.accept(CONCRETE_BRICKS_SLAB);
-                        output.accept(CONCRETE_BRICKS_STAIRS);
-                        output.accept(FOUNDATION_CONCRETE);
-                        output.accept(STEEL_REINFORCED_GLASS);
-                        output.accept(CREATIVE_CONCRETE_BRICKS);
+                        items.accept(IRON_PLATE);
+                        items.accept(COPPER_PLATE);
+                        items.accept(GOLD_PLATE);
+                        items.accept(STEEL_PLATE);
 
-                        output.accept(BLAZING_NUCLEAR_REMAINS);
-                        output.accept(NUCLEAR_REMAINS);
-                        output.accept(SLAKED_NUCLEAR_REMAINS);
+                        items.accept(IRON_WIRE);
+                        items.accept(COPPER_WIRE);
+                        items.accept(GOLD_WIRE);
+                        items.accept(STEEL_WIRE);
 
-                        output.accept(CHARRED_LOG);
-                        output.accept(CHARRED_PLANKS);
-                        output.accept(IRRADIATED_GRASS_BLOCK);
-                        output.accept(IRRADIATED_LEAVES);
-                        output.accept(IRRADIATED_LEAF_PILE);
-                        output.accept(IRRADIATED_PLANT);
-                        output.accept(IRRADIATED_PLANT_FIBERS);
-                        output.accept(NUCLEAR_WASTE_BARREL);
-                        output.accept(URANIUM_SANDWICH);
+                        items.accept(TUNGSTEN_ORE);
+                        items.accept(TITANIUM_ORE);
+                        items.accept(URANIUM_ORE);
+                        items.accept(THORIUM_ORE);
+                        items.accept(DEEPSLATE_TUNGSTEN_ORE);
+                        items.accept(DEEPSLATE_TITANIUM_ORE);
+                        items.accept(DEEPSLATE_URANIUM_ORE);
+                        items.accept(DEEPSLATE_THORIUM_ORE);
+                        items.accept(RAW_TUNGSTEN);
+                        items.accept(RAW_TITANIUM);
+                        items.accept(RAW_URANIUM);
+                        items.accept(RAW_THORIUM);
+                        items.accept(RAW_TUNGSTEN_BLOCK);
+                        items.accept(RAW_TITANIUM_BLOCK);
+                        items.accept(RAW_URANIUM_BLOCK);
+                        items.accept(RAW_THORIUM_BLOCK);
+                        items.accept(TUNGSTEN_INGOT);
+                        items.accept(TITANIUM_INGOT);
+                        items.accept(URANIUM_INGOT);
+                        items.accept(THORIUM_INGOT);
+                        items.accept(TUNGSTEN_BLOCK);
+                        items.accept(TITANIUM_BLOCK);
+                        items.accept(URANIUM_BLOCK);
+                        items.accept(THORIUM_BLOCK);
                     })
                     .build()
     );

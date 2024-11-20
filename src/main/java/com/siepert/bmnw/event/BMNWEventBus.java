@@ -5,6 +5,7 @@ import com.siepert.bmnw.effect.ModEffects;
 import com.siepert.bmnw.entity.ModEntityTypes;
 import com.siepert.bmnw.entity.renderer.*;
 import com.siepert.bmnw.interfaces.IItemHazard;
+import com.siepert.bmnw.misc.BMNWConfig;
 import com.siepert.bmnw.misc.ModAttachments;
 import com.siepert.bmnw.misc.ModDamageSources;
 import com.siepert.bmnw.particle.ModParticleTypes;
@@ -63,30 +64,40 @@ public class BMNWEventBus {
          */
         @SubscribeEvent
         public static void serverTickEventPre(ServerTickEvent.Pre event) {
-            final double radiationRemoveRate = 0.9999;
-            try {
-                for (ServerLevel level : event.getServer().getAllLevels()) {
-                    if (level == null) continue;
-                    Iterable<ChunkHolder> chunkHolders = (Iterable<ChunkHolder>)
-                            ObfuscationReflectionHelper.findMethod(ChunkMap.class, "getChunks")
-                                    .invoke(level.getChunkSource().chunkMap);
-                    if (chunkHolders == null) continue;
+            if (BMNWConfig.radiationSetting.chunk()) {
+                final float radiationRemoveRate = 0.9999f;
+                try {
+                    for (ServerLevel level : event.getServer().getAllLevels()) {
+                        if (level == null) continue;
+                        Iterable<ChunkHolder> chunkHolders = (Iterable<ChunkHolder>)
+                                ObfuscationReflectionHelper.findMethod(ChunkMap.class, "getChunks")
+                                        .invoke(level.getChunkSource().chunkMap);
+                        if (chunkHolders == null) continue;
 
-                    for (ChunkHolder chunkHolder : chunkHolders) {
-                        LevelChunk chunk = chunkHolder.getTickingChunk();
-                        if (chunk == null) continue;
-                        if (chunk.getData(ModAttachments.SOURCED_RADIOACTIVITY_THIS_TICK)) chunk.setData(ModAttachments.SOURCED_RADIOACTIVITY_THIS_TICK, false);
+                        for (ChunkHolder chunkHolder : chunkHolders) {
+                            LevelChunk chunk = chunkHolder.getTickingChunk();
+                            if (chunk == null || !level.isLoaded(chunk.getPos().getMiddleBlockPosition(64))) continue;
+                            if (chunk.getData(ModAttachments.SOURCED_RADIOACTIVITY_THIS_TICK))
+                                chunk.setData(ModAttachments.SOURCED_RADIOACTIVITY_THIS_TICK, false);
 
-                        long femtoRads = chunk.getData(ModAttachments.RADIATION);
-                        chunk.setData(ModAttachments.RADIATION, (long)(femtoRads * radiationRemoveRate));
+                            float rads = chunk.getData(ModAttachments.RADIATION);
+                            chunk.setData(ModAttachments.RADIATION, (rads * radiationRemoveRate));
 
-                        chunk.setData(ModAttachments.RADIATION, chunk.getData(ModAttachments.RADIATION) + chunk.getData(ModAttachments.SOURCE_RADIOACTIVITY));
+                            if (BMNWConfig.recalculateChunks) {
+                                if (level.getGameTime() % BMNWConfig.chunkRecalculationInterval == 0) {
+                                    RadHelper.recalculateChunkRadioactivity(chunk);
+                                }
+                            }
 
-                        if (RadHelper.getChunkRadiation(chunk) > UnitConvertor.fromMilli(1)) RadHelper.disperseChunkRadiation(chunk);
+                            chunk.setData(ModAttachments.RADIATION, chunk.getData(ModAttachments.RADIATION) + (chunk.getData(ModAttachments.SOURCE_RADIOACTIVITY) / 20));
+
+                            if (RadHelper.getChunkRadiation(chunk) > 1)
+                                RadHelper.disperseChunkRadiation(chunk);
+                        }
                     }
-                }
-            } catch (Exception ignored) {
+                } catch (Exception ignored) {
 
+                }
             }
         }
 
@@ -96,30 +107,34 @@ public class BMNWEventBus {
          */
         @SubscribeEvent
         public static void serverTickEventPost(ServerTickEvent.Post event) {
-            try {
-                for (ServerLevel level : event.getServer().getAllLevels()) {
-                    if (level == null) continue;
-                    Iterable<ChunkHolder> chunkHolders = (Iterable<ChunkHolder>)
-                            ObfuscationReflectionHelper.findMethod(ChunkMap.class, "getChunks")
-                                    .invoke(level.getChunkSource().chunkMap);
-                    if (chunkHolders == null) continue;
+            if (BMNWConfig.radiationSetting.chunk()) {
+                try {
+                    for (ServerLevel level : event.getServer().getAllLevels()) {
+                        if (level == null) continue;
+                        Iterable<ChunkHolder> chunkHolders = (Iterable<ChunkHolder>)
+                                ObfuscationReflectionHelper.findMethod(ChunkMap.class, "getChunks")
+                                        .invoke(level.getChunkSource().chunkMap);
+                        if (chunkHolders == null) continue;
 
-                    for (ChunkHolder chunkHolder : chunkHolders) {
-                        LevelChunk chunk = chunkHolder.getTickingChunk();
-                        if (chunk == null) continue;
+                        for (ChunkHolder chunkHolder : chunkHolders) {
+                            LevelChunk chunk = chunkHolder.getTickingChunk();
+                            if (chunk == null) continue;
 
-                        chunk.setData(ModAttachments.RADIATION, chunk.getData(ModAttachments.RADIATION) + chunk.getData(ModAttachments.QUEUED_RADIATION));
-                        chunk.setData(ModAttachments.QUEUED_RADIATION, 0L);
+                            chunk.setData(ModAttachments.RADIATION, chunk.getData(ModAttachments.RADIATION) + chunk.getData(ModAttachments.QUEUED_RADIATION));
+                            chunk.setData(ModAttachments.QUEUED_RADIATION, 0.0f);
 
-                        long femtoRads = RadHelper.getChunkRadiation(chunk);
+                            float rads = RadHelper.getChunkRadiation(chunk);
 
-                        if (UnitConvertor.toNormal(femtoRads) > 15000 || femtoRads < 0) chunk.setData(ModAttachments.RADIATION, UnitConvertor.fromKilo(15));
+                            if (rads > 15000 || rads < 0)
+                                chunk.setData(ModAttachments.RADIATION, 15000.0f);
 
-                        if (UnitConvertor.toNormal(femtoRads) > 5 && level.random.nextInt(50) == 0) RadHelper.createChunkRadiationEffects(chunk);
+                            if (rads > 100 && level.random.nextInt(50) == 0)
+                                RadHelper.createChunkRadiationEffects(chunk);
+                        }
                     }
-                }
-            } catch (Exception ignored) {
+                } catch (Exception ignored) {
 
+                }
             }
         }
 
@@ -128,18 +143,19 @@ public class BMNWEventBus {
          */
         @SubscribeEvent
         public static void entityTickEventPre(EntityTickEvent.Pre event) {
-            if (event.getEntity() instanceof LivingEntity entity) {
-                if (entity instanceof Player player && player.isCreative()) return;
-                CompoundTag nbt = entity.getPersistentData();
+            if (BMNWConfig.radiationSetting.chunk()) {
+                if (event.getEntity() instanceof LivingEntity entity) {
+                    if (entity instanceof Player player && player.isCreative()) return;
+                    CompoundTag nbt = entity.getPersistentData();
 
-                ChunkAccess chunk = entity.level().getChunk(entity.getOnPos());
+                    RadHelper.addEntityRadiation(entity, (RadHelper.getAdjustedRadiation(entity.level(), entity.getOnPos()) / 20f));
 
-                RadHelper.addEntityRadiation(entity, RadHelper.getAdjustedRadiation(entity.level(), entity.getOnPos()));
+                    float rads = nbt.getFloat(RadHelper.RAD_NBT_TAG);
 
-                long entityFemtoRads = nbt.getLong(RadHelper.RAD_NBT_TAG);
-
-                if (UnitConvertor.toKilo(entityFemtoRads) > 15 || entityFemtoRads < 0) nbt.putLong(RadHelper.RAD_NBT_TAG, UnitConvertor.fromKilo(15));
-                else nbt.putLong(RadHelper.RAD_NBT_TAG, (long) (entityFemtoRads * 0.9999));
+                    if (rads > 15000 || rads < 0)
+                        nbt.putFloat(RadHelper.RAD_NBT_TAG, 15000.0f);
+                    else nbt.putFloat(RadHelper.RAD_NBT_TAG, rads * 0.9999f);
+                }
             }
         }
 
@@ -152,18 +168,16 @@ public class BMNWEventBus {
                 if (entity instanceof Player player && player.isCreative()) return;
                 CompoundTag nbt = entity.getPersistentData();
 
-                long entityFemtoRads = nbt.getLong(RadHelper.RAD_NBT_TAG);
-                if (entityFemtoRads > UnitConvertor.fromKilo(15) || entityFemtoRads < 0) entityFemtoRads = UnitConvertor.fromKilo(15);
+                float rads = nbt.getFloat(RadHelper.RAD_NBT_TAG);
+                if (rads > 15000 || rads < 0) rads = 15000.0f;
 
-                long normalized = UnitConvertor.toNormal(entityFemtoRads);
-
-                if (normalized > 1000) {
+                if (rads > 1000) {
                     if (entity.level().getGameTime() % 20 == 0) {
                         entity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 100, 1));
                         entity.hurt(ModDamageSources.radiation(entity.level()), 8);
                     }
                 }
-                if (normalized > 800) {
+                if (rads > 800) {
                     if (entity.getRandom().nextInt(250) == 0) {
                         entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100, 1));
                         entity.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 100, 1));
@@ -171,7 +185,7 @@ public class BMNWEventBus {
                         entity.addEffect(new MobEffectInstance(MobEffects.HUNGER, 100, 1));
                     }
                 }
-                if (normalized > 600) {
+                if (rads > 600) {
                     if (entity.getRandom().nextInt(1000) == 0) {
                         entity.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 100, 0));
                         entity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200, 1));
@@ -184,13 +198,13 @@ public class BMNWEventBus {
                         entity.addEffect(new MobEffectInstance(ModEffects.VOMITING, 20));
                     }
                 }
-                if (normalized > 200) {
+                if (rads > 200) {
                     if (entity.getRandom().nextInt(1000) == 0) {
                         entity.addEffect(new MobEffectInstance(MobEffects.HUNGER, 100, 2));
                         entity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200, 1));
                     }
                 }
-                if (normalized > 100) {
+                if (rads > 100) {
                     if (entity.getRandom().nextInt(1000) == 0) {
                         entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100));
                         entity.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 100));
@@ -204,8 +218,10 @@ public class BMNWEventBus {
          */
         @SubscribeEvent
         public static void chunkEventLoad(ChunkEvent.Load event) {
-            if (event.isNewChunk()) {
-                RadHelper.recalculateChunkRadioactivity(event.getChunk());
+            if (BMNWConfig.radiationSetting.chunk()) {
+                if (event.isNewChunk()) {
+                    RadHelper.recalculateChunkRadioactivity(event.getChunk());
+                }
             }
         }
 
@@ -214,20 +230,22 @@ public class BMNWEventBus {
          */
         @SubscribeEvent
         public static void playerTickEventPre(PlayerTickEvent.Pre event) {
-            Player player = event.getEntity();
-            if (player.isCreative()) return;
-            for (ItemStack stack : player.getInventory().items) {
-                if (stack.getItem() instanceof IItemHazard itemHazard) {
-                    if (itemHazard.radioactivity() > 0L) {
-                        RadHelper.addEntityRadiation(player, itemHazard.radioactivity() * stack.getCount());
-                    }
+            if (BMNWConfig.radiationSetting.item()) {
+                Player player = event.getEntity();
+                if (player.isCreative()) return;
+                for (ItemStack stack : player.getInventory().items) {
+                    if (stack.getItem() instanceof IItemHazard itemHazard) {
+                        if (itemHazard.radioactivity() > 0.0f) {
+                            RadHelper.addEntityRadiation(player, (itemHazard.radioactivity() * stack.getCount()) / 20);
+                        }
 
-                    if (itemHazard.burning()) {
-                        player.setRemainingFireTicks(20);
-                    }
+                        if (itemHazard.burning()) {
+                            player.setRemainingFireTicks(20);
+                        }
 
-                    if (itemHazard.blinding()) {
-                        player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 20, 0, false, false));
+                        if (itemHazard.blinding()) {
+                            player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 20, 0, false, false));
+                        }
                     }
                 }
             }

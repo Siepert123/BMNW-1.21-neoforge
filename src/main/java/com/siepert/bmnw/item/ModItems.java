@@ -8,6 +8,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -16,6 +17,13 @@ import java.util.List;
 import java.util.Optional;
 
 public class ModItems {
+    private static DeferredItem<Item> item(String name) {
+        return ITEMS.register(name, () -> new Item(new Item.Properties()));
+    }
+    @Deprecated
+    private static DeferredItem<BlockItem> blockItem(String name, Block block) {
+        return ITEMS.register(name, () -> new BlockItem(block, new Item.Properties()));
+    }
     private static final DeferredRegister.Items ITEMS = DeferredRegister.createItems("bmnw");
 
     public static final DeferredItem<Item> PLAYSTATION = ITEMS.register("playstation",
@@ -44,6 +52,29 @@ public class ModItems {
     public static final DeferredItem<Item> STEEL_WIRE = ITEMS.register("steel_wire",
             () -> new Item(new Item.Properties()));
 
+    public static final DeferredItem<BlockItem> TUNGSTEN_ORE = ITEMS.register("tungsten_ore",
+            () -> new BlockItem(ModBlocks.TUNGSTEN_ORE.get(), new Item.Properties()));
+    public static final DeferredItem<BlockItem> TITANIUM_ORE = ITEMS.register("titanium_ore",
+            () -> new BlockItem(ModBlocks.TITANIUM_ORE.get(), new Item.Properties()));
+    public static final DeferredItem<BlockItem> DEEPSLATE_TUNGSTEN_ORE = ITEMS.register("deepslate_tungsten_ore",
+            () -> new BlockItem(ModBlocks.DEEPSLATE_TUNGSTEN_ORE.get(), new Item.Properties()));
+    public static final DeferredItem<BlockItem> DEEPSLATE_TITANIUM_ORE = ITEMS.register("deepslate_titanium_ore",
+            () -> new BlockItem(ModBlocks.DEEPSLATE_TITANIUM_ORE.get(), new Item.Properties()));
+
+    public static final DeferredItem<Item> RAW_TUNGSTEN = item("raw_tungsten");
+    public static final DeferredItem<Item> RAW_TITANIUM = item("raw_titanium");
+    public static final DeferredItem<BlockItem> RAW_TUNGSTEN_BLOCK = ITEMS.register("raw_tungsten_block",
+            () -> new BlockItem(ModBlocks.RAW_TUNGSTEN_BLOCK.get(), new Item.Properties()));
+    public static final DeferredItem<BlockItem> RAW_TITANIUM_BLOCK = ITEMS.register("raw_titanium_block",
+            () -> new BlockItem(ModBlocks.RAW_TITANIUM_BLOCK.get(), new Item.Properties()));
+
+    public static final DeferredItem<Item> TUNGSTEN_INGOT = item("tungsten_ingot");
+    public static final DeferredItem<Item> TITANIUM_INGOT = item("titanium_ingot");
+    public static final DeferredItem<BlockItem> TUNGSTEN_BLOCK = ITEMS.register("tungsten_block",
+            () -> new BlockItem(ModBlocks.TUNGSTEN_BLOCK.get(), new Item.Properties()));
+    public static final DeferredItem<BlockItem> TITANIUM_BLOCK = ITEMS.register("titanium_block",
+            () -> new BlockItem(ModBlocks.TITANIUM_BLOCK.get(), new Item.Properties()));
+
     public static final DeferredItem<BlockItem> URANIUM_ORE = ITEMS.register("uranium_ore",
             () -> new BlockItem(ModBlocks.URANIUM_ORE.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> THORIUM_ORE = ITEMS.register("thorium_ore",
@@ -63,9 +94,9 @@ public class ModItems {
             () -> new SimpleRadioactiveBlockItem(ModBlocks.RAW_THORIUM_BLOCK.get(), new Item.Properties()));
 
     public static final DeferredItem<SimpleRadioactiveItem> URANIUM_INGOT = ITEMS.register("uranium_ingot",
-            () -> new SimpleRadioactiveItem(new Item.Properties(), UnitConvertor.fromNano(300)));
+            () -> new SimpleRadioactiveItem(new Item.Properties(), 0.35f));
     public static final DeferredItem<SimpleRadioactiveItem> THORIUM_INGOT = ITEMS.register("thorium_ingot",
-            () -> new SimpleRadioactiveItem(new Item.Properties(), UnitConvertor.fromMicro(1)));
+            () -> new SimpleRadioactiveItem(new Item.Properties(), 0.1f));
     public static final DeferredItem<SimpleRadioactiveBlockItem> URANIUM_BLOCK = ITEMS.register("uranium_block",
             () -> new SimpleRadioactiveBlockItem(ModBlocks.URANIUM_BLOCK.get(), new Item.Properties()));
     public static final DeferredItem<SimpleRadioactiveBlockItem> THORIUM_BLOCK = ITEMS.register("thorium_block",
@@ -127,13 +158,13 @@ public class ModItems {
             () -> new BlockItem(ModBlocks.CHARRED_PLANKS.get(), new Item.Properties()));
 
     public static final DeferredItem<SimpleRadioactiveBlockItem> IRRADIATED_GRASS_BLOCK = ITEMS.register("irradiated_grass_block",
-            () -> new SimpleRadioactiveBlockItem(ModBlocks.IRRADIATED_GRASS_BLOCK.get(), new Item.Properties(), UnitConvertor.fromPico(2)));
+            () -> new SimpleRadioactiveBlockItem(ModBlocks.IRRADIATED_GRASS_BLOCK.get(), new Item.Properties(), 0.1f));
     public static final DeferredItem<SimpleRadioactiveBlockItem> IRRADIATED_LEAVES = ITEMS.register("irradiated_leaves",
-            () -> new SimpleRadioactiveBlockItem(ModBlocks.IRRADIATED_LEAVES.get(), new Item.Properties(), UnitConvertor.fromPico(2)));
+            () -> new SimpleRadioactiveBlockItem(ModBlocks.IRRADIATED_LEAVES.get(), new Item.Properties(), 0.1f));
     public static final DeferredItem<SimpleRadioactiveBlockItem> IRRADIATED_LEAF_PILE = ITEMS.register("irradiated_leaf_pile",
-            () -> new SimpleRadioactiveBlockItem(ModBlocks.IRRADIATED_LEAF_PILE.get(), new Item.Properties(), UnitConvertor.fromPico(2)));
+            () -> new SimpleRadioactiveBlockItem(ModBlocks.IRRADIATED_LEAF_PILE.get(), new Item.Properties(), 0.1f));
     public static final DeferredItem<SimpleRadioactiveBlockItem> IRRADIATED_PLANT = ITEMS.register("irradiated_plant",
-            () -> new SimpleRadioactiveBlockItem(ModBlocks.IRRADIATED_PLANT.get(), new Item.Properties(), UnitConvertor.fromPico(2)));
+            () -> new SimpleRadioactiveBlockItem(ModBlocks.IRRADIATED_PLANT.get(), new Item.Properties(), 0.1f));
     public static final DeferredItem<SimpleRadioactiveItem> IRRADIATED_PLANT_FIBERS = ITEMS.register("irradiated_plant_fibers",
             () -> new SimpleRadioactiveItem(new Item.Properties().food(
                     new FoodProperties(1, 0, false,

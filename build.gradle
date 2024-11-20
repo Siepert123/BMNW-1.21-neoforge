@@ -34,6 +34,9 @@ repositories {
     maven {
         url "https://cursemaven.com"
     }
+    maven {
+        url = "https://api.modrinth.com/maven"
+    }
 }
 
 base {
@@ -131,6 +134,8 @@ dependencies {
     compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
     compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
     localRuntime "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
+    compileOnly "maven.modrinth:midnightlib:${project.midnightlib_version}"
+    runtimeOnly "maven.modrinth:midnightlib:${project.midnightlib_version}"
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.

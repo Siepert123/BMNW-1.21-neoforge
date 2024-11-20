@@ -13,14 +13,14 @@ public class ModAttachments {
             NeoForgeRegistries.ATTACHMENT_TYPES, "bmnw"
     );
 
-    public static final Supplier<AttachmentType<Long>> RADIATION = ATTACHMENTS.register(
-            "radiation", () -> AttachmentType.builder(() -> 0L).serialize(Codec.LONG).build()
+    public static final Supplier<AttachmentType<Float>> RADIATION = ATTACHMENTS.register(
+            "radiation", () -> AttachmentType.builder(() -> 0.0f).serialize(Codec.FLOAT).build()
     );
-    public static final Supplier<AttachmentType<Long>> QUEUED_RADIATION = ATTACHMENTS.register(
-            "queued_radiation", () -> AttachmentType.builder(() -> 0L).serialize(Codec.LONG).build()
+    public static final Supplier<AttachmentType<Float>> QUEUED_RADIATION = ATTACHMENTS.register(
+            "queued_radiation", () -> AttachmentType.builder(() -> 0.0f).serialize(Codec.FLOAT).build()
     );
-    public static final Supplier<AttachmentType<Long>> SOURCE_RADIOACTIVITY = ATTACHMENTS.register(
-            "source_radioactivity", () -> AttachmentType.builder(() -> 0L).serialize(Codec.LONG).build()
+    public static final Supplier<AttachmentType<Float>> SOURCE_RADIOACTIVITY = ATTACHMENTS.register(
+            "source_radioactivity", () -> AttachmentType.builder(() -> 0.0f).serialize(Codec.FLOAT).build()
     );
 
     public static final Supplier<AttachmentType<Boolean>> SOURCED_RADIOACTIVITY_THIS_TICK = ATTACHMENTS.register(

@@ -16,17 +16,17 @@ import java.util.List;
  * @see SimpleRadioactiveBlock
  */
 public class SimpleRadioactiveItem extends Item implements IItemHazard {
-    private final long femtoRads;
+    private final float rads;
     private final Component tooltip;
-    public SimpleRadioactiveItem(Properties properties, long femtoRads) {
+    public SimpleRadioactiveItem(Properties properties, float rads) {
         super(properties);
-        this.femtoRads = femtoRads;
-        tooltip = Component.translatable("tooltip.bmnw.radioactive").append(" - ").append(UnitConvertor.display(femtoRads)).append("RAD/t").withColor(0x00dd00);
+        this.rads = rads;
+        tooltip = Component.translatable("tooltip.bmnw.radioactive").append(" - ").append(String.valueOf(rads)).append("RAD/s").withColor(0x00dd00);
     }
 
     @Override
-    public long radioactivity() {
-        return femtoRads;
+    public float radioactivity() {
+        return rads;
     }
 
     @Override

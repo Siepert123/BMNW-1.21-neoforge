@@ -2,6 +2,7 @@ package com.siepert.bmnw.radiation;
 
 import com.siepert.bmnw.block.ModBlocks;
 import com.siepert.bmnw.interfaces.IRadioactiveBlock;
+import com.siepert.bmnw.misc.BMNWConfig;
 import com.siepert.bmnw.misc.ModAttachments;
 import com.siepert.bmnw.misc.ModStateProperties;
 import com.siepert.bmnw.misc.ModTags;
@@ -21,40 +22,41 @@ import java.util.Random;
  */
 public class RadHelper {
     public static final String RAD_NBT_TAG = "bmnw_femtoRAD";
-    public static int getRadiationLevelForFemtoRads(long femtoRads) {
-        if (UnitConvertor.toNormal(femtoRads) > 100) return 3;
-        if (UnitConvertor.toNormal(femtoRads) > 50) return 2;
-        if (UnitConvertor.toNormal(femtoRads) > 5) return 1;
+    public static int getRadiationLevelForFemtoRads(float rads) {
+        if (rads > 2000) return 3;
+        if (rads > 500) return 2;
+        if (rads > 100) return 1;
         return 0;
     }
-    public static boolean geigerTick(long femtoRads, Random random) {
-        long l = UnitConvertor.toMilli(femtoRads);
-        if (l == 0) return random.nextInt(1000) == 0;
-        return random.nextInt(Math.max((int) (1000-l), 1)) == 0;
+    public static boolean geigerTick(float rads, Random random) {
+        if (rads == 0) return random.nextInt(1000) == 0;
+        return random.nextInt(Math.max((int) (1000-rads), 1)) == 0;
     }
-    public static void addEntityRadiation(@Nonnull LivingEntity entity, long femtoRads) {
+    public static void addEntityRadiation(@Nonnull LivingEntity entity, float rads) {
         CompoundTag nbt = entity.getPersistentData();
-        long original = nbt.getLong(RAD_NBT_TAG);
-        nbt.putLong(RAD_NBT_TAG, original + femtoRads);
+        float original = nbt.getFloat(RAD_NBT_TAG);
+        nbt.putFloat(RAD_NBT_TAG, original + rads);
     }
-    public static void removeEntityRadiation(@Nonnull LivingEntity entity, long femtoRads) {
+    public static void removeEntityRadiation(@Nonnull LivingEntity entity, float rads) {
         CompoundTag nbt = entity.getPersistentData();
-        long original = nbt.getLong(RAD_NBT_TAG);
-        nbt.putLong(RAD_NBT_TAG, Math.max(0, original - femtoRads));
+        float original = nbt.getFloat(RAD_NBT_TAG);
+        nbt.putFloat(RAD_NBT_TAG, Math.max(0, original - rads));
     }
 
     /**
      * Recalculates chunk radioactivity.
      * Warning: VERY resource heavy, I don't recommend running many at the same time.
+     * Consider directly modifying source radioactivity instead!
      * @param chunk The chunk to calculate source radioactivity in.
      * @return The amount of source radioactivity in femtoRADs.
      */
-    public static long recalculateChunkRadioactivity(@Nonnull ChunkAccess chunk) {
+    public static float recalculateChunkRadioactivity(@Nonnull ChunkAccess chunk) {
+        if (!BMNWConfig.radiationSetting.chunk()) return 0.0f;
         if (chunk.getData(ModAttachments.SOURCED_RADIOACTIVITY_THIS_TICK)) return chunk.getData(ModAttachments.SOURCE_RADIOACTIVITY);
         Level level = chunk.getLevel();
-        if (level == null || level.isClientSide()) return 0L;
+        if (level == null || level.isClientSide()) return 0.0f;
 
-        long calculatedFemtoRads = 0L;
+        float calculatedFemtoRads = 0.0f;
 
         for (int y = level.getMinBuildHeight(); y < chunk.getMaxBuildHeight(); y++) {
             if (chunk.isYSpaceEmpty(y, y)) continue;
@@ -74,6 +76,10 @@ public class RadHelper {
         chunk.setData(ModAttachments.SOURCE_RADIOACTIVITY, calculatedFemtoRads);
         chunk.setData(ModAttachments.SOURCED_RADIOACTIVITY_THIS_TICK, true);
         return calculatedFemtoRads;
+    }
+
+    public static void modifySourceRadioactivity(ChunkAccess chunk, float rads) {
+        chunk.setData(ModAttachments.SOURCE_RADIOACTIVITY, Math.max(chunk.getData(ModAttachments.SOURCE_RADIOACTIVITY) + rads, 0));
     }
 
     /**
@@ -128,22 +134,22 @@ public class RadHelper {
         return state.is(ModTags.Blocks.IRRADIATABLE_PLANTS);
     }
 
-    public static long getChunkRadiation(ChunkAccess chunk) {
+    public static float getChunkRadiation(ChunkAccess chunk) {
         return chunk.getData(ModAttachments.RADIATION);
     }
-    public static void addChunkRadiation(ChunkAccess chunk, long femtoRads) {
-        chunk.setData(ModAttachments.RADIATION, chunk.getData(ModAttachments.RADIATION) + femtoRads);
+    public static void addChunkRadiation(ChunkAccess chunk, float rads) {
+        chunk.setData(ModAttachments.RADIATION, chunk.getData(ModAttachments.RADIATION) + rads);
     }
 
-    public static void insertRadiation(Level level, BlockPos pos, long femtoRads) {
-        addChunkRadiation(level.getChunk(pos), getInsertedRadiation(level, pos, femtoRads));
+    public static void insertRadiation(Level level, BlockPos pos, float rads) {
+        addChunkRadiation(level.getChunk(pos), getInsertedRadiation(level, pos, rads));
     }
 
-    public static long getInsertedRadiation(Level level, BlockPos pos, long femtoRads) {
-        return Math.round(ShieldingValues.getShieldingModifierForPosition(level, pos) * femtoRads);
+    public static float getInsertedRadiation(Level level, BlockPos pos, float rads) {
+        return Math.round(ShieldingValues.getShieldingModifierForPosition(level, pos) * rads);
     }
 
-    public static long getAdjustedRadiation(Level level, BlockPos pos) {
+    public static float getAdjustedRadiation(Level level, BlockPos pos) {
         return Math.round(ShieldingValues.getShieldingModifierForPosition(level, pos) * getChunkRadiation(level.getChunk(pos)));
     }
 
@@ -154,7 +160,7 @@ public class RadHelper {
      * @param chunk The chunk to disperse radiation from.
      */
     public static void disperseChunkRadiation(ChunkAccess chunk) {
-        long rads = getChunkRadiation(chunk);
+        float rads = getChunkRadiation(chunk);
         ChunkPos pos = chunk.getPos();
 
         long dispersion = Math.round(rads * disperse_mod);
@@ -192,7 +198,7 @@ public class RadHelper {
         chunk.setData(ModAttachments.RADIATION, rads);
     }
 
-    public static void queueChunkRadiation(ChunkAccess chunk, long femtoRads) {
-        chunk.setData(ModAttachments.QUEUED_RADIATION, chunk.getData(ModAttachments.QUEUED_RADIATION) + femtoRads);
+    public static void queueChunkRadiation(ChunkAccess chunk, float rads) {
+        chunk.setData(ModAttachments.QUEUED_RADIATION, chunk.getData(ModAttachments.QUEUED_RADIATION) + rads);
     }
 }
