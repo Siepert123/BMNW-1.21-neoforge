@@ -23,12 +23,12 @@ public class SimpleRadioactiveBlockItem extends BlockItem implements IItemHazard
     public <T extends Block & IRadioactiveBlock> SimpleRadioactiveBlockItem(T block, Properties properties) {
         super(block, properties);
         this.rads = block.radioactivity();
-        tooltip = Component.translatable("tooltip.bmnw.radioactive").append(" - ").append(String.valueOf(rads)).append("RAD/t").withColor(0x00dd00);
+        tooltip = Component.translatable("tooltip.bmnw.radioactive").append(" - ").append(String.valueOf(rads)).append("RAD/s").withColor(0x00dd00);
     }
     public SimpleRadioactiveBlockItem(Block block, Properties properties, float rads) {
         super(block, properties);
         this.rads = rads;
-        tooltip = Component.translatable("tooltip.bmnw.radioactive").append(" - ").append(String.valueOf(rads)).append("RAD/t").withColor(0x00dd00);
+        tooltip = Component.translatable("tooltip.bmnw.radioactive").append(" - ").append(String.valueOf(rads)).append("RAD/s").withColor(0x00dd00);
     }
 
     @Override
