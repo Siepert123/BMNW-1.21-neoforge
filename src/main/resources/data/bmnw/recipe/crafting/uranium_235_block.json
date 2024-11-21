@@ -6,16 +6,16 @@
       "tag": "c:ingots/uranium_235"
     },
     "N": {
-      "tag": "c:foods/bread"
+      "item": "bmnw:uranium_235_ingot"
     }
   },
   "pattern": [
-    "#",
-    "N",
-    "#"
+    "###",
+    "#N#",
+    "###"
   ],
   "result": {
     "count": 1,
-    "id": "bmnw:uranium_sandwich"
+    "id": "bmnw:uranium_235_block"
   }
 }

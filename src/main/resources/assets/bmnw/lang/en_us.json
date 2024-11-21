@@ -45,6 +45,9 @@
   "block.bmnw.titanium_ore": "Titanium Ore",
   "block.bmnw.tungsten_block": "Block of Tungsten",
   "block.bmnw.tungsten_ore": "Tungsten Ore",
+  "block.bmnw.uranium_233_block": "Block of Uranium-233",
+  "block.bmnw.uranium_235_block": "Block of Uranium-235",
+  "block.bmnw.uranium_238_block": "Block of Uranium-238",
   "block.bmnw.uranium_block": "Block of Uranium",
   "block.bmnw.uranium_ore": "Uranium Ore",
   "bmnw.midnightconfig.category.radiation": "Radiation config",
@@ -57,6 +60,7 @@
   "bmnw.midnightconfig.radiationOptimizer": "Optimize radiation system",
   "bmnw.midnightconfig.radiationSetting": "Radiation mode",
   "bmnw.midnightconfig.recalculateChunks": "Recalculate chunks every so often (recommended)",
+  "bmnw.midnightconfig.recalculateOnBlockEvent": "Recalculate chunks on block event",
   "bmnw.midnightconfig.title": "BMNW Configuration Screen!",
   "death.attack.nuclear_blast": "%ss organs got reorganized by a nuclear blast",
   "death.attack.radiation": "%s suffered acute radiation poisoning",
@@ -89,6 +93,9 @@
   "item.bmnw.thorium_ingot": "Thorium Ingot",
   "item.bmnw.titanium_ingot": "Titanium Ingot",
   "item.bmnw.tungsten_ingot": "Tungsten Ingot",
+  "item.bmnw.uranium_233_ingot": "Uranium-233 Ingot",
+  "item.bmnw.uranium_235_ingot": "Uranium-235 Ingot",
+  "item.bmnw.uranium_238_ingot": "Uranium-238 Ingot",
   "item.bmnw.uranium_ingot": "Uranium Ingot",
   "item.bmnw.uranium_sandwich": "Uranium Sandwich",
   "itemGroup.bmnw": "BMNW",
@@ -140,6 +147,7 @@
   "tag.item.c.wires.gold": "Gold Wires",
   "tag.item.c.wires.iron": "Iron Wires",
   "tag.item.c.wires.steel": "Steel Wires",
+  "text.bmnw.data_set": "Data set!",
   "text.bmnw.detonate_fail": "Detonation failed...",
   "text.bmnw.detonate_success": "Detonation successful!",
   "text.bmnw.position_invalid": "Invalid position!",
@@ -147,6 +155,5 @@
   "text.bmnw.position_set": "Position set!",
   "tooltip.bmnw.blinding": "[Blinding]",
   "tooltip.bmnw.burning": "[Extremely Hot]",
-  "tooltip.bmnw.radioactive": "[Radioactive]",
-  "text.bmnw.data_set": "Data set!"
+  "tooltip.bmnw.radioactive": "[Radioactive]"
 }

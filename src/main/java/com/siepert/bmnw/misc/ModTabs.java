@@ -8,6 +8,7 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
+import java.util.Random;
 import java.util.function.Supplier;
 
 import static com.siepert.bmnw.item.ModItems.*;
@@ -16,6 +17,7 @@ public class ModTabs {
     private static final DeferredRegister<CreativeModeTab> CREATIVE_TABS =
             DeferredRegister.create(Registries.CREATIVE_MODE_TAB, "bmnw");
 
+    @NoUnused
     public static final Supplier<CreativeModeTab> MAIN = CREATIVE_TABS.register("main",
             () -> CreativeModeTab.builder()
                     .title(Component.translatable("itemGroup.bmnw.main"))
@@ -62,10 +64,23 @@ public class ModTabs {
                     .build()
     );
 
+    private static Supplier<ItemStack> getMaterialsIcon() {
+        Random random = new Random();
+        return switch (random.nextInt(5)) {
+            case 0 -> () -> new ItemStack(STEEL_INGOT.get());
+            case 1 -> () -> new ItemStack(URANIUM_INGOT.get());
+            case 2 -> () -> new ItemStack(TUNGSTEN_INGOT.get());
+            case 3 -> () -> new ItemStack(TITANIUM_INGOT.get());
+            case 4 -> () -> new ItemStack(THORIUM_INGOT.get());
+            default -> () -> new ItemStack(PLAYSTATION.get());
+        };
+    }
+
+    @NoUnused
     public static final Supplier<CreativeModeTab> MATERIALS = CREATIVE_TABS.register("materials",
             () -> CreativeModeTab.builder()
                     .title(Component.translatable("itemGroup.bmnw.materials"))
-                    .icon(() -> new ItemStack(URANIUM_INGOT.get()))
+                    .icon(getMaterialsIcon())
                     .displayItems((parameters, items) -> {
                         items.accept(STEEL_INGOT);
                         items.accept(STEEL_BLOCK);

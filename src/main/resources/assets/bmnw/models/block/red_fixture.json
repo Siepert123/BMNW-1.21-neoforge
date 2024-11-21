@@ -1,0 +1,6 @@
+{
+  "parent": "bmnw:block/white_fixture",
+  "textures": {
+    "lamp": "bmnw:block/red"
+  }
+}

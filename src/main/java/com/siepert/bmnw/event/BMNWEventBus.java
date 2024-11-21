@@ -9,9 +9,11 @@ import com.siepert.bmnw.misc.BMNWConfig;
 import com.siepert.bmnw.misc.ModAttachments;
 import com.siepert.bmnw.misc.ModDamageSources;
 import com.siepert.bmnw.particle.ModParticleTypes;
+import com.siepert.bmnw.particle.custom.EvilFogParticleProvider;
 import com.siepert.bmnw.particle.custom.FireSmokeParticleProvider;
 import com.siepert.bmnw.particle.custom.VomitParticleProvider;
 import com.siepert.bmnw.radiation.RadHelper;
+import com.siepert.bmnw.radiation.ShieldingValues;
 import com.siepert.bmnw.radiation.UnitConvertor;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.core.HolderLookup;
@@ -38,6 +40,7 @@ import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 import net.neoforged.neoforge.common.data.AdvancementProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
+import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.level.ChunkEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
@@ -250,6 +253,19 @@ public class BMNWEventBus {
                 }
             }
         }
+
+        @SubscribeEvent
+        public static void blockEventPlace(BlockEvent.EntityPlaceEvent event) {
+            if (ShieldingValues.shields(event.getPlacedBlock()) || BMNWConfig.recalculateOnBlockEvent) {
+                RadHelper.recalculateChunkRadioactivity(event.getLevel().getChunk(event.getPos()));
+            }
+        }
+        @SubscribeEvent
+        public static void blockEventBreak(BlockEvent.BreakEvent event) {
+            if (ShieldingValues.shields(event.getState()) || BMNWConfig.recalculateOnBlockEvent) {
+                RadHelper.recalculateChunkRadioactivity(event.getLevel().getChunk(event.getPos()));
+            }
+        }
     }
 
     @EventBusSubscriber(modid = "bmnw", bus = EventBusSubscriber.Bus.MOD)
@@ -288,6 +304,7 @@ public class BMNWEventBus {
         @SubscribeEvent
         public static void registerParticleProvidersEvent(RegisterParticleProvidersEvent event) {
             event.registerSpriteSet(ModParticleTypes.VOMIT.get(), VomitParticleProvider::new);
+            event.registerSpriteSet(ModParticleTypes.EVIL_FOG.get(), EvilFogParticleProvider::new);
             event.registerSpriteSet(ModParticleTypes.FIRE_SMOKE.get(), FireSmokeParticleProvider::new);
         }
 

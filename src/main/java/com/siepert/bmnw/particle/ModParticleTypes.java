@@ -17,6 +17,11 @@ public class ModParticleTypes {
             () -> new SimpleParticleType(false)
     );
 
+    public static final Supplier<SimpleParticleType> EVIL_FOG = PARTICLE_TYPES.register(
+            "evil_fog",
+            () -> new SimpleParticleType(false)
+    );
+
     public static final Supplier<SimpleParticleType> FIRE_SMOKE = PARTICLE_TYPES.register(
             "fire_smoke",
             () -> new SimpleParticleType(false)

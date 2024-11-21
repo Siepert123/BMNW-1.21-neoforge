@@ -3,19 +3,19 @@
   "category": "misc",
   "key": {
     "#": {
-      "tag": "c:ingots/uranium_235"
+      "tag": "c:ingots/uranium_233"
     },
     "N": {
-      "tag": "c:foods/bread"
+      "item": "bmnw:uranium_233_ingot"
     }
   },
   "pattern": [
-    "#",
-    "N",
-    "#"
+    "###",
+    "#N#",
+    "###"
   ],
   "result": {
     "count": 1,
-    "id": "bmnw:uranium_sandwich"
+    "id": "bmnw:uranium_233_block"
   }
 }
