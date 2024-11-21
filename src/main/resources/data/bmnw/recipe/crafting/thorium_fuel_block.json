@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "thorium_fuel_block",
+  "key": {
+    "#": {
+      "tag": "c:ingots/thorium_fuel"
+    },
+    "N": {
+      "item": "bmnw:thorium_fuel_ingot"
+    }
+  },
+  "pattern": [
+    "###",
+    "#N#",
+    "###"
+  ],
+  "result": {
+    "count": 1,
+    "id": "bmnw:thorium_fuel_block"
+  }
+}

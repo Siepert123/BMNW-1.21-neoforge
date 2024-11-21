@@ -5,7 +5,9 @@
     "bmnw:uranium_233_ingot",
     "bmnw:uranium_235_ingot",
     "bmnw:uranium_238_ingot",
-    "bmnw:thorium_ingot"
+    "bmnw:uranium_fuel_ingot",
+    "bmnw:thorium_ingot",
+    "bmnw:thorium_fuel_ingot"
   ],
   "replace": false
 }

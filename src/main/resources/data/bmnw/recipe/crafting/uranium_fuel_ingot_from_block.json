@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "uranium_fuel_ingot",
+  "key": {
+    "#": {
+      "item": "bmnw:uranium_fuel_block"
+    }
+  },
+  "pattern": [
+    "#"
+  ],
+  "result": {
+    "count": 9,
+    "id": "bmnw:uranium_fuel_ingot"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "values": [
+    "bmnw:tungsten_nugget",
+    "bmnw:titanium_nugget",
+    "bmnw:uranium_nugget",
+    "bmnw:uranium_233_nugget",
+    "bmnw:uranium_235_nugget",
+    "bmnw:uranium_238_nugget",
+    "bmnw:uranium_fuel_nugget",
+    "bmnw:thorium_nugget",
+    "bmnw:thorium_fuel_nugget"
+  ],
+  "replace": false
+}

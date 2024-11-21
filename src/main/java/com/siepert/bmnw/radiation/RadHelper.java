@@ -1,13 +1,14 @@
 package com.siepert.bmnw.radiation;
 
 import com.siepert.bmnw.block.ModBlocks;
-import com.siepert.bmnw.interfaces.IRadioactiveBlock;
 import com.siepert.bmnw.misc.BMNWConfig;
 import com.siepert.bmnw.misc.ModAttachments;
 import com.siepert.bmnw.misc.ModStateProperties;
 import com.siepert.bmnw.misc.ModTags;
+import com.siepert.bmnw.particle.ModParticleTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
@@ -47,36 +48,26 @@ public class RadHelper {
      * Recalculates chunk radioactivity.
      * Warning: VERY resource heavy, I don't recommend running many at the same time.
      * Consider directly modifying source radioactivity instead!
+     *
      * @param chunk The chunk to calculate source radioactivity in.
-     * @return The amount of source radioactivity in femtoRADs.
      */
-    public static float recalculateChunkRadioactivity(@Nonnull ChunkAccess chunk) {
-        if (!BMNWConfig.radiationSetting.chunk()) return 0.0f;
-        if (chunk.getData(ModAttachments.SOURCED_RADIOACTIVITY_THIS_TICK)) return chunk.getData(ModAttachments.SOURCE_RADIOACTIVITY);
-        Level level = chunk.getLevel();
-        if (level == null || level.isClientSide()) return 0.0f;
-
-        float calculatedFemtoRads = 0.0f;
-
-        for (int y = level.getMinBuildHeight(); y < chunk.getMaxBuildHeight(); y++) {
-            if (chunk.isYSpaceEmpty(y, y)) continue;
-
-            for (int x = chunk.getPos().getMinBlockX(); x <= chunk.getPos().getMaxBlockX(); x++) {
-                for (int z = chunk.getPos().getMinBlockZ(); z <= chunk.getPos().getMaxBlockZ(); z++) {
-                    BlockPos pos = new BlockPos(x, y, z);
-                    BlockState state = level.getBlockState(pos);
-
-                    if (state.getBlock() instanceof IRadioactiveBlock block) {
-                        calculatedFemtoRads += getInsertedRadiation(level, pos, block.radioactivity(level, pos, state));
-                    }
-                }
-            }
+    public static void recalculateChunkRadioactivity(@Nonnull ChunkAccess chunk) {
+        if (!BMNWConfig.radiationSetting.chunk()) return;
+        if (chunk.getData(ModAttachments.SOURCED_RADIOACTIVITY_THIS_TICK)) {
+            chunk.getData(ModAttachments.SOURCE_RADIOACTIVITY);
+            return;
         }
+        ChunkRecalculatorThread thread = new ChunkRecalculatorThread(chunk);
+        Level level = chunk.getLevel();
+        if (level == null || level.isClientSide()) return;
 
-        chunk.setData(ModAttachments.SOURCE_RADIOACTIVITY, calculatedFemtoRads);
-        chunk.setData(ModAttachments.SOURCED_RADIOACTIVITY_THIS_TICK, true);
-        return calculatedFemtoRads;
+        if (implode) {
+            Thread.startVirtualThread(thread);
+        } else {
+            thread.run(); //TODO: make this threaded without the game imploding
+        }
     }
+    private static final boolean implode = false;
 
     public static void modifySourceRadioactivity(ChunkAccess chunk, float rads) {
         chunk.setData(ModAttachments.SOURCE_RADIOACTIVITY, Math.max(chunk.getData(ModAttachments.SOURCE_RADIOACTIVITY) + rads, 0));
@@ -106,7 +97,15 @@ public class RadHelper {
                     BlockPos pos = new BlockPos(x, y, z);
 
                     BlockState state = level.getBlockState(pos);
-                    if (state.isAir()) continue; //for now...
+                    if (state.isAir()) {
+                        if (level instanceof ServerLevel serverLevel && !level.getBlockState(pos.below()).isAir() && rad_level == 3) {
+                            if (level.random.nextFloat() > 0.999) {
+                                serverLevel.sendParticles(ModParticleTypes.EVIL_FOG.get(), x + 0.5, y + 0.5, z + 0.5,
+                                        1, 0, 0, 0, 0);
+                            }
+                        }
+                        continue;
+                    }
 
                     if (state.hasProperty(ModStateProperties.RAD_LEVEL)) {
                         level.setBlock(pos, state.setValue(ModStateProperties.RAD_LEVEL,

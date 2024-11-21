@@ -15,15 +15,16 @@ public class EvilFogParticle extends TextureSheetParticle {
         this.spriteSet = spriteSet;
         this.gravity = 0;
         this.lifetime = 100;
-        this.quadSize = 20;
+        this.quadSize = 10;
         this.setSpriteFromAge(spriteSet);
     }
 
     @Override
     public void tick() {
         this.setSpriteFromAge(spriteSet);
+        this.quadSize = ((float) (lifetime - age) / lifetime * 10 + 1);
+        this.setAlpha((float) (lifetime - age) / lifetime);
         super.tick();
-        setAlpha(this.lifetime - this.age);
     }
 
     @Override

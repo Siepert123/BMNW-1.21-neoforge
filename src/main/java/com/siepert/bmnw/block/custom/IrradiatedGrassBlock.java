@@ -6,10 +6,12 @@ import com.siepert.bmnw.radiation.RadHelper;
 import com.siepert.bmnw.radiation.UnitConvertor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -30,6 +32,9 @@ public class IrradiatedGrassBlock extends Block {
     @Override
     public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity) {
         if (entity instanceof LivingEntity livingEntity) {
+            for (ItemStack stack : livingEntity.getArmorSlots()) {
+                if (stack.is(ItemTags.FOOT_ARMOR)) return;
+            }
             livingEntity.addEffect(new MobEffectInstance(
                     ModEffects.CONTAMINATION,
                     400,
