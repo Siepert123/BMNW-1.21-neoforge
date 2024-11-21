@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "raw_titanium_block",
+  "key": {
+    "#": {
+      "tag": "c:raw_materials/titanium"
+    },
+    "N": {
+      "item": "bmnw:raw_titanium"
+    }
+  },
+  "pattern": [
+    "###",
+    "#N#",
+    "###"
+  ],
+  "result": {
+    "count": 1,
+    "id": "bmnw:raw_titanium_block"
+  }
+}

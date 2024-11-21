@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "raw_tungsten_block",
+  "key": {
+    "#": {
+      "tag": "c:raw_materials/tungsten"
+    },
+    "N": {
+      "item": "bmnw:raw_tungsten"
+    }
+  },
+  "pattern": [
+    "###",
+    "#N#",
+    "###"
+  ],
+  "result": {
+    "count": 1,
+    "id": "bmnw:raw_tungsten_block"
+  }
+}

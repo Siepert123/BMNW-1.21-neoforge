@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "titanium_block",
+  "key": {
+    "#": {
+      "tag": "c:ingots/titanium"
+    },
+    "N": {
+      "item": "bmnw:titanium_ingot"
+    }
+  },
+  "pattern": [
+    "###",
+    "#N#",
+    "###"
+  ],
+  "result": {
+    "count": 1,
+    "id": "bmnw:titanium_block"
+  }
+}

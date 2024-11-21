@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "tungsten_block",
+  "key": {
+    "#": {
+      "tag": "c:ingots/tungsten"
+    },
+    "N": {
+      "item": "bmnw:tungsten_ingot"
+    }
+  },
+  "pattern": [
+    "###",
+    "#N#",
+    "###"
+  ],
+  "result": {
+    "count": 1,
+    "id": "bmnw:tungsten_block"
+  }
+}
