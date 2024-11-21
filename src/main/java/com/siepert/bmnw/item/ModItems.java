@@ -102,6 +102,19 @@ public class ModItems {
     public static final DeferredItem<SimpleRadioactiveBlockItem> THORIUM_BLOCK = ITEMS.register("thorium_block",
             () -> new SimpleRadioactiveBlockItem(ModBlocks.THORIUM_BLOCK.get(), new Item.Properties()));
 
+    public static final DeferredItem<SimpleRadioactiveItem> URANIUM_233_INGOT = ITEMS.register("uranium_233_ingot",
+            () -> new SimpleRadioactiveItem(new Item.Properties(), 5.0f));
+    public static final DeferredItem<SimpleRadioactiveItem> URANIUM_235_INGOT = ITEMS.register("uranium_235_ingot",
+            () -> new SimpleRadioactiveItem(new Item.Properties(), 1.0f));
+    public static final DeferredItem<SimpleRadioactiveItem> URANIUM_238_INGOT = ITEMS.register("uranium_238_ingot",
+            () -> new SimpleRadioactiveItem(new Item.Properties(), 0.25f));
+    public static final DeferredItem<SimpleRadioactiveBlockItem> URANIUM_233_BLOCK = ITEMS.register("uranium_233_block",
+            () -> new SimpleRadioactiveBlockItem(ModBlocks.URANIUM_233_BLOCK.get(), new Item.Properties()));
+    public static final DeferredItem<SimpleRadioactiveBlockItem> URANIUM_235_BLOCK = ITEMS.register("uranium_235_block",
+            () -> new SimpleRadioactiveBlockItem(ModBlocks.URANIUM_235_BLOCK.get(), new Item.Properties()));
+    public static final DeferredItem<SimpleRadioactiveBlockItem> URANIUM_238_BLOCK = ITEMS.register("uranium_238_block",
+            () -> new SimpleRadioactiveBlockItem(ModBlocks.URANIUM_238_BLOCK.get(), new Item.Properties()));
+
     public static final DeferredItem<GeigerCounterItem> GEIGER_COUNTER = ITEMS.register("geiger_counter",
             () -> new GeigerCounterItem(new Item.Properties().stacksTo(1)));
     public static final DeferredItem<BlockItem> DECONTAMINATOR = ITEMS.register("decontaminator",

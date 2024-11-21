@@ -99,10 +99,16 @@ public class ModTabs {
                         items.accept(TUNGSTEN_INGOT);
                         items.accept(TITANIUM_INGOT);
                         items.accept(URANIUM_INGOT);
+                        items.accept(URANIUM_233_INGOT);
+                        items.accept(URANIUM_235_INGOT);
+                        items.accept(URANIUM_238_INGOT);
                         items.accept(THORIUM_INGOT);
                         items.accept(TUNGSTEN_BLOCK);
                         items.accept(TITANIUM_BLOCK);
                         items.accept(URANIUM_BLOCK);
+                        items.accept(URANIUM_233_BLOCK);
+                        items.accept(URANIUM_235_BLOCK);
+                        items.accept(URANIUM_238_BLOCK);
                         items.accept(THORIUM_BLOCK);
                     })
                     .build()
