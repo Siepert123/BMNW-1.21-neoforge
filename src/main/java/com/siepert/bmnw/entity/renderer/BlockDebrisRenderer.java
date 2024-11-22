@@ -2,9 +2,7 @@ package com.siepert.bmnw.entity.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.siepert.bmnw.entity.custom.BlockDebrisEntity;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -16,7 +14,6 @@ import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.client.model.data.ModelData;
 import org.joml.AxisAngle4d;
 import org.joml.Quaternionf;
 
@@ -35,7 +32,7 @@ public class BlockDebrisRenderer extends EntityRenderer<BlockDebrisEntity> {
             if (blockstate != level.getBlockState(entity.blockPosition()) && blockstate.getRenderShape() != RenderShape.INVISIBLE) {
                 poseStack.pushPose();
                 BlockPos blockpos = BlockPos.containing(entity.getX(), entity.getBoundingBox().maxY, entity.getZ());
-                poseStack.rotateAround(new Quaternionf(new AxisAngle4d(entity.getX() + entity.getZ() + (entity.getY() / 5), 0.5f, 0.5f, 0.5f)), 1f, 1f, 1f);
+                poseStack.rotateAround(new Quaternionf(new AxisAngle4d(entity.getX() + entity.getZ() + (entity.getY() / 5), 0.5f, 0.5f, 0.5f)), 0.5f, 0.5f, 0.5f);
                 poseStack.translate(-0.5, 0.0, -0.5);
                 var model = this.dispatcher.getBlockModel(blockstate);
                 for (var renderType : model.getRenderTypes(blockstate, RandomSource.create(blockstate.getSeed(BlockPos.ZERO)), net.neoforged.neoforge.client.model.data.ModelData.EMPTY))

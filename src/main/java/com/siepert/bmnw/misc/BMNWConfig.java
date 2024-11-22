@@ -25,8 +25,8 @@ public class BMNWConfig extends MidnightConfig {
     }
 
     @Comment(category = RADIATION) public static Comment radOptimizerComment;
-    @Entry(category = RADIATION) public static boolean radiationOptimizer;
-    @Entry(category = RADIATION) public static boolean recalculateOnBlockEvent;
-    @Entry(category = RADIATION) public static boolean recalculateChunks;
+    @Entry(category = RADIATION) public static boolean radiationOptimizer = false;
+    @Entry(category = RADIATION) public static boolean recalculateOnBlockEvent = false;
+    @Entry(category = RADIATION) public static boolean recalculateChunks = false;
     @Entry(category = RADIATION, min = 10, max = 1000) public static int chunkRecalculationInterval = 100;
 }

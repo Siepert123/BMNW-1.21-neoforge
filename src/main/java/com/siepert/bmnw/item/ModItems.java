@@ -1,6 +1,7 @@
 package com.siepert.bmnw.item;
 
 import com.siepert.bmnw.block.ModBlocks;
+import com.siepert.bmnw.category.BombCategory;
 import com.siepert.bmnw.effect.ModEffects;
 import com.siepert.bmnw.item.custom.*;
 import com.siepert.bmnw.radiation.UnitConvertor;
@@ -160,16 +161,21 @@ public class ModItems {
             () -> new GeigerCounterItem(new Item.Properties().stacksTo(1)));
     public static final DeferredItem<BlockItem> DECONTAMINATOR = ITEMS.register("decontaminator",
             () -> new BlockItem(ModBlocks.DECONTAMINATOR.get(), new Item.Properties()));
-    public static final DeferredItem<BlockItem> NUCLEAR_CHARGE = ITEMS.register("nuclear_charge",
-            () -> new BlockItem(ModBlocks.NUCLEAR_CHARGE.get(), new Item.Properties()));
-    public static final DeferredItem<BlockItem> LITTLE_BOY = ITEMS.register("little_boy",
-            () -> new BlockItem(ModBlocks.LITTLE_BOY.get(), new Item.Properties().stacksTo(1)));
-    public static final DeferredItem<BlockItem> CASEOH = ITEMS.register("caseoh",
-            () -> new BlockItem(ModBlocks.CASEOH.get(), new Item.Properties().stacksTo(1)));
-    public static final DeferredItem<BlockItem> DUD = ITEMS.register("dud",
-            () -> new BlockItem(ModBlocks.DUD.get(), new Item.Properties().stacksTo(1)));
-    public static final DeferredItem<BlockItem> BRICK_CHARGE = ITEMS.register("brick_charge",
-            () -> new BlockItem(ModBlocks.BRICK_CHARGE.get(), new Item.Properties()));
+    public static final DeferredItem<BombBlockItem> NUCLEAR_CHARGE = ITEMS.register("nuclear_charge",
+            () -> new BombBlockItem(ModBlocks.NUCLEAR_CHARGE.get(), new Item.Properties(),
+                    BombCategory.of("nuclear", 0x00ff00)));
+    public static final DeferredItem<BombBlockItem> LITTLE_BOY = ITEMS.register("little_boy",
+            () -> new BombBlockItem(ModBlocks.LITTLE_BOY.get(), new Item.Properties().stacksTo(1),
+                    BombCategory.of("nuclear", 0x00ff00)));
+    public static final DeferredItem<BombBlockItem> CASEOH = ITEMS.register("caseoh",
+            () -> new BombBlockItem(ModBlocks.CASEOH.get(), new Item.Properties().stacksTo(1),
+                    BombCategory.of("nuclear", 0x00ff00)));
+    public static final DeferredItem<BombBlockItem> DUD = ITEMS.register("dud",
+            () -> new BombBlockItem(ModBlocks.DUD.get(), new Item.Properties().stacksTo(1),
+                    BombCategory.of("soulfire", 0x8888ff)));
+    public static final DeferredItem<BombBlockItem> BRICK_CHARGE = ITEMS.register("brick_charge",
+            () -> new BombBlockItem(ModBlocks.BRICK_CHARGE.get(), new Item.Properties(),
+                    BombCategory.of("brick", 0xff8888)));
     public static final DeferredItem<DetonatorItem> DETONATOR = ITEMS.register("detonator",
             () -> new DetonatorItem(new Item.Properties()));
 
@@ -196,6 +202,8 @@ public class ModItems {
             () -> new BlockItem(ModBlocks.FOUNDATION_CONCRETE.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> STEEL_REINFORCED_GLASS = ITEMS.register("steel_reinforced_glass",
             () -> new BlockItem(ModBlocks.STEEL_REINFORCED_GLASS.get(), new Item.Properties()));
+    public static final DeferredItem<BlockItem> CHISELED_CONCRETE_BRICKS = ITEMS.register("chiseled_concrete_bricks",
+            () -> new BlockItem(ModBlocks.CHISELED_CONCRETE_BRICKS.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> CREATIVE_CONCRETE_BRICKS = ITEMS.register("creative_concrete_bricks",
             () -> new BlockItem(ModBlocks.CREATIVE_CONCRETE_BRICKS.get(), new Item.Properties()));
 

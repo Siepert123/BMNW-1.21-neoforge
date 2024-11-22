@@ -49,6 +49,7 @@ public class ModTabs {
                         items.accept(CONCRETE_BRICKS_STAIRS);
                         items.accept(CONCRETE_BRICKS_SLAB);
                         items.accept(FOUNDATION_CONCRETE);
+                        items.accept(CHISELED_CONCRETE_BRICKS);
                         items.accept(STEEL_REINFORCED_GLASS);
                         items.accept(CREATIVE_CONCRETE_BRICKS);
 
@@ -62,11 +63,6 @@ public class ModTabs {
                                 DEEPSLATE_URANIUM_ORE,
                                 DEEPSLATE_THORIUM_ORE
                         );
-                        {
-                            ItemStack fill = new ItemStack(Items.LIGHT_GRAY_STAINED_GLASS_PANE);
-                            fill.set(DataComponents.MAX_STACK_SIZE, 1);
-                            items.accept(fill);
-                        }
 
                         addItems(items,
                                 RAW_TUNGSTEN_BLOCK,
@@ -87,12 +83,6 @@ public class ModTabs {
                                 URANIUM_FUEL_BLOCK,
                                 THORIUM_FUEL_BLOCK
                         );
-
-                        for (int i = 0; i < 4; i++) {
-                            ItemStack fill = new ItemStack(Items.LIGHT_GRAY_STAINED_GLASS_PANE);
-                            fill.set(DataComponents.MAX_STACK_SIZE, 3 + i);
-                            items.accept(fill);
-                        }
 
                         items.accept(SLAKED_NUCLEAR_REMAINS);
                         items.accept(NUCLEAR_REMAINS);

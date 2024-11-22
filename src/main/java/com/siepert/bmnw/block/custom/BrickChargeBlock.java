@@ -2,6 +2,7 @@ package com.siepert.bmnw.block.custom;
 
 import com.siepert.bmnw.entity.ModEntityTypes;
 import com.siepert.bmnw.entity.custom.BlockDebrisEntity;
+import com.siepert.bmnw.interfaces.IBombBlock;
 import com.siepert.bmnw.interfaces.IDetonatable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
@@ -10,7 +11,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 
-public class BrickChargeBlock extends Block implements IDetonatable {
+public class BrickChargeBlock extends Block implements IDetonatable, IBombBlock {
     public BrickChargeBlock(Properties properties) {
         super(properties);
     }
@@ -45,5 +46,10 @@ public class BrickChargeBlock extends Block implements IDetonatable {
         if (level.hasNeighborSignal(pos)) {
             detonate(level, pos);
         }
+    }
+
+    @Override
+    public int radius() {
+        return 4;
     }
 }

@@ -3,6 +3,7 @@ package com.siepert.bmnw.block.custom;
 import com.siepert.bmnw.entity.ModEntityTypes;
 import com.siepert.bmnw.entity.custom.LittleBoyEntity;
 import com.siepert.bmnw.entity.custom.NuclearChargeEntity;
+import com.siepert.bmnw.interfaces.IBombBlock;
 import com.siepert.bmnw.interfaces.IDetonatable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
@@ -13,7 +14,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class LittleBoyBlock extends Block implements IDetonatable {
+public class LittleBoyBlock extends Block implements IDetonatable, IBombBlock {
     public LittleBoyBlock(Properties properties) {
         super(properties);
     }
@@ -39,5 +40,10 @@ public class LittleBoyBlock extends Block implements IDetonatable {
     @Override
     protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return shape;
+    }
+
+    @Override
+    public int radius() {
+        return 64;
     }
 }

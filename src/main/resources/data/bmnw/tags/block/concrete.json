@@ -6,6 +6,7 @@
     "bmnw:concrete_bricks",
     "bmnw:concrete_bricks_slab",
     "bmnw:concrete_bricks_stairs",
-    "bmnw:foundation_concrete"
+    "bmnw:foundation_concrete",
+    "bmnw:chiseled_concrete_bricks"
   ]
 }

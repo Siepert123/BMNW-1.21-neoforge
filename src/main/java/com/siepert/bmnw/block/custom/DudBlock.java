@@ -2,6 +2,7 @@ package com.siepert.bmnw.block.custom;
 
 import com.siepert.bmnw.entity.ModEntityTypes;
 import com.siepert.bmnw.entity.custom.DudEntity;
+import com.siepert.bmnw.interfaces.IBombBlock;
 import com.siepert.bmnw.interfaces.IDetonatable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Explosion;
@@ -10,7 +11,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class DudBlock extends Block implements IDetonatable {
+public class DudBlock extends Block implements IDetonatable, IBombBlock {
     public DudBlock(Properties properties) {
         super(properties);
     }
@@ -36,5 +37,10 @@ public class DudBlock extends Block implements IDetonatable {
                 detonate(level, pos);
             }
         }
+    }
+
+    @Override
+    public int radius() {
+        return 32;
     }
 }
