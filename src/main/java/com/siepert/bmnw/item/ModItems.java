@@ -124,6 +124,22 @@ public class ModItems {
             () -> new SimpleRadioactiveItem(new Item.Properties(), 0.25f));
     public static final DeferredItem<SimpleRadioactiveItem> URANIUM_FUEL_INGOT = ITEMS.register("uranium_fuel_ingot",
             () -> new SimpleRadioactiveItem(new Item.Properties(), 0.5f));
+
+    public static final DeferredItem<SimpleRadioactiveItem> URANIUM_BILLET = ITEMS.register("uranium_billet",
+            () -> new SimpleRadioactiveItem(0.175f));
+    public static final DeferredItem<SimpleRadioactiveItem> URANIUM_233_BILLET = ITEMS.register("uranium_233_billet",
+            () -> new SimpleRadioactiveItem(2.5f));
+    public static final DeferredItem<SimpleRadioactiveItem> URANIUM_235_BILLET = ITEMS.register("uranium_235_billet",
+            () -> new SimpleRadioactiveItem(0.5f));
+    public static final DeferredItem<SimpleRadioactiveItem> URANIUM_238_BILLET = ITEMS.register("uranium_238_billet",
+            () -> new SimpleRadioactiveItem(0.125f));
+    public static final DeferredItem<SimpleRadioactiveItem> URANIUM_FUEL_BILLET = ITEMS.register("uranium_fuel_billet",
+            () -> new SimpleRadioactiveItem(0.25f));
+    public static final DeferredItem<SimpleRadioactiveItem> THORIUM_BILLET = ITEMS.register("thorium_billet",
+            () -> new SimpleRadioactiveItem(0.05f));
+    public static final DeferredItem<SimpleRadioactiveItem> THORIUM_FUEL_BILLET = ITEMS.register("thorium_fuel_billet",
+            () -> new SimpleRadioactiveItem(0.875f));
+
     public static final DeferredItem<SimpleRadioactiveBlockItem> URANIUM_233_BLOCK = ITEMS.register("uranium_233_block",
             () -> new SimpleRadioactiveBlockItem(ModBlocks.URANIUM_233_BLOCK.get(), new Item.Properties()));
     public static final DeferredItem<SimpleRadioactiveBlockItem> URANIUM_235_BLOCK = ITEMS.register("uranium_235_block",

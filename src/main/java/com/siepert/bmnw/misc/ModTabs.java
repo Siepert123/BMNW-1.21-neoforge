@@ -152,6 +152,7 @@ public class ModTabs {
                         items.accept(RAW_TITANIUM);
                         items.accept(RAW_URANIUM);
                         items.accept(RAW_THORIUM);
+
                         items.accept(TUNGSTEN_NUGGET);
                         items.accept(TITANIUM_NUGGET);
                         items.accept(URANIUM_NUGGET);
@@ -161,6 +162,7 @@ public class ModTabs {
                         items.accept(URANIUM_FUEL_NUGGET);
                         items.accept(THORIUM_NUGGET);
                         items.accept(THORIUM_FUEL_NUGGET);
+
                         items.accept(TUNGSTEN_INGOT);
                         items.accept(TITANIUM_INGOT);
                         items.accept(URANIUM_INGOT);
@@ -170,6 +172,14 @@ public class ModTabs {
                         items.accept(URANIUM_FUEL_INGOT);
                         items.accept(THORIUM_INGOT);
                         items.accept(THORIUM_FUEL_INGOT);
+
+                        items.accept(URANIUM_BILLET);
+                        items.accept(URANIUM_233_BILLET);
+                        items.accept(URANIUM_235_BILLET);
+                        items.accept(URANIUM_238_BILLET);
+                        items.accept(URANIUM_FUEL_BILLET);
+                        items.accept(THORIUM_BILLET);
+                        items.accept(THORIUM_FUEL_BILLET);
                     })
                     .build()
     );

@@ -24,6 +24,10 @@ public class SimpleRadioactiveItem extends Item implements IItemHazard {
         tooltip = Component.translatable("tooltip.bmnw.radioactive").append(" - ").append(String.valueOf(rads)).append("RAD/s").withColor(0x00dd00);
     }
 
+    public SimpleRadioactiveItem(float rads) {
+        this(new Properties(), rads);
+    }
+
     @Override
     public float getRadioactivity() {
         return rads;
