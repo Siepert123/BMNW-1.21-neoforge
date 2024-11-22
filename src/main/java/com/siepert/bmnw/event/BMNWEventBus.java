@@ -90,7 +90,7 @@ public class BMNWEventBus {
                                 }
                             }
 
-                            chunk.setData(ModAttachments.RADIATION, chunk.getData(ModAttachments.RADIATION) + (chunk.getData(ModAttachments.SOURCE_RADIOACTIVITY) / 20));
+                            chunk.setData(ModAttachments.RADIATION, chunk.getData(ModAttachments.RADIATION) + (chunk.getData(ModAttachments.SOURCE_RADIOACTIVITY) / 200));
 
                             if (RadHelper.getChunkRadiation(chunk) > 1)
                                 RadHelper.disperseChunkRadiation(chunk);
