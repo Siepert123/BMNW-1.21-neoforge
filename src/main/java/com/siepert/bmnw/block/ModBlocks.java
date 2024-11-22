@@ -3,8 +3,6 @@ package com.siepert.bmnw.block;
 import com.siepert.bmnw.block.custom.*;
 import com.siepert.bmnw.category.MissileCategory;
 import com.siepert.bmnw.entity.custom.ExampleMissileEntity;
-import com.siepert.bmnw.radiation.UnitConvertor;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.bus.api.IEventBus;
@@ -12,6 +10,10 @@ import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class ModBlocks {
+    @SuppressWarnings("deprecation")
+    private static final float obsidian_blast_res = Blocks.OBSIDIAN.getExplosionResistance();
+    private static final float concrete_blast_res = obsidian_blast_res / 10;
+
     private static DeferredBlock<Block> ore(String name) {
         return BLOCKS.register(name, () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_ORE)));
     }
@@ -117,7 +119,7 @@ public class ModBlocks {
             () -> new DecontaminatorBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)));
 
     public static final DeferredBlock<Block> CONCRETE = BLOCKS.register("concrete",
-            () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.OBSIDIAN)));
+            () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.OBSIDIAN).strength(Blocks.OBSIDIAN.defaultDestroyTime() / 2, concrete_blast_res)));
     public static final DeferredBlock<Block> CONCRETE_SLAB = BLOCKS.register("concrete_slab",
             () -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(CONCRETE.get())));
     public static final DeferredBlock<StairBlock> CONCRETE_STAIRS = BLOCKS.register("concrete_stairs",
@@ -128,10 +130,10 @@ public class ModBlocks {
             () -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(CONCRETE_BRICKS.get())));
     public static final DeferredBlock<StairBlock> CONCRETE_BRICKS_STAIRS = BLOCKS.register("concrete_bricks_stairs",
             () -> new StairBlock(CONCRETE_BRICKS.get().defaultBlockState(), BlockBehaviour.Properties.ofFullCopy(CONCRETE_BRICKS.get())));
-    @SuppressWarnings("deprecation")
+
     public static final DeferredBlock<Block> FOUNDATION_CONCRETE = BLOCKS.register("foundation_concrete",
             () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.OBSIDIAN)
-                    .strength(Blocks.OBSIDIAN.defaultDestroyTime(), Blocks.OBSIDIAN.getExplosionResistance() * 3)));
+                    .strength(Blocks.OBSIDIAN.defaultDestroyTime(), concrete_blast_res * 3)));
     public static final DeferredBlock<ReinforcedGlassBlock> STEEL_REINFORCED_GLASS = BLOCKS.register("steel_reinforced_glass",
             () -> new ReinforcedGlassBlock(BlockBehaviour.Properties.ofFullCopy(CONCRETE_BRICKS.get()).noOcclusion()));
     public static final DeferredBlock<Block> CHISELED_CONCRETE_BRICKS = BLOCKS.register("chiseled_concrete_bricks",

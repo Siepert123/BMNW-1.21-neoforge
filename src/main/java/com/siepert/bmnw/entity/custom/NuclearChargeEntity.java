@@ -56,6 +56,14 @@ public class NuclearChargeEntity extends BombEntity {
             dry(radius * 2);
             LOGGER.info("Effect entities!");
             effectEntities(radius * 3);
+
+            for (int x = -1; x <= 1; x++) {
+                for (int y = 1; y >= -1; y--) {
+                    for (int z = -1; z <= 1; z++) {
+                        level().setBlock(worldPosition.offset(x, y, z), Blocks.AIR.defaultBlockState(), 3);
+                    }
+                }
+            }
         }
         if (progress < radius) {
             for (int x = -progress; x <= progress; x++) {

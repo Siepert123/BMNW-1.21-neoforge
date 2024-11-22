@@ -37,6 +37,14 @@ public class CaseohEntity extends BombEntity {
             dry(radius * 2);
             LOGGER.info("Effect entities!");
             effectEntities(radius * 3);
+
+            for (int x = -10; x <= 10; x++) {
+                for (int y = 10; y >= -10; y--) {
+                    for (int z = -10; z <= 10; z++) {
+                        level().setBlock(worldPosition.offset(x, y, z), Blocks.AIR.defaultBlockState(), 3);
+                    }
+                }
+            }
         }
         if (progress < radius) {
             for (int x = -progress; x <= progress; x++) {

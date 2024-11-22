@@ -37,6 +37,14 @@ public class LittleBoyEntity extends BombEntity {
             dry(radius * 2);
             LOGGER.info("Effect entities!");
             effectEntities(radius * 3);
+
+            for (int x = -5; x <= 5; x++) {
+                for (int y = 5; y >= -5; y--) {
+                    for (int z = -5; z <= 5; z++) {
+                        level().setBlock(worldPosition.offset(x, y, z), Blocks.AIR.defaultBlockState(), 3);
+                    }
+                }
+            }
         }
         if (progress < radius) {
             for (int x = -progress; x <= progress; x++) {
