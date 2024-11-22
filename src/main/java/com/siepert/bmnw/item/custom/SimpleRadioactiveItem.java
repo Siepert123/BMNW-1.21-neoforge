@@ -25,7 +25,7 @@ public class SimpleRadioactiveItem extends Item implements IItemHazard {
     }
 
     @Override
-    public float radioactivity() {
+    public float getRadioactivity() {
         return rads;
     }
 

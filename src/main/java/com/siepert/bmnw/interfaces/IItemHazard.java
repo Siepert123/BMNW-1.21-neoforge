@@ -1,13 +1,13 @@
 package com.siepert.bmnw.interfaces;
 
 public interface IItemHazard {
-    default float radioactivity() {
+    default float getRadioactivity() {
         return 0.0f;
     }
-    default boolean burning() {
+    default boolean isBurning() {
         return false;
     }
-    default boolean blinding() {
+    default boolean isBlinding() {
         return false;
     }
 }

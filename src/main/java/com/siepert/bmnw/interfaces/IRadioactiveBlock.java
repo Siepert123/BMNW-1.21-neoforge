@@ -5,8 +5,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
 public interface IRadioactiveBlock {
-    default float radioactivity(Level level, BlockPos pos, BlockState state) {
-        return radioactivity();
+    default float getRadioactivity(Level level, BlockPos pos, BlockState state) {
+        return getRadioactivity();
     }
-    float radioactivity();
+    float getRadioactivity();
 }

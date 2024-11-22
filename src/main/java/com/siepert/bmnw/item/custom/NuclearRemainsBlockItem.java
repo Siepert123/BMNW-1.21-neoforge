@@ -14,7 +14,7 @@ public class NuclearRemainsBlockItem extends SimpleRadioactiveBlockItem {
     }
 
     @Override
-    public boolean burning() {
+    public boolean isBurning() {
         return true;
     }
 

@@ -14,7 +14,6 @@ import com.siepert.bmnw.particle.custom.FireSmokeParticleProvider;
 import com.siepert.bmnw.particle.custom.VomitParticleProvider;
 import com.siepert.bmnw.radiation.RadHelper;
 import com.siepert.bmnw.radiation.ShieldingValues;
-import com.siepert.bmnw.radiation.UnitConvertor;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
@@ -30,7 +29,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -238,15 +236,15 @@ public class BMNWEventBus {
                 if (player.isCreative()) return;
                 for (ItemStack stack : player.getInventory().items) {
                     if (stack.getItem() instanceof IItemHazard itemHazard) {
-                        if (itemHazard.radioactivity() > 0.0f) {
-                            RadHelper.addEntityRadiation(player, (itemHazard.radioactivity() * stack.getCount()) / 20);
+                        if (itemHazard.getRadioactivity() > 0.0f) {
+                            RadHelper.addEntityRadiation(player, (itemHazard.getRadioactivity() * stack.getCount()) / 20);
                         }
 
-                        if (itemHazard.burning()) {
+                        if (itemHazard.isBurning()) {
                             player.setRemainingFireTicks(20);
                         }
 
-                        if (itemHazard.blinding()) {
+                        if (itemHazard.isBlinding()) {
                             player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 20, 0, false, false));
                         }
                     }

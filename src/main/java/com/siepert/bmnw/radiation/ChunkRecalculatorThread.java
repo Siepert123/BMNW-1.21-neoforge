@@ -32,7 +32,7 @@ public class ChunkRecalculatorThread implements Runnable {
                     BlockState state = level.getBlockState(pos);
 
                     if (state.getBlock() instanceof IRadioactiveBlock block) {
-                        calculatedRads += getInsertedRadiation(level, pos, block.radioactivity(level, pos, state));
+                        calculatedRads += getInsertedRadiation(level, pos, block.getRadioactivity(level, pos, state));
                     }
                 }
             }

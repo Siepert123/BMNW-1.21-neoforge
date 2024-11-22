@@ -23,7 +23,7 @@ public class SimpleRadioactiveBlock extends Block implements IRadioactiveBlock {
     }
 
     @Override
-    public float radioactivity() {
+    public float getRadioactivity() {
         return rads;
     }
 

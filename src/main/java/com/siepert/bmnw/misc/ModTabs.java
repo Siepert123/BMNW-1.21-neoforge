@@ -1,10 +1,14 @@
 package com.siepert.bmnw.misc;
 
 import com.siepert.bmnw.item.ModItems;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.ItemLike;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -14,19 +18,14 @@ import java.util.function.Supplier;
 import static com.siepert.bmnw.item.ModItems.*;
 
 public class ModTabs {
+    private static void addItems(CreativeModeTab.Output items, ItemLike... itemLikes) {
+        for (ItemLike itemLike : itemLikes) {
+            items.accept(itemLike);
+        }
+    }
+
     private static final DeferredRegister<CreativeModeTab> CREATIVE_TABS =
             DeferredRegister.create(Registries.CREATIVE_MODE_TAB, "bmnw");
-
-    @Deprecated(forRemoval = true)
-    public static final Supplier<CreativeModeTab> MAIN = CREATIVE_TABS.register("main",
-            () -> CreativeModeTab.builder()
-                    .title(Component.translatable("itemGroup.bmnw.main"))
-                    .icon(() -> new ItemStack(PLAYSTATION.get()))
-                    .displayItems((parameters, items) -> {
-                        //FIXME: either remove or add EVERY SINGLE ITEM here.
-                    })
-                    .build()
-    );
 
     private static Supplier<ItemStack> getBlocksIcon() {
         return () -> new ItemStack(CONCRETE_BRICKS.get());
@@ -36,6 +35,12 @@ public class ModTabs {
             () -> CreativeModeTab.builder()
                     .title(Component.translatable("itemGroup.bmnw.blocks"))
                     .icon(getBlocksIcon())
+                    .withTabsAfter(
+                            ResourceLocation.parse("bmnw:materials"),
+                            ResourceLocation.parse("bmnw:tools"),
+                            ResourceLocation.parse("bmnw:machines"),
+                            ResourceLocation.parse("bmnw:bombs")
+                    )
                     .displayItems((parameters, items) -> {
                         items.accept(CONCRETE);
                         items.accept(CONCRETE_STAIRS);
@@ -46,6 +51,48 @@ public class ModTabs {
                         items.accept(FOUNDATION_CONCRETE);
                         items.accept(STEEL_REINFORCED_GLASS);
                         items.accept(CREATIVE_CONCRETE_BRICKS);
+
+                        addItems(items,
+                                TUNGSTEN_ORE,
+                                TITANIUM_ORE,
+                                URANIUM_ORE,
+                                THORIUM_ORE,
+                                DEEPSLATE_TUNGSTEN_ORE,
+                                DEEPSLATE_TITANIUM_ORE,
+                                DEEPSLATE_URANIUM_ORE,
+                                DEEPSLATE_THORIUM_ORE
+                        );
+                        {
+                            ItemStack fill = new ItemStack(Items.LIGHT_GRAY_STAINED_GLASS_PANE);
+                            fill.set(DataComponents.MAX_STACK_SIZE, 1);
+                            items.accept(fill);
+                        }
+
+                        addItems(items,
+                                RAW_TUNGSTEN_BLOCK,
+                                RAW_TITANIUM_BLOCK,
+                                RAW_URANIUM_BLOCK,
+                                RAW_THORIUM_BLOCK,
+                                TUNGSTEN_BLOCK,
+                                TITANIUM_BLOCK,
+                                URANIUM_BLOCK,
+                                THORIUM_BLOCK,
+                                STEEL_BLOCK
+                        );
+
+                        addItems(items,
+                                URANIUM_233_BLOCK,
+                                URANIUM_235_BLOCK,
+                                URANIUM_238_BLOCK,
+                                URANIUM_FUEL_BLOCK,
+                                THORIUM_FUEL_BLOCK
+                        );
+
+                        for (int i = 0; i < 4; i++) {
+                            ItemStack fill = new ItemStack(Items.LIGHT_GRAY_STAINED_GLASS_PANE);
+                            fill.set(DataComponents.MAX_STACK_SIZE, 3 + i);
+                            items.accept(fill);
+                        }
 
                         items.accept(SLAKED_NUCLEAR_REMAINS);
                         items.accept(NUCLEAR_REMAINS);
@@ -80,9 +127,16 @@ public class ModTabs {
             () -> CreativeModeTab.builder()
                     .title(Component.translatable("itemGroup.bmnw.materials"))
                     .icon(getMaterialsIcon())
+                    .withTabsBefore(
+                            ResourceLocation.parse("bmnw:blocks")
+                    )
+                    .withTabsAfter(
+                            ResourceLocation.parse("bmnw:tools"),
+                            ResourceLocation.parse("bmnw:machines"),
+                            ResourceLocation.parse("bmnw:bombs")
+                    )
                     .displayItems((parameters, items) -> {
                         items.accept(STEEL_INGOT);
-                        items.accept(STEEL_BLOCK);
 
                         items.accept(IRON_PLATE);
                         items.accept(COPPER_PLATE);
@@ -94,22 +148,10 @@ public class ModTabs {
                         items.accept(GOLD_WIRE);
                         items.accept(STEEL_WIRE);
 
-                        items.accept(TUNGSTEN_ORE);
-                        items.accept(TITANIUM_ORE);
-                        items.accept(URANIUM_ORE);
-                        items.accept(THORIUM_ORE);
-                        items.accept(DEEPSLATE_TUNGSTEN_ORE);
-                        items.accept(DEEPSLATE_TITANIUM_ORE);
-                        items.accept(DEEPSLATE_URANIUM_ORE);
-                        items.accept(DEEPSLATE_THORIUM_ORE);
                         items.accept(RAW_TUNGSTEN);
                         items.accept(RAW_TITANIUM);
                         items.accept(RAW_URANIUM);
                         items.accept(RAW_THORIUM);
-                        items.accept(RAW_TUNGSTEN_BLOCK);
-                        items.accept(RAW_TITANIUM_BLOCK);
-                        items.accept(RAW_URANIUM_BLOCK);
-                        items.accept(RAW_THORIUM_BLOCK);
                         items.accept(TUNGSTEN_NUGGET);
                         items.accept(TITANIUM_NUGGET);
                         items.accept(URANIUM_NUGGET);
@@ -128,36 +170,6 @@ public class ModTabs {
                         items.accept(URANIUM_FUEL_INGOT);
                         items.accept(THORIUM_INGOT);
                         items.accept(THORIUM_FUEL_INGOT);
-                        items.accept(TUNGSTEN_BLOCK);
-                        items.accept(TITANIUM_BLOCK);
-                        items.accept(URANIUM_BLOCK);
-                        items.accept(URANIUM_233_BLOCK);
-                        items.accept(URANIUM_235_BLOCK);
-                        items.accept(URANIUM_238_BLOCK);
-                        items.accept(URANIUM_FUEL_BLOCK);
-                        items.accept(THORIUM_BLOCK);
-                        items.accept(THORIUM_FUEL_BLOCK);
-                    })
-                    .build()
-    );
-
-    @NoUnused
-    public static final Supplier<CreativeModeTab> BOMBS = CREATIVE_TABS.register("bombs",
-            () -> CreativeModeTab.builder()
-                    .title(Component.translatable("itemGroup.bmnw.bombs"))
-                    .icon(() -> new ItemStack(EXAMPLE_MISSILE.get()))
-                    .displayItems((parameters, items) -> {
-                        items.accept(DETONATOR);
-
-                        items.accept(DUD);
-                        items.accept(BRICK_CHARGE);
-                        items.accept(NUCLEAR_CHARGE);
-                        items.accept(LITTLE_BOY);
-                        items.accept(CASEOH);
-
-                        items.accept(MISSILE_LAUNCH_PAD);
-                        items.accept(TARGET_DESIGNATOR);
-                        items.accept(EXAMPLE_MISSILE);
                     })
                     .build()
     );
@@ -167,6 +179,14 @@ public class ModTabs {
             () -> CreativeModeTab.builder()
                     .title(Component.translatable("itemGroup.bmnw.tools"))
                     .icon(() -> new ItemStack(URANIUM_SANDWICH.get()))
+                    .withTabsBefore(
+                            ResourceLocation.parse("bmnw:blocks"),
+                            ResourceLocation.parse("bmnw:materials")
+                    )
+                    .withTabsAfter(
+                            ResourceLocation.parse("bmnw:machines"),
+                            ResourceLocation.parse("bmnw:bombs")
+                    )
                     .displayItems((parameters, items) -> {
                         items.accept(GEIGER_COUNTER);
                         items.accept(DETONATOR);
@@ -181,8 +201,43 @@ public class ModTabs {
             () -> CreativeModeTab.builder()
                     .title(Component.translatable("itemGroup.bmnw.machines"))
                     .icon(() -> new ItemStack(DECONTAMINATOR.get()))
+                    .withTabsBefore(
+                            ResourceLocation.parse("bmnw:blocks"),
+                            ResourceLocation.parse("bmnw:materials"),
+                            ResourceLocation.parse("bmnw:tools")
+                    )
+                    .withTabsAfter(
+                            ResourceLocation.parse("bmnw:bombs")
+                    )
                     .displayItems((parameters, items) -> {
                         items.accept(DECONTAMINATOR);
+                    })
+                    .build()
+    );
+
+    @NoUnused
+    public static final Supplier<CreativeModeTab> BOMBS = CREATIVE_TABS.register("bombs",
+            () -> CreativeModeTab.builder()
+                    .title(Component.translatable("itemGroup.bmnw.bombs"))
+                    .icon(() -> new ItemStack(EXAMPLE_MISSILE.get()))
+                    .withTabsBefore(
+                            ResourceLocation.parse("bmnw:blocks"),
+                            ResourceLocation.parse("bmnw:materials"),
+                            ResourceLocation.parse("bmnw:tools"),
+                            ResourceLocation.parse("bmnw:machines")
+                    )
+                    .displayItems((parameters, items) -> {
+                        items.accept(DETONATOR);
+
+                        items.accept(DUD);
+                        items.accept(BRICK_CHARGE);
+                        items.accept(NUCLEAR_CHARGE);
+                        items.accept(LITTLE_BOY);
+                        items.accept(CASEOH);
+
+                        items.accept(MISSILE_LAUNCH_PAD);
+                        items.accept(TARGET_DESIGNATOR);
+                        items.accept(EXAMPLE_MISSILE);
                     })
                     .build()
     );

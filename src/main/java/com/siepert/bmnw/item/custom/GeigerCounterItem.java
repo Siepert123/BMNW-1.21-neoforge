@@ -5,7 +5,6 @@ import com.siepert.bmnw.misc.BMNWConfig;
 import com.siepert.bmnw.misc.ModAttachments;
 import com.siepert.bmnw.misc.ModSounds;
 import com.siepert.bmnw.radiation.RadHelper;
-import com.siepert.bmnw.radiation.UnitConvertor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -48,7 +47,7 @@ public class GeigerCounterItem extends Item {
 
         for (ItemStack stack : player.getInventory().items) {
             if (stack.getItem() instanceof IItemHazard) {
-                inventoryRads += (((IItemHazard) stack.getItem()).radioactivity() * stack.getCount());
+                inventoryRads += (((IItemHazard) stack.getItem()).getRadioactivity() * stack.getCount());
             }
         }
         return inventoryRads;
