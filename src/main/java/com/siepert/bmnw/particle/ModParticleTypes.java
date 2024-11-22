@@ -24,6 +24,10 @@ public class ModParticleTypes {
 
     public static final Supplier<SimpleParticleType> FIRE_SMOKE = PARTICLE_TYPES.register(
             "fire_smoke",
+            () -> new SimpleParticleType(true)
+    );
+    public static final Supplier<SimpleParticleType> SMOKE_HD = PARTICLE_TYPES.register(
+            "smoke_hd",
             () -> new SimpleParticleType(false)
     );
 

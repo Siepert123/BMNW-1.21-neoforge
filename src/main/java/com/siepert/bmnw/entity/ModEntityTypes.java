@@ -23,24 +23,28 @@ public class ModEntityTypes {
             "nuclear_charge",
             () -> EntityType.Builder.of(NuclearChargeEntity::new, MobCategory.MISC)
                     .sized(1.0f, 1.0f)
+                    .clientTrackingRange(256)
                     .build("bmnw:nuclear_charge")
     );
     public static final DeferredHolder<EntityType<?>, EntityType<DudEntity>> DUD = ENTITY_TYPES.register(
             "dud",
             () -> EntityType.Builder.of(DudEntity::new, MobCategory.MISC)
                     .sized(1.0f, 1.0f)
+                    .clientTrackingRange(256)
                     .build("bmnw:dud")
     );
     public static final DeferredHolder<EntityType<?>, EntityType<LittleBoyEntity>> LITTLE_BOY = ENTITY_TYPES.register(
             "little_boy",
             () -> EntityType.Builder.of(LittleBoyEntity::new, MobCategory.MISC)
                     .sized(1.0f, 1.0f)
+                    .clientTrackingRange(512)
                     .build("bmnw:little_boy")
     );
     public static final DeferredHolder<EntityType<?>, EntityType<CaseohEntity>> CASEOH = ENTITY_TYPES.register(
             "caseoh",
             () -> EntityType.Builder.of(CaseohEntity::new, MobCategory.MISC)
                     .sized(1.0f, 1.0f)
+                    .clientTrackingRange(1024)
                     .build("bmnw:caseoh")
     );
 
@@ -48,6 +52,7 @@ public class ModEntityTypes {
             "example_missile",
             () -> EntityType.Builder.of(ExampleMissileEntity::new, MobCategory.MISC)
                     .sized(1.0f, 1.0f)
+                    .clientTrackingRange(512)
                     .build("bmnw:example_missile")
     );
 

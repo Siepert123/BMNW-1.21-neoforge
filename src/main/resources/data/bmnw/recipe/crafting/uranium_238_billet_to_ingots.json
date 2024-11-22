@@ -10,19 +10,10 @@
     },
     {
       "item": "bmnw:uranium_238_billet"
-    },
-    {
-      "item": "bmnw:uranium_238_billet"
-    },
-    {
-      "item": "bmnw:uranium_238_billet"
-    },
-    {
-      "item": "bmnw:uranium_235_billet"
     }
   ],
   "result": {
-    "count": 6,
-    "id": "bmnw:uranium_fuel_billet"
+    "count": 2,
+    "id": "bmnw:uranium_238_ingot"
   }
 }
