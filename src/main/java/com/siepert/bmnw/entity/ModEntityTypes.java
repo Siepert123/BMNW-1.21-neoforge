@@ -56,6 +56,14 @@ public class ModEntityTypes {
                     .build("bmnw:example_missile")
     );
 
+    public static final DeferredHolder<EntityType<?>, EntityType<NuclearMissileEntity>> NUCLEAR_MISSILE = ENTITY_TYPES.register(
+            "nuclear_missile",
+            () -> EntityType.Builder.of(NuclearMissileEntity::new, MobCategory.MISC)
+                    .sized(1.0f, 1.0f)
+                    .clientTrackingRange(512)
+                    .build("bmnw:nuclear_missile")
+    );
+
     public static void register(IEventBus eventBus) {
         ENTITY_TYPES.register(eventBus);
     }

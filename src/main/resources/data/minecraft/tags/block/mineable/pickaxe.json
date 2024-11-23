@@ -33,7 +33,8 @@
     "bmnw:little_boy",
     "bmnw:caseoh",
     "bmnw:brick_charge",
-    "bmnw:example_missile"
+    "bmnw:example_missile",
+    "bmnw:nuclear_missile"
   ],
   "replace": false
 }

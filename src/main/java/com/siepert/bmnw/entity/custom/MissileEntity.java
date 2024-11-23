@@ -40,6 +40,7 @@ public abstract class MissileEntity extends Entity {
     protected MissileEntity(EntityType<?> entityType, Level level) {
         super(entityType, level);
     }
+
     @Override
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
         builder.define(IS_FALLING_DATA, false);

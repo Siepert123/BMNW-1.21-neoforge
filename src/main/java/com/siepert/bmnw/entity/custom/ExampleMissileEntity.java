@@ -6,8 +6,12 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 
 public class ExampleMissileEntity extends MissileEntity {
+
     public ExampleMissileEntity(EntityType<?> entityType, Level level) {
         super(entityType, level);
+    }
+    protected ExampleMissileEntity(Level level) {
+        this(ModEntityTypes.EXAMPLE_MISSILE.get(), level);
     }
 
     final boolean b = true;

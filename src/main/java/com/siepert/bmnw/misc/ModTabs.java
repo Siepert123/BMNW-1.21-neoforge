@@ -264,7 +264,7 @@ public class ModTabs {
     public static final Supplier<CreativeModeTab> BOMBS = CREATIVE_TABS.register("bombs",
             () -> CreativeModeTab.builder()
                     .title(Component.translatable("itemGroup.bmnw.bombs"))
-                    .icon(() -> new ItemStack(EXAMPLE_MISSILE.get()))
+                    .icon(() -> new ItemStack(NUCLEAR_CHARGE.get()))
                     .withTabsBefore(
                             CreativeModeTabs.BUILDING_BLOCKS.location(),
                             CreativeModeTabs.COLORED_BLOCKS.location(),
@@ -293,6 +293,7 @@ public class ModTabs {
                         items.accept(MISSILE_LAUNCH_PAD);
                         items.accept(TARGET_DESIGNATOR);
                         items.accept(EXAMPLE_MISSILE);
+                        items.accept(NUCLEAR_MISSILE);
                     })
                     .build()
     );

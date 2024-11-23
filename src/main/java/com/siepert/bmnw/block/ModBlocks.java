@@ -3,6 +3,7 @@ package com.siepert.bmnw.block;
 import com.siepert.bmnw.block.custom.*;
 import com.siepert.bmnw.category.MissileCategory;
 import com.siepert.bmnw.entity.custom.ExampleMissileEntity;
+import com.siepert.bmnw.entity.custom.NuclearMissileEntity;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.bus.api.IEventBus;
@@ -121,6 +122,9 @@ public class ModBlocks {
     public static final DeferredBlock<MissileBlock> EXAMPLE_MISSILE = BLOCKS.register("example_missile",
             () -> new MissileBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get()), ExampleMissileEntity.class,
                     MissileCategory.of("brick", 0xff8888)));
+    public static final DeferredBlock<MissileBlock> NUCLEAR_MISSILE = BLOCKS.register("nuclear_missile",
+            () -> new MissileBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get()), NuclearMissileEntity.class,
+                    MissileCategory.of("nuclear", 0x00ff00)));
     //endregion
 
     //region Basic machines

@@ -85,7 +85,7 @@ public class MissileLaunchPadBlockEntity extends BlockEntity implements IEnergyS
             if (isCore()) {
                 MissileBlock block = (MissileBlock) level.getBlockState(worldPosition.above()).getBlock();
                 level.setBlock(worldPosition.above(), Blocks.AIR.defaultBlockState(), 3);
-                MissileEntity missile = block.getNewMissileEntity(ModEntityTypes.EXAMPLE_MISSILE.get(), level);
+                MissileEntity missile = block.getNewMissileEntity(level);
                 missile.setPos(worldPosition.getX() + 0.5, worldPosition.getY() + 2, worldPosition.getZ() + 0.5);
                 missile.setTarget(new Vector2i(target.getX(), target.getZ()));
                 level.addFreshEntity(missile);

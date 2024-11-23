@@ -191,6 +191,8 @@ public class ModItems {
             () -> new TargetDesignatorItem(new Item.Properties()));
     public static final DeferredItem<BlockItem> EXAMPLE_MISSILE = ITEMS.register("example_missile",
             () -> new BlockItem(ModBlocks.EXAMPLE_MISSILE.get(), new Item.Properties().stacksTo(1)));
+    public static final DeferredItem<BlockItem> NUCLEAR_MISSILE = ITEMS.register("nuclear_missile",
+            ()-> new BlockItem(ModBlocks.NUCLEAR_MISSILE.get(), new Item.Properties().stacksTo(1)));
     //endregion
 
     //region Concrete & similar

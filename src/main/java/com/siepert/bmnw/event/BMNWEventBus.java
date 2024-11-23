@@ -283,6 +283,7 @@ public class BMNWEventBus {
             registerEntityRenderingHandler(event, ModEntityTypes.CASEOH, CaseohRenderer::new);
 
             registerEntityRenderingHandler(event, ModEntityTypes.EXAMPLE_MISSILE, ExampleMissileRenderer::new);
+            registerEntityRenderingHandler(event, ModEntityTypes.NUCLEAR_MISSILE, NuclearMissileRenderer::new);
         }
 
         /**

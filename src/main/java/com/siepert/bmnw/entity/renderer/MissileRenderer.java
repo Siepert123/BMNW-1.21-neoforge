@@ -19,7 +19,7 @@ import net.neoforged.neoforge.client.model.data.ModelData;
 import org.joml.AxisAngle4d;
 import org.joml.Quaternionf;
 
-public abstract class MissileRenderer extends EntityRenderer<MissileEntity> {
+public abstract class MissileRenderer<T extends MissileEntity> extends EntityRenderer<T> {
     private BlockState missileState;
     protected MissileRenderer(EntityRendererProvider.Context context) {
         super(context);
@@ -29,7 +29,7 @@ public abstract class MissileRenderer extends EntityRenderer<MissileEntity> {
     }
 
     @Override
-    public void render(MissileEntity entity, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
+    public void render(T entity, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
         if (missileState == null) return;
         poseStack.pushPose();
 
@@ -43,12 +43,12 @@ public abstract class MissileRenderer extends EntityRenderer<MissileEntity> {
     }
 
     @Override
-    public ResourceLocation getTextureLocation(MissileEntity entity) {
+    public ResourceLocation getTextureLocation(T entity) {
         return InventoryMenu.BLOCK_ATLAS;
     }
 
     @Override
-    public boolean shouldRender(MissileEntity livingEntity, Frustum camera, double camX, double camY, double camZ) {
+    public boolean shouldRender(T livingEntity, Frustum camera, double camX, double camY, double camZ) {
         return true;
     }
 }

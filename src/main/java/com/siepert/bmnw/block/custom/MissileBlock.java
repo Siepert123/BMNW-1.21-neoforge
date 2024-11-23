@@ -13,6 +13,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
@@ -28,9 +29,12 @@ public class MissileBlock extends Block {
         this(properties, missileEntityClass, MissileCategory.of("uncategorized"));
     }
 
-    public MissileEntity getNewMissileEntity(EntityType<?> type, Level level) {
+    public MissileEntity getNewMissileEntity(Level level) {
         try {
-            return missileEntityClass.getDeclaredConstructor(EntityType.class, Level.class).newInstance(type, level);
+            //i will commit crime
+            Constructor<? extends MissileEntity> constructor = missileEntityClass.getDeclaredConstructor(Level.class);
+            constructor.setAccessible(true);
+            return constructor.newInstance(level);
         } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
             throw new RuntimeException(e);
         }
