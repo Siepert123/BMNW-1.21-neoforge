@@ -1,9 +1,11 @@
 package com.siepert.bmnw.block.entity.custom;
 
+import com.siepert.bmnw.block.ModBlocks;
 import com.siepert.bmnw.block.custom.MissileBlock;
 import com.siepert.bmnw.block.entity.ModBlockEntities;
 import com.siepert.bmnw.entity.ModEntityTypes;
 import com.siepert.bmnw.entity.custom.MissileEntity;
+import com.siepert.bmnw.misc.ModStateProperties;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -23,6 +25,56 @@ public class MissileLaunchPadBlockEntity extends BlockEntity implements IEnergyS
     public MissileLaunchPadBlockEntity(BlockPos pos, BlockState blockState) {
         super(ModBlockEntities.MISSILE_LAUNCH_PAD.get(), pos, blockState);
     }
+    private BlockPos corePos = worldPosition;
+    public void setCorePos(BlockPos pos) {
+        corePos = pos;
+    }
+    public boolean isCore() {
+        return getCorePos().equals(worldPosition);
+    }
+    public BlockPos getCorePos() {
+        return corePos;
+    }
+
+    public boolean check() {
+        if (level == null) throw new IllegalStateException("Level should NOT be null!");
+        if (corePos.equals(worldPosition)) { //Check if we are the core
+            boolean valid = true;
+
+            if (!level.getBlockState(corePos.offset(-1, 0, -1)).is(ModBlocks.MISSILE_LAUNCH_PAD)) valid = false;
+            if (!level.getBlockState(corePos.offset(0, 0, -1)).is(ModBlocks.MISSILE_LAUNCH_PAD)) valid = false;
+            if (!level.getBlockState(corePos.offset(1, 0, -1)).is(ModBlocks.MISSILE_LAUNCH_PAD)) valid = false;
+            if (!level.getBlockState(corePos.offset(-1, 0, 0)).is(ModBlocks.MISSILE_LAUNCH_PAD)) valid = false;
+            if (!level.getBlockState(corePos.offset(0, 0, 0)).is(ModBlocks.MISSILE_LAUNCH_PAD)) valid = false;
+            if (!level.getBlockState(corePos.offset(1, 0, 0)).is(ModBlocks.MISSILE_LAUNCH_PAD)) valid = false;
+            if (!level.getBlockState(corePos.offset(-1, 0, 1)).is(ModBlocks.MISSILE_LAUNCH_PAD)) valid = false;
+            if (!level.getBlockState(corePos.offset(0, 0, 1)).is(ModBlocks.MISSILE_LAUNCH_PAD)) valid = false;
+            if (!level.getBlockState(corePos.offset(1, 0, 1)).is(ModBlocks.MISSILE_LAUNCH_PAD)) valid = false;
+
+            if (!valid) {
+                for (int x = -1; x <= 1; x++) {
+                    for (int z = -1; z <= 1; z++) {
+                        if (x != 0 || z != 0) {
+                            if (level.getBlockState(corePos.offset(x, 0, z)).is(ModBlocks.MISSILE_LAUNCH_PAD)) {
+                                level.destroyBlock(corePos.offset(x, 0, z), false);
+                            }
+                        }
+                    }
+                }
+                level.destroyBlock(corePos, true);
+                return false;
+            }
+            return true;
+        } else {
+            BlockEntity entity = level.getBlockEntity(corePos);
+            if (entity instanceof MissileLaunchPadBlockEntity) {
+                return ((MissileLaunchPadBlockEntity)entity).check();
+            } else {
+                level.destroyBlock(worldPosition, false);
+                return false;
+            }
+        }
+    }
 
     public boolean canLaunch() {
         return level != null && energyStored >= requiredLaunchEnergy && level.getBlockState(worldPosition.above()).getBlock() instanceof MissileBlock && !BlockPos.ZERO.equals(target);
@@ -30,12 +82,20 @@ public class MissileLaunchPadBlockEntity extends BlockEntity implements IEnergyS
 
     public boolean launch() {
         if (canLaunch()) {
-            MissileBlock block = (MissileBlock) level.getBlockState(worldPosition.above()).getBlock();
-            level.setBlock(worldPosition.above(), Blocks.AIR.defaultBlockState(), 3);
-            MissileEntity missile = block.getNewMissileEntity(ModEntityTypes.EXAMPLE_MISSILE.get(), level);
-            missile.setPos(worldPosition.getX() + 0.5, worldPosition.getY() + 2, worldPosition.getZ() + 0.5);
-            missile.setTarget(new Vector2i(target.getX(), target.getZ()));
-            level.addFreshEntity(missile);
+            if (isCore()) {
+                MissileBlock block = (MissileBlock) level.getBlockState(worldPosition.above()).getBlock();
+                level.setBlock(worldPosition.above(), Blocks.AIR.defaultBlockState(), 3);
+                MissileEntity missile = block.getNewMissileEntity(ModEntityTypes.EXAMPLE_MISSILE.get(), level);
+                missile.setPos(worldPosition.getX() + 0.5, worldPosition.getY() + 2, worldPosition.getZ() + 0.5);
+                missile.setTarget(new Vector2i(target.getX(), target.getZ()));
+                level.addFreshEntity(missile);
+                return true;
+            } else {
+                BlockEntity entity = level.getBlockEntity(getCorePos());
+                if (entity instanceof MissileLaunchPadBlockEntity pad) {
+                    return pad.launch();
+                } else return false;
+            }
         }
         return false;
     }
@@ -61,6 +121,7 @@ public class MissileLaunchPadBlockEntity extends BlockEntity implements IEnergyS
 
     @Override
     public int receiveEnergy(int toReceive, boolean simulate) {
+        if (!isCore()) return 0;
         if (simulate) {
             if (energyStored + toReceive <= maxEnergyStored) {
                 return toReceive;
@@ -81,6 +142,7 @@ public class MissileLaunchPadBlockEntity extends BlockEntity implements IEnergyS
 
     @Override
     public int extractEnergy(int toExtract, boolean simulate) {
+        if (!isCore()) return 0;
         if (simulate) {
             if (energyStored - toExtract >= maxEnergyStored) {
                 return toExtract;
@@ -116,11 +178,18 @@ public class MissileLaunchPadBlockEntity extends BlockEntity implements IEnergyS
 
     @Override
     public boolean canReceive() {
-        return true;
+        return isCore();
     }
 
     protected BlockPos target = new BlockPos(0, 0, 0);
     public void setTarget(BlockPos blockPos) {
-        target = blockPos;
+        if (isCore()) {
+            target = blockPos;
+        } else {
+            BlockEntity entity = level.getBlockEntity(getCorePos());
+            if (entity instanceof MissileLaunchPadBlockEntity pad) {
+                pad.setTarget(blockPos);
+            }
+        }
     }
 }

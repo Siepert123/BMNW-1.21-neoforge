@@ -30,6 +30,7 @@ public class ModItems {
     public static final DeferredItem<Item> PLAYSTATION = ITEMS.register("playstation",
             () -> new Item(new Item.Properties().stacksTo(1)));
 
+    //region Materials, ores & storage blocks
     public static final DeferredItem<Item> STEEL_INGOT = ITEMS.register("steel_ingot",
             () -> new Item(new Item.Properties()));
     public static final DeferredItem<BlockItem> STEEL_BLOCK = ITEMS.register("steel_block",
@@ -104,11 +105,17 @@ public class ModItems {
             () -> new SimpleRadioactiveItem(new Item.Properties(), 0.35f));
     public static final DeferredItem<SimpleRadioactiveItem> THORIUM_INGOT = ITEMS.register("thorium_ingot",
             () -> new SimpleRadioactiveItem(new Item.Properties(), 0.1f));
+    public static final DeferredItem<SimpleRadioactiveItem> URANIUM_BILLET = ITEMS.register("uranium_billet",
+            () -> new SimpleRadioactiveItem(0.175f));
+    public static final DeferredItem<SimpleRadioactiveItem> THORIUM_BILLET = ITEMS.register("thorium_billet",
+            () -> new SimpleRadioactiveItem(0.05f));
     public static final DeferredItem<SimpleRadioactiveBlockItem> URANIUM_BLOCK = ITEMS.register("uranium_block",
             () -> new SimpleRadioactiveBlockItem(ModBlocks.URANIUM_BLOCK.get(), new Item.Properties()));
     public static final DeferredItem<SimpleRadioactiveBlockItem> THORIUM_BLOCK = ITEMS.register("thorium_block",
             () -> new SimpleRadioactiveBlockItem(ModBlocks.THORIUM_BLOCK.get(), new Item.Properties()));
+    //endregion
 
+    //region Isotopes of materials & storage blocks
     public static final DeferredItem<SimpleRadioactiveItem> URANIUM_233_NUGGET = ITEMS.register("uranium_233_nugget",
             () -> new SimpleRadioactiveItem(new Item.Properties(), 0.5f));
     public static final DeferredItem<SimpleRadioactiveItem> URANIUM_235_NUGGET = ITEMS.register("uranium_235_nugget",
@@ -126,8 +133,6 @@ public class ModItems {
     public static final DeferredItem<SimpleRadioactiveItem> URANIUM_FUEL_INGOT = ITEMS.register("uranium_fuel_ingot",
             () -> new SimpleRadioactiveItem(new Item.Properties(), 0.5f));
 
-    public static final DeferredItem<SimpleRadioactiveItem> URANIUM_BILLET = ITEMS.register("uranium_billet",
-            () -> new SimpleRadioactiveItem(0.175f));
     public static final DeferredItem<SimpleRadioactiveItem> URANIUM_233_BILLET = ITEMS.register("uranium_233_billet",
             () -> new SimpleRadioactiveItem(2.5f));
     public static final DeferredItem<SimpleRadioactiveItem> URANIUM_235_BILLET = ITEMS.register("uranium_235_billet",
@@ -136,8 +141,6 @@ public class ModItems {
             () -> new SimpleRadioactiveItem(0.125f));
     public static final DeferredItem<SimpleRadioactiveItem> URANIUM_FUEL_BILLET = ITEMS.register("uranium_fuel_billet",
             () -> new SimpleRadioactiveItem(0.25f));
-    public static final DeferredItem<SimpleRadioactiveItem> THORIUM_BILLET = ITEMS.register("thorium_billet",
-            () -> new SimpleRadioactiveItem(0.05f));
     public static final DeferredItem<SimpleRadioactiveItem> THORIUM_FUEL_BILLET = ITEMS.register("thorium_fuel_billet",
             () -> new SimpleRadioactiveItem(0.875f));
 
@@ -156,11 +159,14 @@ public class ModItems {
             () -> new SimpleRadioactiveItem(new Item.Properties(), 1.75f));
     public static final DeferredItem<SimpleRadioactiveBlockItem> THORIUM_FUEL_BLOCK = ITEMS.register("thorium_fuel_block",
             () -> new SimpleRadioactiveBlockItem(ModBlocks.THORIUM_FUEL_BLOCK.get(), new Item.Properties()));
+    //endregion
 
     public static final DeferredItem<GeigerCounterItem> GEIGER_COUNTER = ITEMS.register("geiger_counter",
             () -> new GeigerCounterItem(new Item.Properties().stacksTo(1)));
     public static final DeferredItem<BlockItem> DECONTAMINATOR = ITEMS.register("decontaminator",
             () -> new BlockItem(ModBlocks.DECONTAMINATOR.get(), new Item.Properties()));
+
+    //region Bombs & Missiles
     public static final DeferredItem<BombBlockItem> NUCLEAR_CHARGE = ITEMS.register("nuclear_charge",
             () -> new BombBlockItem(ModBlocks.NUCLEAR_CHARGE.get(), new Item.Properties(),
                     BombCategory.of("nuclear", 0x00ff00)));
@@ -185,7 +191,9 @@ public class ModItems {
             () -> new TargetDesignatorItem(new Item.Properties()));
     public static final DeferredItem<BlockItem> EXAMPLE_MISSILE = ITEMS.register("example_missile",
             () -> new BlockItem(ModBlocks.EXAMPLE_MISSILE.get(), new Item.Properties().stacksTo(1)));
+    //endregion
 
+    //region Concrete & similar
     public static final DeferredItem<BlockItem> CONCRETE = ITEMS.register("concrete",
             () -> new BlockItem(ModBlocks.CONCRETE.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> CONCRETE_SLAB = ITEMS.register("concrete_slab",
@@ -206,7 +214,9 @@ public class ModItems {
             () -> new BlockItem(ModBlocks.CHISELED_CONCRETE_BRICKS.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> CREATIVE_CONCRETE_BRICKS = ITEMS.register("creative_concrete_bricks",
             () -> new BlockItem(ModBlocks.CREATIVE_CONCRETE_BRICKS.get(), new Item.Properties()));
+    //endregion
 
+    //region Nuclear after effects
     public static final DeferredItem<BlockItem> SLAKED_NUCLEAR_REMAINS = ITEMS.register("slaked_nuclear_remains",
             () -> new BlockItem(ModBlocks.SLAKED_NUCLEAR_REMAINS.get(), new Item.Properties()));
     public static final DeferredItem<NuclearRemainsBlockItem> NUCLEAR_REMAINS = ITEMS.register("nuclear_remains",
@@ -235,6 +245,7 @@ public class ModItems {
                     )))
             ), 0.1f)
     );
+    //endregion
 
     public static final DeferredItem<SimpleRadioactiveBlockItem> NUCLEAR_WASTE_BARREL = ITEMS.register("nuclear_waste_barrel",
             () -> new SimpleRadioactiveBlockItem(ModBlocks.NUCLEAR_WASTE_BARREL.get(), new Item.Properties()));

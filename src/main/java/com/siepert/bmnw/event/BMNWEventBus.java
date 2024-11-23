@@ -9,10 +9,7 @@ import com.siepert.bmnw.misc.BMNWConfig;
 import com.siepert.bmnw.misc.ModAttachments;
 import com.siepert.bmnw.misc.ModDamageSources;
 import com.siepert.bmnw.particle.ModParticleTypes;
-import com.siepert.bmnw.particle.custom.EvilFogParticleProvider;
-import com.siepert.bmnw.particle.custom.FireSmokeParticleProvider;
-import com.siepert.bmnw.particle.custom.SmokeHDParticleProvider;
-import com.siepert.bmnw.particle.custom.VomitParticleProvider;
+import com.siepert.bmnw.particle.custom.*;
 import com.siepert.bmnw.radiation.RadHelper;
 import com.siepert.bmnw.radiation.ShieldingValues;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -306,6 +303,7 @@ public class BMNWEventBus {
             event.registerSpriteSet(ModParticleTypes.EVIL_FOG.get(), EvilFogParticleProvider::new);
             event.registerSpriteSet(ModParticleTypes.FIRE_SMOKE.get(), FireSmokeParticleProvider::new);
             event.registerSpriteSet(ModParticleTypes.SMOKE_HD.get(), SmokeHDParticleProvider::new);
+            event.registerSpriteSet(ModParticleTypes.SHOCKWAVE.get(), ShockwaveParticleProvider::new);
         }
 
         /**

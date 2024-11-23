@@ -30,4 +30,9 @@ public class FireSmokeParticle extends TextureSheetParticle {
     public ParticleRenderType getRenderType() {
         return ParticleRenderType.PARTICLE_SHEET_LIT;
     }
+
+    @Override
+    protected int getLightColor(float partialTick) {
+        return 0xf000f0;
+    }
 }

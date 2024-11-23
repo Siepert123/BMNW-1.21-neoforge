@@ -13,6 +13,7 @@ import com.siepert.bmnw.misc.ModAttachments;
 import com.siepert.bmnw.misc.ModSounds;
 import com.siepert.bmnw.misc.ModTabs;
 import com.siepert.bmnw.particle.ModParticleTypes;
+import com.siepert.bmnw.radiation.RadFiler;
 import com.siepert.bmnw.radiation.ShieldingValues;
 import eu.midnightdust.lib.config.MidnightConfig;
 import net.neoforged.api.distmarker.Dist;
@@ -81,7 +82,7 @@ public class BMNW {
     // You can use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {
-
+        RadFiler.rerun(event.getServer());
     }
 
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent

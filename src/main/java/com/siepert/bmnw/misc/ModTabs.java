@@ -1,13 +1,11 @@
 package com.siepert.bmnw.misc;
 
-import com.siepert.bmnw.item.ModItems;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -35,6 +33,18 @@ public class ModTabs {
             () -> CreativeModeTab.builder()
                     .title(Component.translatable("itemGroup.bmnw.blocks"))
                     .icon(getBlocksIcon())
+                    .withTabsBefore(
+                            CreativeModeTabs.BUILDING_BLOCKS.location(),
+                            CreativeModeTabs.COLORED_BLOCKS.location(),
+                            CreativeModeTabs.NATURAL_BLOCKS.location(),
+                            CreativeModeTabs.FUNCTIONAL_BLOCKS.location(),
+                            CreativeModeTabs.REDSTONE_BLOCKS.location(),
+                            CreativeModeTabs.TOOLS_AND_UTILITIES.location(),
+                            CreativeModeTabs.COMBAT.location(),
+                            CreativeModeTabs.FOOD_AND_DRINKS.location(),
+                            CreativeModeTabs.INGREDIENTS.location(),
+                            CreativeModeTabs.SPAWN_EGGS.location()
+                    )
                     .withTabsAfter(
                             ResourceLocation.parse("bmnw:materials"),
                             ResourceLocation.parse("bmnw:tools"),
@@ -118,6 +128,16 @@ public class ModTabs {
                     .title(Component.translatable("itemGroup.bmnw.materials"))
                     .icon(getMaterialsIcon())
                     .withTabsBefore(
+                            CreativeModeTabs.BUILDING_BLOCKS.location(),
+                            CreativeModeTabs.COLORED_BLOCKS.location(),
+                            CreativeModeTabs.NATURAL_BLOCKS.location(),
+                            CreativeModeTabs.FUNCTIONAL_BLOCKS.location(),
+                            CreativeModeTabs.REDSTONE_BLOCKS.location(),
+                            CreativeModeTabs.TOOLS_AND_UTILITIES.location(),
+                            CreativeModeTabs.COMBAT.location(),
+                            CreativeModeTabs.FOOD_AND_DRINKS.location(),
+                            CreativeModeTabs.INGREDIENTS.location(),
+                            CreativeModeTabs.SPAWN_EGGS.location(),
                             ResourceLocation.parse("bmnw:blocks")
                     )
                     .withTabsAfter(
@@ -146,29 +166,32 @@ public class ModTabs {
                         items.accept(TUNGSTEN_NUGGET);
                         items.accept(TITANIUM_NUGGET);
                         items.accept(URANIUM_NUGGET);
-                        items.accept(URANIUM_233_NUGGET);
-                        items.accept(URANIUM_235_NUGGET);
-                        items.accept(URANIUM_238_NUGGET);
-                        items.accept(URANIUM_FUEL_NUGGET);
                         items.accept(THORIUM_NUGGET);
-                        items.accept(THORIUM_FUEL_NUGGET);
 
                         items.accept(TUNGSTEN_INGOT);
                         items.accept(TITANIUM_INGOT);
                         items.accept(URANIUM_INGOT);
+                        items.accept(THORIUM_INGOT);
+
+                        items.accept(URANIUM_BILLET);
+                        items.accept(THORIUM_BILLET);
+
+                        items.accept(URANIUM_233_NUGGET);
+                        items.accept(URANIUM_235_NUGGET);
+                        items.accept(URANIUM_238_NUGGET);
+                        items.accept(URANIUM_FUEL_NUGGET);
+                        items.accept(THORIUM_FUEL_NUGGET);
+
                         items.accept(URANIUM_233_INGOT);
                         items.accept(URANIUM_235_INGOT);
                         items.accept(URANIUM_238_INGOT);
                         items.accept(URANIUM_FUEL_INGOT);
-                        items.accept(THORIUM_INGOT);
                         items.accept(THORIUM_FUEL_INGOT);
 
-                        items.accept(URANIUM_BILLET);
                         items.accept(URANIUM_233_BILLET);
                         items.accept(URANIUM_235_BILLET);
                         items.accept(URANIUM_238_BILLET);
                         items.accept(URANIUM_FUEL_BILLET);
-                        items.accept(THORIUM_BILLET);
                         items.accept(THORIUM_FUEL_BILLET);
                     })
                     .build()
@@ -180,6 +203,16 @@ public class ModTabs {
                     .title(Component.translatable("itemGroup.bmnw.tools"))
                     .icon(() -> new ItemStack(URANIUM_SANDWICH.get()))
                     .withTabsBefore(
+                            CreativeModeTabs.BUILDING_BLOCKS.location(),
+                            CreativeModeTabs.COLORED_BLOCKS.location(),
+                            CreativeModeTabs.NATURAL_BLOCKS.location(),
+                            CreativeModeTabs.FUNCTIONAL_BLOCKS.location(),
+                            CreativeModeTabs.REDSTONE_BLOCKS.location(),
+                            CreativeModeTabs.TOOLS_AND_UTILITIES.location(),
+                            CreativeModeTabs.COMBAT.location(),
+                            CreativeModeTabs.FOOD_AND_DRINKS.location(),
+                            CreativeModeTabs.INGREDIENTS.location(),
+                            CreativeModeTabs.SPAWN_EGGS.location(),
                             ResourceLocation.parse("bmnw:blocks"),
                             ResourceLocation.parse("bmnw:materials")
                     )
@@ -197,11 +230,22 @@ public class ModTabs {
                     .build()
     );
 
+    @NoUnused
     public static final Supplier<CreativeModeTab> MACHINES = CREATIVE_TABS.register("machines",
             () -> CreativeModeTab.builder()
                     .title(Component.translatable("itemGroup.bmnw.machines"))
                     .icon(() -> new ItemStack(DECONTAMINATOR.get()))
                     .withTabsBefore(
+                            CreativeModeTabs.BUILDING_BLOCKS.location(),
+                            CreativeModeTabs.COLORED_BLOCKS.location(),
+                            CreativeModeTabs.NATURAL_BLOCKS.location(),
+                            CreativeModeTabs.FUNCTIONAL_BLOCKS.location(),
+                            CreativeModeTabs.REDSTONE_BLOCKS.location(),
+                            CreativeModeTabs.TOOLS_AND_UTILITIES.location(),
+                            CreativeModeTabs.COMBAT.location(),
+                            CreativeModeTabs.FOOD_AND_DRINKS.location(),
+                            CreativeModeTabs.INGREDIENTS.location(),
+                            CreativeModeTabs.SPAWN_EGGS.location(),
                             ResourceLocation.parse("bmnw:blocks"),
                             ResourceLocation.parse("bmnw:materials"),
                             ResourceLocation.parse("bmnw:tools")
@@ -210,6 +254,7 @@ public class ModTabs {
                             ResourceLocation.parse("bmnw:bombs")
                     )
                     .displayItems((parameters, items) -> {
+                        //this comment removes a warning! [remove once there are 2 or more entries here]
                         items.accept(DECONTAMINATOR);
                     })
                     .build()
@@ -221,6 +266,16 @@ public class ModTabs {
                     .title(Component.translatable("itemGroup.bmnw.bombs"))
                     .icon(() -> new ItemStack(EXAMPLE_MISSILE.get()))
                     .withTabsBefore(
+                            CreativeModeTabs.BUILDING_BLOCKS.location(),
+                            CreativeModeTabs.COLORED_BLOCKS.location(),
+                            CreativeModeTabs.NATURAL_BLOCKS.location(),
+                            CreativeModeTabs.FUNCTIONAL_BLOCKS.location(),
+                            CreativeModeTabs.REDSTONE_BLOCKS.location(),
+                            CreativeModeTabs.TOOLS_AND_UTILITIES.location(),
+                            CreativeModeTabs.COMBAT.location(),
+                            CreativeModeTabs.FOOD_AND_DRINKS.location(),
+                            CreativeModeTabs.INGREDIENTS.location(),
+                            CreativeModeTabs.SPAWN_EGGS.location(),
                             ResourceLocation.parse("bmnw:blocks"),
                             ResourceLocation.parse("bmnw:materials"),
                             ResourceLocation.parse("bmnw:tools"),

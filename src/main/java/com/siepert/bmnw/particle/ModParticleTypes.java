@@ -30,6 +30,11 @@ public class ModParticleTypes {
             "smoke_hd",
             () -> new SimpleParticleType(false)
     );
+    public static final Supplier<SimpleParticleType> SHOCKWAVE = PARTICLE_TYPES.register(
+            "shockwave",
+            () -> new SimpleParticleType(true)
+    );
+
 
     public static void register(IEventBus eventBus) {
         PARTICLE_TYPES.register(eventBus);

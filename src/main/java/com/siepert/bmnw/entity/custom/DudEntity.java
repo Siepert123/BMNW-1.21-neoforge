@@ -3,6 +3,7 @@ package com.siepert.bmnw.entity.custom;
 import com.siepert.bmnw.block.ModBlocks;
 import com.siepert.bmnw.misc.ModSounds;
 import com.siepert.bmnw.misc.ModTags;
+import com.siepert.bmnw.particle.ModParticleTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundSource;
@@ -32,6 +33,10 @@ public class DudEntity extends BombEntity {
         super.tick();
 
         if (level().isClientSide()) {
+            progress = entityData.get(PROGRESS_DATA);
+            if (progress == 0) {
+                level().addParticle(ModParticleTypes.SHOCKWAVE.get(), getX(), getY(), getZ(), 0, 0, 0);
+            }
             progress = entityData.get(PROGRESS_DATA);
             return;
         }
