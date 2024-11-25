@@ -35,12 +35,16 @@ public class BMNWBlocks {
     public static final DeferredBlock<Block> STEEL_BLOCK = BLOCKS.register("steel_block",
             () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.DIAMOND_BLOCK).sound(SoundType.METAL)));
 
+    public static final DeferredBlock<Block> LEAD_ORE = ore("lead_ore");
     public static final DeferredBlock<Block> TUNGSTEN_ORE = ore("tungsten_ore");
     public static final DeferredBlock<Block> TITANIUM_ORE = ore("titanium_ore");
+    public static final DeferredBlock<Block> DEEPSLATE_LEAD_ORE = deepslateOre("lead_ore");
     public static final DeferredBlock<Block> DEEPSLATE_TUNGSTEN_ORE = deepslateOre("deepslate_tungsten_ore");
     public static final DeferredBlock<Block> DEEPSLATE_TITANIUM_ORE = deepslateOre("deepslate_titanium_ore");
+    public static final DeferredBlock<Block> RAW_LEAD_BLOCK = rawBlock("raw_lead_block");
     public static final DeferredBlock<Block> RAW_TUNGSTEN_BLOCK = rawBlock("raw_tungsten_block");
     public static final DeferredBlock<Block> RAW_TITANIUM_BLOCK = rawBlock("raw_titanium_block");
+    public static final DeferredBlock<Block> LEAD_BLOCK = storageBlock("lead_block");
     public static final DeferredBlock<Block> TUNGSTEN_BLOCK = storageBlock("tungsten_block");
     public static final DeferredBlock<Block> TITANIUM_BLOCK = storageBlock("titanium_block");
 
@@ -77,8 +81,9 @@ public class BMNWBlocks {
     public static final DeferredBlock<SimpleRadioactiveBlock> THORIUM_FUEL_BLOCK = BLOCKS.register("thorium_fuel_block",
             () -> new SimpleRadioactiveBlock(BlockBehaviour.Properties.ofFullCopy(THORIUM_BLOCK.get()), 17.5f));
 
+    @SuppressWarnings("all")
     public static final DeferredBlock<Plutonium238Block> PLUTONIUM_238_BLOCK = BLOCKS.register("plutonium_238_block",
-            () -> new Plutonium238Block(BlockBehaviour.Properties.ofFullCopy(PLUTONIUM_BLOCK.get()).emissiveRendering((i, j, k) -> true), 100.0f));
+            () -> new Plutonium238Block());
     public static final DeferredBlock<SimpleRadioactiveBlock> PLUTONIUM_239_BLOCK = BLOCKS.register("plutonium_239_block",
             () -> new SimpleRadioactiveBlock(BlockBehaviour.Properties.ofFullCopy(PLUTONIUM_BLOCK.get()), 50.0f));
     public static final DeferredBlock<SimpleRadioactiveBlock> PLUTONIUM_240_BLOCK = BLOCKS.register("plutonium_240_block",

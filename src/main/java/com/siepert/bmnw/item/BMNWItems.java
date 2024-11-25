@@ -43,6 +43,9 @@ public class BMNWItems {
             () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> STEEL_PLATE = ITEMS.register("steel_plate",
             () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> LEAD_PLATE = item("lead_plate");
+    public static final DeferredItem<Item> TUNGSTEN_PLATE = item("tungsten_plate");
+    public static final DeferredItem<Item> TITANIUM_PLATE = item("titanium_plate");
 
     public static final DeferredItem<Item> IRON_WIRE = ITEMS.register("iron_wire",
             () -> new Item(new Item.Properties()));
@@ -53,26 +56,37 @@ public class BMNWItems {
     public static final DeferredItem<Item> STEEL_WIRE = ITEMS.register("steel_wire",
             () -> new Item(new Item.Properties()));
 
+    public static final DeferredItem<BlockItem> LEAD_ORE = ITEMS.register("lead_ore",
+            () -> new BlockItem(BMNWBlocks.LEAD_ORE.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> TUNGSTEN_ORE = ITEMS.register("tungsten_ore",
             () -> new BlockItem(BMNWBlocks.TUNGSTEN_ORE.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> TITANIUM_ORE = ITEMS.register("titanium_ore",
             () -> new BlockItem(BMNWBlocks.TITANIUM_ORE.get(), new Item.Properties()));
+    public static final DeferredItem<BlockItem> DEEPSLATE_LEAD_ORE = ITEMS.register("deepslate_lead_ore",
+            () -> new BlockItem(BMNWBlocks.DEEPSLATE_LEAD_ORE.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> DEEPSLATE_TUNGSTEN_ORE = ITEMS.register("deepslate_tungsten_ore",
             () -> new BlockItem(BMNWBlocks.DEEPSLATE_TUNGSTEN_ORE.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> DEEPSLATE_TITANIUM_ORE = ITEMS.register("deepslate_titanium_ore",
             () -> new BlockItem(BMNWBlocks.DEEPSLATE_TITANIUM_ORE.get(), new Item.Properties()));
 
+    public static final DeferredItem<Item> RAW_LEAD = item("raw_lead");
     public static final DeferredItem<Item> RAW_TUNGSTEN = item("raw_tungsten");
     public static final DeferredItem<Item> RAW_TITANIUM = item("raw_titanium");
+    public static final DeferredItem<BlockItem> RAW_LEAD_BLOCK = ITEMS.register("raw_lead_block",
+            () -> new BlockItem(BMNWBlocks.RAW_LEAD_BLOCK.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> RAW_TUNGSTEN_BLOCK = ITEMS.register("raw_tungsten_block",
             () -> new BlockItem(BMNWBlocks.RAW_TUNGSTEN_BLOCK.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> RAW_TITANIUM_BLOCK = ITEMS.register("raw_titanium_block",
             () -> new BlockItem(BMNWBlocks.RAW_TITANIUM_BLOCK.get(), new Item.Properties()));
 
+    public static final DeferredItem<Item> LEAD_NUGGET = item("lead_nugget");
     public static final DeferredItem<Item> TUNGSTEN_NUGGET = item("tungsten_nugget");
     public static final DeferredItem<Item> TITANIUM_NUGGET = item("titanium_nugget");
+    public static final DeferredItem<Item> LEAD_INGOT = item("lead_ingot"); //base color: #3a4899
     public static final DeferredItem<Item> TUNGSTEN_INGOT = item("tungsten_ingot");
     public static final DeferredItem<Item> TITANIUM_INGOT = item("titanium_ingot");
+    public static final DeferredItem<BlockItem> LEAD_BLOCK = ITEMS.register("lead_block",
+            () -> new BlockItem(BMNWBlocks.LEAD_BLOCK.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> TUNGSTEN_BLOCK = ITEMS.register("tungsten_block",
             () -> new BlockItem(BMNWBlocks.TUNGSTEN_BLOCK.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> TITANIUM_BLOCK = ITEMS.register("titanium_block",

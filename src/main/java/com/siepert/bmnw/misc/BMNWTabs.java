@@ -64,10 +64,12 @@ public class BMNWTabs {
                         items.accept(CREATIVE_CONCRETE_BRICKS);
 
                         addItems(items,
+                                LEAD_ORE,
                                 TUNGSTEN_ORE,
                                 TITANIUM_ORE,
                                 URANIUM_ORE,
                                 THORIUM_ORE,
+                                DEEPSLATE_LEAD_ORE,
                                 DEEPSLATE_TUNGSTEN_ORE,
                                 DEEPSLATE_TITANIUM_ORE,
                                 DEEPSLATE_URANIUM_ORE,
@@ -75,10 +77,12 @@ public class BMNWTabs {
                         );
 
                         addItems(items,
+                                RAW_LEAD_BLOCK,
                                 RAW_TUNGSTEN_BLOCK,
                                 RAW_TITANIUM_BLOCK,
                                 RAW_URANIUM_BLOCK,
                                 RAW_THORIUM_BLOCK,
+                                LEAD_BLOCK,
                                 TUNGSTEN_BLOCK,
                                 TITANIUM_BLOCK,
                                 URANIUM_BLOCK,
@@ -159,23 +163,29 @@ public class BMNWTabs {
                         items.accept(COPPER_PLATE);
                         items.accept(GOLD_PLATE);
                         items.accept(STEEL_PLATE);
+                        items.accept(LEAD_PLATE);
+                        items.accept(TUNGSTEN_PLATE);
+                        items.accept(TITANIUM_PLATE);
 
                         items.accept(IRON_WIRE);
                         items.accept(COPPER_WIRE);
                         items.accept(GOLD_WIRE);
                         items.accept(STEEL_WIRE);
 
+                        items.accept(RAW_LEAD);
                         items.accept(RAW_TUNGSTEN);
                         items.accept(RAW_TITANIUM);
                         items.accept(RAW_URANIUM);
                         items.accept(RAW_THORIUM);
 
+                        items.accept(LEAD_NUGGET);
                         items.accept(TUNGSTEN_NUGGET);
                         items.accept(TITANIUM_NUGGET);
                         items.accept(URANIUM_NUGGET);
                         items.accept(THORIUM_NUGGET);
                         items.accept(PLUTONIUM_NUGGET);
 
+                        items.accept(LEAD_INGOT);
                         items.accept(TUNGSTEN_INGOT);
                         items.accept(TITANIUM_INGOT);
                         items.accept(URANIUM_INGOT);
