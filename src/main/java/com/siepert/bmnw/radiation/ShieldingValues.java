@@ -79,6 +79,8 @@ public class ShieldingValues {
         addShielding(BMNWBlocks.CREATIVE_CONCRETE_BRICKS.get(), 10, 0);
         addShielding(BMNWBlocks.CHISELED_CONCRETE_BRICKS.get(), 10, 0);
 
+        addShielding(BMNWBlocks.LEAD_BLOCK.get(), 10, 0);
+
         initialized = true;
     }
 }

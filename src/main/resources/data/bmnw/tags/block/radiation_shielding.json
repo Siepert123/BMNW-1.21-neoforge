@@ -9,6 +9,7 @@
       "required": false
     },
     "#c:storage_blocks/netherite",
+    "#c:storage_blocks/lead",
     "minecraft:stone_bricks",
     "minecraft:stone_brick_slab",
     "minecraft:stone_brick_stairs",
