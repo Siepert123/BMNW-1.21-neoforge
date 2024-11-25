@@ -157,8 +157,6 @@ public class BMNWTabs {
                             ResourceLocation.parse("bmnw:bombs")
                     )
                     .displayItems((parameters, items) -> {
-                        items.accept(STEEL_INGOT);
-
                         items.accept(IRON_PLATE);
                         items.accept(COPPER_PLATE);
                         items.accept(GOLD_PLATE);
@@ -191,6 +189,7 @@ public class BMNWTabs {
                         items.accept(URANIUM_INGOT);
                         items.accept(THORIUM_INGOT);
                         items.accept(PLUTONIUM_INGOT);
+                        items.accept(STEEL_INGOT);
 
                         items.accept(URANIUM_BILLET);
                         items.accept(THORIUM_BILLET);

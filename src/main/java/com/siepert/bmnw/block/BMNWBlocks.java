@@ -38,7 +38,7 @@ public class BMNWBlocks {
     public static final DeferredBlock<Block> LEAD_ORE = ore("lead_ore");
     public static final DeferredBlock<Block> TUNGSTEN_ORE = ore("tungsten_ore");
     public static final DeferredBlock<Block> TITANIUM_ORE = ore("titanium_ore");
-    public static final DeferredBlock<Block> DEEPSLATE_LEAD_ORE = deepslateOre("lead_ore");
+    public static final DeferredBlock<Block> DEEPSLATE_LEAD_ORE = deepslateOre("deepslate_lead_ore");
     public static final DeferredBlock<Block> DEEPSLATE_TUNGSTEN_ORE = deepslateOre("deepslate_tungsten_ore");
     public static final DeferredBlock<Block> DEEPSLATE_TITANIUM_ORE = deepslateOre("deepslate_titanium_ore");
     public static final DeferredBlock<Block> RAW_LEAD_BLOCK = rawBlock("raw_lead_block");
