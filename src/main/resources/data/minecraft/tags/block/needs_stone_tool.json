@@ -16,7 +16,11 @@
     "bmnw:raw_uranium_block",
     "bmnw:raw_thorium_block",
     "#bmnw:container_barrels",
-    "bmnw:brick_charge"
+    "bmnw:brick_charge",
+    "bmnw:lead_block",
+    "bmnw:raw_lead_block",
+    "bmnw:lead_ore",
+    "bmnw:deepslate_lead_ore"
   ],
   "replace": false
 }

@@ -7,7 +7,9 @@
     "bmnw:tungsten_ore",
     "bmnw:titanium_ore",
     "bmnw:deepslate_tungsten_ore",
-    "bmnw:deepslate_titanium_ore"
+    "bmnw:deepslate_titanium_ore",
+    "bmnw:lead_ore",
+    "bmnw:deepslate_lead_ore"
   ],
   "replace": false
 }

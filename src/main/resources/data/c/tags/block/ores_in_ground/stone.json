@@ -3,7 +3,8 @@
     "bmnw:uranium_ore",
     "bmnw:thorium_ore",
     "bmnw:tungsten_ore",
-    "bmnw:titanium_ore"
+    "bmnw:titanium_ore",
+    "bmnw:lead_ore"
   ],
   "replace": false
 }

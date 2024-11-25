@@ -3,7 +3,10 @@
     "bmnw:iron_plate",
     "bmnw:copper_plate",
     "bmnw:gold_plate",
-    "bmnw:steel_plate"
+    "bmnw:steel_plate",
+    "bmnw:lead_plate",
+    "bmnw:tungsten_plate",
+    "bmnw:titanium_plate"
   ],
   "replace": false
 }
