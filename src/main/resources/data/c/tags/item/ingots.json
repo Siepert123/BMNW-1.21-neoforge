@@ -7,7 +7,14 @@
     "bmnw:uranium_238_ingot",
     "bmnw:uranium_fuel_ingot",
     "bmnw:thorium_ingot",
-    "bmnw:thorium_fuel_ingot"
+    "bmnw:thorium_fuel_ingot",
+    "bmnw:plutonium_ingot",
+    "bmnw:plutonium_238_ingot",
+    "bmnw:plutonium_239_ingot",
+    "bmnw:plutonium_240_ingot",
+    "bmnw:plutonium_241_ingot",
+    "bmnw:reactor_grade_plutonium_ingot",
+    "bmnw:plutonium_fuel_ingot"
   ],
   "replace": false
 }

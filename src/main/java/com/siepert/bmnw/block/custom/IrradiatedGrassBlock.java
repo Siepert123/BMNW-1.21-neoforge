@@ -1,9 +1,7 @@
 package com.siepert.bmnw.block.custom;
 
-import com.siepert.bmnw.effect.ModEffects;
-import com.siepert.bmnw.misc.ModStateProperties;
-import com.siepert.bmnw.radiation.RadHelper;
-import com.siepert.bmnw.radiation.UnitConvertor;
+import com.siepert.bmnw.effect.BMNWEffects;
+import com.siepert.bmnw.misc.BMNWStateProperties;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.tags.ItemTags;
@@ -19,7 +17,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 
 public class IrradiatedGrassBlock extends Block {
-    public static final IntegerProperty RAD_LEVEL = ModStateProperties.RAD_LEVEL;
+    public static final IntegerProperty RAD_LEVEL = BMNWStateProperties.RAD_LEVEL;
     public IrradiatedGrassBlock(Properties properties) {
         super(properties);
     }
@@ -36,9 +34,9 @@ public class IrradiatedGrassBlock extends Block {
                 if (stack.is(ItemTags.FOOT_ARMOR)) return;
             }
             livingEntity.addEffect(new MobEffectInstance(
-                    ModEffects.CONTAMINATION,
+                    BMNWEffects.CONTAMINATION,
                     400,
-                    state.getValue(RAD_LEVEL)-1
+                    0
             ));
         }
     }

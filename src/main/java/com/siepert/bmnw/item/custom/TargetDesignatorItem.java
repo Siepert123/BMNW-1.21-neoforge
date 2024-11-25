@@ -1,8 +1,8 @@
 package com.siepert.bmnw.item.custom;
 
-import com.siepert.bmnw.block.ModBlocks;
+import com.siepert.bmnw.block.BMNWBlocks;
 import com.siepert.bmnw.block.entity.custom.MissileLaunchPadBlockEntity;
-import com.siepert.bmnw.item.components.ModDataComponents;
+import com.siepert.bmnw.item.components.BMNWDataComponents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
@@ -23,19 +23,19 @@ public class TargetDesignatorItem extends Item {
 
     @Override
     public InteractionResult useOn(UseOnContext context) {
-        if (context.getLevel().getBlockState(context.getClickedPos()).is(ModBlocks.MISSILE_LAUNCH_PAD)) {
+        if (context.getLevel().getBlockState(context.getClickedPos()).is(BMNWBlocks.MISSILE_LAUNCH_PAD)) {
             MissileLaunchPadBlockEntity be = (MissileLaunchPadBlockEntity) context.getLevel().getBlockEntity(context.getClickedPos());
             if (be != null) {
                 ItemStack stack = context.getItemInHand();
-                if (stack.has(ModDataComponents.TARGET)) {
-                    be.setTarget(stack.get(ModDataComponents.TARGET));
+                if (stack.has(BMNWDataComponents.TARGET)) {
+                    be.setTarget(stack.get(BMNWDataComponents.TARGET));
                     if (context.getLevel().isClientSide()) context.getPlayer().sendSystemMessage(Component.translatable("text.bmnw.data_set").withColor(0x00DD00));
                     return InteractionResult.SUCCESS;
                 }
             }
         } else {
             ItemStack stack = context.getItemInHand();
-            stack.set(ModDataComponents.TARGET, context.getClickedPos());
+            stack.set(BMNWDataComponents.TARGET, context.getClickedPos());
             if (context.getLevel().isClientSide()) context.getPlayer().sendSystemMessage(Component.translatable("text.bmnw.position_set").withColor(0x00DD00));
             return InteractionResult.SUCCESS;
         }
@@ -44,8 +44,8 @@ public class TargetDesignatorItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-        if (stack.has(ModDataComponents.TARGET)) {
-            BlockPos target = stack.get(ModDataComponents.TARGET);
+        if (stack.has(BMNWDataComponents.TARGET)) {
+            BlockPos target = stack.get(BMNWDataComponents.TARGET);
             if (target == null) {
                 tooltipComponents.add(Component.translatable("text.bmnw.position_invalid").withColor(0xDD0000));
             } else {

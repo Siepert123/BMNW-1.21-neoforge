@@ -1,9 +1,9 @@
 package com.siepert.bmnw.entity.custom;
 
-import com.siepert.bmnw.block.ModBlocks;
+import com.siepert.bmnw.block.BMNWBlocks;
 import com.siepert.bmnw.misc.DistributionType;
-import com.siepert.bmnw.misc.ModDamageSources;
-import com.siepert.bmnw.misc.ModTags;
+import com.siepert.bmnw.misc.BMNWDamageSources;
+import com.siepert.bmnw.misc.BMNWTags;
 import com.siepert.bmnw.radiation.RadHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -227,9 +227,9 @@ public abstract class BombEntity extends Entity {
 
         for (LivingEntity entity : entities) {
             if (entity.distanceTo(this) < radius) {
-                if (!level().getBlockState(entity.getOnPos()).is(ModTags.Blocks.CUSHIONS_NUCLEAR_BLAST)) {
+                if (!level().getBlockState(entity.getOnPos()).is(BMNWTags.Blocks.CUSHIONS_NUCLEAR_BLAST)) {
                     if (!level().getBlockState(entity.getOnPos()).isAir()) {
-                        entity.hurt(ModDamageSources.nuclear_blast(level()), radius - entity.distanceTo(this));
+                        entity.hurt(BMNWDamageSources.nuclear_blast(level()), radius - entity.distanceTo(this));
                     }
                 }
             }
@@ -237,7 +237,7 @@ public abstract class BombEntity extends Entity {
     }
 
     protected void irradiate(int nuclearRadius, int grassRadius, float insertedRads) {
-        irradiate(nuclearRadius, grassRadius, insertedRads, ModBlocks.NUCLEAR_REMAINS.get().defaultBlockState());
+        irradiate(nuclearRadius, grassRadius, insertedRads, BMNWBlocks.NUCLEAR_REMAINS.get().defaultBlockState());
     }
     protected void irradiate(int nuclearRadius, int grassRadius, float insertedRads, BlockState remains) {
         final BlockState diamond = Blocks.DIAMOND_ORE.defaultBlockState();
@@ -261,7 +261,7 @@ public abstract class BombEntity extends Entity {
                                 level().setBlock(hitResult.getBlockPos(), diamond, 3);
                             }
                         } else if (state.getBlock().getExplosionResistance() <= str) {
-                            if (!state.is(ModTags.Blocks.NUCLEAR_REMAINS_BLACKLIST)) {
+                            if (!state.is(BMNWTags.Blocks.NUCLEAR_REMAINS_BLACKLIST)) {
                                 level().setBlock(hitResult.getBlockPos(), remains, 3);
                             }
                         }
@@ -274,7 +274,7 @@ public abstract class BombEntity extends Entity {
             }
         }
 
-        final BlockState grass = ModBlocks.IRRADIATED_GRASS_BLOCK.get().defaultBlockState();
+        final BlockState grass = BMNWBlocks.IRRADIATED_GRASS_BLOCK.get().defaultBlockState();
         for (int x = -grassRadius; x <= grassRadius; x++) {
             for (int z = -grassRadius; z <= grassRadius; z++) {
                 for (int y = grassRadius; y >= -grassRadius; y--) {
@@ -282,7 +282,7 @@ public abstract class BombEntity extends Entity {
                     BlockPos pos = worldPosition.offset(x, y, z);
                     if (level().getBlockState(pos).isAir()) continue;
                     if (level().getBlockState(pos).canBeReplaced()) level().setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
-                    if (level().getBlockState(pos).is(ModTags.Blocks.IRRADIATABLE_GRASS_BLOCKS)) level().setBlock(pos, grass, 3);
+                    if (level().getBlockState(pos).is(BMNWTags.Blocks.IRRADIATABLE_GRASS_BLOCKS)) level().setBlock(pos, grass, 3);
                 }
             }
         }
@@ -299,7 +299,7 @@ public abstract class BombEntity extends Entity {
                     if (!level().getFluidState(pos).isEmpty()) {
                         level().setBlock(pos, air, 3);
                     }
-                    if (level().getBlockState(pos).is(ModTags.Blocks.MELTABLES)) {
+                    if (level().getBlockState(pos).is(BMNWTags.Blocks.MELTABLES)) {
                         level().setBlock(pos, air, 3);
                     }
                 }
@@ -307,8 +307,8 @@ public abstract class BombEntity extends Entity {
         }
     }
     protected void burn(int radius) {
-        final BlockState log = ModBlocks.CHARRED_LOG.get().defaultBlockState();
-        final BlockState plank = ModBlocks.CHARRED_PLANKS.get().defaultBlockState();
+        final BlockState log = BMNWBlocks.CHARRED_LOG.get().defaultBlockState();
+        final BlockState plank = BMNWBlocks.CHARRED_PLANKS.get().defaultBlockState();
         for (int x = -radius; x <= radius; x++) {
             for (int z = -radius; z <= radius; z++) {
                 for (int y = radius; y >= -radius; y--) {
@@ -320,7 +320,7 @@ public abstract class BombEntity extends Entity {
                     if (level().getBlockState(pos).is(BlockTags.LEAVES)) {
                         level().setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
                     }
-                    if (level().getBlockState(pos).is(ModTags.Blocks.CHARRABLE_PLANKS)) {
+                    if (level().getBlockState(pos).is(BMNWTags.Blocks.CHARRABLE_PLANKS)) {
                         level().setBlock(pos, plank, 3);
                     }
                 }

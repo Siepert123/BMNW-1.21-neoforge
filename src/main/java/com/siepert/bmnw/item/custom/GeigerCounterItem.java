@@ -2,8 +2,8 @@ package com.siepert.bmnw.item.custom;
 
 import com.siepert.bmnw.interfaces.IItemHazard;
 import com.siepert.bmnw.misc.BMNWConfig;
-import com.siepert.bmnw.misc.ModAttachments;
-import com.siepert.bmnw.misc.ModSounds;
+import com.siepert.bmnw.misc.BMNWAttachments;
+import com.siepert.bmnw.misc.BMNWSounds;
 import com.siepert.bmnw.radiation.RadHelper;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundSource;
@@ -28,7 +28,7 @@ public class GeigerCounterItem extends Item {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand usedHand) {
         if (!level.isClientSide()) {
             ChunkAccess myChunk = level.getChunk(player.getOnPos());
-            float chunkRads = myChunk.getData(ModAttachments.RADIATION);
+            float chunkRads = myChunk.getData(BMNWAttachments.RADIATION);
             float playerRads = player.getPersistentData().getFloat(RadHelper.RAD_NBT_TAG);
 
             player.sendSystemMessage(Component.literal(String.format("Chunk radiation: %sRAD\nPlayer radiation: %sRAD",
@@ -61,7 +61,7 @@ public class GeigerCounterItem extends Item {
             if (RadHelper.geigerTick((BMNWConfig.radiationSetting.chunk() ? RadHelper.getAdjustedRadiation(player.level(), player.getOnPos()) : 0)
                     + invRads(player), RANDOM)) {
                 level.playSound(null, entity.getX(), entity.getY(), entity.getZ(),
-                        ModSounds.GEIGER_CLICK, SoundSource.NEUTRAL, 1.0f, 1.0f);
+                        BMNWSounds.GEIGER_CLICK, SoundSource.NEUTRAL, 1.0f, 1.0f);
             }
         }
     }

@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "bmnw:uranium_233_billet"
+    }
+  ],
+  "result": {
+    "count": 6,
+    "id": "bmnw:uranium_233_nugget"
+  }
+}

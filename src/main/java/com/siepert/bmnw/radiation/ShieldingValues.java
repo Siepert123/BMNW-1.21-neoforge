@@ -1,7 +1,7 @@
 package com.siepert.bmnw.radiation;
 
-import com.siepert.bmnw.block.ModBlocks;
-import com.siepert.bmnw.misc.ModTags;
+import com.siepert.bmnw.block.BMNWBlocks;
+import com.siepert.bmnw.misc.BMNWTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.level.Level;
@@ -38,7 +38,7 @@ public class ShieldingValues {
     }
 
     public static boolean shields(BlockState block) {
-        return block.is(ModTags.Blocks.RADIATION_SHIELDING);
+        return block.is(BMNWTags.Blocks.RADIATION_SHIELDING);
     }
 
     public static double getShieldingModifierForPosition(Level level, BlockPos pos) {
@@ -68,16 +68,16 @@ public class ShieldingValues {
         addShielding(Blocks.IRON_DOOR, 5, 0.5);
         addShielding(Blocks.IRON_TRAPDOOR, 5, 0.5);
 
-        addShielding(ModBlocks.CONCRETE.get(), 10, 0);
-        addShielding(ModBlocks.CONCRETE_SLAB.get(), 10, 0);
-        addShielding(ModBlocks.CONCRETE_STAIRS.get(), 10, 0);
-        addShielding(ModBlocks.CONCRETE_BRICKS.get(), 10, 0);
-        addShielding(ModBlocks.CONCRETE_BRICKS_SLAB.get(), 10, 0);
-        addShielding(ModBlocks.CONCRETE_BRICKS_STAIRS.get(), 10, 0);
-        addShielding(ModBlocks.FOUNDATION_CONCRETE.get(), 10, 0);
-        addShielding(ModBlocks.STEEL_REINFORCED_GLASS.get(), 10, 0);
-        addShielding(ModBlocks.CREATIVE_CONCRETE_BRICKS.get(), 10, 0);
-        addShielding(ModBlocks.CHISELED_CONCRETE_BRICKS.get(), 10, 0);
+        addShielding(BMNWBlocks.CONCRETE.get(), 10, 0);
+        addShielding(BMNWBlocks.CONCRETE_SLAB.get(), 10, 0);
+        addShielding(BMNWBlocks.CONCRETE_STAIRS.get(), 10, 0);
+        addShielding(BMNWBlocks.CONCRETE_BRICKS.get(), 10, 0);
+        addShielding(BMNWBlocks.CONCRETE_BRICKS_SLAB.get(), 10, 0);
+        addShielding(BMNWBlocks.CONCRETE_BRICKS_STAIRS.get(), 10, 0);
+        addShielding(BMNWBlocks.FOUNDATION_CONCRETE.get(), 10, 0);
+        addShielding(BMNWBlocks.STEEL_REINFORCED_GLASS.get(), 10, 0);
+        addShielding(BMNWBlocks.CREATIVE_CONCRETE_BRICKS.get(), 10, 0);
+        addShielding(BMNWBlocks.CHISELED_CONCRETE_BRICKS.get(), 10, 0);
 
         initialized = true;
     }

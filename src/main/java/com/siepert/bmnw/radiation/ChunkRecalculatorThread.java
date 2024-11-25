@@ -1,7 +1,7 @@
 package com.siepert.bmnw.radiation;
 
 import com.siepert.bmnw.interfaces.IRadioactiveBlock;
-import com.siepert.bmnw.misc.ModAttachments;
+import com.siepert.bmnw.misc.BMNWAttachments;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -38,8 +38,8 @@ public class ChunkRecalculatorThread implements Runnable {
             }
         }
 
-        chunk.setData(ModAttachments.SOURCE_RADIOACTIVITY, calculatedRads);
-        chunk.setData(ModAttachments.SOURCED_RADIOACTIVITY_THIS_TICK, true);
+        chunk.setData(BMNWAttachments.SOURCE_RADIOACTIVITY, calculatedRads);
+        chunk.setData(BMNWAttachments.SOURCED_RADIOACTIVITY_THIS_TICK, true);
 
         result = calculatedRads;
     }

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "bmnw:plutonium_fuel_billet"
+    },
+    {
+      "item": "bmnw:plutonium_fuel_billet"
+    },
+    {
+      "item": "bmnw:plutonium_fuel_billet"
+    }
+  ],
+  "result": {
+    "count": 2,
+    "id": "bmnw:plutonium_fuel_ingot"
+  }
+}

@@ -1,8 +1,7 @@
 package com.siepert.bmnw.block.custom;
 
-import com.siepert.bmnw.entity.ModEntityTypes;
+import com.siepert.bmnw.entity.BMNWEntityTypes;
 import com.siepert.bmnw.entity.custom.CaseohEntity;
-import com.siepert.bmnw.entity.custom.LittleBoyEntity;
 import com.siepert.bmnw.interfaces.IBombBlock;
 import com.siepert.bmnw.interfaces.IDetonatable;
 import net.minecraft.core.BlockPos;
@@ -22,7 +21,7 @@ public class CaseohBlock extends Block implements IDetonatable, IBombBlock {
     @Override
     public void detonate(Level level, BlockPos pos) {
         level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
-        CaseohEntity entity = new CaseohEntity(ModEntityTypes.LITTLE_BOY.get(), level);
+        CaseohEntity entity = new CaseohEntity(BMNWEntityTypes.LITTLE_BOY.get(), level);
         entity.setPos(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
         level.addFreshEntity(entity);
     }

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "tag": "c:ingots/plutonium_241"
+    },
+    "N": {
+      "item": "bmnw:plutonium_241_ingot"
+    }
+  },
+  "pattern": [
+    "###",
+    "#N#",
+    "###"
+  ],
+  "result": {
+    "count": 1,
+    "id": "bmnw:plutonium_241_block"
+  }
+}

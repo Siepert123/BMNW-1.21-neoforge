@@ -1,6 +1,6 @@
 package com.siepert.bmnw.block.custom;
 
-import com.siepert.bmnw.entity.ModEntityTypes;
+import com.siepert.bmnw.entity.BMNWEntityTypes;
 import com.siepert.bmnw.entity.custom.NuclearChargeEntity;
 import com.siepert.bmnw.interfaces.IBombBlock;
 import com.siepert.bmnw.interfaces.IDetonatable;
@@ -18,7 +18,7 @@ public class NuclearChargeBlock extends Block implements IDetonatable, IBombBloc
     @Override
     public void detonate(Level level, BlockPos pos) {
         level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
-        NuclearChargeEntity entity = new NuclearChargeEntity(ModEntityTypes.NUCLEAR_CHARGE.get(), level);
+        NuclearChargeEntity entity = new NuclearChargeEntity(BMNWEntityTypes.NUCLEAR_CHARGE.get(), level);
         entity.setPos(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
         level.addFreshEntity(entity);
     }

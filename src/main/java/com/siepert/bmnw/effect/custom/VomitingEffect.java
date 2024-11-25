@@ -1,6 +1,6 @@
 package com.siepert.bmnw.effect.custom;
 
-import com.siepert.bmnw.particle.ModParticleTypes;
+import com.siepert.bmnw.particle.BMNWParticleTypes;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
@@ -22,7 +22,7 @@ public class VomitingEffect extends MobEffect {
         RandomSource rand = entity.getRandom();
         for (int i = 0; i < 10; i++) {
             Vec3 vec = look.xRot(rand.nextFloat() - 0.5f).yRot(rand.nextFloat() - 0.5f).zRot(rand.nextFloat() - 0.5f);
-            entity.level().addParticle(ModParticleTypes.VOMIT.get(),
+            entity.level().addParticle(BMNWParticleTypes.VOMIT.get(),
                     entity.getX(), entity.getEyeY(), entity.getZ(),
                     vec.x(), vec.y(), vec.z());
         }

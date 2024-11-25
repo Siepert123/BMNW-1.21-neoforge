@@ -1,14 +1,16 @@
 package com.siepert.bmnw.event;
 
-import com.siepert.bmnw.datagen.ModAdvancementGenerator;
-import com.siepert.bmnw.effect.ModEffects;
-import com.siepert.bmnw.entity.ModEntityTypes;
+import com.siepert.bmnw.datagen.BMNWAdvancementGenerator;
+import com.siepert.bmnw.datagen.BMNWItemTagGenerator;
+import com.siepert.bmnw.effect.BMNWEffects;
+import com.siepert.bmnw.entity.BMNWEntityTypes;
 import com.siepert.bmnw.entity.renderer.*;
 import com.siepert.bmnw.interfaces.IItemHazard;
+import com.siepert.bmnw.item.BMNWItems;
 import com.siepert.bmnw.misc.BMNWConfig;
-import com.siepert.bmnw.misc.ModAttachments;
-import com.siepert.bmnw.misc.ModDamageSources;
-import com.siepert.bmnw.particle.ModParticleTypes;
+import com.siepert.bmnw.misc.BMNWAttachments;
+import com.siepert.bmnw.misc.BMNWDamageSources;
+import com.siepert.bmnw.particle.BMNWParticleTypes;
 import com.siepert.bmnw.particle.custom.*;
 import com.siepert.bmnw.radiation.RadHelper;
 import com.siepert.bmnw.radiation.ShieldingValues;
@@ -17,6 +19,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ChunkHolder;
 import net.minecraft.server.level.ChunkMap;
 import net.minecraft.server.level.ServerLevel;
@@ -26,11 +29,14 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.util.ObfuscationReflectionHelper;
+import net.neoforged.neoforge.client.event.AddAttributeTooltipsEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 import net.neoforged.neoforge.common.data.AdvancementProvider;
@@ -57,6 +63,7 @@ public class BMNWEventBus {
 
     @EventBusSubscriber(modid = "bmnw", bus = EventBusSubscriber.Bus.GAME)
     public static class GameEventBus {
+        //region Server tick events
         /**
          * Irradiates chunks based on source radioactivity (calculated seperately).
          * Could break at any moment, really.
@@ -76,11 +83,11 @@ public class BMNWEventBus {
                         for (ChunkHolder chunkHolder : chunkHolders) {
                             LevelChunk chunk = chunkHolder.getTickingChunk();
                             if (chunk == null || !level.isLoaded(chunk.getPos().getMiddleBlockPosition(64))) continue;
-                            if (chunk.getData(ModAttachments.SOURCED_RADIOACTIVITY_THIS_TICK))
-                                chunk.setData(ModAttachments.SOURCED_RADIOACTIVITY_THIS_TICK, false);
+                            if (chunk.getData(BMNWAttachments.SOURCED_RADIOACTIVITY_THIS_TICK))
+                                chunk.setData(BMNWAttachments.SOURCED_RADIOACTIVITY_THIS_TICK, false);
 
-                            float rads = chunk.getData(ModAttachments.RADIATION);
-                            chunk.setData(ModAttachments.RADIATION, (rads * radiationRemoveRate));
+                            float rads = chunk.getData(BMNWAttachments.RADIATION);
+                            chunk.setData(BMNWAttachments.RADIATION, (rads * radiationRemoveRate));
 
                             if (BMNWConfig.recalculateChunks) {
                                 if (level.getGameTime() % BMNWConfig.chunkRecalculationInterval == 0) {
@@ -88,7 +95,7 @@ public class BMNWEventBus {
                                 }
                             }
 
-                            chunk.setData(ModAttachments.RADIATION, chunk.getData(ModAttachments.RADIATION) + (chunk.getData(ModAttachments.SOURCE_RADIOACTIVITY) / 200));
+                            chunk.setData(BMNWAttachments.RADIATION, chunk.getData(BMNWAttachments.RADIATION) + (chunk.getData(BMNWAttachments.SOURCE_RADIOACTIVITY) / 200));
 
                             if (RadHelper.getChunkRadiation(chunk) > 1)
                                 RadHelper.disperseChunkRadiation(chunk);
@@ -119,13 +126,13 @@ public class BMNWEventBus {
                             LevelChunk chunk = chunkHolder.getTickingChunk();
                             if (chunk == null) continue;
 
-                            chunk.setData(ModAttachments.RADIATION, chunk.getData(ModAttachments.RADIATION) + chunk.getData(ModAttachments.QUEUED_RADIATION));
-                            chunk.setData(ModAttachments.QUEUED_RADIATION, 0.0f);
+                            chunk.setData(BMNWAttachments.RADIATION, chunk.getData(BMNWAttachments.RADIATION) + chunk.getData(BMNWAttachments.QUEUED_RADIATION));
+                            chunk.setData(BMNWAttachments.QUEUED_RADIATION, 0.0f);
 
                             float rads = RadHelper.getChunkRadiation(chunk);
 
-                            if (rads > 15000 || rads < 0)
-                                chunk.setData(ModAttachments.RADIATION, 15000.0f);
+                            if (rads > Float.MAX_VALUE || rads < 0 || Float.isNaN(rads))
+                                chunk.setData(BMNWAttachments.RADIATION, 15000.0f);
 
                             if (rads > 100 && level.random.nextInt(50) == 0)
                                 RadHelper.createChunkRadiationEffects(chunk);
@@ -136,7 +143,9 @@ public class BMNWEventBus {
                 }
             }
         }
+        //endregion
 
+        //region Entity tick events
         /**
          * Handles contamination and decontamination of entities.
          */
@@ -173,7 +182,7 @@ public class BMNWEventBus {
                 if (rads > 1000) {
                     if (entity.level().getGameTime() % 20 == 0) {
                         entity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 100, 1));
-                        entity.hurt(ModDamageSources.radiation(entity.level()), 8);
+                        entity.hurt(BMNWDamageSources.radiation(entity.level()), 8);
                     }
                 }
                 if (rads > 800) {
@@ -194,7 +203,7 @@ public class BMNWEventBus {
                     }
                     if (entity.getRandom().nextInt(500) == 0) {
                         entity.addEffect(new MobEffectInstance(MobEffects.HUNGER, 100, 4));
-                        entity.addEffect(new MobEffectInstance(ModEffects.VOMITING, 20));
+                        entity.addEffect(new MobEffectInstance(BMNWEffects.VOMITING, 20));
                     }
                 }
                 if (rads > 200) {
@@ -249,7 +258,9 @@ public class BMNWEventBus {
                 }
             }
         }
+        //endregion
 
+        //region Block events
         @SubscribeEvent
         public static void blockEventPlace(BlockEvent.EntityPlaceEvent event) {
             if (ShieldingValues.shields(event.getPlacedBlock()) || BMNWConfig.recalculateOnBlockEvent) {
@@ -260,6 +271,40 @@ public class BMNWEventBus {
         public static void blockEventBreak(BlockEvent.BreakEvent event) {
             if (ShieldingValues.shields(event.getState()) || BMNWConfig.recalculateOnBlockEvent) {
                 RadHelper.recalculateChunkRadioactivity(event.getLevel().getChunk(event.getPos()));
+            }
+        }
+        //endregion
+
+        @SubscribeEvent
+        public static void addAttributeTooltipsEvent(AddAttributeTooltipsEvent event) {
+            ItemStack stack = event.getStack();
+            if (stack.is(BMNWItems.BASE_MISSILE.get())) {
+                event.addTooltipLines(Component.translatable("tooltip.bmnw.crafting_part").withColor(0x888888));
+                return;
+            }
+            if (stack.getItem() instanceof BlockItem) {
+                Block block = ((BlockItem) stack.getItem()).getBlock();
+                if (ShieldingValues.shields(block.defaultBlockState())) {
+                    event.addTooltipLines(
+                            Component.translatable("tooltip.bmnw.radiation_shielding")
+                                    .append(" - ")
+                                    .append(String.valueOf(Math.round(100 * (1.0f - ShieldingValues.getShieldingModifier(block.defaultBlockState())))))
+                                    .append("%")
+                                    .withColor(0x00ff00)
+                    );
+                }
+            }
+            if (stack.getItem() instanceof IItemHazard hazard) {
+                if (hazard.getRadioactivity() > 0) {
+                    event.addTooltipLines(Component.translatable("tooltip.bmnw.radioactive")
+                            .append(" - ").append(String.valueOf(hazard.getRadioactivity())).append("RAD/s").withColor(0x00ff00));
+                }
+                if (hazard.isBurning()) {
+                    event.addTooltipLines(Component.translatable("tooltip.bmnw.burning").withColor(0xffff00));
+                }
+                if (hazard.isBlinding()) {
+                    event.addTooltipLines(Component.translatable("tooltip.bmnw.blinding").withColor(0x0000ff));
+                }
             }
         }
     }
@@ -275,15 +320,16 @@ public class BMNWEventBus {
 
         }
         private static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
-            registerEntityRenderingHandler(event, ModEntityTypes.BLOCK_DEBRIS, BlockDebrisRenderer::new);
+            registerEntityRenderingHandler(event, BMNWEntityTypes.BLOCK_DEBRIS, BlockDebrisRenderer::new);
 
-            registerEntityRenderingHandler(event, ModEntityTypes.NUCLEAR_CHARGE, NuclearChargeRenderer::new);
-            registerEntityRenderingHandler(event, ModEntityTypes.DUD, DudRenderer::new);
-            registerEntityRenderingHandler(event, ModEntityTypes.LITTLE_BOY, LittleBoyRenderer::new);
-            registerEntityRenderingHandler(event, ModEntityTypes.CASEOH, CaseohRenderer::new);
+            registerEntityRenderingHandler(event, BMNWEntityTypes.NUCLEAR_CHARGE, NuclearChargeRenderer::new);
+            registerEntityRenderingHandler(event, BMNWEntityTypes.DUD, DudRenderer::new);
+            registerEntityRenderingHandler(event, BMNWEntityTypes.LITTLE_BOY, LittleBoyRenderer::new);
+            registerEntityRenderingHandler(event, BMNWEntityTypes.CASEOH, CaseohRenderer::new);
 
-            registerEntityRenderingHandler(event, ModEntityTypes.EXAMPLE_MISSILE, ExampleMissileRenderer::new);
-            registerEntityRenderingHandler(event, ModEntityTypes.NUCLEAR_MISSILE, NuclearMissileRenderer::new);
+            registerEntityRenderingHandler(event, BMNWEntityTypes.EXAMPLE_MISSILE, ExampleMissileRenderer::new);
+            registerEntityRenderingHandler(event, BMNWEntityTypes.HE_MISSILE, HighExplosiveMissileRenderer::new);
+            registerEntityRenderingHandler(event, BMNWEntityTypes.NUCLEAR_MISSILE, NuclearMissileRenderer::new);
         }
 
         /**
@@ -300,11 +346,11 @@ public class BMNWEventBus {
          */
         @SubscribeEvent
         public static void registerParticleProvidersEvent(RegisterParticleProvidersEvent event) {
-            event.registerSpriteSet(ModParticleTypes.VOMIT.get(), VomitParticleProvider::new);
-            event.registerSpriteSet(ModParticleTypes.EVIL_FOG.get(), EvilFogParticleProvider::new);
-            event.registerSpriteSet(ModParticleTypes.FIRE_SMOKE.get(), FireSmokeParticleProvider::new);
-            event.registerSpriteSet(ModParticleTypes.SMOKE_HD.get(), SmokeHDParticleProvider::new);
-            event.registerSpriteSet(ModParticleTypes.SHOCKWAVE.get(), ShockwaveParticleProvider::new);
+            event.registerSpriteSet(BMNWParticleTypes.VOMIT.get(), VomitParticleProvider::new);
+            event.registerSpriteSet(BMNWParticleTypes.EVIL_FOG.get(), EvilFogParticleProvider::new);
+            event.registerSpriteSet(BMNWParticleTypes.FIRE_SMOKE.get(), FireSmokeParticleProvider::new);
+            event.registerSpriteSet(BMNWParticleTypes.SMOKE_HD.get(), SmokeHDParticleProvider::new);
+            event.registerSpriteSet(BMNWParticleTypes.SHOCKWAVE.get(), ShockwaveParticleProvider::new);
         }
 
         /**
@@ -321,7 +367,7 @@ public class BMNWEventBus {
                     event.includeServer(),
                     new AdvancementProvider(
                             output, lookupProvider, existingFileHelper,
-                            List.of(new ModAdvancementGenerator())
+                            List.of(new BMNWAdvancementGenerator())
                     )
             );
         }

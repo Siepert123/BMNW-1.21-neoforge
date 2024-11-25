@@ -1,31 +1,14 @@
 package com.siepert.bmnw.entity.custom;
 
-import com.siepert.bmnw.block.ModBlocks;
-import com.siepert.bmnw.misc.ModSounds;
-import com.siepert.bmnw.misc.ModTags;
-import com.siepert.bmnw.radiation.RadHelper;
-import com.siepert.bmnw.radiation.UnitConvertor;
+import com.siepert.bmnw.misc.BMNWSounds;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializers;
-import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.SupportType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
-import net.neoforged.neoforge.common.Tags;
-
-import java.util.List;
 
 public class NuclearChargeEntity extends BombEntity {
     public final int radius = 32;
@@ -51,7 +34,7 @@ public class NuclearChargeEntity extends BombEntity {
         level().setBlock(worldPosition, Blocks.AIR.defaultBlockState(), 3);
 
         if (progress == 0) {
-            level().playSound(null, worldPosition, ModSounds.LARGE_EXPLOSION.get(), SoundSource.MASTER, 1.0f, 1.0f);
+            level().playSound(null, worldPosition, BMNWSounds.LARGE_EXPLOSION.get(), SoundSource.MASTER, 1.0f, 1.0f);
             LOGGER.info("Dry!");
             dry(radius * 2);
             LOGGER.info("Effect entities!");

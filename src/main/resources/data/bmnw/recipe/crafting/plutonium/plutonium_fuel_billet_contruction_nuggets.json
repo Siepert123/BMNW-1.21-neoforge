@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "bmnw:uranium_238_nugget"
+    },
+    {
+      "item": "bmnw:uranium_238_nugget"
+    },
+    {
+      "item": "bmnw:uranium_238_nugget"
+    },
+    {
+      "item": "bmnw:uranium_238_nugget"
+    },
+    {
+      "item": "bmnw:reactor_grade_plutonium_nugget"
+    },
+    {
+      "item": "bmnw:reactor_grade_plutonium_nugget"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "bmnw:plutonium_fuel_billet"
+  }
+}

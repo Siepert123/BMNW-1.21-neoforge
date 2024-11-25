@@ -18,25 +18,17 @@ import java.util.List;
  */
 public class SimpleRadioactiveBlockItem extends BlockItem implements IItemHazard {
     private final float rads;
-    private final Component tooltip;
     public <T extends Block & IRadioactiveBlock> SimpleRadioactiveBlockItem(T block, Properties properties) {
         super(block, properties);
         this.rads = block.getRadioactivity();
-        tooltip = Component.translatable("tooltip.bmnw.radioactive").append(" - ").append(String.valueOf(rads)).append("RAD/s").withColor(0x00dd00);
     }
     public SimpleRadioactiveBlockItem(Block block, Properties properties, float rads) {
         super(block, properties);
         this.rads = rads;
-        tooltip = Component.translatable("tooltip.bmnw.radioactive").append(" - ").append(String.valueOf(rads)).append("RAD/s").withColor(0x00dd00);
     }
 
     @Override
     public float getRadioactivity() {
         return rads;
-    }
-
-    @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-        tooltipComponents.add(tooltip);
     }
 }

@@ -1,7 +1,7 @@
 package com.siepert.bmnw.block.custom;
 
-import com.siepert.bmnw.block.ModBlocks;
-import com.siepert.bmnw.effect.ModEffects;
+import com.siepert.bmnw.block.BMNWBlocks;
+import com.siepert.bmnw.effect.BMNWEffects;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -28,7 +28,7 @@ public class NuclearRemainsBlock extends SimpleRadioactiveBlock {
         if (entity instanceof LivingEntity living) {
             living.addEffect(
                     new MobEffectInstance(
-                            ModEffects.CONTAMINATION,
+                            BMNWEffects.CONTAMINATION,
                             600,
                             1
                     )
@@ -38,10 +38,10 @@ public class NuclearRemainsBlock extends SimpleRadioactiveBlock {
 
     @Override
     protected void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-        if (state.is(ModBlocks.NUCLEAR_REMAINS.get())) {
+        if (state.is(BMNWBlocks.NUCLEAR_REMAINS.get())) {
             boolean decayable = true;
             for (Direction direction : Direction.values()) {
-                if (level.getBlockState(pos.offset(direction.getNormal())).is(ModBlocks.BLAZING_NUCLEAR_REMAINS.get())) {
+                if (level.getBlockState(pos.offset(direction.getNormal())).is(BMNWBlocks.BLAZING_NUCLEAR_REMAINS.get())) {
                     decayable = false;
                 }
             }
@@ -57,7 +57,7 @@ public class NuclearRemainsBlock extends SimpleRadioactiveBlock {
     @Override
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
         if (!animate) return;
-        if (state.is(ModBlocks.BLAZING_NUCLEAR_REMAINS.get())) {
+        if (state.is(BMNWBlocks.BLAZING_NUCLEAR_REMAINS.get())) {
             if (random.nextFloat() > 0.8) {
                 level.addParticle(ParticleTypes.LAVA,
                         pos.getX() + random.nextFloat(), pos.getY() + 1, pos.getZ() + random.nextFloat(),

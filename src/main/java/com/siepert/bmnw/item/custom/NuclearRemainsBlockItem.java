@@ -17,10 +17,4 @@ public class NuclearRemainsBlockItem extends SimpleRadioactiveBlockItem {
     public boolean isBurning() {
         return true;
     }
-
-    @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-        super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
-        tooltipComponents.add(Component.translatable("tooltip.bmnw.burning").withColor(0xffff00));
-    }
 }

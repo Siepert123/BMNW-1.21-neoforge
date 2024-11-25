@@ -16,7 +16,7 @@ public record NukeTriggerInstance(Optional<ContextAwarePredicate> player) implem
     ).apply(instance, NukeTriggerInstance::new));
 
     public static Criterion<NukeTriggerInstance> instance(ContextAwarePredicate player) {
-        return  ModAdvancementTriggers.NUKE.get().createCriterion(new NukeTriggerInstance(Optional.of(player)));
+        return  BMNWAdvancementTriggers.NUKE.get().createCriterion(new NukeTriggerInstance(Optional.of(player)));
     }
 
     public boolean matches(Player player) {

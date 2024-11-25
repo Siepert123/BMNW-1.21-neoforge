@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "bmnw:thorium_fuel_billet"
+    }
+  ],
+  "result": {
+    "count": 6,
+    "id": "bmnw:thorium_fuel_nugget"
+  }
+}

@@ -1,20 +1,22 @@
 package com.siepert.bmnw;
 
 import com.mojang.logging.LogUtils;
-import com.siepert.bmnw.block.ModBlocks;
-import com.siepert.bmnw.block.entity.ModBlockEntities;
-import com.siepert.bmnw.critereon.ModAdvancementTriggers;
-import com.siepert.bmnw.effect.ModEffects;
-import com.siepert.bmnw.entity.ModEntityTypes;
-import com.siepert.bmnw.item.ModItems;
-import com.siepert.bmnw.item.components.ModDataComponents;
+import com.siepert.bmnw.block.BMNWBlocks;
+import com.siepert.bmnw.block.entity.BMNWBlockEntities;
+import com.siepert.bmnw.critereon.BMNWAdvancementTriggers;
+import com.siepert.bmnw.effect.BMNWEffects;
+import com.siepert.bmnw.entity.BMNWEntityTypes;
+import com.siepert.bmnw.item.BMNWItems;
+import com.siepert.bmnw.item.components.BMNWDataComponents;
 import com.siepert.bmnw.misc.BMNWConfig;
-import com.siepert.bmnw.misc.ModAttachments;
-import com.siepert.bmnw.misc.ModSounds;
-import com.siepert.bmnw.misc.ModTabs;
-import com.siepert.bmnw.particle.ModParticleTypes;
+import com.siepert.bmnw.misc.BMNWAttachments;
+import com.siepert.bmnw.misc.BMNWSounds;
+import com.siepert.bmnw.misc.BMNWTabs;
+import com.siepert.bmnw.particle.BMNWParticleTypes;
 import com.siepert.bmnw.radiation.RadFiler;
 import com.siepert.bmnw.radiation.ShieldingValues;
+import com.siepert.bmnw.recipe.BMNWRecipeSerializers;
+import com.siepert.bmnw.recipe.BMNWRecipeTypes;
 import eu.midnightdust.lib.config.MidnightConfig;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
@@ -49,17 +51,19 @@ public class BMNW {
         modEventBus.addListener(this::commonSetup);
 
         LOGGER.debug("BMNW loader");
-        ModBlocks.register(modEventBus);
-        ModBlockEntities.register(modEventBus);
-        ModItems.register(modEventBus);
-        ModTabs.register(modEventBus);
-        ModDataComponents.register(modEventBus);
-        ModAttachments.register(modEventBus);
-        ModEntityTypes.register(modEventBus);
-        ModEffects.register(modEventBus);
-        ModParticleTypes.register(modEventBus);
-        ModSounds.register(modEventBus);
-        ModAdvancementTriggers.register(modEventBus);
+        BMNWBlocks.register(modEventBus);
+        BMNWBlockEntities.register(modEventBus);
+        BMNWItems.register(modEventBus);
+        BMNWRecipeTypes.register(modEventBus);
+        BMNWRecipeSerializers.register(modEventBus);
+        BMNWTabs.register(modEventBus);
+        BMNWDataComponents.register(modEventBus);
+        BMNWAttachments.register(modEventBus);
+        BMNWEntityTypes.register(modEventBus);
+        BMNWEffects.register(modEventBus);
+        BMNWParticleTypes.register(modEventBus);
+        BMNWSounds.register(modEventBus);
+        BMNWAdvancementTriggers.register(modEventBus);
 
         MidnightConfig.init("bmnw", BMNWConfig.class);
 

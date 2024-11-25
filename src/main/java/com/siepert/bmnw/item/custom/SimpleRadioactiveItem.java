@@ -17,11 +17,9 @@ import java.util.List;
  */
 public class SimpleRadioactiveItem extends Item implements IItemHazard {
     private final float rads;
-    private final Component tooltip;
     public SimpleRadioactiveItem(Properties properties, float rads) {
         super(properties);
         this.rads = rads;
-        tooltip = Component.translatable("tooltip.bmnw.radioactive").append(" - ").append(String.valueOf(rads)).append("RAD/s").withColor(0x00dd00);
     }
 
     public SimpleRadioactiveItem(float rads) {
@@ -31,10 +29,5 @@ public class SimpleRadioactiveItem extends Item implements IItemHazard {
     @Override
     public float getRadioactivity() {
         return rads;
-    }
-
-    @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-        tooltipComponents.add(tooltip);
     }
 }

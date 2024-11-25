@@ -1,9 +1,9 @@
 package com.siepert.bmnw.item.custom;
 
-import com.siepert.bmnw.critereon.ModAdvancementTriggers;
+import com.siepert.bmnw.critereon.BMNWAdvancementTriggers;
 import com.siepert.bmnw.interfaces.IDetonatable;
-import com.siepert.bmnw.item.components.ModDataComponents;
-import com.siepert.bmnw.misc.ModTags;
+import com.siepert.bmnw.item.components.BMNWDataComponents;
+import com.siepert.bmnw.misc.BMNWTags;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -32,12 +32,12 @@ public class DetonatorItem extends Item {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand usedHand) {
         ItemStack stack = player.getItemInHand(usedHand);
 
-        if (stack.has(ModDataComponents.TARGET)) {
-            BlockPos target = stack.get(ModDataComponents.TARGET);
+        if (stack.has(BMNWDataComponents.TARGET)) {
+            BlockPos target = stack.get(BMNWDataComponents.TARGET);
 
             if (target != null && level.getBlockState(target).getBlock() instanceof IDetonatable) {
-                if (level.getBlockState(target).is(ModTags.Blocks.GRANTS_NUKE_ACHIEVEMENT) && !level.isClientSide()) {
-                    ModAdvancementTriggers.NUKE.get().trigger((ServerPlayer) player);
+                if (level.getBlockState(target).is(BMNWTags.Blocks.GRANTS_NUKE_ACHIEVEMENT) && !level.isClientSide()) {
+                    BMNWAdvancementTriggers.NUKE.get().trigger((ServerPlayer) player);
                 }
                 ((IDetonatable) level.getBlockState(target).getBlock()).detonate(level, target);
                 if (level.isClientSide()) player.sendSystemMessage(Component.translatable("text.bmnw.detonate_success").withColor(0x00DD00));
@@ -55,7 +55,7 @@ public class DetonatorItem extends Item {
         if (context.getPlayer() == null) return InteractionResult.PASS;
         if (context.getPlayer().isShiftKeyDown()) {
             if (context.getLevel().getBlockState(context.getClickedPos()).getBlock() instanceof IDetonatable) {
-                context.getItemInHand().set(ModDataComponents.TARGET, context.getClickedPos());
+                context.getItemInHand().set(BMNWDataComponents.TARGET, context.getClickedPos());
                 if (context.getLevel().isClientSide()) context.getPlayer().sendSystemMessage(Component.translatable("text.bmnw.position_set").withColor(0x00DD00));
                 return InteractionResult.SUCCESS;
             }
@@ -66,8 +66,8 @@ public class DetonatorItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-        if (stack.has(ModDataComponents.TARGET)) {
-            BlockPos target = stack.get(ModDataComponents.TARGET);
+        if (stack.has(BMNWDataComponents.TARGET)) {
+            BlockPos target = stack.get(BMNWDataComponents.TARGET);
             if (target == null) {
                 tooltipComponents.add(Component.translatable("text.bmnw.position_invalid").withColor(0xDD0000));
             } else {

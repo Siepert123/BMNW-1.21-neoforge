@@ -8,7 +8,14 @@
     "bmnw:uranium_238_nugget",
     "bmnw:uranium_fuel_nugget",
     "bmnw:thorium_nugget",
-    "bmnw:thorium_fuel_nugget"
+    "bmnw:thorium_fuel_nugget",
+    "bmnw:plutonium_nugget",
+    "bmnw:plutonium_238_nugget",
+    "bmnw:plutonium_239_nugget",
+    "bmnw:plutonium_240_nugget",
+    "bmnw:plutonium_241_nugget",
+    "bmnw:reactor_grade_plutonium_nugget",
+    "bmnw:plutonium_fuel_nugget"
   ],
   "replace": false
 }

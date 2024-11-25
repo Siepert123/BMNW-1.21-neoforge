@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "bmnw:reactor_grade_plutonium_billet"
+    }
+  ],
+  "result": {
+    "count": 6,
+    "id": "bmnw:reactor_grade_plutonium_nugget"
+  }
+}

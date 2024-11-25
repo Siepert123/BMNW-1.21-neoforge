@@ -1,8 +1,6 @@
 package com.siepert.bmnw.entity.custom;
 
-import com.siepert.bmnw.entity.ModEntityTypes;
-import com.siepert.bmnw.particle.ModParticleTypes;
-import net.minecraft.core.BlockPos;
+import com.siepert.bmnw.particle.BMNWParticleTypes;
 import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -65,7 +63,7 @@ public abstract class MissileEntity extends Entity {
     public void baseTick() {
         if (level().isClientSide()) {
             falling = entityData.get(IS_FALLING_DATA);
-            level().addParticle(ModParticleTypes.FIRE_SMOKE.get(), true, this.getX(), this.getY(), this.getZ(), 0, falling ? 0.1 : -0.1, 0);
+            level().addParticle(BMNWParticleTypes.FIRE_SMOKE.get(), true, this.getX(), this.getY(), this.getZ(), 0, falling ? 0.1 : -0.1, 0);
         } else {
             if (isFalling()) {
                 if (!level().getBlockState(getOnPos()).isAir()) {

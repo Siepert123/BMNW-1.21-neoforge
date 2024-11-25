@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "tag": "c:nuggets/plutonium_238"
+    },
+    "N": {
+      "item": "bmnw:plutonium_238_nugget"
+    }
+  },
+  "pattern": [
+    "###",
+    "#N#",
+    "###"
+  ],
+  "result": {
+    "count": 1,
+    "id": "bmnw:plutonium_238_ingot"
+  }
+}

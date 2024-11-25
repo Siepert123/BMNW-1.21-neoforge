@@ -1,9 +1,9 @@
 package com.siepert.bmnw.entity.custom;
 
-import com.siepert.bmnw.block.ModBlocks;
-import com.siepert.bmnw.misc.ModSounds;
-import com.siepert.bmnw.misc.ModTags;
-import com.siepert.bmnw.particle.ModParticleTypes;
+import com.siepert.bmnw.block.BMNWBlocks;
+import com.siepert.bmnw.misc.BMNWSounds;
+import com.siepert.bmnw.misc.BMNWTags;
+import com.siepert.bmnw.particle.BMNWParticleTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundSource;
@@ -35,7 +35,7 @@ public class DudEntity extends BombEntity {
         if (level().isClientSide()) {
             progress = entityData.get(PROGRESS_DATA);
             if (progress == 0) {
-                level().addParticle(ModParticleTypes.SHOCKWAVE.get(), getX(), getY(), getZ(), 0, 0, 0);
+                level().addParticle(BMNWParticleTypes.SHOCKWAVE.get(), getX(), getY(), getZ(), 0, 0, 0);
             }
             progress = entityData.get(PROGRESS_DATA);
             return;
@@ -45,7 +45,7 @@ public class DudEntity extends BombEntity {
         level().setBlock(worldPosition, Blocks.AIR.defaultBlockState(), 3);
 
         if (progress == 0) {
-            level().playSound(null, worldPosition, ModSounds.LARGE_EXPLOSION.get(), SoundSource.MASTER, 1.0f, 1.0f);
+            level().playSound(null, worldPosition, BMNWSounds.LARGE_EXPLOSION.get(), SoundSource.MASTER, 1.0f, 1.0f);
             LOGGER.info("Dry!");
             dry();
             LOGGER.info("Effect entities!");
@@ -133,7 +133,7 @@ public class DudEntity extends BombEntity {
                     if (!level().getFluidState(pos).isEmpty()) {
                         level().setBlock(pos, air, 3);
                     }
-                    if (level().getBlockState(pos).is(ModTags.Blocks.MELTABLES)) {
+                    if (level().getBlockState(pos).is(BMNWTags.Blocks.MELTABLES)) {
                         level().setBlock(pos, air, 3);
                     }
                 }
@@ -142,8 +142,8 @@ public class DudEntity extends BombEntity {
     }
     private void burn() {
         final int burnRadius = radius * 2;
-        final BlockState log = ModBlocks.CHARRED_LOG.get().defaultBlockState();
-        final BlockState plank = ModBlocks.CHARRED_PLANKS.get().defaultBlockState();
+        final BlockState log = BMNWBlocks.CHARRED_LOG.get().defaultBlockState();
+        final BlockState plank = BMNWBlocks.CHARRED_PLANKS.get().defaultBlockState();
         for (int x = -burnRadius; x <= burnRadius; x++) {
             for (int z = -burnRadius; z <= burnRadius; z++) {
                 for (int y = burnRadius; y >= -burnRadius; y--) {
@@ -155,7 +155,7 @@ public class DudEntity extends BombEntity {
                     if (level().getBlockState(pos).is(BlockTags.LEAVES)) {
                         level().setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
                     }
-                    if (level().getBlockState(pos).is(ModTags.Blocks.CHARRABLE_PLANKS)) {
+                    if (level().getBlockState(pos).is(BMNWTags.Blocks.CHARRABLE_PLANKS)) {
                         level().setBlock(pos, plank, 3);
                     }
                 }
@@ -184,7 +184,7 @@ public class DudEntity extends BombEntity {
 
     @Override
     protected void irradiate(int nuclearRadius, int grassRadius, float insertedRads) {
-        final BlockState remains = ModBlocks.SLAKED_NUCLEAR_REMAINS.get().defaultBlockState();
+        final BlockState remains = BMNWBlocks.SLAKED_NUCLEAR_REMAINS.get().defaultBlockState();
         final BlockState diamond = Blocks.DIAMOND_ORE.defaultBlockState();
         final BlockState emerald = Blocks.EMERALD_ORE.defaultBlockState();
         for (int x = -nuclearRadius; x <= nuclearRadius; x++) {
@@ -206,7 +206,7 @@ public class DudEntity extends BombEntity {
                                 level().setBlock(hitResult.getBlockPos(), diamond, 3);
                             }
                         } else if (state.getBlock().getExplosionResistance() <= str) {
-                            if (!state.is(ModTags.Blocks.NUCLEAR_REMAINS_BLACKLIST)) {
+                            if (!state.is(BMNWTags.Blocks.NUCLEAR_REMAINS_BLACKLIST)) {
                                 level().setBlock(hitResult.getBlockPos(), remains, 3);
                             }
                         }

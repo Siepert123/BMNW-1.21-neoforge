@@ -9,7 +9,18 @@
     "bmnw:raw_uranium_block",
     "bmnw:thorium_block",
     "bmnw:thorium_fuel_block",
-    "bmnw:raw_thorium_block"
+    "bmnw:raw_thorium_block",
+    "bmnw:tungsten_block",
+    "bmnw:raw_tungsten_block",
+    "bmnw:titanium_block",
+    "bmnw:raw_titanium_block",
+    "bmnw:plutonium_block",
+    "bmnw:plutonium_238_block",
+    "bmnw:plutonium_239_block",
+    "bmnw:plutonium_240_block",
+    "bmnw:plutonium_241_block",
+    "bmnw:reactor_grade_plutonium_block",
+    "bmnw:plutonium_fuel_block"
   ],
   "replace": false
 }

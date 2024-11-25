@@ -20,7 +20,6 @@ public class RadFiler {
 
     public static void rerun(MinecraftServer server) {
         for (ServerLevel level : server.getAllLevels()) {
-            RadiationSavedData.saveTo(level.getDataStorage());
         }
     }
 }

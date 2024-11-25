@@ -1,8 +1,7 @@
 package com.siepert.bmnw.block.custom;
 
-import com.siepert.bmnw.entity.ModEntityTypes;
+import com.siepert.bmnw.entity.BMNWEntityTypes;
 import com.siepert.bmnw.entity.custom.LittleBoyEntity;
-import com.siepert.bmnw.entity.custom.NuclearChargeEntity;
 import com.siepert.bmnw.interfaces.IBombBlock;
 import com.siepert.bmnw.interfaces.IDetonatable;
 import net.minecraft.core.BlockPos;
@@ -22,7 +21,7 @@ public class LittleBoyBlock extends Block implements IDetonatable, IBombBlock {
     @Override
     public void detonate(Level level, BlockPos pos) {
         level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
-        LittleBoyEntity entity = new LittleBoyEntity(ModEntityTypes.LITTLE_BOY.get(), level);
+        LittleBoyEntity entity = new LittleBoyEntity(BMNWEntityTypes.LITTLE_BOY.get(), level);
         entity.setPos(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
         level.addFreshEntity(entity);
     }

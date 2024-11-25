@@ -1,7 +1,7 @@
 package com.siepert.bmnw.block.custom;
 
-import com.siepert.bmnw.block.ModBlocks;
-import com.siepert.bmnw.misc.ModStateProperties;
+import com.siepert.bmnw.block.BMNWBlocks;
+import com.siepert.bmnw.misc.BMNWStateProperties;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -19,7 +19,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.common.IShearable;
 
 public class IrradiatedLeavesBlock extends Block implements IShearable {
-    public static final IntegerProperty RAD_LEVEL = ModStateProperties.RAD_LEVEL;
+    public static final IntegerProperty RAD_LEVEL = BMNWStateProperties.RAD_LEVEL;
     public IrradiatedLeavesBlock(Properties properties) {
         super(properties);
     }
@@ -36,7 +36,7 @@ public class IrradiatedLeavesBlock extends Block implements IShearable {
             for (int y = 1; y < 16; y++) {
                 if (level.getBlockState(pos.below(y)).isFaceSturdy(level,pos.below(y), Direction.UP, SupportType.FULL)) {
                     if (level.getBlockState(pos.below(y-1)).canBeReplaced()) {
-                        level.setBlock(pos.below(y - 1), ModBlocks.IRRADIATED_LEAF_PILE.get()
+                        level.setBlock(pos.below(y - 1), BMNWBlocks.IRRADIATED_LEAF_PILE.get()
                                 .defaultBlockState().setValue(RAD_LEVEL, state.getValue(RAD_LEVEL)), 3);
                     }
                     break;

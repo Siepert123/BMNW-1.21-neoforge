@@ -1,9 +1,8 @@
 package com.siepert.bmnw.entity.custom;
 
-import com.siepert.bmnw.entity.ModEntityTypes;
+import com.siepert.bmnw.entity.BMNWEntityTypes;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
 
 public class NuclearMissileEntity extends MissileEntity {
 
@@ -11,12 +10,12 @@ public class NuclearMissileEntity extends MissileEntity {
         super(entityType, level);
     }
     protected NuclearMissileEntity(Level level) {
-        this(ModEntityTypes.NUCLEAR_MISSILE.get(), level);
+        this(BMNWEntityTypes.NUCLEAR_MISSILE.get(), level);
     }
 
     @Override
     protected void onImpact() {
-        NuclearChargeEntity entity = new NuclearChargeEntity(ModEntityTypes.NUCLEAR_CHARGE.get(), level());
+        NuclearChargeEntity entity = new NuclearChargeEntity(BMNWEntityTypes.NUCLEAR_CHARGE.get(), level());
         entity.setPos(this.position());
         level().addFreshEntity(entity);
     }

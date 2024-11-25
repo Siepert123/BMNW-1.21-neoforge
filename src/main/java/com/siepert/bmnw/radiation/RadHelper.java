@@ -1,19 +1,21 @@
 package com.siepert.bmnw.radiation;
 
-import com.siepert.bmnw.block.ModBlocks;
+import com.siepert.bmnw.block.BMNWBlocks;
 import com.siepert.bmnw.misc.BMNWConfig;
-import com.siepert.bmnw.misc.ModAttachments;
-import com.siepert.bmnw.misc.ModStateProperties;
-import com.siepert.bmnw.misc.ModTags;
-import com.siepert.bmnw.particle.ModParticleTypes;
+import com.siepert.bmnw.misc.BMNWAttachments;
+import com.siepert.bmnw.misc.BMNWStateProperties;
+import com.siepert.bmnw.misc.BMNWTags;
+import com.siepert.bmnw.particle.BMNWParticleTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
+import net.minecraft.world.level.levelgen.Heightmap;
 
 import javax.annotation.Nonnull;
 import java.util.Random;
@@ -53,8 +55,8 @@ public class RadHelper {
      */
     public static void recalculateChunkRadioactivity(@Nonnull ChunkAccess chunk) {
         if (!BMNWConfig.radiationSetting.chunk()) return;
-        if (chunk.getData(ModAttachments.SOURCED_RADIOACTIVITY_THIS_TICK)) {
-            chunk.getData(ModAttachments.SOURCE_RADIOACTIVITY);
+        if (chunk.getData(BMNWAttachments.SOURCED_RADIOACTIVITY_THIS_TICK)) {
+            chunk.getData(BMNWAttachments.SOURCE_RADIOACTIVITY);
             return;
         }
         ChunkRecalculatorThread thread = new ChunkRecalculatorThread(chunk);
@@ -70,7 +72,7 @@ public class RadHelper {
     private static final boolean implode = false;
 
     public static void modifySourceRadioactivity(ChunkAccess chunk, float rads) {
-        chunk.setData(ModAttachments.SOURCE_RADIOACTIVITY, Math.max(chunk.getData(ModAttachments.SOURCE_RADIOACTIVITY) + rads, 0));
+        chunk.setData(BMNWAttachments.SOURCE_RADIOACTIVITY, Math.max(chunk.getData(BMNWAttachments.SOURCE_RADIOACTIVITY) + rads, 0));
     }
 
     /**
@@ -81,13 +83,13 @@ public class RadHelper {
         if (chunk.getLevel() == null || chunk.getLevel().isClientSide()) return;
         Level level = chunk.getLevel();
 
-        int rad_level = getRadiationLevelForFemtoRads(chunk.getData(ModAttachments.RADIATION));
+        int rad_level = getRadiationLevelForFemtoRads(chunk.getData(BMNWAttachments.RADIATION));
         if (rad_level < 1) return;
         if (rad_level > 3) return;
 
-        final BlockState grass = ModBlocks.IRRADIATED_GRASS_BLOCK.get().defaultBlockState().setValue(ModStateProperties.RAD_LEVEL, rad_level);
-        final BlockState leaves = ModBlocks.IRRADIATED_LEAVES.get().defaultBlockState().setValue(ModStateProperties.RAD_LEVEL, rad_level);
-        final BlockState plant = ModBlocks.IRRADIATED_PLANT.get().defaultBlockState().setValue(ModStateProperties.RAD_LEVEL, rad_level);
+        final BlockState grass = BMNWBlocks.IRRADIATED_GRASS_BLOCK.get().defaultBlockState().setValue(BMNWStateProperties.RAD_LEVEL, rad_level);
+        final BlockState leaves = BMNWBlocks.IRRADIATED_LEAVES.get().defaultBlockState().setValue(BMNWStateProperties.RAD_LEVEL, rad_level);
+        final BlockState plant = BMNWBlocks.IRRADIATED_PLANT.get().defaultBlockState().setValue(BMNWStateProperties.RAD_LEVEL, rad_level);
 
         for (int y = level.getMinBuildHeight(); y < level.getMaxBuildHeight(); y++) {
             if (chunk.isYSpaceEmpty(y, y)) continue;
@@ -100,16 +102,16 @@ public class RadHelper {
                     if (state.isAir()) {
                         if (level instanceof ServerLevel serverLevel && !level.getBlockState(pos.below()).isAir() && rad_level == 3) {
                             if (level.random.nextFloat() > 0.999) {
-                                serverLevel.sendParticles(ModParticleTypes.EVIL_FOG.get(), x + 0.5, y + 0.5, z + 0.5,
+                                serverLevel.sendParticles(BMNWParticleTypes.EVIL_FOG.get(), x + 0.5, y + 0.5, z + 0.5,
                                         1, 0, 0, 0, 0);
                             }
                         }
                         continue;
                     }
 
-                    if (state.hasProperty(ModStateProperties.RAD_LEVEL)) {
-                        level.setBlock(pos, state.setValue(ModStateProperties.RAD_LEVEL,
-                                Math.max(state.getValue(ModStateProperties.RAD_LEVEL), rad_level)), 3);
+                    if (state.hasProperty(BMNWStateProperties.RAD_LEVEL)) {
+                        level.setBlock(pos, state.setValue(BMNWStateProperties.RAD_LEVEL,
+                                Math.max(state.getValue(BMNWStateProperties.RAD_LEVEL), rad_level)), 3);
                     } else {
                         if (irradiatableLeaves(state)) {
                             level.setBlock(pos, leaves, 3);
@@ -124,20 +126,20 @@ public class RadHelper {
         }
     }
     public static boolean irradiatableLeaves(BlockState state) {
-        return state.is(ModTags.Blocks.IRRADIATABLE_LEAVES);
+        return state.is(BMNWTags.Blocks.IRRADIATABLE_LEAVES);
     }
     public static boolean irradiatableGrass(BlockState state) {
-        return state.is(ModTags.Blocks.IRRADIATABLE_GRASS_BLOCKS);
+        return state.is(BMNWTags.Blocks.IRRADIATABLE_GRASS_BLOCKS);
     }
     public static boolean irradiatablePlant(BlockState state) {
-        return state.is(ModTags.Blocks.IRRADIATABLE_PLANTS);
+        return state.is(BMNWTags.Blocks.IRRADIATABLE_PLANTS);
     }
 
     public static float getChunkRadiation(ChunkAccess chunk) {
-        return chunk.getData(ModAttachments.RADIATION);
+        return chunk.getData(BMNWAttachments.RADIATION);
     }
     public static void addChunkRadiation(ChunkAccess chunk, float rads) {
-        chunk.setData(ModAttachments.RADIATION, chunk.getData(ModAttachments.RADIATION) + rads);
+        chunk.setData(BMNWAttachments.RADIATION, chunk.getData(BMNWAttachments.RADIATION) + rads);
     }
 
     public static void insertRadiation(Level level, BlockPos pos, float rads) {
@@ -194,10 +196,26 @@ public class RadHelper {
                 rads -= dispersion;
             }
         }
-        chunk.setData(ModAttachments.RADIATION, rads);
+        chunk.setData(BMNWAttachments.RADIATION, rads);
     }
 
     public static void queueChunkRadiation(ChunkAccess chunk, float rads) {
-        chunk.setData(ModAttachments.QUEUED_RADIATION, chunk.getData(ModAttachments.QUEUED_RADIATION) + rads);
+        chunk.setData(BMNWAttachments.QUEUED_RADIATION, chunk.getData(BMNWAttachments.QUEUED_RADIATION) + rads);
+    }
+
+    public static void createFallout(ChunkAccess chunk) {
+        ChunkPos pos = chunk.getPos();
+        Level l = chunk.getLevel();
+        RandomSource random = l.getRandom();
+        if (l instanceof ServerLevel level) {
+            for (int x = pos.getMinBlockX(); x <= pos.getMaxBlockX(); x++) {
+                for (int z = pos.getMinBlockZ(); z <= pos.getMaxBlockZ(); z++) {
+                    int minY = chunk.getHeight(Heightmap.Types.MOTION_BLOCKING, x, z);
+                    if (random.nextFloat() > 0.99f) {
+                        //TODO: place fallout layer
+                    }
+                }
+            }
+        }
     }
 }

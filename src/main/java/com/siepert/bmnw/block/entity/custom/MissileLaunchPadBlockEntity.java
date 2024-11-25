@@ -1,11 +1,9 @@
 package com.siepert.bmnw.block.entity.custom;
 
-import com.siepert.bmnw.block.ModBlocks;
+import com.siepert.bmnw.block.BMNWBlocks;
 import com.siepert.bmnw.block.custom.MissileBlock;
-import com.siepert.bmnw.block.entity.ModBlockEntities;
-import com.siepert.bmnw.entity.ModEntityTypes;
+import com.siepert.bmnw.block.entity.BMNWBlockEntities;
 import com.siepert.bmnw.entity.custom.MissileEntity;
-import com.siepert.bmnw.misc.ModStateProperties;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -23,7 +21,7 @@ public class MissileLaunchPadBlockEntity extends BlockEntity implements IEnergyS
     protected final int maxEnergyStored = 100000;
     protected final int requiredLaunchEnergy = 0;
     public MissileLaunchPadBlockEntity(BlockPos pos, BlockState blockState) {
-        super(ModBlockEntities.MISSILE_LAUNCH_PAD.get(), pos, blockState);
+        super(BMNWBlockEntities.MISSILE_LAUNCH_PAD.get(), pos, blockState);
     }
     private BlockPos corePos = worldPosition;
     public void setCorePos(BlockPos pos) {
@@ -41,21 +39,21 @@ public class MissileLaunchPadBlockEntity extends BlockEntity implements IEnergyS
         if (corePos.equals(worldPosition)) { //Check if we are the core
             boolean valid = true;
 
-            if (!level.getBlockState(corePos.offset(-1, 0, -1)).is(ModBlocks.MISSILE_LAUNCH_PAD)) valid = false;
-            if (!level.getBlockState(corePos.offset(0, 0, -1)).is(ModBlocks.MISSILE_LAUNCH_PAD)) valid = false;
-            if (!level.getBlockState(corePos.offset(1, 0, -1)).is(ModBlocks.MISSILE_LAUNCH_PAD)) valid = false;
-            if (!level.getBlockState(corePos.offset(-1, 0, 0)).is(ModBlocks.MISSILE_LAUNCH_PAD)) valid = false;
-            if (!level.getBlockState(corePos.offset(0, 0, 0)).is(ModBlocks.MISSILE_LAUNCH_PAD)) valid = false;
-            if (!level.getBlockState(corePos.offset(1, 0, 0)).is(ModBlocks.MISSILE_LAUNCH_PAD)) valid = false;
-            if (!level.getBlockState(corePos.offset(-1, 0, 1)).is(ModBlocks.MISSILE_LAUNCH_PAD)) valid = false;
-            if (!level.getBlockState(corePos.offset(0, 0, 1)).is(ModBlocks.MISSILE_LAUNCH_PAD)) valid = false;
-            if (!level.getBlockState(corePos.offset(1, 0, 1)).is(ModBlocks.MISSILE_LAUNCH_PAD)) valid = false;
+            if (!level.getBlockState(corePos.offset(-1, 0, -1)).is(BMNWBlocks.MISSILE_LAUNCH_PAD)) valid = false;
+            if (!level.getBlockState(corePos.offset(0, 0, -1)).is(BMNWBlocks.MISSILE_LAUNCH_PAD)) valid = false;
+            if (!level.getBlockState(corePos.offset(1, 0, -1)).is(BMNWBlocks.MISSILE_LAUNCH_PAD)) valid = false;
+            if (!level.getBlockState(corePos.offset(-1, 0, 0)).is(BMNWBlocks.MISSILE_LAUNCH_PAD)) valid = false;
+            if (!level.getBlockState(corePos.offset(0, 0, 0)).is(BMNWBlocks.MISSILE_LAUNCH_PAD)) valid = false;
+            if (!level.getBlockState(corePos.offset(1, 0, 0)).is(BMNWBlocks.MISSILE_LAUNCH_PAD)) valid = false;
+            if (!level.getBlockState(corePos.offset(-1, 0, 1)).is(BMNWBlocks.MISSILE_LAUNCH_PAD)) valid = false;
+            if (!level.getBlockState(corePos.offset(0, 0, 1)).is(BMNWBlocks.MISSILE_LAUNCH_PAD)) valid = false;
+            if (!level.getBlockState(corePos.offset(1, 0, 1)).is(BMNWBlocks.MISSILE_LAUNCH_PAD)) valid = false;
 
             if (!valid) {
                 for (int x = -1; x <= 1; x++) {
                     for (int z = -1; z <= 1; z++) {
                         if (x != 0 || z != 0) {
-                            if (level.getBlockState(corePos.offset(x, 0, z)).is(ModBlocks.MISSILE_LAUNCH_PAD)) {
+                            if (level.getBlockState(corePos.offset(x, 0, z)).is(BMNWBlocks.MISSILE_LAUNCH_PAD)) {
                                 level.destroyBlock(corePos.offset(x, 0, z), false);
                             }
                         }

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "tag": "c:nuggets/reactor_grade_plutonium"
+    },
+    "N": {
+      "item": "bmnw:reactor_grade_plutonium_nugget"
+    }
+  },
+  "pattern": [
+    "###",
+    "#N#",
+    "###"
+  ],
+  "result": {
+    "count": 1,
+    "id": "bmnw:reactor_grade_plutonium_ingot"
+  }
+}

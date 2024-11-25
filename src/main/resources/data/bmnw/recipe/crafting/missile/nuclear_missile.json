@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "bmnw:base_missile"
+    },
+    {
+      "item": "bmnw:nuclear_charge"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "bmnw:nuclear_missile"
+  }
+}

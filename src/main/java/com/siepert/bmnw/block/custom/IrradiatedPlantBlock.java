@@ -1,6 +1,6 @@
 package com.siepert.bmnw.block.custom;
 
-import com.siepert.bmnw.misc.ModStateProperties;
+import com.siepert.bmnw.misc.BMNWStateProperties;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
@@ -19,7 +19,7 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class IrradiatedPlantBlock extends Block {
-    public static final IntegerProperty RAD_LEVEL = ModStateProperties.RAD_LEVEL;
+    public static final IntegerProperty RAD_LEVEL = BMNWStateProperties.RAD_LEVEL;
     public IrradiatedPlantBlock(Properties properties) {
         super(properties);
     }

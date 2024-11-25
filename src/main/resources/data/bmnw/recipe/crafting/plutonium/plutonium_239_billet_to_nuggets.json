@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "bmnw:plutonium_239_billet"
+    }
+  ],
+  "result": {
+    "count": 6,
+    "id": "bmnw:plutonium_239_nugget"
+  }
+}
