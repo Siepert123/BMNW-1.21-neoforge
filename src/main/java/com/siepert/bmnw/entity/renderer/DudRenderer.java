@@ -34,7 +34,7 @@ public class DudRenderer extends EntityRenderer<DudEntity> {
 
         float f = (partialTick) / 200f;
         poseStack.pushPose();
-        poseStack.translate(0, -1, 0);
+        poseStack.translate(0, 0, 0);
         renderRays(poseStack, f, buffer.getBuffer(RenderType.dragonRays()));
         renderRays(poseStack, f, buffer.getBuffer(RenderType.dragonRaysDepth()));
         poseStack.popPose();

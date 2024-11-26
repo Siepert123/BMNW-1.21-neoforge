@@ -68,7 +68,7 @@ public abstract class BombEntity extends Entity {
     }
     public static final boolean USE_RAY = true;
     protected void recalcPos() {
-        worldPosition = getOnPos(1f).above();
+        worldPosition = getOnPos();
     }
     protected static final Logger LOGGER = LogManager.getLogger("BMNW Nuclear Bomb");
     public BombEntity(EntityType<?> entityType, Level level) {
@@ -280,9 +280,14 @@ public abstract class BombEntity extends Entity {
                 for (int y = grassRadius; y >= -grassRadius; y--) {
                     if (Math.sqrt(Math.pow(x, 2) + Math.pow(z, 2) + Math.pow(y, 2)) > grassRadius) continue;
                     BlockPos pos = worldPosition.offset(x, y, z);
-                    if (level().getBlockState(pos).isAir()) continue;
-                    if (level().getBlockState(pos).canBeReplaced()) level().setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
-                    if (level().getBlockState(pos).is(BMNWTags.Blocks.IRRADIATABLE_GRASS_BLOCKS)) level().setBlock(pos, grass, 3);
+                    if (RadHelper.blockExposedToAir(level(), pos) || level().clip(new ClipContext(this.position(), convertVec3i(pos),
+                            ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this)).getBlockPos().equals(pos)) {
+                        if (level().getBlockState(pos).isAir()) continue;
+                        if (level().getBlockState(pos).canBeReplaced())
+                            level().setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
+                        if (level().getBlockState(pos).is(BMNWTags.Blocks.IRRADIATABLE_GRASS_BLOCKS))
+                            level().setBlock(pos, grass, 3);
+                    }
                 }
             }
         }
@@ -296,6 +301,7 @@ public abstract class BombEntity extends Entity {
                 for (int y = radius; y >= -radius; y--) {
                     if (Math.sqrt(Math.pow(x, 2) + Math.pow(z, 2)) > radius) continue;
                     BlockPos pos = worldPosition.offset(x, y, z);
+
                     if (!level().getFluidState(pos).isEmpty()) {
                         level().setBlock(pos, air, 3);
                     }
@@ -314,14 +320,17 @@ public abstract class BombEntity extends Entity {
                 for (int y = radius; y >= -radius; y--) {
                     if (Math.sqrt(Math.pow(x, 2) + Math.pow(z, 2)) > radius) continue;
                     BlockPos pos = worldPosition.offset(x, y, z);
-                    if (level().getBlockState(pos).is(BlockTags.LOGS_THAT_BURN)) {
-                        level().setBlock(pos, log, 3);
-                    }
-                    if (level().getBlockState(pos).is(BlockTags.LEAVES)) {
-                        level().setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
-                    }
-                    if (level().getBlockState(pos).is(BMNWTags.Blocks.CHARRABLE_PLANKS)) {
-                        level().setBlock(pos, plank, 3);
+                    if (RadHelper.blockExposedToAir(level(), pos) || level().clip(new ClipContext(this.position(), convertVec3i(pos),
+                            ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this)).getBlockPos().equals(pos)) {
+                        if (level().getBlockState(pos).is(BlockTags.LOGS_THAT_BURN)) {
+                            level().setBlock(pos, log, 3);
+                        }
+                        else if (level().getBlockState(pos).is(BlockTags.LEAVES)) {
+                            level().setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
+                        }
+                        else if (level().getBlockState(pos).is(BMNWTags.Blocks.CHARRABLE_PLANKS)) {
+                            level().setBlock(pos, plank, 3);
+                        }
                     }
                 }
             }

@@ -35,7 +35,7 @@ public class CaseohRenderer extends EntityRenderer<CaseohEntity> {
 
         float f = (partialTick) / 200f;
         poseStack.pushPose();
-        poseStack.translate(0, -1, 0);
+        poseStack.translate(0, 0, 0);
         renderRays(poseStack, f, buffer.getBuffer(RenderType.dragonRays()), 8);
         renderRays(poseStack, f, buffer.getBuffer(RenderType.dragonRaysDepth()), 8);
         poseStack.popPose();

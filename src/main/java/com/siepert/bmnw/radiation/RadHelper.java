@@ -7,6 +7,7 @@ import com.siepert.bmnw.misc.BMNWStateProperties;
 import com.siepert.bmnw.misc.BMNWTags;
 import com.siepert.bmnw.particle.BMNWParticleTypes;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
@@ -97,28 +98,30 @@ public class RadHelper {
             for (int x = chunk.getPos().getMinBlockX(); x <= chunk.getPos().getMaxBlockX(); x++) {
                 for (int z = chunk.getPos().getMinBlockZ(); z <= chunk.getPos().getMaxBlockZ(); z++) {
                     BlockPos pos = new BlockPos(x, y, z);
-
-                    BlockState state = level.getBlockState(pos);
-                    if (state.isAir()) {
-                        if (level instanceof ServerLevel serverLevel && !level.getBlockState(pos.below()).isAir() && rad_level == 3) {
-                            if (level.random.nextFloat() > 0.999) {
-                                serverLevel.sendParticles(BMNWParticleTypes.EVIL_FOG.get(), x + 0.5, y + 0.5, z + 0.5,
-                                        1, 0, 0, 0, 0);
+                    if (blockExposedToAir(level, pos)) {
+                        BlockState state = level.getBlockState(pos);
+                        if (state.isAir()) {
+                            if (level instanceof ServerLevel serverLevel && !level.getBlockState(pos.below()).isAir() && rad_level == 3
+                                && blockExposedToAir(serverLevel, pos)) {
+                                if (level.random.nextFloat() > 0.999) {
+                                    serverLevel.sendParticles(BMNWParticleTypes.EVIL_FOG.get(), x + 0.5, y + 0.5, z + 0.5,
+                                            1, 0, 0, 0, 0);
+                                }
                             }
+                            continue;
                         }
-                        continue;
-                    }
 
-                    if (state.hasProperty(BMNWStateProperties.RAD_LEVEL)) {
-                        level.setBlock(pos, state.setValue(BMNWStateProperties.RAD_LEVEL,
-                                Math.max(state.getValue(BMNWStateProperties.RAD_LEVEL), rad_level)), 3);
-                    } else {
-                        if (irradiatableLeaves(state)) {
-                            level.setBlock(pos, leaves, 3);
-                        } else if (irradiatableGrass(state)) {
-                            level.setBlock(pos, grass, 3);
-                        } else if (irradiatablePlant(state)) {
-                            level.setBlock(pos, plant, 3);
+                        if (state.hasProperty(BMNWStateProperties.RAD_LEVEL)) {
+                            level.setBlock(pos, state.setValue(BMNWStateProperties.RAD_LEVEL,
+                                    Math.max(state.getValue(BMNWStateProperties.RAD_LEVEL), rad_level)), 3);
+                        } else {
+                            if (irradiatableLeaves(state)) {
+                                level.setBlock(pos, leaves, 3);
+                            } else if (irradiatableGrass(state)) {
+                                level.setBlock(pos, grass, 3);
+                            } else if (irradiatablePlant(state)) {
+                                level.setBlock(pos, plant, 3);
+                            }
                         }
                     }
                 }
@@ -217,5 +220,16 @@ public class RadHelper {
                 }
             }
         }
+    }
+
+    public static boolean blockExposedToAir(Level level, BlockPos pos) {
+        int h = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, pos.getX(), pos.getZ());
+        if (pos.getY() >= h-1) return true;
+        for (Direction direction : Direction.values()) {
+            BlockPos sidePos = pos.offset(direction.getNormal());
+            int sideH = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, sidePos.getX(), sidePos.getZ());
+            if (pos.getY() >= sideH-1) return true;
+        }
+        return false;
     }
 }

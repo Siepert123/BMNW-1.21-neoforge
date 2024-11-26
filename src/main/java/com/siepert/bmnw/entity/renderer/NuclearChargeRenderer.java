@@ -33,7 +33,7 @@ public class NuclearChargeRenderer extends EntityRenderer<NuclearChargeEntity> {
     public void render(NuclearChargeEntity entity, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
         float f = (partialTick) / 200f;
         poseStack.pushPose();
-        poseStack.translate(0, -1, 0);
+        poseStack.translate(0, 0, 0);
         renderRays(poseStack, f, buffer.getBuffer(RenderType.dragonRays()));
         renderRays(poseStack, f, buffer.getBuffer(RenderType.dragonRaysDepth()));
         poseStack.popPose();
