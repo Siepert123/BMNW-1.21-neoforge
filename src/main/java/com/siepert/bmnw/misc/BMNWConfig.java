@@ -39,7 +39,11 @@ public class BMNWConfig extends MidnightConfig {
         DISABLED;
 
         public int id() {
-            return ordinal();
+            return switch (this) {
+                case ALL -> 2;
+                case GENERAL -> 1;
+                default -> 0;
+            };
         }
     }
 }
