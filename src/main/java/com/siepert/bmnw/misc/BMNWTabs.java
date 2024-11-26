@@ -22,6 +22,8 @@ public class BMNWTabs {
         }
     }
 
+    //General item order:
+    //iron copper gold lead tungsten titanium steel uranium thorium plutonium
     private static final DeferredRegister<CreativeModeTab> CREATIVE_TABS =
             DeferredRegister.create(Registries.CREATIVE_MODE_TAB, "bmnw");
 
@@ -85,18 +87,15 @@ public class BMNWTabs {
                                 LEAD_BLOCK,
                                 TUNGSTEN_BLOCK,
                                 TITANIUM_BLOCK,
+                                STEEL_BLOCK,
                                 URANIUM_BLOCK,
-                                THORIUM_BLOCK,
-                                PLUTONIUM_BLOCK,
-                                STEEL_BLOCK
-                        );
-
-                        addItems(items,
                                 URANIUM_233_BLOCK,
                                 URANIUM_235_BLOCK,
                                 URANIUM_238_BLOCK,
                                 URANIUM_FUEL_BLOCK,
+                                THORIUM_BLOCK,
                                 THORIUM_FUEL_BLOCK,
+                                PLUTONIUM_BLOCK,
                                 PLUTONIUM_238_BLOCK,
                                 PLUTONIUM_239_BLOCK,
                                 PLUTONIUM_240_BLOCK,
@@ -156,21 +155,7 @@ public class BMNWTabs {
                             ResourceLocation.parse("bmnw:machines"),
                             ResourceLocation.parse("bmnw:bombs")
                     )
-                    .displayItems((parameters, items) -> {
-                        items.accept(IRON_PLATE);
-                        items.accept(COPPER_PLATE);
-                        items.accept(GOLD_PLATE);
-                        items.accept(STEEL_PLATE);
-                        items.accept(LEAD_PLATE);
-                        items.accept(TUNGSTEN_PLATE);
-                        items.accept(TITANIUM_PLATE);
-
-                        items.accept(IRON_WIRE);
-                        items.accept(COPPER_WIRE);
-                        items.accept(GOLD_WIRE);
-                        items.accept(STEEL_WIRE);
-
-                        items.accept(RAW_LEAD);
+                    .displayItems((parameters, items) -> {items.accept(RAW_LEAD);
                         items.accept(RAW_TUNGSTEN);
                         items.accept(RAW_TITANIUM);
                         items.accept(RAW_URANIUM);
@@ -180,26 +165,13 @@ public class BMNWTabs {
                         items.accept(TUNGSTEN_NUGGET);
                         items.accept(TITANIUM_NUGGET);
                         items.accept(URANIUM_NUGGET);
-                        items.accept(THORIUM_NUGGET);
-                        items.accept(PLUTONIUM_NUGGET);
-
-                        items.accept(LEAD_INGOT);
-                        items.accept(TUNGSTEN_INGOT);
-                        items.accept(TITANIUM_INGOT);
-                        items.accept(URANIUM_INGOT);
-                        items.accept(THORIUM_INGOT);
-                        items.accept(PLUTONIUM_INGOT);
-                        items.accept(STEEL_INGOT);
-
-                        items.accept(URANIUM_BILLET);
-                        items.accept(THORIUM_BILLET);
-                        items.accept(PLUTONIUM_BILLET);
-
                         items.accept(URANIUM_233_NUGGET);
                         items.accept(URANIUM_235_NUGGET);
                         items.accept(URANIUM_238_NUGGET);
                         items.accept(URANIUM_FUEL_NUGGET);
+                        items.accept(THORIUM_NUGGET);
                         items.accept(THORIUM_FUEL_NUGGET);
+                        items.accept(PLUTONIUM_NUGGET);
                         items.accept(PLUTONIUM_238_NUGGET);
                         items.accept(PLUTONIUM_239_NUGGET);
                         items.accept(PLUTONIUM_240_NUGGET);
@@ -207,11 +179,18 @@ public class BMNWTabs {
                         items.accept(REACTOR_GRADE_PLUTONIUM_NUGGET);
                         items.accept(PLUTONIUM_FUEL_NUGGET);
 
+                        items.accept(LEAD_INGOT);
+                        items.accept(TUNGSTEN_INGOT);
+                        items.accept(TITANIUM_INGOT);
+                        items.accept(STEEL_INGOT);
+                        items.accept(URANIUM_INGOT);
                         items.accept(URANIUM_233_INGOT);
                         items.accept(URANIUM_235_INGOT);
                         items.accept(URANIUM_238_INGOT);
                         items.accept(URANIUM_FUEL_INGOT);
+                        items.accept(THORIUM_INGOT);
                         items.accept(THORIUM_FUEL_INGOT);
+                        items.accept(PLUTONIUM_INGOT);
                         items.accept(PLUTONIUM_238_INGOT);
                         items.accept(PLUTONIUM_239_INGOT);
                         items.accept(PLUTONIUM_240_INGOT);
@@ -219,11 +198,27 @@ public class BMNWTabs {
                         items.accept(REACTOR_GRADE_PLUTONIUM_INGOT);
                         items.accept(PLUTONIUM_FUEL_INGOT);
 
+                        items.accept(IRON_PLATE);
+                        items.accept(COPPER_PLATE);
+                        items.accept(GOLD_PLATE);
+                        items.accept(LEAD_PLATE);
+                        items.accept(TUNGSTEN_PLATE);
+                        items.accept(TITANIUM_PLATE);
+                        items.accept(STEEL_PLATE);
+
+                        items.accept(IRON_WIRE);
+                        items.accept(COPPER_WIRE);
+                        items.accept(GOLD_WIRE);
+                        items.accept(STEEL_WIRE);
+
+                        items.accept(URANIUM_BILLET);
                         items.accept(URANIUM_233_BILLET);
                         items.accept(URANIUM_235_BILLET);
                         items.accept(URANIUM_238_BILLET);
                         items.accept(URANIUM_FUEL_BILLET);
+                        items.accept(THORIUM_BILLET);
                         items.accept(THORIUM_FUEL_BILLET);
+                        items.accept(PLUTONIUM_BILLET);
                         items.accept(PLUTONIUM_238_BILLET);
                         items.accept(PLUTONIUM_239_BILLET);
                         items.accept(PLUTONIUM_240_BILLET);
