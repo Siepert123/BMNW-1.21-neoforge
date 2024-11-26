@@ -282,22 +282,33 @@ public class BMNWEventBus {
                 event.addTooltipLines(Component.translatable("tooltip.bmnw.crafting_part").withColor(0x888888));
                 return;
             }
-            if (stack.getItem() instanceof BlockItem) {
+            if (stack.getItem() instanceof BlockItem && BMNWConfig.itemHazardInfo.id() > 0) {
                 Block block = ((BlockItem) stack.getItem()).getBlock();
                 if (ShieldingValues.shields(block.defaultBlockState())) {
-                    event.addTooltipLines(
-                            Component.translatable("tooltip.bmnw.radiation_shielding")
-                                    .append(" - ")
-                                    .append(String.valueOf(Math.round(100 * (1.0f - ShieldingValues.getShieldingModifier(block.defaultBlockState())))))
-                                    .append("%")
-                                    .withColor(0x00ff00)
-                    );
+                    if (BMNWConfig.itemHazardInfo.id() == 2) {
+                        event.addTooltipLines(
+                                Component.translatable("tooltip.bmnw.radiation_shielding")
+                                        .append(" - ")
+                                        .append(String.valueOf(Math.round(100 * (1.0f - ShieldingValues.getShieldingModifier(block.defaultBlockState())))))
+                                        .append("%")
+                                        .withColor(0x00ff00)
+                        );
+                    } else {
+                        event.addTooltipLines(
+                                Component.translatable("tooltip.bmnw.radiation_shielding")
+                                        .withColor(0x00ff00)
+                        );
+                    }
                 }
             }
-            if (stack.getItem() instanceof IItemHazard hazard) {
+            if (stack.getItem() instanceof IItemHazard hazard && BMNWConfig.itemHazardInfo.id() > 0) {
                 if (hazard.getRadioactivity() > 0) {
-                    event.addTooltipLines(Component.translatable("tooltip.bmnw.radioactive")
-                            .append(" - ").append(String.valueOf(hazard.getRadioactivity())).append("RAD/s").withColor(0x00ff00));
+                    if (BMNWConfig.itemHazardInfo.id() == 2) {
+                        event.addTooltipLines(Component.translatable("tooltip.bmnw.radioactive")
+                                .append(" - ").append(String.valueOf(hazard.getRadioactivity())).append("RAD/s").withColor(0x00ff00));
+                    } else {
+                        event.addTooltipLines(Component.translatable("tooltip.bmnw.radioactive").withColor(0x00ff00));
+                    }
                 }
                 if (hazard.isBurning()) {
                     event.addTooltipLines(Component.translatable("tooltip.bmnw.burning").withColor(0xffff00));

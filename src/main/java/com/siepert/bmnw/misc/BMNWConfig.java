@@ -4,6 +4,7 @@ import eu.midnightdust.lib.config.MidnightConfig;
 
 public class BMNWConfig extends MidnightConfig {
     public static final String RADIATION = "radiation";
+    public static final String GAMEPLAY = "gameplay";
 
     @Comment(category = RADIATION) public static Comment radSettingComment;
     @Entry(category = RADIATION) public static RadiationSetting radiationSetting = RadiationSetting.ALL;
@@ -29,4 +30,16 @@ public class BMNWConfig extends MidnightConfig {
     @Entry(category = RADIATION) public static boolean recalculateOnBlockEvent = false;
     @Entry(category = RADIATION) public static boolean recalculateChunks = false;
     @Entry(category = RADIATION, min = 10, max = 1000) public static int chunkRecalculationInterval = 100;
+
+    @Comment(category = GAMEPLAY) public static Comment itemHazardInfoComment;
+    @Entry(category = GAMEPLAY) public static HazardInfo itemHazardInfo = HazardInfo.ALL;
+    public enum HazardInfo {
+        ALL,
+        GENERAL,
+        DISABLED;
+
+        public int id() {
+            return ordinal();
+        }
+    }
 }
