@@ -153,7 +153,7 @@ public class BMNWEventBus {
         public static void entityTickEventPre(EntityTickEvent.Pre event) {
             if (BMNWConfig.radiationSetting.chunk()) {
                 if (event.getEntity() instanceof LivingEntity entity) {
-                    if (entity instanceof Player player && player.isCreative()) return;
+                    if (entity instanceof Player player && (player.isCreative() || player.isSpectator())) return;
                     CompoundTag nbt = entity.getPersistentData();
 
                     RadHelper.addEntityRadiation(entity, (RadHelper.getAdjustedRadiation(entity.level(), entity.getOnPos()) / 20f));
@@ -173,7 +173,7 @@ public class BMNWEventBus {
         @SubscribeEvent
         public static void entityTickEventPost(EntityTickEvent.Post event) {
             if (event.getEntity() instanceof LivingEntity entity) {
-                if (entity instanceof Player player && player.isCreative()) return;
+                if (entity instanceof Player player && (player.isCreative() || player.isSpectator())) return;
                 CompoundTag nbt = entity.getPersistentData();
 
                 float rads = nbt.getFloat(RadHelper.RAD_NBT_TAG);

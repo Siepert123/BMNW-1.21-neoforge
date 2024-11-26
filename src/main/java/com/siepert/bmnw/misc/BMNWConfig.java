@@ -46,4 +46,6 @@ public class BMNWConfig extends MidnightConfig {
             };
         }
     }
+
+    @Entry(category = GAMEPLAY) public static boolean enableExcavationVeinDepletion = false;
 }

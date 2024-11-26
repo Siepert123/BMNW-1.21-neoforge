@@ -1,20 +1,15 @@
 package com.siepert.bmnw.misc;
 
-import com.mojang.datafixers.util.Pair;
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.DataResult;
-import com.mojang.serialization.DynamicOps;
+import com.siepert.bmnw.item.BMNWItems;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.ChunkPos;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.material.Fluid;
-import net.neoforged.neoforge.fluids.FluidStack;
+import net.minecraft.world.level.biome.BiomeManager;
+import net.minecraft.world.level.chunk.ChunkAccess;
+import net.neoforged.fml.util.ObfuscationReflectionHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.annotation.Nullable;
 import java.util.*;
 
 public class ExcavationVein {
@@ -35,20 +30,30 @@ public class ExcavationVein {
         initialized = true;
     }
 
-    public static ExcavationVein getNextVein(ChunkPos pos) {
+    public static ExcavationVein getNextVein(ChunkAccess chunk) {
         if (!initialized) throw new IllegalStateException("Cannot get vein before initialization!");
 
-        Random random = new Random(Objects.hash(pos));
+        try {
+            // noinspection all
+            long seed = ObfuscationReflectionHelper.getPrivateValue(BiomeManager.class, chunk.getLevel().getBiomeManager(),
+                    "biomeZoomSeed");
 
-        return WEIGHTED_VEIN_LIST.get(random.nextInt(WEIGHTED_VEIN_LIST.size()));
+            Random random = new Random(Objects.hash(chunk.getPos(), seed));
+
+            return WEIGHTED_VEIN_LIST.get(random.nextInt(WEIGHTED_VEIN_LIST.size()));
+        } catch (NullPointerException e) {
+            LOGGER.fatal("Could not get vein at {} {} due to private value being null", chunk.getPos().x, chunk.getPos().z);
+            return EMPTY;
+        }
     }
 
-    public ExcavationVein(int weight, Map<Item, Integer> items, String name) {
+    public ExcavationVein(int weight, Map<Item, Integer> items, String name, int maximumExtraction) {
         if (initialized) throw new IllegalStateException("Cannot create vein after initialization!");
         this.weight = weight;
         this.itemToIntMap = items;
         this.name = name;
         this.random = RandomSource.create();
+        this.maximumExtraction = maximumExtraction;
 
         this.weightedItemMap = new ArrayList<>();
         for (Map.Entry<Item, Integer> entry : this.itemToIntMap.entrySet()) {
@@ -59,12 +64,23 @@ public class ExcavationVein {
 
         LOGGER.debug("Created excavation vein with name '{}'", name);
     }
+    public ExcavationVein(int weight, Map<Item, Integer> items, String name) {
+        this(weight, items, name, 100_000);
+    }
+
+    public static ExcavationVein byName(String name) {
+        for (ExcavationVein vein : VEINS) {
+            if (vein.getName().equals(name)) return vein;
+        }
+        return EMPTY;
+    }
 
     private final Map<Item, Integer> itemToIntMap;
     private final List<Item> weightedItemMap;
     private final String name;
     private final int weight;
     private final RandomSource random;
+    private final int maximumExtraction;
 
     public Map<Item, Integer> getItemToIntMap() {
         return itemToIntMap;
@@ -79,13 +95,28 @@ public class ExcavationVein {
     public int getWeight() {
         return this.weight;
     }
+    public int getMaximumExtraction() {
+        return this.maximumExtraction;
+    }
+
+    public boolean mayExcavate(ChunkAccess chunk) {
+        if (BMNWConfig.enableExcavationVeinDepletion) {
+            int depletion = chunk.getData(BMNWAttachments.EXCAVATION_VEIN_DEPLETION);
+            return getMaximumExtraction() > depletion;
+        }
+        return true;
+    }
 
     public static final ExcavationVein EMPTY =
             new ExcavationVein(100, Map.of(), "empty");
     public static final ExcavationVein IRON =
-            new ExcavationVein(5, Map.of(Items.IRON_ORE, 9, Items.GOLD_ORE, 1), "iron");
+            new ExcavationVein(10, Map.of(Items.IRON_ORE, 9, Items.GOLD_ORE, 1), "iron");
     public static final ExcavationVein COAL =
-            new ExcavationVein(5, Map.of(Items.COAL_ORE, 95, Items.DIAMOND_ORE, 4, Items.EMERALD_ORE, 1), "coal");
+            new ExcavationVein(10, Map.of(Items.COAL_ORE, 95, Items.DIAMOND_ORE, 4, Items.EMERALD_ORE, 1), "coal");
     public static final ExcavationVein SOIL =
             new ExcavationVein(5, Map.of(Items.CLAY, 5, Items.SAND, 3, Items.GRAVEL, 3), "soil");
+    public static final ExcavationVein COPPER =
+            new ExcavationVein(5, Map.of(Items.COPPER_ORE, 2, BMNWItems.LEAD_ORE.get(), 1), "copper");
+    public static final ExcavationVein TUNGSTEN =
+            new ExcavationVein(3, Map.of(BMNWItems.TUNGSTEN_ORE.get(), 3, BMNWItems.TITANIUM_ORE.get(), 1), "tungsten");
 }

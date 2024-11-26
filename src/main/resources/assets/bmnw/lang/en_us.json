@@ -66,9 +66,11 @@
   "block.bmnw.uranium_block": "Block of Uranium",
   "block.bmnw.uranium_fuel_block": "Block of Uranium Fuel",
   "block.bmnw.uranium_ore": "Uranium Ore",
+  "block.bmnw.test_excavator": "TEST Excavator",
   "bmnw.midnightconfig.category.gameplay": "Gameplay config",
   "bmnw.midnightconfig.category.radiation": "Radiation config",
   "bmnw.midnightconfig.chunkRecalculationInterval": "Chunk recalculation interval",
+  "bmnw.midnightconfig.enableExcavationVeinDepletion": "Allow excavation veins to run out",
   "bmnw.midnightconfig.enum.HazardInfo.ALL": "ALL",
   "bmnw.midnightconfig.enum.HazardInfo.DISABLED": "DISABLED",
   "bmnw.midnightconfig.enum.HazardInfo.GENERAL": "GENERAL",
@@ -138,6 +140,7 @@
   "item.bmnw.plutonium_nugget": "Plutonium Nugget",
   "item.bmnw.proemevlaai": "Proemevlaai",
   "item.bmnw.raw_lead": "Raw Lead",
+  "item.bmnw.excavation_vein_detector": "Excavation Vein Scanner",
   "item.bmnw.raw_thorium": "Raw Thorium",
   "item.bmnw.raw_titanium": "Raw Titanium",
   "item.bmnw.raw_tungsten": "Raw Tungsten",
@@ -257,5 +260,6 @@
   "tooltip.bmnw.radiation_shielding": "[Radiation Shielding]",
   "tooltip.bmnw.radioactive": "[Radioactive]",
   "tooltip.bmnw.radius": "Radius: ~%s",
-  "text.bmnw.excavation_vein_detector": "Excavation vein: %s"
+  "text.bmnw.excavation_vein_detector": "Excavation vein: %s",
+  "text.bmnw.excavation_vein_detector_msg": "Vein '%s' at chunk X %s Z %s"
 }

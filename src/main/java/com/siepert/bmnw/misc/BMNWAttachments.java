@@ -27,6 +27,10 @@ public class BMNWAttachments {
             "sourced_radioactivity_this_tick", () -> AttachmentType.builder(() -> false).serialize(Codec.BOOL).build()
     );
 
+    public static final Supplier<AttachmentType<Integer>> EXCAVATION_VEIN_DEPLETION = ATTACHMENTS.register(
+            "excavation_vein_depletion", () -> AttachmentType.builder(() -> 0).serialize(Codec.INT).build()
+    );
+
 
     public static void register(IEventBus eventBus) {
         ATTACHMENTS.register(eventBus);
