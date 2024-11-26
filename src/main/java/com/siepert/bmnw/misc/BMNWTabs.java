@@ -256,6 +256,7 @@ public class BMNWTabs {
                         items.accept(GEIGER_COUNTER);
                         items.accept(DETONATOR);
                         items.accept(TARGET_DESIGNATOR);
+                        items.accept(EXCAVATION_VEIN_DETECTOR);
                         items.accept(IRRADIATED_PLANT_FIBERS);
                         items.accept(URANIUM_SANDWICH);
                     })
@@ -288,6 +289,7 @@ public class BMNWTabs {
                     .displayItems((parameters, items) -> {
                         //this comment removes a warning! [remove once there are 2 or more entries here]
                         items.accept(DECONTAMINATOR);
+                        items.accept(TEST_EXCAVATOR);
                     })
                     .build()
     );

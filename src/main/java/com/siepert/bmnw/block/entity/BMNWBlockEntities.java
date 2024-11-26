@@ -2,6 +2,7 @@ package com.siepert.bmnw.block.entity;
 
 import com.siepert.bmnw.block.BMNWBlocks;
 import com.siepert.bmnw.block.entity.custom.MissileLaunchPadBlockEntity;
+import com.siepert.bmnw.block.entity.custom.TestExcavatorBlockEntity;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.bus.api.IEventBus;
@@ -21,7 +22,16 @@ public class BMNWBlockEntities {
                             Set.of(BMNWBlocks.MISSILE_LAUNCH_PAD.get()),
                             null
                     )
-            );
+    );
+
+    public static final Supplier<BlockEntityType<TestExcavatorBlockEntity>> TEST_EXCAVATOR = BLOCK_ENTITIES.register(
+            "test_excavator",
+            () -> new BlockEntityType<>(
+                    TestExcavatorBlockEntity::new,
+                    Set.of(BMNWBlocks.TEST_EXCAVATOR.get()),
+                    null
+            )
+    );
 
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);

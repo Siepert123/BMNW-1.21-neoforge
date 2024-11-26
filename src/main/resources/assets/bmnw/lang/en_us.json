@@ -256,5 +256,6 @@
   "tooltip.bmnw.crafting_part": "Crafting component",
   "tooltip.bmnw.radiation_shielding": "[Radiation Shielding]",
   "tooltip.bmnw.radioactive": "[Radioactive]",
-  "tooltip.bmnw.radius": "Radius: ~%s"
+  "tooltip.bmnw.radius": "Radius: ~%s",
+  "text.bmnw.excavation_vein_detector": "Excavation vein: %s"
 }

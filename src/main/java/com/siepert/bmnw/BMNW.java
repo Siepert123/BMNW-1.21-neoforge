@@ -8,10 +8,7 @@ import com.siepert.bmnw.effect.BMNWEffects;
 import com.siepert.bmnw.entity.BMNWEntityTypes;
 import com.siepert.bmnw.item.BMNWItems;
 import com.siepert.bmnw.item.components.BMNWDataComponents;
-import com.siepert.bmnw.misc.BMNWConfig;
-import com.siepert.bmnw.misc.BMNWAttachments;
-import com.siepert.bmnw.misc.BMNWSounds;
-import com.siepert.bmnw.misc.BMNWTabs;
+import com.siepert.bmnw.misc.*;
 import com.siepert.bmnw.particle.BMNWParticleTypes;
 import com.siepert.bmnw.radiation.RadFiler;
 import com.siepert.bmnw.radiation.ShieldingValues;
@@ -76,6 +73,7 @@ public class BMNW {
 
     private void commonSetup(final FMLCommonSetupEvent event) {
         ShieldingValues.initialize();
+        ExcavationVein.initialize();
     }
 
     // Add the example block item to the building blocks tab

@@ -154,6 +154,9 @@ public class BMNWBlocks {
     //region Basic machines
     public static final DeferredBlock<DecontaminatorBlock> DECONTAMINATOR = BLOCKS.register("decontaminator",
             () -> new DecontaminatorBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)));
+
+    public static final DeferredBlock<TestExcavatorBlock> TEST_EXCAVATOR = BLOCKS.register("test_excavator",
+            () -> new TestExcavatorBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get())));
     //endregion
 
     //region Concrete & similar

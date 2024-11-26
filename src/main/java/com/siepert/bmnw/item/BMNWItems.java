@@ -239,6 +239,10 @@ public class BMNWItems {
             () -> new GeigerCounterItem(new Item.Properties().stacksTo(1)));
     public static final DeferredItem<BlockItem> DECONTAMINATOR = ITEMS.register("decontaminator",
             () -> new BlockItem(BMNWBlocks.DECONTAMINATOR.get(), new Item.Properties()));
+    public static final DeferredItem<ExcavationVeinDetectorItem> EXCAVATION_VEIN_DETECTOR = ITEMS.register("excavation_vein_detector",
+            () -> new ExcavationVeinDetectorItem(new Item.Properties().stacksTo(1)));
+    public static final DeferredItem<BlockItem> TEST_EXCAVATOR = ITEMS.register("test_excavator",
+            () -> new BlockItem(BMNWBlocks.TEST_EXCAVATOR.get(), new Item.Properties()));
 
     //region Bombs & Missiles
     public static final DeferredItem<BombBlockItem> NUCLEAR_CHARGE = ITEMS.register("nuclear_charge",
@@ -334,7 +338,7 @@ public class BMNWItems {
             () -> new SimpleRadioactiveItem(new Item.Properties().food(new FoodProperties(19, 100, true,
                     4.0f, Optional.empty(), List.of(new FoodProperties.PossibleEffect(
                     () -> new MobEffectInstance(BMNWEffects.CONTAMINATION, 100, 1), 0.5f
-            )))), 69)
+            )))), 6.9f)
     );
 
     public static void register(IEventBus eventBus) {
