@@ -2,6 +2,7 @@ package com.siepert.bmnw.entity.custom;
 
 import com.siepert.bmnw.particle.BMNWParticleTypes;
 import net.minecraft.core.Vec3i;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -63,6 +64,7 @@ public abstract class MissileEntity extends Entity {
     public void baseTick() {
         if (level().isClientSide()) {
             falling = entityData.get(IS_FALLING_DATA);
+            level().addParticle(ParticleTypes.CAMPFIRE_SIGNAL_SMOKE, true, getX(), getY(), getZ(), 0, 0, 0);
             level().addParticle(BMNWParticleTypes.FIRE_SMOKE.get(), true, this.getX(), this.getY(), this.getZ(), 0, falling ? 0.1 : -0.1, 0);
         } else {
             if (isFalling()) {

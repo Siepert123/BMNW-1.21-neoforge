@@ -25,23 +25,10 @@ public class TargetDesignatorItem extends Item implements ITargetHolder {
 
     @Override
     public InteractionResult useOn(UseOnContext context) {
-        if (context.getLevel().getBlockState(context.getClickedPos()).is(BMNWBlocks.MISSILE_LAUNCH_PAD)) {
-            MissileLaunchPadBlockEntity be = (MissileLaunchPadBlockEntity) context.getLevel().getBlockEntity(context.getClickedPos());
-            if (be != null) {
-                ItemStack stack = context.getItemInHand();
-                if (stack.has(BMNWDataComponents.TARGET)) {
-                    be.setTarget(stack.get(BMNWDataComponents.TARGET));
-                    if (context.getLevel().isClientSide()) context.getPlayer().sendSystemMessage(Component.translatable("text.bmnw.data_set").withColor(0x00DD00));
-                    return InteractionResult.SUCCESS;
-                }
-            }
-        } else {
-            ItemStack stack = context.getItemInHand();
-            stack.set(BMNWDataComponents.TARGET, context.getClickedPos());
-            if (context.getLevel().isClientSide()) context.getPlayer().sendSystemMessage(Component.translatable("text.bmnw.position_set").withColor(0x00DD00));
-            return InteractionResult.SUCCESS;
-        }
-        return InteractionResult.FAIL;
+        ItemStack stack = context.getItemInHand();
+        stack.set(BMNWDataComponents.TARGET, context.getClickedPos());
+        if (context.getLevel().isClientSide()) context.getPlayer().sendSystemMessage(Component.translatable("text.bmnw.position_set").withColor(0x00DD00));
+        return InteractionResult.SUCCESS;
     }
 
     @Override

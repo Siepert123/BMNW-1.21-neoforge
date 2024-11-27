@@ -2,8 +2,14 @@ package com.siepert.bmnw.block.custom;
 
 import com.siepert.bmnw.block.entity.custom.MissileLaunchPadBlockEntity;
 import com.siepert.bmnw.interfaces.IDetonatable;
+import com.siepert.bmnw.interfaces.ITargetHolder;
 import com.siepert.bmnw.misc.BMNWStateProperties;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -13,6 +19,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
 public class MissileLaunchPadBlock extends Block implements EntityBlock, IDetonatable {
@@ -53,6 +60,7 @@ public class MissileLaunchPadBlock extends Block implements EntityBlock, IDetona
                 for (int z = -1; z <= 1; z++) {
                     if (x != 0 || z != 0) {
                         level.setBlock(pos.offset(x, 0, z), state.setValue(MULTIBLOCK_SLAVE, true), 3);
+                        level.removeBlockEntity(pos.offset(x, 0, z));
                         MissileLaunchPadBlockEntity pad = new MissileLaunchPadBlockEntity(pos.offset(x, 0, z), state.setValue(MULTIBLOCK_SLAVE, true));
                         pad.setCorePos(pos);
                         level.setBlockEntity(pad);
@@ -79,9 +87,17 @@ public class MissileLaunchPadBlock extends Block implements EntityBlock, IDetona
 
     @Override
     protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, BlockPos neighborPos, boolean movedByPiston) {
-        BlockEntity entity = level.getBlockEntity(pos);
-        if (entity instanceof MissileLaunchPadBlockEntity pad) {
-            //if (!pad.check()) return;
+        if (!state.getValue(MULTIBLOCK_SLAVE)) {
+            for (int x = -1; x <= 1; x++) {
+                for (int z = -1; z <= 1; z++) {
+                    if (x != 0 || z != 0) {
+                        BlockEntity entity = level.getBlockEntity(pos.offset(x, 0, z));
+                        if (entity instanceof MissileLaunchPadBlockEntity pad) {
+                            pad.setCorePos(pos);
+                        }
+                    }
+                }
+            }
         }
         if (!level.isClientSide() && level.hasNeighborSignal(pos)) {
             detonate(level, pos);
@@ -115,5 +131,18 @@ public class MissileLaunchPadBlock extends Block implements EntityBlock, IDetona
     @Override
     protected boolean propagatesSkylightDown(BlockState state, BlockGetter level, BlockPos pos) {
         return true;
+    }
+
+    @Override
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        if (stack.getItem() instanceof ITargetHolder targetHolder) {
+            BlockEntity entity = level.getBlockEntity(pos);
+            if (entity instanceof MissileLaunchPadBlockEntity pad) {
+                pad.setTarget(targetHolder.getTarget(stack));
+                if (level.isClientSide()) player.sendSystemMessage(Component.translatable("text.bmnw.data_set").withColor(0x00DD00));
+                return ItemInteractionResult.SUCCESS;
+            }
+        }
+        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 }

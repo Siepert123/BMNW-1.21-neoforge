@@ -4,6 +4,7 @@ import com.siepert.bmnw.block.BMNWBlocks;
 import com.siepert.bmnw.block.custom.MissileBlock;
 import com.siepert.bmnw.block.entity.BMNWBlockEntities;
 import com.siepert.bmnw.entity.custom.MissileEntity;
+import com.siepert.bmnw.misc.BMNWStateProperties;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -14,6 +15,8 @@ import net.neoforged.neoforge.energy.IEnergyStorage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.joml.Vector2i;
+
+import javax.annotation.Nullable;
 
 public class MissileLaunchPadBlockEntity extends BlockEntity implements IEnergyStorage {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -75,18 +78,24 @@ public class MissileLaunchPadBlockEntity extends BlockEntity implements IEnergyS
     }
 
     public boolean canLaunch() {
-        return level != null && energyStored >= requiredLaunchEnergy && level.getBlockState(worldPosition.above()).getBlock() instanceof MissileBlock && !BlockPos.ZERO.equals(target);
+        return (level != null && !level.isClientSide() && energyStored >= requiredLaunchEnergy &&
+                (level.getBlockState(worldPosition.above()).getBlock() instanceof MissileBlock) &&
+                !BlockPos.ZERO.equals(target)) || getBlockState().getValue(BMNWStateProperties.MULTIBLOCK_SLAVE);
     }
 
     public boolean launch() {
         if (canLaunch()) {
             if (isCore()) {
-                MissileBlock block = (MissileBlock) level.getBlockState(worldPosition.above()).getBlock();
-                level.setBlock(worldPosition.above(), Blocks.AIR.defaultBlockState(), 3);
-                MissileEntity missile = block.getNewMissileEntity(level);
-                missile.setPos(worldPosition.getX() + 0.5, worldPosition.getY() + 2, worldPosition.getZ() + 0.5);
-                missile.setTarget(new Vector2i(target.getX(), target.getZ()));
-                level.addFreshEntity(missile);
+                try {
+                    MissileBlock block = (MissileBlock) level.getBlockState(worldPosition.above()).getBlock();
+                    level.setBlock(worldPosition.above(), Blocks.AIR.defaultBlockState(), 3);
+                    MissileEntity missile = block.getNewMissileEntity(level);
+                    missile.setPos(worldPosition.getX() + 0.5, worldPosition.getY() + 2, worldPosition.getZ() + 0.5);
+                    missile.setTarget(new Vector2i(target.getX(), target.getZ()));
+                    level.addFreshEntity(missile);
+                } catch (ClassCastException e) {
+                    LOGGER.fatal("Attempted to launch missile at {} but failed (corepos: {})", worldPosition, corePos);
+                }
                 return true;
             } else {
                 BlockEntity entity = level.getBlockEntity(getCorePos());
@@ -106,6 +115,12 @@ public class MissileLaunchPadBlockEntity extends BlockEntity implements IEnergyS
 
         tag.putInt("targetX", target.getX());
         tag.putInt("targetZ", target.getZ());
+
+        if (!BlockPos.ZERO.equals(corePos)) {
+            tag.putInt("coreX", getCorePos().getX());
+            tag.putInt("coreY", getCorePos().getY());
+            tag.putInt("coreZ", getCorePos().getZ());
+        }
     }
 
     @Override
@@ -115,6 +130,14 @@ public class MissileLaunchPadBlockEntity extends BlockEntity implements IEnergyS
         energyStored = tag.getInt("energyStored");
 
         target = new BlockPos(tag.getInt("targetX"), 0, tag.getInt("targetZ"));
+
+        if (tag.contains("coreX")) {
+            setCorePos(new BlockPos(
+                    tag.getInt("coreX"),
+                    tag.getInt("coreY"),
+                    tag.getInt("coreZ")
+            ));
+        }
     }
 
     @Override
@@ -180,7 +203,8 @@ public class MissileLaunchPadBlockEntity extends BlockEntity implements IEnergyS
     }
 
     protected BlockPos target = new BlockPos(0, 0, 0);
-    public void setTarget(BlockPos blockPos) {
+    public void setTarget(@Nullable BlockPos blockPos) {
+        if (blockPos == null) return;
         if (isCore()) {
             target = blockPos;
         } else {
