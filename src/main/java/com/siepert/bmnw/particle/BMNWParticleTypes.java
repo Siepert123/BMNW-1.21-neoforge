@@ -34,6 +34,10 @@ public class BMNWParticleTypes {
             "shockwave",
             () -> new SimpleParticleType(true)
     );
+    public static final Supplier<SimpleParticleType> LARGE_MISSILE_SMOKE = PARTICLE_TYPES.register(
+            "large_missile_smoke",
+            () -> new SimpleParticleType(true)
+    );
 
 
     public static void register(IEventBus eventBus) {

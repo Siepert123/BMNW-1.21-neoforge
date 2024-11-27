@@ -24,7 +24,8 @@ public abstract class MissileEntity extends Entity {
         return speed;
     }
 
-    public static final EntityDataAccessor<Boolean> IS_FALLING_DATA = SynchedEntityData.defineId(MissileEntity.class, EntityDataSerializers.BOOLEAN);
+    public static final EntityDataAccessor<Boolean> IS_FALLING_DATA =
+            SynchedEntityData.defineId(MissileEntity.class, EntityDataSerializers.BOOLEAN);
 
     protected Vector2i target = new Vector2i(0, 0);
 
@@ -60,12 +61,22 @@ public abstract class MissileEntity extends Entity {
         compound.putInt("targetZ", target.y());
     }
 
+    private void createSmoke() {
+        float vx = random.nextFloat() - random.nextFloat();
+        float vy = random.nextFloat() - random.nextFloat();
+        float vz = random.nextFloat() - random.nextFloat();
+
+        level().addParticle(BMNWParticleTypes.LARGE_MISSILE_SMOKE.get(), true,
+                getX() + vx, getY() + vy - 1, getZ() + vz,
+                0, 0, 0);
+    }
     @Override
     public void baseTick() {
         if (level().isClientSide()) {
             falling = entityData.get(IS_FALLING_DATA);
-            level().addParticle(ParticleTypes.CAMPFIRE_SIGNAL_SMOKE, true, getX(), getY(), getZ(), 0, 0, 0);
-            level().addParticle(BMNWParticleTypes.FIRE_SMOKE.get(), true, this.getX(), this.getY(), this.getZ(), 0, falling ? 0.1 : -0.1, 0);
+            if (random.nextFloat() > 0.2) createSmoke();
+            level().addParticle(BMNWParticleTypes.FIRE_SMOKE.get(), true,
+                    this.getX(), this.getY(), this.getZ(), 0, falling ? 0.1 : -0.1, 0);
         } else {
             if (isFalling()) {
                 if (!level().getBlockState(getOnPos()).isAir()) {

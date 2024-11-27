@@ -381,6 +381,7 @@ public class BMNWEventBus {
             event.registerSpriteSet(BMNWParticleTypes.FIRE_SMOKE.get(), FireSmokeParticleProvider::new);
             event.registerSpriteSet(BMNWParticleTypes.SMOKE_HD.get(), SmokeHDParticleProvider::new);
             event.registerSpriteSet(BMNWParticleTypes.SHOCKWAVE.get(), ShockwaveParticleProvider::new);
+            event.registerSpriteSet(BMNWParticleTypes.LARGE_MISSILE_SMOKE.get(), LargeMissileSmokeParticle.Provider::new);
         }
 
         /**
