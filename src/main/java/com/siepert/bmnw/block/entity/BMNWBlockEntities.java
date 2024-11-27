@@ -1,6 +1,8 @@
 package com.siepert.bmnw.block.entity;
 
 import com.siepert.bmnw.block.BMNWBlocks;
+import com.siepert.bmnw.block.entity.custom.ExcavatorBlockEntity;
+import com.siepert.bmnw.block.entity.custom.ExcavatorBlockEntitySlave;
 import com.siepert.bmnw.block.entity.custom.MissileLaunchPadBlockEntity;
 import com.siepert.bmnw.block.entity.custom.TestExcavatorBlockEntity;
 import net.minecraft.core.registries.Registries;
@@ -29,6 +31,23 @@ public class BMNWBlockEntities {
             () -> new BlockEntityType<>(
                     TestExcavatorBlockEntity::new,
                     Set.of(BMNWBlocks.TEST_EXCAVATOR.get()),
+                    null
+            )
+    );
+
+    public static final Supplier<BlockEntityType<ExcavatorBlockEntity>> EXCAVATOR = BLOCK_ENTITIES.register(
+            "excavator",
+            () -> new BlockEntityType<>(
+                    ExcavatorBlockEntity::new,
+                    Set.of(),
+                    null
+            )
+    );
+    public static final Supplier<BlockEntityType<ExcavatorBlockEntitySlave>> EXCAVATOR_SLAVE = BLOCK_ENTITIES.register(
+            "excavator_slave",
+            () -> new BlockEntityType<>(
+                    ExcavatorBlockEntitySlave::new,
+                    Set.of(),
                     null
             )
     );

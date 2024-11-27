@@ -4,6 +4,7 @@ import com.siepert.bmnw.block.BMNWBlocks;
 import com.siepert.bmnw.effect.BMNWEffects;
 import com.siepert.bmnw.item.custom.*;
 import com.siepert.bmnw.misc.Categories;
+import com.siepert.bmnw.misc.ExcavationVein;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.BlockItem;
@@ -329,6 +330,23 @@ public class BMNWItems {
                     )))
             ), 0.1f)
     );
+    //endregion
+
+    //region Core samples
+
+    public static final DeferredItem<CoreSampleItem> EMPTY_CORE_SAMPLE = ITEMS.register("empty_core_sample",
+            () -> new CoreSampleItem(new Item.Properties(), ExcavationVein.EMPTY));
+    public static final DeferredItem<CoreSampleItem> IRON_CORE_SAMPLE = ITEMS.register("iron_core_sample",
+            () -> new CoreSampleItem(new Item.Properties(), ExcavationVein.IRON));
+    public static final DeferredItem<CoreSampleItem> COAL_CORE_SAMPLE = ITEMS.register("coal_core_sample",
+            () -> new CoreSampleItem(new Item.Properties(), ExcavationVein.COAL));
+    public static final DeferredItem<CoreSampleItem> SOIL_CORE_SAMPLE = ITEMS.register("soil_core_sample",
+            () -> new CoreSampleItem(new Item.Properties(), ExcavationVein.SOIL));
+    public static final DeferredItem<CoreSampleItem> COPPER_CORE_SAMPLE = ITEMS.register("copper_core_sample",
+            () -> new CoreSampleItem(new Item.Properties(), ExcavationVein.COPPER));
+    public static final DeferredItem<CoreSampleItem> TUNGSTEN_CORE_SAMPLE = ITEMS.register("tungsten_core_sample",
+            () -> new CoreSampleItem(new Item.Properties(), ExcavationVein.TUNGSTEN));
+
     //endregion
 
     public static final DeferredItem<SimpleRadioactiveBlockItem> NUCLEAR_WASTE_BARREL = ITEMS.register("nuclear_waste_barrel",

@@ -7,9 +7,11 @@ import com.siepert.bmnw.entity.BMNWEntityTypes;
 import com.siepert.bmnw.entity.renderer.*;
 import com.siepert.bmnw.interfaces.IItemHazard;
 import com.siepert.bmnw.item.BMNWItems;
+import com.siepert.bmnw.item.custom.CoreSampleItem;
 import com.siepert.bmnw.misc.BMNWConfig;
 import com.siepert.bmnw.misc.BMNWAttachments;
 import com.siepert.bmnw.misc.BMNWDamageSources;
+import com.siepert.bmnw.misc.ExcavationVein;
 import com.siepert.bmnw.particle.BMNWParticleTypes;
 import com.siepert.bmnw.particle.custom.*;
 import com.siepert.bmnw.radiation.RadHelper;
@@ -30,6 +32,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.chunk.LevelChunk;
@@ -51,6 +54,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
 
@@ -315,6 +319,21 @@ public class BMNWEventBus {
                 }
                 if (hazard.isBlinding()) {
                     event.addTooltipLines(Component.translatable("tooltip.bmnw.blinding").withColor(0x0000ff));
+                }
+            }
+            if (stack.getItem() instanceof CoreSampleItem) {
+                if (stack.is(BMNWItems.EMPTY_CORE_SAMPLE)) event.addTooltipLines(
+                        Component.translatable("tooltip.bmnw.coreSample.empty").withColor(0x888888)
+                );
+                else {
+                    final ExcavationVein vein = ((CoreSampleItem) stack.getItem()).getVein();
+
+                    final Map<Item, Integer> itemMap = vein.getItemToIntMap();
+
+                    for (Map.Entry<Item, Integer> entry : itemMap.entrySet()) {
+                        event.addTooltipLines(entry.getKey().getName(new ItemStack(entry.getKey())).copy()
+                                .append(": " + vein.percent(entry.getValue()) + "%").withColor(0x888888));
+                    }
                 }
             }
         }

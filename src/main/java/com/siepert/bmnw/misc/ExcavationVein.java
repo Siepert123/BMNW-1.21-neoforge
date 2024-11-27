@@ -1,6 +1,8 @@
 package com.siepert.bmnw.misc;
 
 import com.siepert.bmnw.item.BMNWItems;
+import com.siepert.bmnw.item.custom.CoreSampleItem;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -12,7 +14,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.*;
 
-public class ExcavationVein {
+public final class ExcavationVein {
     private static final Logger LOGGER = LogManager.getLogger("ExcavationVein");
     private static final List<ExcavationVein> VEINS = new ArrayList<>();
     private static final List<ExcavationVein> WEIGHTED_VEIN_LIST = new ArrayList<>();
@@ -27,6 +29,15 @@ public class ExcavationVein {
             for (int i = 0; i < vein.getWeight(); i++) WEIGHTED_VEIN_LIST.add(vein);
         }
         LOGGER.info("Successfully initialized excavation veins");
+
+        LOGGER.info("Binding core samples to veins");
+        registerCoreSample(BMNWItems.EMPTY_CORE_SAMPLE.get());
+        registerCoreSample(BMNWItems.IRON_CORE_SAMPLE.get());
+        registerCoreSample(BMNWItems.COAL_CORE_SAMPLE.get());
+        registerCoreSample(BMNWItems.SOIL_CORE_SAMPLE.get());
+        registerCoreSample(BMNWItems.COPPER_CORE_SAMPLE.get());
+        registerCoreSample(BMNWItems.TUNGSTEN_CORE_SAMPLE.get());
+
         initialized = true;
     }
 
@@ -65,7 +76,7 @@ public class ExcavationVein {
         LOGGER.debug("Created excavation vein with name '{}'", name);
     }
     public ExcavationVein(int weight, Map<Item, Integer> items, String name) {
-        this(weight, items, name, 100_000);
+        this(weight, items, name, 500_000);
     }
 
     public static ExcavationVein byName(String name) {
@@ -73,6 +84,15 @@ public class ExcavationVein {
             if (vein.getName().equals(name)) return vein;
         }
         return EMPTY;
+    }
+
+    public static ExcavationVein byItem(CoreSampleItem item) {
+        return item.getVein();
+    }
+
+    private static final Map<ExcavationVein, CoreSampleItem> ITEM_VEIN_MAP = new HashMap<>();
+    public static void registerCoreSample(CoreSampleItem item) {
+        ITEM_VEIN_MAP.put(item.getVein(), item);
     }
 
     private final Map<Item, Integer> itemToIntMap;
@@ -98,8 +118,30 @@ public class ExcavationVein {
     public int getMaximumExtraction() {
         return this.maximumExtraction;
     }
+    public boolean isEmpty() {
+        return this == EMPTY;
+    }
+    public CoreSampleItem getCoreSample() {
+        return ITEM_VEIN_MAP.get(this);
+    }
+    public int totalIntegers() {
+        int result = 0;
+        for (Map.Entry<Item, Integer> entry : itemToIntMap.entrySet()) {
+            result += entry.getValue();
+        }
+        return result;
+    }
+    public int roundedPercent(int i) {
+        int max = totalIntegers();
+        return i / max * 100;
+    }
+    public float percent(int i) {
+        int max = totalIntegers();
+        return Mth.quantize((double) i / max * 10000, 1) / 100f;
+    }
 
     public boolean mayExcavate(ChunkAccess chunk) {
+        if (this.isEmpty()) return false;
         if (BMNWConfig.enableExcavationVeinDepletion) {
             int depletion = chunk.getData(BMNWAttachments.EXCAVATION_VEIN_DEPLETION);
             return getMaximumExtraction() > depletion;
@@ -116,7 +158,7 @@ public class ExcavationVein {
     public static final ExcavationVein SOIL =
             new ExcavationVein(5, Map.of(Items.CLAY, 5, Items.SAND, 3, Items.GRAVEL, 3), "soil");
     public static final ExcavationVein COPPER =
-            new ExcavationVein(5, Map.of(Items.COPPER_ORE, 2, BMNWItems.LEAD_ORE.get(), 1), "copper");
+            new ExcavationVein(5, Map.of(Items.COPPER_ORE, 5, BMNWItems.LEAD_ORE.get(), 1), "copper");
     public static final ExcavationVein TUNGSTEN =
             new ExcavationVein(3, Map.of(BMNWItems.TUNGSTEN_ORE.get(), 3, BMNWItems.TITANIUM_ORE.get(), 1), "tungsten");
 }

@@ -257,6 +257,12 @@ public class BMNWTabs {
                         items.accept(DETONATOR);
                         items.accept(TARGET_DESIGNATOR);
                         items.accept(EXCAVATION_VEIN_DETECTOR);
+                        items.accept(EMPTY_CORE_SAMPLE);
+                        items.accept(IRON_CORE_SAMPLE);
+                        items.accept(COAL_CORE_SAMPLE);
+                        items.accept(SOIL_CORE_SAMPLE);
+                        items.accept(COPPER_CORE_SAMPLE);
+                        items.accept(TUNGSTEN_CORE_SAMPLE);
                         items.accept(IRRADIATED_PLANT_FIBERS);
                         items.accept(URANIUM_SANDWICH);
                     })
