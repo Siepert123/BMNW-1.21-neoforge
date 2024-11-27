@@ -184,6 +184,10 @@ public class BMNWBlocks {
             () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.BEDROCK).noLootTable()));
     //endregion
 
+    //region Fluids
+
+    //endregion
+
     public static void register(IEventBus eventBus) {
         BLOCKS.register(eventBus);
     }

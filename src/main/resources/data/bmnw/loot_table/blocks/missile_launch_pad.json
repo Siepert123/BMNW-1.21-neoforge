@@ -11,6 +11,15 @@
       "entries": [
         {
           "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "minecraft:acacia_door",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "multiblock_slave": "false"
+              }
+            }
+          ],
           "name": "bmnw:missile_launch_pad"
         }
       ],

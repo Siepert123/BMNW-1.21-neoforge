@@ -268,6 +268,8 @@ public class BMNWItems {
             () -> new BlockItem(BMNWBlocks.MISSILE_LAUNCH_PAD.get(), new Item.Properties()));
     public static final DeferredItem<TargetDesignatorItem> TARGET_DESIGNATOR = ITEMS.register("target_designator",
             () -> new TargetDesignatorItem(new Item.Properties()));
+    public static final DeferredItem<LaserTargetDesignatorItem> LASER_TARGET_DESIGNATOR = ITEMS.register("laser_target_designator",
+            () -> new LaserTargetDesignatorItem(new Item.Properties()));
     public static final DeferredItem<Item> BASE_MISSILE = ITEMS.register("base_missile",
             () -> new Item(new Item.Properties().stacksTo(1)));
     public static final DeferredItem<BlockItem> EXAMPLE_MISSILE = ITEMS.register("example_missile",

@@ -256,6 +256,7 @@ public class BMNWTabs {
                         items.accept(GEIGER_COUNTER);
                         items.accept(DETONATOR);
                         items.accept(TARGET_DESIGNATOR);
+                        items.accept(LASER_TARGET_DESIGNATOR);
                         items.accept(EXCAVATION_VEIN_DETECTOR);
                         items.accept(EMPTY_CORE_SAMPLE);
                         items.accept(IRON_CORE_SAMPLE);
@@ -332,6 +333,7 @@ public class BMNWTabs {
 
                         items.accept(MISSILE_LAUNCH_PAD);
                         items.accept(TARGET_DESIGNATOR);
+                        items.accept(LASER_TARGET_DESIGNATOR);
                         items.accept(BASE_MISSILE);
                         items.accept(EXAMPLE_MISSILE);
                         items.accept(HE_MISSILE);

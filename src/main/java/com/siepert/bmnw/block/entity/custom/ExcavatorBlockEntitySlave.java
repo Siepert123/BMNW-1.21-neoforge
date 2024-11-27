@@ -9,4 +9,12 @@ public class ExcavatorBlockEntitySlave extends BlockEntity {
     public ExcavatorBlockEntitySlave(BlockPos pos, BlockState blockState) {
         super(BMNWBlockEntities.EXCAVATOR_SLAVE.get(), pos, blockState);
     }
+
+    private BlockPos corePos = BlockPos.ZERO;
+    public void setCore(BlockPos pos) {
+        this.corePos = pos;
+    }
+    public BlockPos getCore() {
+        return this.corePos;
+    }
 }
