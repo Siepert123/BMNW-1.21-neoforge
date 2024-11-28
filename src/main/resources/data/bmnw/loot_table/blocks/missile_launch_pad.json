@@ -13,7 +13,7 @@
           "type": "minecraft:item",
           "conditions": [
             {
-              "block": "minecraft:acacia_door",
+              "block": "bmnw:missile_launch_pad",
               "condition": "minecraft:block_state_property",
               "properties": {
                 "multiblock_slave": "false"

@@ -1,10 +1,12 @@
 package com.siepert.bmnw.block.custom;
 
+import com.siepert.bmnw.block.BMNWBlocks;
 import com.siepert.bmnw.block.entity.custom.MissileLaunchPadBlockEntity;
 import com.siepert.bmnw.interfaces.IDetonatable;
 import com.siepert.bmnw.interfaces.ITargetHolder;
 import com.siepert.bmnw.misc.BMNWStateProperties;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
@@ -20,6 +22,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 public class MissileLaunchPadBlock extends Block implements EntityBlock, IDetonatable {
@@ -144,5 +149,20 @@ public class MissileLaunchPadBlock extends Block implements EntityBlock, IDetona
             }
         }
         return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+    }
+
+    private static final VoxelShape thing = Block.box(0, 12, 0, 16, 16, 16);
+    @Override
+    protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        if (state.getValue(MULTIBLOCK_SLAVE)) {
+            for (Direction d : Direction.values()) {
+                if (d.getAxis() != Direction.Axis.Y) {
+                    BlockState sideState = level.getBlockState(pos.offset(d.getNormal()));
+                    if (sideState.is(BMNWBlocks.MISSILE_LAUNCH_PAD) && !sideState.getValue(MULTIBLOCK_SLAVE)) return thing;
+                }
+            }
+            return Shapes.block();
+        }
+        return thing;
     }
 }

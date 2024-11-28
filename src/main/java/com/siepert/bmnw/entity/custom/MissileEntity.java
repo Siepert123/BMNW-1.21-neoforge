@@ -67,7 +67,7 @@ public abstract class MissileEntity extends Entity {
         float vz = random.nextFloat() - random.nextFloat();
 
         level().addParticle(BMNWParticleTypes.LARGE_MISSILE_SMOKE.get(), true,
-                getX() + vx, getY() + vy - 1, getZ() + vz,
+                getX() + vx, getY() + vy + (falling ? 2 : -2), getZ() + vz,
                 0, 0, 0);
     }
     @Override
