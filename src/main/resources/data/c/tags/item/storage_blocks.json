@@ -1,6 +1,7 @@
 {
   "values": [
     "bmnw:steel_block",
+    "bmnw:conductive_copper_block",
     "bmnw:raw_lead_block",
     "bmnw:lead_block",
     "bmnw:uranium_block",
