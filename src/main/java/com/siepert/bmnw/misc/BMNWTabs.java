@@ -23,7 +23,7 @@ public class BMNWTabs {
     }
 
     //General item order:
-    //iron copper gold lead tungsten titanium steel uranium thorium plutonium
+    //iron copper gold conductive_copper lead tungsten titanium steel uranium thorium plutonium
     private static final DeferredRegister<CreativeModeTab> CREATIVE_TABS =
             DeferredRegister.create(Registries.CREATIVE_MODE_TAB, "bmnw");
 
@@ -84,6 +84,7 @@ public class BMNWTabs {
                                 RAW_TITANIUM_BLOCK,
                                 RAW_URANIUM_BLOCK,
                                 RAW_THORIUM_BLOCK,
+                                CONDUCTIVE_COPPER_BLOCK,
                                 LEAD_BLOCK,
                                 TUNGSTEN_BLOCK,
                                 TITANIUM_BLOCK,
@@ -179,6 +180,7 @@ public class BMNWTabs {
                         items.accept(REACTOR_GRADE_PLUTONIUM_NUGGET);
                         items.accept(PLUTONIUM_FUEL_NUGGET);
 
+                        items.accept(CONDUCTIVE_COPPER_INGOT);
                         items.accept(LEAD_INGOT);
                         items.accept(TUNGSTEN_INGOT);
                         items.accept(TITANIUM_INGOT);
@@ -201,6 +203,7 @@ public class BMNWTabs {
                         items.accept(IRON_PLATE);
                         items.accept(COPPER_PLATE);
                         items.accept(GOLD_PLATE);
+                        items.accept(CONDUCTIVE_COPPER_PLATE);
                         items.accept(LEAD_PLATE);
                         items.accept(TUNGSTEN_PLATE);
                         items.accept(TITANIUM_PLATE);
@@ -209,6 +212,7 @@ public class BMNWTabs {
                         items.accept(IRON_WIRE);
                         items.accept(COPPER_WIRE);
                         items.accept(GOLD_WIRE);
+                        items.accept(CONDUCTIVE_COPPER_WIRE);
                         items.accept(STEEL_WIRE);
 
                         items.accept(URANIUM_BILLET);

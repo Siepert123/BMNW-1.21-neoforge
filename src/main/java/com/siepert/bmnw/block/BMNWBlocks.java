@@ -44,6 +44,8 @@ public class BMNWBlocks {
     public static final DeferredBlock<Block> RAW_LEAD_BLOCK = rawBlock("raw_lead_block");
     public static final DeferredBlock<Block> RAW_TUNGSTEN_BLOCK = rawBlock("raw_tungsten_block");
     public static final DeferredBlock<Block> RAW_TITANIUM_BLOCK = rawBlock("raw_titanium_block");
+    public static final DeferredBlock<Block> CONDUCTIVE_COPPER_BLOCK = BLOCKS.register("conductive_copper_block",
+            () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.COPPER_BLOCK)));
     public static final DeferredBlock<Block> LEAD_BLOCK = storageBlock("lead_block");
     public static final DeferredBlock<Block> TUNGSTEN_BLOCK = storageBlock("tungsten_block");
     public static final DeferredBlock<Block> TITANIUM_BLOCK = storageBlock("titanium_block");

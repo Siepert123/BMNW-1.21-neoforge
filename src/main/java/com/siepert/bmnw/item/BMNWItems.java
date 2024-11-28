@@ -17,7 +17,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import java.util.List;
 import java.util.Optional;
 
-public class BMNWItems {
+public class    BMNWItems {
     private static DeferredItem<Item> item(String name) {
         return ITEMS.register(name, () -> new Item(new Item.Properties()));
     }
@@ -42,6 +42,8 @@ public class BMNWItems {
             () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> GOLD_PLATE = ITEMS.register("gold_plate",
             () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> CONDUCTIVE_COPPER_PLATE = ITEMS.register("conductive_copper_plate",
+            () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> STEEL_PLATE = ITEMS.register("steel_plate",
             () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> LEAD_PLATE = item("lead_plate");
@@ -53,6 +55,8 @@ public class BMNWItems {
     public static final DeferredItem<Item> COPPER_WIRE = ITEMS.register("copper_wire",
             () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> GOLD_WIRE = ITEMS.register("gold_wire",
+            () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> CONDUCTIVE_COPPER_WIRE = ITEMS.register("conductive_copper_wire",
             () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> STEEL_WIRE = ITEMS.register("steel_wire",
             () -> new Item(new Item.Properties()));
@@ -83,9 +87,12 @@ public class BMNWItems {
     public static final DeferredItem<Item> LEAD_NUGGET = item("lead_nugget");
     public static final DeferredItem<Item> TUNGSTEN_NUGGET = item("tungsten_nugget");
     public static final DeferredItem<Item> TITANIUM_NUGGET = item("titanium_nugget");
+    public static final DeferredItem<Item> CONDUCTIVE_COPPER_INGOT = item("conductive_copper_ingot");
     public static final DeferredItem<Item> LEAD_INGOT = item("lead_ingot"); //base color: #3a4899
     public static final DeferredItem<Item> TUNGSTEN_INGOT = item("tungsten_ingot");
     public static final DeferredItem<Item> TITANIUM_INGOT = item("titanium_ingot");
+    public static final DeferredItem<BlockItem> CONDUCTIVE_COPPER_BLOCK = ITEMS.register("conductive_copper_block",
+            () -> new BlockItem(BMNWBlocks.CONDUCTIVE_COPPER_BLOCK.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> LEAD_BLOCK = ITEMS.register("lead_block",
             () -> new BlockItem(BMNWBlocks.LEAD_BLOCK.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> TUNGSTEN_BLOCK = ITEMS.register("tungsten_block",
