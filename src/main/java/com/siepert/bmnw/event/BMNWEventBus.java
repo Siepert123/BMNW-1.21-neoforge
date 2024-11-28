@@ -14,6 +14,7 @@ import com.siepert.bmnw.misc.BMNWDamageSources;
 import com.siepert.bmnw.misc.ExcavationVein;
 import com.siepert.bmnw.particle.BMNWParticleTypes;
 import com.siepert.bmnw.particle.custom.*;
+import com.siepert.bmnw.radiation.ChunkRecalculatorThread;
 import com.siepert.bmnw.radiation.RadHelper;
 import com.siepert.bmnw.radiation.ShieldingValues;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -117,6 +118,13 @@ public class BMNWEventBus {
          */
         @SubscribeEvent
         public static void serverTickEventPost(ServerTickEvent.Post event) {
+            if (BMNWConfig.threadChunkRecalculation) {
+                boolean unpassable = !RadHelper.chunk_calculator_threads.isEmpty();
+                while (unpassable) {
+                    RadHelper.chunk_calculator_threads.removeIf(thread -> !thread.working);
+                    if (RadHelper.chunk_calculator_threads.isEmpty()) unpassable = false;
+                }
+            }
             if (BMNWConfig.radiationSetting.chunk()) {
                 try {
                     for (ServerLevel level : event.getServer().getAllLevels()) {
@@ -382,6 +390,7 @@ public class BMNWEventBus {
             event.registerSpriteSet(BMNWParticleTypes.SMOKE_HD.get(), SmokeHDParticleProvider::new);
             event.registerSpriteSet(BMNWParticleTypes.SHOCKWAVE.get(), ShockwaveParticleProvider::new);
             event.registerSpriteSet(BMNWParticleTypes.LARGE_MISSILE_SMOKE.get(), LargeMissileSmokeParticle.Provider::new);
+            event.registerSpriteSet(BMNWParticleTypes.DUSTY_FIRE.get(), DustyFireParticle.Provider::new);
         }
 
         /**

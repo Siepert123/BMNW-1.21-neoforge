@@ -19,6 +19,8 @@ import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.levelgen.Heightmap;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -64,13 +66,14 @@ public class RadHelper {
         Level level = chunk.getLevel();
         if (level == null || level.isClientSide()) return;
 
-        if (implode) {
+        if (BMNWConfig.threadChunkRecalculation) {
             Thread.startVirtualThread(thread);
+            chunk_calculator_threads.add(thread);
         } else {
-            thread.run(); //TODO: make this threaded without the game imploding
+            thread.run();
         }
     }
-    private static final boolean implode = false;
+    public static final List<ChunkRecalculatorThread> chunk_calculator_threads = new ArrayList<>();
 
     public static void modifySourceRadioactivity(ChunkAccess chunk, float rads) {
         chunk.setData(BMNWAttachments.SOURCE_RADIOACTIVITY, Math.max(chunk.getData(BMNWAttachments.SOURCE_RADIOACTIVITY) + rads, 0));

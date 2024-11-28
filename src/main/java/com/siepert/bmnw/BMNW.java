@@ -11,6 +11,7 @@ import com.siepert.bmnw.item.components.BMNWDataComponents;
 import com.siepert.bmnw.misc.*;
 import com.siepert.bmnw.particle.BMNWParticleTypes;
 import com.siepert.bmnw.radiation.RadFiler;
+import com.siepert.bmnw.radiation.RadHelper;
 import com.siepert.bmnw.radiation.ShieldingValues;
 import com.siepert.bmnw.recipe.BMNWRecipeSerializers;
 import com.siepert.bmnw.recipe.BMNWRecipeTypes;
@@ -26,6 +27,7 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
+import net.neoforged.neoforge.event.server.ServerStoppingEvent;
 import org.slf4j.Logger;
 
 import javax.annotation.Nonnull;
@@ -85,6 +87,11 @@ public class BMNW {
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {
         RadFiler.rerun(event.getServer());
+    }
+
+    @SubscribeEvent
+    public void onServerStopping(ServerStoppingEvent event) {
+        RadHelper.chunk_calculator_threads.clear();
     }
 
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent

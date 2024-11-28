@@ -38,6 +38,10 @@ public class BMNWParticleTypes {
             "large_missile_smoke",
             () -> new SimpleParticleType(true)
     );
+    public static final Supplier<SimpleParticleType> DUSTY_FIRE = PARTICLE_TYPES.register(
+            "dusty_fire",
+            () -> new SimpleParticleType(true)
+    );
 
 
     public static void register(IEventBus eventBus) {

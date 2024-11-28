@@ -165,4 +165,9 @@ public class MissileLaunchPadBlock extends Block implements EntityBlock, IDetona
         }
         return thing;
     }
+
+    @Override
+    public boolean canConnectRedstone(BlockState state, BlockGetter level, BlockPos pos, @Nullable Direction direction) {
+        return getShape(state, level, pos, CollisionContext.empty()).equals(Shapes.block());
+    }
 }

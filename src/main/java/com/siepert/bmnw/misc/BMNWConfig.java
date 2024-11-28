@@ -5,6 +5,7 @@ import eu.midnightdust.lib.config.MidnightConfig;
 public class BMNWConfig extends MidnightConfig {
     public static final String RADIATION = "radiation";
     public static final String GAMEPLAY = "gameplay";
+    public static final String EXPERIMENTAL = "experimental";
 
     @Comment(category = RADIATION) public static Comment radSettingComment;
     @Entry(category = RADIATION) public static RadiationSetting radiationSetting = RadiationSetting.ALL;
@@ -48,4 +49,7 @@ public class BMNWConfig extends MidnightConfig {
     }
 
     @Entry(category = GAMEPLAY) public static boolean enableExcavationVeinDepletion = false;
+
+    @Comment(centered = true, category = EXPERIMENTAL) public static Comment experimentalHeader;
+    @Entry(category = EXPERIMENTAL) public static boolean threadChunkRecalculation = false;
 }

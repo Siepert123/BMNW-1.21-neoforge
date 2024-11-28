@@ -14,8 +14,9 @@ public class ChunkRecalculatorThread implements Runnable {
         this.chunk = chunk;
     }
 
-    public final ChunkAccess chunk;
+    public ChunkAccess chunk;
     public float result = 0.0f;
+    public boolean working = true;
     @Override
     public void run() {
         Level level = chunk.getLevel();
@@ -41,6 +42,10 @@ public class ChunkRecalculatorThread implements Runnable {
         chunk.setData(BMNWAttachments.SOURCE_RADIOACTIVITY, calculatedRads);
         chunk.setData(BMNWAttachments.SOURCED_RADIOACTIVITY_THIS_TICK, true);
 
+        chunk = null;
+
         result = calculatedRads;
+
+        working = false;
     }
 }
