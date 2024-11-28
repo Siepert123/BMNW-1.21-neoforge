@@ -27,10 +27,10 @@ public class BMNWConfig extends MidnightConfig {
     }
 
     @Comment(category = RADIATION) public static Comment radOptimizerComment;
-    @Entry(category = RADIATION) public static boolean radiationOptimizer = false;
-    @Entry(category = RADIATION) public static boolean recalculateOnBlockEvent = false;
-    @Entry(category = RADIATION) public static boolean recalculateChunks = false;
-    @Entry(category = RADIATION, min = 10, max = 1000) public static int chunkRecalculationInterval = 100;
+    @Entry(category = RADIATION) public static boolean radiationOptimizer;
+    @Entry(category = RADIATION) public static boolean recalculateOnBlockEvent;
+    @Entry(category = RADIATION) public static boolean recalculateChunks;
+    @Entry(category = RADIATION, min = 10, max = 1000) public static int chunkRecalculationInterval;
 
     @Comment(category = GAMEPLAY) public static Comment itemHazardInfoComment;
     @Entry(category = GAMEPLAY) public static HazardInfo itemHazardInfo = HazardInfo.ALL;
@@ -48,8 +48,9 @@ public class BMNWConfig extends MidnightConfig {
         }
     }
 
-    @Entry(category = GAMEPLAY) public static boolean enableExcavationVeinDepletion = false;
+    @Entry(category = GAMEPLAY) public static boolean enableExcavationVeinDepletion;
+    @Entry(category = GAMEPLAY, min = 0, max = 1) public static float antiMissileImpactChance;
 
     @Comment(centered = true, category = EXPERIMENTAL) public static Comment experimentalHeader;
-    @Entry(category = EXPERIMENTAL) public static boolean threadChunkRecalculation = false;
+    @Entry(category = EXPERIMENTAL) public static boolean threadChunkRecalculation;
 }

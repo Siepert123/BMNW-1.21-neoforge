@@ -61,7 +61,7 @@ public abstract class MissileEntity extends Entity {
         compound.putInt("targetZ", target.y());
     }
 
-    private void createSmoke() {
+    protected void createSmoke() {
         float vx = random.nextFloat() - random.nextFloat();
         float vy = random.nextFloat() - random.nextFloat();
         float vz = random.nextFloat() - random.nextFloat();

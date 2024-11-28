@@ -48,6 +48,14 @@ public class BMNWEntityTypes {
                     .build("bmnw:caseoh")
     );
 
+    public static final DeferredHolder<EntityType<?>, EntityType<AntiMissileMissileEntity>> ANTI_MISSILE_MISSILE = ENTITY_TYPES.register(
+            "anti_missile_missile",
+            () -> EntityType.Builder.of(AntiMissileMissileEntity::new, MobCategory.MISC)
+                    .sized(1.0f, 1.0f)
+                    .clientTrackingRange(512)
+                    .build("bmnw:anti_missile_missile")
+    );
+
     public static final DeferredHolder<EntityType<?>, EntityType<ExampleMissileEntity>> EXAMPLE_MISSILE = ENTITY_TYPES.register(
             "example_missile",
             () -> EntityType.Builder.of(ExampleMissileEntity::new, MobCategory.MISC)

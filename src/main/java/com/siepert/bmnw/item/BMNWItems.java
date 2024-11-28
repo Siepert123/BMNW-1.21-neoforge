@@ -284,7 +284,9 @@ public class    BMNWItems {
     public static final DeferredItem<BlockItem> HE_MISSILE = ITEMS.register("he_missile",
             () -> new BlockItem(BMNWBlocks.HE_MISSILE.get(), new Item.Properties().stacksTo(1)));
     public static final DeferredItem<BlockItem> NUCLEAR_MISSILE = ITEMS.register("nuclear_missile",
-            ()-> new BlockItem(BMNWBlocks.NUCLEAR_MISSILE.get(), new Item.Properties().stacksTo(1)));
+            () -> new BlockItem(BMNWBlocks.NUCLEAR_MISSILE.get(), new Item.Properties().stacksTo(1)));
+    public static final DeferredItem<BlockItem> ANTI_MISSILE_MISSILE = ITEMS.register("anti_missile_missile",
+            () -> new BlockItem(BMNWBlocks.ANTI_MISSILE_MISSILE.get(), new Item.Properties().stacksTo(1)));
     //endregion
 
     //region Concrete & similar

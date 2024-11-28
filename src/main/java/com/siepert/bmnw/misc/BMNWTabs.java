@@ -342,6 +342,7 @@ public class BMNWTabs {
                         items.accept(EXAMPLE_MISSILE);
                         items.accept(HE_MISSILE);
                         items.accept(NUCLEAR_MISSILE);
+                        items.accept(ANTI_MISSILE_MISSILE);
                     })
                     .build()
     );

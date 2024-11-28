@@ -1,5 +1,6 @@
 package com.siepert.bmnw.entity.custom;
 
+import com.siepert.bmnw.block.BMNWBlocks;
 import net.minecraft.CrashReport;
 import net.minecraft.CrashReportCategory;
 import net.minecraft.ReportedException;
@@ -13,14 +14,18 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.Shapes;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.util.List;
 
 public class BlockDebrisEntity extends Entity {
     protected static final Logger LOGGER = LogManager.getLogger();
@@ -63,7 +68,7 @@ public class BlockDebrisEntity extends Entity {
             entityData.set(DEBRIS_STATE_DATA, debrisState);
         }
 
-        this.setPos(getDeltaMovement().add(position()));
+        this.move(MoverType.SELF, getDeltaMovement());
         setDeltaMovement(getDeltaMovement().multiply(0.9, 0.9, 0.9));
         addDeltaMovement(Vec3.ZERO.add(0, -0.05, 0));
         checkInsideBlocks();
@@ -71,11 +76,7 @@ public class BlockDebrisEntity extends Entity {
 
     @Override
     protected void checkInsideBlocks() {
-        BlockPos pos = new BlockPos((int) Math.round(getX()), (int) Math.round(getY()), (int) Math.round(getZ()));
-
-        if (!level().getBlockState(pos).isAir()) {
-            onInsideBlock(level().getBlockState(pos.above()));
-        }
+        if (!level().getBlockState(getOnPos()).isAir()) onInsideBlock(debrisState);
     }
 
     @Override

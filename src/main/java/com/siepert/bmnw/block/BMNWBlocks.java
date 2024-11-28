@@ -1,6 +1,8 @@
 package com.siepert.bmnw.block;
 
 import com.siepert.bmnw.block.custom.*;
+import com.siepert.bmnw.category.MissileCategory;
+import com.siepert.bmnw.entity.custom.AntiMissileMissileEntity;
 import com.siepert.bmnw.entity.custom.ExampleMissileEntity;
 import com.siepert.bmnw.entity.custom.HighExplosiveMissileEntity;
 import com.siepert.bmnw.entity.custom.NuclearMissileEntity;
@@ -151,6 +153,10 @@ public class BMNWBlocks {
     public static final DeferredBlock<MissileBlock> NUCLEAR_MISSILE = BLOCKS.register("nuclear_missile",
             () -> new MissileBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get()), NuclearMissileEntity.class,
                     Categories.NUCLEAR_MISSILE));
+
+    public static final DeferredBlock<MissileBlock> ANTI_MISSILE_MISSILE = BLOCKS.register("anti_missile_missile",
+            () -> new MissileBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get()), AntiMissileMissileEntity.class,
+                    MissileCategory.of("anti_missile")));
     //endregion
 
     //region Basic machines
