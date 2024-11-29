@@ -253,6 +253,19 @@ public class    BMNWItems {
             () -> new BlockItem(BMNWBlocks.TEST_EXCAVATOR.get(), new Item.Properties()));
 
     //region Bombs & Missiles
+    public static final DeferredItem<BombBlockItem> FRACTURIZER = ITEMS.register("fracturizer",
+            () -> new BombBlockItem(BMNWBlocks.FRACTURIZER.get(), new Item.Properties(),
+                    Categories.FRACTURIZER_BOMB));
+    public static final DeferredItem<BombBlockItem> VOLCANIC_FRACTURIZER = ITEMS.register("volcanic_fracturizer",
+            () -> new BombBlockItem(BMNWBlocks.VOLCANIC_FRACTURIZER.get(), new Item.Properties(),
+                    Categories.FRACTURIZER_BOMB));
+    public static final DeferredItem<BombBlockItem> STRONG_FRACTURIZER = ITEMS.register("strong_fracturizer",
+            () -> new BombBlockItem(BMNWBlocks.STRONG_FRACTURIZER.get(), new Item.Properties(),
+                    Categories.FRACTURIZER_BOMB));
+    public static final DeferredItem<BombBlockItem> STRONG_VOLCANIC_FRACTURIZER = ITEMS.register("strong_volcanic_fracturizer",
+            () -> new BombBlockItem(BMNWBlocks.STRONG_VOLCANIC_FRACTURIZER.get(), new Item.Properties(),
+                    Categories.FRACTURIZER_BOMB));
+
     public static final DeferredItem<BombBlockItem> NUCLEAR_CHARGE = ITEMS.register("nuclear_charge",
             () -> new BombBlockItem(BMNWBlocks.NUCLEAR_CHARGE.get(), new Item.Properties(),
                     Categories.NUCLEAR_BOMB));

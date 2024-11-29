@@ -128,6 +128,15 @@ public class BMNWBlocks {
             () -> new NuclearWasteBarrelBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).noOcclusion(), 50));
 
     //region Bombs & Missiles
+    public static final DeferredBlock<FracturizerBlock> FRACTURIZER = BLOCKS.register("fracturizer",
+            () -> new FracturizerBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.COPPER_BLOCK), 5, false, 0.1f));
+    public static final DeferredBlock<FracturizerBlock> VOLCANIC_FRACTURIZER = BLOCKS.register("volcanic_fracturizer",
+            () -> new FracturizerBlock(BlockBehaviour.Properties.ofFullCopy(FRACTURIZER.get()), 5, true, 0.1f));
+    public static final DeferredBlock<FracturizerBlock> STRONG_FRACTURIZER = BLOCKS.register("strong_fracturizer",
+            () -> new FracturizerBlock(BlockBehaviour.Properties.ofFullCopy(FRACTURIZER.get()), 10, false, 0.5f));
+    public static final DeferredBlock<FracturizerBlock> STRONG_VOLCANIC_FRACTURIZER = BLOCKS.register("strong_volcanic_fracturizer",
+            () -> new FracturizerBlock(BlockBehaviour.Properties.ofFullCopy(FRACTURIZER.get()), 10, true, 0.5f));
+
     public static final DeferredBlock<NuclearChargeBlock> NUCLEAR_CHARGE = BLOCKS.register("nuclear_charge",
             () -> new NuclearChargeBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)));
     public static final DeferredBlock<LittleBoyBlock> LITTLE_BOY = BLOCKS.register("little_boy",

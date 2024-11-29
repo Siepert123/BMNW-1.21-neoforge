@@ -331,6 +331,10 @@ public class BMNWTabs {
 
                         items.accept(DUD);
                         items.accept(BRICK_CHARGE);
+                        items.accept(FRACTURIZER);
+                        items.accept(VOLCANIC_FRACTURIZER);
+                        items.accept(STRONG_FRACTURIZER);
+                        items.accept(STRONG_VOLCANIC_FRACTURIZER);
                         items.accept(NUCLEAR_CHARGE);
                         items.accept(LITTLE_BOY);
                         items.accept(CASEOH);
