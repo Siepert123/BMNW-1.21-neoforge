@@ -144,6 +144,14 @@ public class    BMNWItems {
             () -> new SimpleRadioactiveBlockItem(BMNWBlocks.PLUTONIUM_BLOCK.get(), new Item.Properties()));
     //endregion
 
+    //region Crafting components
+
+    public static final DeferredItem<Item> BASIC_CIRCUIT = item("basic_circuit");
+    public static final DeferredItem<Item> ENHANCED_CIRCUIT = item("enhanced_circuit");
+    public static final DeferredItem<Item> ADVANCED_CIRCUIT = item("advanced_circuit");
+
+    //endregion
+
     //region Isotopes of materials & storage blocks
     public static final DeferredItem<SimpleRadioactiveItem> URANIUM_233_NUGGET = ITEMS.register("uranium_233_nugget",
             () -> new SimpleRadioactiveItem(new Item.Properties(), 0.5f));

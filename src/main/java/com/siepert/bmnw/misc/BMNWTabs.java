@@ -157,6 +157,7 @@ public class BMNWTabs {
                             ResourceLocation.parse("bmnw:bombs")
                     )
                     .displayItems((parameters, items) -> {items.accept(RAW_LEAD);
+                        //region Materials
                         items.accept(RAW_TUNGSTEN);
                         items.accept(RAW_TITANIUM);
                         items.accept(RAW_URANIUM);
@@ -229,6 +230,13 @@ public class BMNWTabs {
                         items.accept(PLUTONIUM_241_BILLET);
                         items.accept(REACTOR_GRADE_PLUTONIUM_BILLET);
                         items.accept(PLUTONIUM_FUEL_BILLET);
+                        //endregion
+
+                        //region Parts
+                        items.accept(BASIC_CIRCUIT);
+                        items.accept(ENHANCED_CIRCUIT);
+                        items.accept(ADVANCED_CIRCUIT);
+                        //endregion
                     })
                     .build()
     );

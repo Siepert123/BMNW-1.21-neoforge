@@ -8,10 +8,7 @@ import com.siepert.bmnw.entity.renderer.*;
 import com.siepert.bmnw.interfaces.IItemHazard;
 import com.siepert.bmnw.item.BMNWItems;
 import com.siepert.bmnw.item.custom.CoreSampleItem;
-import com.siepert.bmnw.misc.BMNWConfig;
-import com.siepert.bmnw.misc.BMNWAttachments;
-import com.siepert.bmnw.misc.BMNWDamageSources;
-import com.siepert.bmnw.misc.ExcavationVein;
+import com.siepert.bmnw.misc.*;
 import com.siepert.bmnw.particle.BMNWParticleTypes;
 import com.siepert.bmnw.particle.custom.*;
 import com.siepert.bmnw.radiation.ChunkRecalculatorThread;
@@ -37,6 +34,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.chunk.LevelChunk;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.util.ObfuscationReflectionHelper;
@@ -349,14 +348,20 @@ public class BMNWEventBus {
 
     @EventBusSubscriber(modid = "bmnw", bus = EventBusSubscriber.Bus.MOD)
     public static class ModEventBus {
+
+        @OnlyIn(Dist.CLIENT)
         private static <T extends Entity, V extends T> void registerEntityRenderingHandler(EntityRenderersEvent.RegisterRenderers event,
                                                                                            Supplier<EntityType<V>> type,
                                                                                            EntityRendererProvider<T> renderer) {
             event.registerEntityRenderer(type.get(), renderer);
         }
+
+        @OnlyIn(Dist.CLIENT)
         private static void registerBlockEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
 
         }
+
+        @OnlyIn(Dist.CLIENT)
         private static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
             registerEntityRenderingHandler(event, BMNWEntityTypes.BLOCK_DEBRIS, BlockDebrisRenderer::new);
 
@@ -375,10 +380,13 @@ public class BMNWEventBus {
         /**
          * Registers entity renderers.
          */
+        @OnlyIn(Dist.CLIENT)
         @SubscribeEvent
         public static void entityRenderersEventRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
-            registerBlockEntityRenderers(event);
-            registerEntityRenderers(event);
+            if (DistrictHolder.getDistrict().isClient()) {
+                registerBlockEntityRenderers(event);
+                registerEntityRenderers(event);
+            }
         }
 
         /**

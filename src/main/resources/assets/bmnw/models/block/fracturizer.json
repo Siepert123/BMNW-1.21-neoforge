@@ -1,0 +1,9 @@
+{
+  "parent": "block/cube_bottom_top",
+  "textures": {
+    "bottom": "minecraft:block/netherite_block",
+    "particle": "bmnw:block/fracturizer",
+    "side": "bmnw:block/fracturizer",
+    "top": "minecraft:block/netherite_block"
+  }
+}

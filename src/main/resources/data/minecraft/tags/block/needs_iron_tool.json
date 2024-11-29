@@ -11,7 +11,11 @@
     "bmnw:he_missile",
     "bmnw:nuclear_missile",
     "bmnw:tungsten_ore",
-    "bmnw:deepslate_tungsten_ore"
+    "bmnw:deepslate_tungsten_ore",
+    "bmnw:fracturizer",
+    "bmnw:volcanic_fracturizer",
+    "bmnw:strong_fracturizer",
+    "bmnw:strong_volcanic_fracturizer"
   ],
   "replace": false
 }

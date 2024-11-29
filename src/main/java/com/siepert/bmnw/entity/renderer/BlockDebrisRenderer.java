@@ -14,9 +14,12 @@ import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import org.joml.AxisAngle4d;
 import org.joml.Quaternionf;
 
+@OnlyIn(Dist.CLIENT)
 public class BlockDebrisRenderer extends EntityRenderer<BlockDebrisEntity> {
     protected BlockRenderDispatcher dispatcher;
     public BlockDebrisRenderer(EntityRendererProvider.Context context) {

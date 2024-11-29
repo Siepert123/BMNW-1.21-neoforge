@@ -1,12 +1,15 @@
 package com.siepert.bmnw.entity.custom;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.player.Player;
@@ -16,9 +19,11 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.entity.EntityTypeTest;
 import net.minecraft.world.phys.Vec3;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.Nullable;
 
 public class BlockDebrisEntity extends Entity {
     protected static final Logger LOGGER = LogManager.getLogger();
@@ -77,9 +82,30 @@ public class BlockDebrisEntity extends Entity {
     private final int lifetime;
     @Override
     public void tick() {
+        Vec3 previousPos = position();
         if (age > lifetime && !noDespawn) onInsideBlock(debrisState);
 
-        super.tick();
+        this.level().getProfiler().push("entityBaseTick");
+        this.firstTick = false;
+        this.walkDistO = this.walkDist;
+        this.xRotO = this.getXRot();
+        this.yRotO = this.getYRot();
+        this.handlePortal();
+        this.level().getProfiler().pop();
+
+        if (isOnFire()) {
+            //I don't really care if it fails, it usually should not care about the location anyway
+            try {
+                boolean flame = debrisState.isFlammable(level(), BlockPos.ZERO, Direction.UP);
+                if (flame && random.nextFloat() > 0.99) {
+                    this.kill();
+                    return;
+                }
+            } catch (Throwable ignored) {
+
+            }
+        }
+
         if (level().isClientSide()) {
             debrisState = entityData.get(DEBRIS_STATE_DATA);
         } else {
@@ -89,18 +115,34 @@ public class BlockDebrisEntity extends Entity {
         for (Player player : level().getEntitiesOfClass(Player.class, this.getBoundingBox())) {
             if (!this.isRemoved()) playerTouch(player);
         }
+        if (!this.isRemoved()) {
+            for (Entity entity : level().getEntities(this, this.getBoundingBox(), EntitySelector.NO_CREATIVE_OR_SPECTATOR)) {
+                if (!this.isRemoved()) {
+                    if (fallDistance > 10) {
+                        entity.hurt(entity.damageSources().fallingBlock(this), fallDistance - 7);
+                        resetFallDistance();
+                    }
+                }
+            }
+        }
 
         this.move(MoverType.SELF, getDeltaMovement());
         setDeltaMovement(getDeltaMovement().multiply(0.9, 0.9, 0.9));
         addDeltaMovement(Vec3.ZERO.add(0, -0.05, 0));
 
         age++;
+
+        if (previousPos.y > position().y) {
+            fallDistance += (float) (previousPos.y - position().y);
+        }
     }
 
     @Override
     public void playerTouch(Player player) {
-        if (player.isShiftKeyDown()) {
+        if (player.isShiftKeyDown() && !level().isClientSide()) {
             if (mayPickup && debrisState.getBlock().asItem() != Items.AIR) {
+                level().playSound(null, getX(), getY(), getZ(), SoundEvents.ITEM_PICKUP, SoundSource.PLAYERS,
+                        1.0f, 0.9f + random.nextFloat() * 0.2f);
                 player.getInventory().add(new ItemStack(debrisState.getBlock().asItem()));
             }
             this.kill();

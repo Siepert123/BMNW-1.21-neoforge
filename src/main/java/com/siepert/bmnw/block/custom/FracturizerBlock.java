@@ -6,7 +6,12 @@ import com.siepert.bmnw.interfaces.IBombBlock;
 import com.siepert.bmnw.interfaces.IDetonatable;
 import com.siepert.bmnw.misc.MiddleMouseButton;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -25,8 +30,11 @@ public class FracturizerBlock extends Block implements IDetonatable, IBombBlock 
         this.spewUpwards = spewUpwards;
         this.debrisDecayRate = debrisDecayRate;
     }
-    public FracturizerBlock(Properties properties, int radius, boolean spewUpwards) {
-        this(properties, radius, spewUpwards, 0);
+
+    @Override
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+        tooltipComponents.add(Component.translatable("tooltip.bmnw.fracturizer")
+                .withStyle(Style.EMPTY.withUnderlined(true).withColor(0xbbbbbb)));
     }
 
     @Override

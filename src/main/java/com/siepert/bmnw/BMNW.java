@@ -43,10 +43,14 @@ public class BMNW {
             "Have you tried Create Legacy?",
             "Have you tried MelonLoader?",
             "Radiation free!",
-            "Now with extra visuals!"
+            "Now with extra visuals!",
+            "[Brick Bomb]!",
+            "Uranium Sandwich!",
+            "Block of Uranium-235!"
     };
 
-    public BMNW(IEventBus modEventBus, @Nonnull ModContainer ignoredModContainer) {
+    public BMNW(IEventBus modEventBus, @Nonnull ModContainer ignoredModContainer, Dist dist) {
+        DistrictHolder.setDistrict(dist);
         modEventBus.addListener(this::commonSetup);
 
         LOGGER.debug("BMNW loader");

@@ -40,7 +40,11 @@
     "bmnw:missile_launch_pad",
     "bmnw:example_missile",
     "bmnw:he_missile",
-    "bmnw:nuclear_missile"
+    "bmnw:nuclear_missile",
+    "bmnw:fracturizer",
+    "bmnw:volcanic_fracturizer",
+    "bmnw:strong_fracturizer",
+    "bmnw:strong_volcanic_fracturizer"
   ],
   "replace": false
 }

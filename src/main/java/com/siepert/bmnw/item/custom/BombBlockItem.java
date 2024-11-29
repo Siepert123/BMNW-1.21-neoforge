@@ -24,6 +24,7 @@ public class BombBlockItem extends BlockItem {
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+        super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
         tooltipComponents.add(category.asTooltip());
         tooltipComponents.add(Component.translatable("tooltip.bmnw.radius", radius).withColor(0x888888));
     }
