@@ -154,6 +154,8 @@ public class    BMNWItems {
 
     //region Batteries
 
+    public static final DeferredItem<BatteryItem> LEAD_ACID_BATTERY = ITEMS.register("lead_acid_battery",
+            () -> new BatteryItem(new Item.Properties(), 10000, 25));
     public static final DeferredItem<BatteryItem> DURAPIXEL_BATTERY = ITEMS.register("durapixel_battery",
             () -> new BatteryItem(new Item.Properties(), 1000000, 1000));
     public static final DeferredItem<InfiniteBatteryItem> CREATIVE_BATTERY = ITEMS.register("creative_battery",

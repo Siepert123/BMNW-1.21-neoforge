@@ -39,6 +39,19 @@ public class BatteryItem extends Item implements IBatteryItem {
         } else {
             tooltipComponents.add(Component.literal(String.format("%s/%sRF", nrg, maxNRG)).withColor(0xaaaaaa));
         }
+        if (b) {
+            if (getMaxEnergyTransfer() >= giga) {
+                tooltipComponents.add(Component.translatable("tooltip.bmnw.discharge_rate_giga", formatNicely(getMaxEnergyTransfer(), getMaxEnergyTransfer())).withColor(0xaaaaaa));
+            } else if (getMaxEnergyTransfer() >= mega) {
+                tooltipComponents.add(Component.translatable("tooltip.bmnw.discharge_rate_mega", formatNicely(getMaxEnergyTransfer(), getMaxEnergyTransfer())).withColor(0xaaaaaa));
+            } else if (getMaxEnergyTransfer() >= kilo * 5) {
+                tooltipComponents.add(Component.translatable("tooltip.bmnw.discharge_rate_kilo", formatNicely(getMaxEnergyTransfer(), getMaxEnergyTransfer())).withColor(0xaaaaaa));
+            } else {
+                tooltipComponents.add(Component.translatable("tooltip.bmnw.discharge_rate", getMaxEnergyTransfer()).withColor(0xaaaaaa));
+            }
+        } else {
+            tooltipComponents.add(Component.translatable("tooltip.bmnw.discharge_rate", getMaxEnergyTransfer()).withColor(0xaaaaaa));
+        }
 
         if (getStoredEnergy(stack) > getMaxStoredEnergy()) {
             tooltipComponents.add(Component.translatable("tooltip.bmnw.battery_overcharge").withColor(0xff0000));

@@ -292,6 +292,8 @@ public class BMNWTabs {
                         items.accept(IRRADIATED_PLANT_FIBERS);
                         items.accept(URANIUM_SANDWICH);
 
+                        items.accept(getEmptyBattery(LEAD_ACID_BATTERY.get()));
+                        items.accept(getFullBattery(LEAD_ACID_BATTERY.get()));
                         items.accept(getEmptyBattery(DURAPIXEL_BATTERY.get()));
                         items.accept(getFullBattery(DURAPIXEL_BATTERY.get()));
                         items.accept(CREATIVE_BATTERY);
