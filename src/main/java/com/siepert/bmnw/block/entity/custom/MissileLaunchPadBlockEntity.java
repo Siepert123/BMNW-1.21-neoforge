@@ -11,6 +11,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.energy.EnergyStorage;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,10 +19,8 @@ import org.joml.Vector2i;
 
 import javax.annotation.Nullable;
 
-public class MissileLaunchPadBlockEntity extends BlockEntity implements IEnergyStorage {
+public class MissileLaunchPadBlockEntity extends BlockEntity {
     private static final Logger LOGGER = LogManager.getLogger();
-    protected int energyStored;
-    protected final int maxEnergyStored = 100000;
     protected final int requiredLaunchEnergy = 0;
     public MissileLaunchPadBlockEntity(BlockPos pos, BlockState blockState) {
         super(BMNWBlockEntities.MISSILE_LAUNCH_PAD.get(), pos, blockState);
@@ -78,7 +77,7 @@ public class MissileLaunchPadBlockEntity extends BlockEntity implements IEnergyS
     }
 
     public boolean canLaunch() {
-        return (level != null && !level.isClientSide() && energyStored >= requiredLaunchEnergy &&
+        return (level != null && !level.isClientSide() && energy.getEnergyStored() >= requiredLaunchEnergy &&
                 (level.getBlockState(worldPosition.above()).getBlock() instanceof MissileBlock) &&
                 !BlockPos.ZERO.equals(target)) || getBlockState().getValue(BMNWStateProperties.MULTIBLOCK_SLAVE);
     }
@@ -111,7 +110,7 @@ public class MissileLaunchPadBlockEntity extends BlockEntity implements IEnergyS
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
 
-        tag.putInt("energyStored", energyStored);
+        tag.putInt("energyStored", energy.getEnergyStored());
 
         tag.putInt("targetX", target.getX());
         tag.putInt("targetZ", target.getZ());
@@ -127,7 +126,7 @@ public class MissileLaunchPadBlockEntity extends BlockEntity implements IEnergyS
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
 
-        energyStored = tag.getInt("energyStored");
+        //energy. = tag.getInt("energyStored");
 
         target = new BlockPos(tag.getInt("targetX"), 0, tag.getInt("targetZ"));
 
@@ -138,68 +137,6 @@ public class MissileLaunchPadBlockEntity extends BlockEntity implements IEnergyS
                     tag.getInt("coreZ")
             ));
         }
-    }
-
-    @Override
-    public int receiveEnergy(int toReceive, boolean simulate) {
-        if (!isCore()) return 0;
-        if (simulate) {
-            if (energyStored + toReceive <= maxEnergyStored) {
-                return toReceive;
-            } else {
-                return maxEnergyStored - energyStored;
-            }
-        } else {
-            if (energyStored + toReceive <= maxEnergyStored) {
-                energyStored += toReceive;
-                return toReceive;
-            } else {
-                int i = maxEnergyStored - energyStored;
-                energyStored += i;
-                return i;
-            }
-        }
-    }
-
-    @Override
-    public int extractEnergy(int toExtract, boolean simulate) {
-        if (!isCore()) return 0;
-        if (simulate) {
-            if (energyStored - toExtract >= maxEnergyStored) {
-                return toExtract;
-            } else {
-                return energyStored;
-            }
-        } else {
-            if (energyStored - toExtract >= 0) {
-                energyStored += toExtract;
-                return toExtract;
-            } else {
-                int i = energyStored;
-                energyStored = 0;
-                return i;
-            }
-        }
-    }
-
-    @Override
-    public int getEnergyStored() {
-        return energyStored;
-    }
-
-    @Override
-    public int getMaxEnergyStored() {
-        return maxEnergyStored;
-    }
-
-    @Override
-    public boolean canExtract() {
-        return false;
-    }
-
-    @Override
-    public boolean canReceive() {
-        return isCore();
     }
 
     protected BlockPos target = new BlockPos(0, 0, 0);
@@ -213,5 +150,11 @@ public class MissileLaunchPadBlockEntity extends BlockEntity implements IEnergyS
                 pad.setTarget(blockPos);
             }
         }
+    }
+
+    public IEnergyStorage energy = new EnergyStorage(100000);
+
+    public IEnergyStorage getIEnergy() {
+        return energy;
     }
 }

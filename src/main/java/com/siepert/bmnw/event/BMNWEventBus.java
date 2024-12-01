@@ -1,5 +1,7 @@
 package com.siepert.bmnw.event;
 
+import com.siepert.bmnw.block.BMNWBlocks;
+import com.siepert.bmnw.block.entity.custom.MissileLaunchPadBlockEntity;
 import com.siepert.bmnw.datagen.BMNWAdvancementGenerator;
 import com.siepert.bmnw.datagen.BMNWItemTagGenerator;
 import com.siepert.bmnw.effect.BMNWEffects;
@@ -32,19 +34,25 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.util.ObfuscationReflectionHelper;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.client.event.AddAttributeTooltipsEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 import net.neoforged.neoforge.common.data.AdvancementProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.common.util.TriState;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.level.ChunkEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
@@ -401,6 +409,15 @@ public class BMNWEventBus {
             event.registerSpriteSet(BMNWParticleTypes.SHOCKWAVE.get(), ShockwaveParticleProvider::new);
             event.registerSpriteSet(BMNWParticleTypes.LARGE_MISSILE_SMOKE.get(), LargeMissileSmokeParticle.Provider::new);
             event.registerSpriteSet(BMNWParticleTypes.DUSTY_FIRE.get(), DustyFireParticle.Provider::new);
+        }
+
+        @SubscribeEvent
+        public static void registerCapabilitiesEvent(RegisterCapabilitiesEvent event) {
+            event.registerBlock(
+                    Capabilities.EnergyStorage.BLOCK,
+                    (level, pos, state, blockEntity, context) -> ((MissileLaunchPadBlockEntity) blockEntity).getIEnergy(),
+                    BMNWBlocks.MISSILE_LAUNCH_PAD.get()
+            );
         }
 
         /**

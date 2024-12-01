@@ -115,6 +115,7 @@ public class MissileLaunchPadBlock extends Block implements EntityBlock, IDetona
         if (entity instanceof MissileLaunchPadBlockEntity pad) {
             pad.check();
         } else System.err.println("mleb :(");
+        level.invalidateCapabilities(pos);
         super.onRemove(state, level, pos, newState, movedByPiston);
     }
 
