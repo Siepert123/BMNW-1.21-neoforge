@@ -297,6 +297,12 @@ public class BMNWTabs {
                         items.accept(getEmptyBattery(DURAPIXEL_BATTERY.get()));
                         items.accept(getFullBattery(DURAPIXEL_BATTERY.get()));
                         items.accept(CREATIVE_BATTERY);
+
+                        items.accept(getEmptyBattery(LEAD_ACID_CAR_BATTERY.get()));
+                        items.accept(getFullBattery(LEAD_ACID_CAR_BATTERY.get()));
+                        items.accept(getEmptyBattery(DURAPIXEL_CAR_BATTERY.get()));
+                        items.accept(getFullBattery(DURAPIXEL_CAR_BATTERY.get()));
+                        items.accept(CREATIVE_CAR_BATTERY);
                     })
                     .build()
     );

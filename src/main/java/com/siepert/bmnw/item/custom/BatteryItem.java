@@ -55,6 +55,8 @@ public class BatteryItem extends Item implements IBatteryItem {
 
         if (getStoredEnergy(stack) > getMaxStoredEnergy()) {
             tooltipComponents.add(Component.translatable("tooltip.bmnw.battery_overcharge").withColor(0xff0000));
+        } else if (!isBarVisible(stack)) {
+            tooltipComponents.add(Component.translatable("tooltip.bmnw.fully_charged").withColor(0x00ff00));
         }
     }
     private float formatNicely(int nrg, int maxNRG) {

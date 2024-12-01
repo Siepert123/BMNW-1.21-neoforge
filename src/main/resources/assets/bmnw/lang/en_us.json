@@ -134,8 +134,10 @@
   "item.bmnw.copper_plate": "Copper Plate",
   "item.bmnw.copper_wire": "Copper Wire",
   "item.bmnw.creative_battery": "Creative Battery",
+  "item.bmnw.creative_car_battery": "Creative Car Battery",
   "item.bmnw.detonator": "Remote Detonator",
   "item.bmnw.durapixel_battery": "Durapixel Battery",
+  "item.bmnw.durapixel_car_battery": "Durapixel Car Battery",
   "item.bmnw.empty_core_sample": "Empty Core Sample",
   "item.bmnw.enhanced_circuit": "Enhanced Circuit",
   "item.bmnw.excavation_vein_detector": "Excavation Vein Scanner",
@@ -148,6 +150,7 @@
   "item.bmnw.irradiated_plant_fibers": "Irradiated Plant Fibers",
   "item.bmnw.laser_target_designator": "Laser Target Designator",
   "item.bmnw.lead_acid_battery": "Lead-Acid Battery",
+  "item.bmnw.lead_acid_car_battery": "Lead-Acid Car Battery",
   "item.bmnw.lead_ingot": "Lead Ingot",
   "item.bmnw.lead_nugget": "Lead Nugget",
   "item.bmnw.lead_plate": "Lead Plate",
@@ -302,5 +305,6 @@
   "tooltip.bmnw.fracturizer": "(Not the virus)",
   "tooltip.bmnw.radiation_shielding": "[Radiation Shielding]",
   "tooltip.bmnw.radioactive": "[Radioactive]",
-  "tooltip.bmnw.radius": "Radius: ~%s"
+  "tooltip.bmnw.radius": "Radius: ~%s",
+  "tooltip.bmnw.fully_charged": "Fully charged!"
 }

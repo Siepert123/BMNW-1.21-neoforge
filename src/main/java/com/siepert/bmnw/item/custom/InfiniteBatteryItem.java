@@ -10,7 +10,7 @@ import java.util.List;
 
 public class InfiniteBatteryItem extends Item implements IBatteryItem {
     public InfiniteBatteryItem(Properties properties) {
-        super(properties);
+        super(properties.stacksTo(1));
     }
 
     @Override
