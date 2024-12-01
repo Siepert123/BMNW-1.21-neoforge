@@ -1,5 +1,6 @@
 package com.siepert.bmnw.radiation;
 
+import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.siepert.bmnw.block.BMNWBlocks;
 import com.siepert.bmnw.misc.BMNWConfig;
 import com.siepert.bmnw.misc.BMNWAttachments;
@@ -234,5 +235,9 @@ public class RadHelper {
             if (pos.getY() >= sideH-1) return true;
         }
         return false;
+    }
+
+    public static void setChunkRadiation(ChunkAccess chunk, float rads) {
+        chunk.setData(BMNWAttachments.RADIATION.get(), rads);
     }
 }

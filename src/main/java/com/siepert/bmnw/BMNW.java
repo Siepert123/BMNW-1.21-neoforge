@@ -16,6 +16,7 @@ import com.siepert.bmnw.radiation.ShieldingValues;
 import com.siepert.bmnw.recipe.BMNWRecipeSerializers;
 import com.siepert.bmnw.recipe.BMNWRecipeTypes;
 import eu.midnightdust.lib.config.MidnightConfig;
+import net.minecraft.commands.Commands;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -91,6 +92,9 @@ public class BMNW {
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {
         RadFiler.rerun(event.getServer());
+
+        Commands commands = event.getServer().getCommands();
+        BMNWCommands.register(commands);
     }
 
     @SubscribeEvent

@@ -152,6 +152,13 @@ public class    BMNWItems {
 
     //endregion
 
+    //region Batteries
+
+    public static final DeferredItem<BatteryItem> DURAPIXEL_BATTERY = ITEMS.register("durapixel_battery",
+            () -> new BatteryItem(new Item.Properties(), 1000000, 1000));
+
+    //endregion
+
     //region Isotopes of materials & storage blocks
     public static final DeferredItem<SimpleRadioactiveItem> URANIUM_233_NUGGET = ITEMS.register("uranium_233_nugget",
             () -> new SimpleRadioactiveItem(new Item.Properties(), 0.5f));

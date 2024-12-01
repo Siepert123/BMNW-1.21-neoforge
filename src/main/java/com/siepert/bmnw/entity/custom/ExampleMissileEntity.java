@@ -26,6 +26,7 @@ public class ExampleMissileEntity extends MissileEntity {
                         (random.nextDouble() - random.nextDouble())*5,
                         (random.nextDouble() - random.nextDouble())*5);
                 entity.setDebrisState(Blocks.BRICKS.defaultBlockState());
+                entity.setPickup(false);
                 level().addFreshEntity(entity);
             }
         } else {

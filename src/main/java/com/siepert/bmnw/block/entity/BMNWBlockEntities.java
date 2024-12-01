@@ -1,10 +1,7 @@
 package com.siepert.bmnw.block.entity;
 
 import com.siepert.bmnw.block.BMNWBlocks;
-import com.siepert.bmnw.block.entity.custom.ExcavatorBlockEntity;
-import com.siepert.bmnw.block.entity.custom.ExcavatorBlockEntitySlave;
-import com.siepert.bmnw.block.entity.custom.MissileLaunchPadBlockEntity;
-import com.siepert.bmnw.block.entity.custom.TestExcavatorBlockEntity;
+import com.siepert.bmnw.block.entity.custom.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.bus.api.IEventBus;
@@ -48,6 +45,14 @@ public class BMNWBlockEntities {
             () -> new BlockEntityType<>(
                     ExcavatorBlockEntitySlave::new,
                     Set.of(),
+                    null
+            )
+    );
+    public static final Supplier<BlockEntityType<IronBarrelBlockEntity>> IRON_BARREL = BLOCK_ENTITIES.register(
+            "iron_barrel",
+            () -> new BlockEntityType<>(
+                    IronBarrelBlockEntity::new,
+                    Set.of(BMNWBlocks.IRON_BARREL.get()),
                     null
             )
     );

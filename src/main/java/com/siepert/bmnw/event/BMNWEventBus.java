@@ -1,6 +1,7 @@
 package com.siepert.bmnw.event;
 
 import com.siepert.bmnw.block.BMNWBlocks;
+import com.siepert.bmnw.block.entity.custom.IronBarrelBlockEntity;
 import com.siepert.bmnw.block.entity.custom.MissileLaunchPadBlockEntity;
 import com.siepert.bmnw.datagen.BMNWAdvancementGenerator;
 import com.siepert.bmnw.datagen.BMNWItemTagGenerator;
@@ -9,6 +10,7 @@ import com.siepert.bmnw.entity.BMNWEntityTypes;
 import com.siepert.bmnw.entity.renderer.*;
 import com.siepert.bmnw.interfaces.IItemHazard;
 import com.siepert.bmnw.item.BMNWItems;
+import com.siepert.bmnw.item.custom.BatteryItem;
 import com.siepert.bmnw.item.custom.CoreSampleItem;
 import com.siepert.bmnw.misc.*;
 import com.siepert.bmnw.particle.BMNWParticleTypes;
@@ -418,6 +420,12 @@ public class BMNWEventBus {
                     (level, pos, state, blockEntity, context) -> blockEntity != null ?
                             ((MissileLaunchPadBlockEntity) blockEntity).getIEnergy() : null,
                     BMNWBlocks.MISSILE_LAUNCH_PAD.get()
+            );
+            event.registerBlock(
+                    Capabilities.FluidHandler.BLOCK,
+                    (level, pos, state, blockEntity, context) -> blockEntity != null?
+                            ((IronBarrelBlockEntity)blockEntity).getIFluid() : null,
+                    BMNWBlocks.IRON_BARREL.get()
             );
         }
 

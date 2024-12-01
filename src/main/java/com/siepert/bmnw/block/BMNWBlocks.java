@@ -124,8 +124,14 @@ public class BMNWBlocks {
             () -> new IrradiatedPlantBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SHORT_GRASS)));
     //endregion
 
+    //region Barrels
+
+    public static final DeferredBlock<IronBarrelBlock> IRON_BARREL = BLOCKS.register("iron_barrel",
+            () -> new IronBarrelBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).noOcclusion()));
     public static final DeferredBlock<NuclearWasteBarrelBlock> NUCLEAR_WASTE_BARREL = BLOCKS.register("nuclear_waste_barrel",
             () -> new NuclearWasteBarrelBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).noOcclusion(), 50));
+
+    //endregion
 
     //region Bombs & Missiles
     public static final DeferredBlock<FracturizerBlock> FRACTURIZER = BLOCKS.register("fracturizer",

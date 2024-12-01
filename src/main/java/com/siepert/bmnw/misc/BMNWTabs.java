@@ -1,5 +1,7 @@
 package com.siepert.bmnw.misc;
 
+import com.siepert.bmnw.item.components.BMNWDataComponents;
+import com.siepert.bmnw.item.custom.BatteryItem;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -241,6 +243,17 @@ public class BMNWTabs {
                     .build()
     );
 
+    private static ItemStack getEmptyBattery(BatteryItem item) {
+        ItemStack stack = new ItemStack(item);
+        stack.set(BMNWDataComponents.STORED_BATTERY_RF.get(), 0);
+        return stack;
+    }
+    private static ItemStack getFullBattery(BatteryItem item) {
+        ItemStack stack = new ItemStack(item);
+        stack.set(BMNWDataComponents.STORED_BATTERY_RF.get(), item.getMaxStoredEnergy());
+        return stack;
+    }
+
     @NoUnused
     public static final Supplier<CreativeModeTab> TOOLS = CREATIVE_TABS.register("tools",
             () -> CreativeModeTab.builder()
@@ -278,6 +291,9 @@ public class BMNWTabs {
                         items.accept(TUNGSTEN_CORE_SAMPLE);
                         items.accept(IRRADIATED_PLANT_FIBERS);
                         items.accept(URANIUM_SANDWICH);
+
+                        items.accept(getEmptyBattery(DURAPIXEL_BATTERY.get()));
+                        items.accept(getFullBattery(DURAPIXEL_BATTERY.get()));
                     })
                     .build()
     );

@@ -15,7 +15,8 @@ public class BMNWEntityTypes {
     public static final DeferredHolder<EntityType<?>, EntityType<BlockDebrisEntity>> BLOCK_DEBRIS = ENTITY_TYPES.register(
             "block_debris",
             () -> EntityType.Builder.of(BlockDebrisEntity::new, MobCategory.MISC)
-                    .sized(1.0f, 1.0f)
+                    .clientTrackingRange(128)
+                    .sized(0.5f, 0.5f)
                     .build("bmnw:block_debris")
     );
 
