@@ -154,7 +154,15 @@ public class MissileLaunchPadBlockEntity extends BlockEntity {
 
     public IEnergyStorage energy = new EnergyStorage(100000);
 
+    @Nullable
     public IEnergyStorage getIEnergy() {
-        return energy;
+        if (isCore()) {
+            return energy;
+        }
+        BlockEntity entity = level.getBlockEntity(getCorePos());
+        if (entity instanceof MissileLaunchPadBlockEntity pad) {
+            return pad.getIEnergy();
+        }
+        return null;
     }
 }

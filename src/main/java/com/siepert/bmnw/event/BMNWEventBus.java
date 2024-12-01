@@ -415,7 +415,8 @@ public class BMNWEventBus {
         public static void registerCapabilitiesEvent(RegisterCapabilitiesEvent event) {
             event.registerBlock(
                     Capabilities.EnergyStorage.BLOCK,
-                    (level, pos, state, blockEntity, context) -> ((MissileLaunchPadBlockEntity) blockEntity).getIEnergy(),
+                    (level, pos, state, blockEntity, context) -> blockEntity != null ?
+                            ((MissileLaunchPadBlockEntity) blockEntity).getIEnergy() : null,
                     BMNWBlocks.MISSILE_LAUNCH_PAD.get()
             );
         }
