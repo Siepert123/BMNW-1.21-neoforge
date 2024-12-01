@@ -28,16 +28,16 @@ public class BatteryItem extends Item implements IBatteryItem {
         final int maxNRG = getMaxStoredEnergy();
         if (b) {
             if (maxNRG >= giga) {
-                tooltipComponents.add(Component.literal(String.format("%s/%sGRF", formatNicely(nrg, maxNRG), formatNicely(maxNRG, maxNRG))));
+                tooltipComponents.add(Component.literal(String.format("%s/%sGRF", formatNicely(nrg, maxNRG), formatNicely(maxNRG, maxNRG))).withColor(0xaaaaaa));
             } else if (maxNRG >= mega) {
-                tooltipComponents.add(Component.literal(String.format("%s/%sMRF", formatNicely(nrg, maxNRG), formatNicely(maxNRG, maxNRG))));
+                tooltipComponents.add(Component.literal(String.format("%s/%sMRF", formatNicely(nrg, maxNRG), formatNicely(maxNRG, maxNRG))).withColor(0xaaaaaa));
             } else if (maxNRG >= kilo * 5) {
-                tooltipComponents.add(Component.literal(String.format("%s/%skRF", formatNicely(nrg, maxNRG), formatNicely(maxNRG, maxNRG))));
+                tooltipComponents.add(Component.literal(String.format("%s/%skRF", formatNicely(nrg, maxNRG), formatNicely(maxNRG, maxNRG))).withColor(0xaaaaaa));
             } else {
-                tooltipComponents.add(Component.literal(String.format("%s/%sRF", nrg, maxNRG)));
+                tooltipComponents.add(Component.literal(String.format("%s/%sRF", nrg, maxNRG)).withColor(0xaaaaaa));
             }
         } else {
-            tooltipComponents.add(Component.literal(String.format("%s/%sRF", nrg, maxNRG)));
+            tooltipComponents.add(Component.literal(String.format("%s/%sRF", nrg, maxNRG)).withColor(0xaaaaaa));
         }
 
         if (getStoredEnergy(stack) > getMaxStoredEnergy()) {
