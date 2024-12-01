@@ -158,6 +158,7 @@ public class    BMNWItems {
             () -> new BatteryItem(new Item.Properties(), 1000000, 1000));
     public static final DeferredItem<InfiniteBatteryItem> CREATIVE_BATTERY = ITEMS.register("creative_battery",
             () -> new InfiniteBatteryItem(new Item.Properties()));
+
     //endregion
 
     //region Isotopes of materials & storage blocks
