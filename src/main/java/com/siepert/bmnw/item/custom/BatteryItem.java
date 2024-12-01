@@ -45,17 +45,17 @@ public class BatteryItem extends Item implements IBatteryItem {
         }
     }
     private float formatNicely(int nrg, int maxNRG) {
-        final int giga = 1000000000;
-        final int mega = 1000000;
-        final int kilo = 1000;
+        final float giga = 1000000000;
+        final float mega = 1000000;
+        final float kilo = 1000;
         if (maxNRG >= giga) {
-            return Mth.quantize(nrg / (giga / 10f), 1) * 10;
+            return Mth.quantize(nrg / (giga) * 100f, 1) / 100f;
         }
         if (maxNRG >= mega) {
-            return Mth.quantize(nrg / (mega / 10f), 1) * 10;
+            return Mth.quantize(nrg / (mega) * 100f, 1) / 100f;
         }
         if (maxNRG >= kilo) {
-            return Mth.quantize(nrg / (kilo / 10f), 1) * 10;
+            return Mth.quantize(nrg / (kilo) * 100f, 1) / 100f;
         }
         return nrg;
     }
