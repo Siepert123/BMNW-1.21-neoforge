@@ -348,6 +348,11 @@ public class BMNWItems {
             () -> new BlockItem(BMNWBlocks.CHISELED_CONCRETE_BRICKS.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> CREATIVE_CONCRETE_BRICKS = ITEMS.register("creative_concrete_bricks",
             () -> new BlockItem(BMNWBlocks.CREATIVE_CONCRETE_BRICKS.get(), new Item.Properties()));
+
+    public static final DeferredItem<BlockItem> CONCRETE_LAMP = ITEMS.register("concrete_lamp",
+            () -> new BlockItem(BMNWBlocks.CONCRETE_LAMP.get(), new Item.Properties()));
+    public static final DeferredItem<BlockItem> CONCRETE_CEILING_LAMP = ITEMS.register("concrete_ceiling_lamp",
+            () -> new BlockItem(BMNWBlocks.CONCRETE_CEILING_LAMP.get(), new Item.Properties()));
     //endregion
 
     //region Nuclear after effects

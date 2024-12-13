@@ -68,6 +68,11 @@ public class BMNWTabs {
                         items.accept(CREATIVE_CONCRETE_BRICKS);
 
                         addItems(items,
+                                CONCRETE_LAMP,
+                                CONCRETE_CEILING_LAMP
+                        );
+
+                        addItems(items,
                                 LEAD_ORE,
                                 TUNGSTEN_ORE,
                                 TITANIUM_ORE,

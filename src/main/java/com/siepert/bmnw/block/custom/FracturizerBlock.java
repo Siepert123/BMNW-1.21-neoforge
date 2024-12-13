@@ -60,6 +60,7 @@ public class FracturizerBlock extends Block implements IDetonatable, IBombBlock 
         RandomSource random = level.getRandom();
         for (BlockState state : debrisStates) {
             BlockDebrisEntity entity = new BlockDebrisEntity(BMNWEntityTypes.BLOCK_DEBRIS.get(), level);
+            entity.placeOnLand = true;
             entity.setPos(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
             entity.setDebrisState(state);
             if (spewUpwards) {

@@ -1,0 +1,7 @@
+{
+  "parent": "bmnw:block/ceiling_lamp_block",
+  "textures": {
+    "side": "bmnw:block/concrete_bricks",
+    "lamp": "bmnw:block/concrete_glowstone"
+  }
+}

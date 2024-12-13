@@ -43,7 +43,7 @@ public class ShieldingValues {
 
     public static double getShieldingModifierForPosition(Level level, BlockPos pos) {
         double mod = 1;
-        for (int y = 0; y <= max_shielding_distance; y++) {
+        for (int y = 1; y <= max_shielding_distance; y++) {
             if (shields(level.getBlockState(pos.above(y)))) {
                 if (y <= getShieldingDistance(level.getBlockState(pos.above(y)))) {
                     mod *= getShieldingModifier(level.getBlockState(pos.above(y)));

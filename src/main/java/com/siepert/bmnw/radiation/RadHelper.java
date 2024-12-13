@@ -15,6 +15,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.levelgen.Heightmap;
@@ -87,6 +88,8 @@ public class RadHelper {
     public static void createChunkRadiationEffects(@Nonnull ChunkAccess chunk) {
         if (chunk.getLevel() == null || chunk.getLevel().isClientSide()) return;
         Level level = chunk.getLevel();
+
+        //createFallout(chunk);
 
         int rad_level = getRadiationLevelForFemtoRads(chunk.getData(BMNWAttachments.RADIATION));
         if (rad_level < 1) return;
@@ -219,7 +222,7 @@ public class RadHelper {
                 for (int z = pos.getMinBlockZ(); z <= pos.getMaxBlockZ(); z++) {
                     int minY = chunk.getHeight(Heightmap.Types.MOTION_BLOCKING, x, z);
                     if (random.nextFloat() > 0.99f) {
-                        //TODO: place fallout layer
+                        level.setBlock(pos.getBlockAt(x, minY+1, z), Blocks.SNOW.defaultBlockState(), 3);
                     }
                 }
             }

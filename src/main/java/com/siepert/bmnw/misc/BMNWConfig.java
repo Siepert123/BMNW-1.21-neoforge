@@ -50,6 +50,7 @@ public class BMNWConfig extends MidnightConfig {
 
     @Entry(category = GAMEPLAY) public static boolean enableExcavationVeinDepletion;
     @Entry(category = GAMEPLAY, min = 0, max = 1) public static float antiMissileImpactChance;
+    @Entry(category = GAMEPLAY) public static boolean useSI;
 
     @Comment(centered = true, category = EXPERIMENTAL) public static Comment experimentalHeader;
     @Entry(category = EXPERIMENTAL) public static boolean threadChunkRecalculation;

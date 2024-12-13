@@ -3,6 +3,7 @@ package com.siepert.bmnw.recipe;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -12,7 +13,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+
 //big thanks to emma for letting me copy code :3
+@MethodsReturnNonnullByDefault
+@ParametersAreNonnullByDefault
 public record AlloyingRecipe(int duration, Ingredient input1, Ingredient input2, ItemStack result) implements Recipe<RecipeInput> {
     public static final RecipeType<AlloyingRecipe> TYPE = RecipeType.simple(ResourceLocation.parse("bmnw:alloying"));
     public static final Serializer SERIALIZER = new Serializer();

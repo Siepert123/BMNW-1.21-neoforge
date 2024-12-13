@@ -23,7 +23,6 @@ import net.minecraft.world.level.entity.EntityTypeTest;
 import net.minecraft.world.phys.Vec3;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.jetbrains.annotations.Nullable;
 
 public class BlockDebrisEntity extends Entity {
     protected static final Logger LOGGER = LogManager.getLogger();
@@ -37,6 +36,7 @@ public class BlockDebrisEntity extends Entity {
 
     private boolean noDespawn = false;
     private boolean mayPickup = true;
+    public boolean placeOnLand = false;
 
     public BlockDebrisEntity setNoDespawn() {
         noDespawn = true;
@@ -67,6 +67,7 @@ public class BlockDebrisEntity extends Entity {
 
         mayPickup = compound.getBoolean("mayPickup");
         noDespawn = compound.getBoolean("noDespawn");
+        placeOnLand = compound.getBoolean("placeOnGround");
     }
 
     @Override
@@ -76,13 +77,14 @@ public class BlockDebrisEntity extends Entity {
 
         compound.putBoolean("mayPickup", mayPickup);
         compound.putBoolean("noDespawn", noDespawn);
+        compound.putBoolean("placeOnGround", placeOnLand);
     }
 
     private int age = 0;
     private final int lifetime;
     @Override
     public void tick() {
-        Vec3 previousPos = position();
+        Vec3 previousPos = new Vec3(position().x, position().y, position().z);
         if (age > lifetime && !noDespawn) onInsideBlock(debrisState);
 
         this.level().getProfiler().push("entityBaseTick");
@@ -135,6 +137,15 @@ public class BlockDebrisEntity extends Entity {
         if (previousPos.y > position().y) {
             fallDistance += (float) (previousPos.y - position().y);
         }
+        if (placeOnLand && previousPos.y == position().y) {
+            this.placeSelf();
+        }
+    }
+
+    private void placeSelf() {
+        BlockPos pos = this.getOnPos().above();
+        level().setBlock(pos, debrisState, 3);
+        this.kill();
     }
 
     @Override
