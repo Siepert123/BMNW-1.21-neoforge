@@ -59,14 +59,6 @@ public class ShieldingValues {
 
         addShielding(Blocks.BEDROCK, 10, 0);
         addShielding(Blocks.BARRIER, 10, 0);
-        addShielding(Blocks.IRON_BLOCK,5, 0.5);
-        addShielding(Blocks.GOLD_BLOCK,5, 0.5f);
-        addShielding(Blocks.NETHERITE_BLOCK,5, 0.25);
-        addShielding(Blocks.STONE_BRICKS, 3, 0.95);
-        addShielding(Blocks.STONE_BRICK_SLAB, 3, 0.95);
-        addShielding(Blocks.STONE_BRICK_STAIRS, 3, 0.95);
-        addShielding(Blocks.IRON_DOOR, 5, 0.5);
-        addShielding(Blocks.IRON_TRAPDOOR, 5, 0.5);
 
         addShielding(BMNWBlocks.CONCRETE.get(), 10, 0);
         addShielding(BMNWBlocks.CONCRETE_SLAB.get(), 10, 0);
@@ -78,6 +70,8 @@ public class ShieldingValues {
         addShielding(BMNWBlocks.STEEL_REINFORCED_GLASS.get(), 10, 0);
         addShielding(BMNWBlocks.CREATIVE_CONCRETE_BRICKS.get(), 10, 0);
         addShielding(BMNWBlocks.CHISELED_CONCRETE_BRICKS.get(), 10, 0);
+        addShielding(BMNWBlocks.CONCRETE_LAMP.get(), 10, 0);
+        addShielding(BMNWBlocks.CONCRETE_CEILING_LAMP.get(), 10, 0);
 
         addShielding(BMNWBlocks.LEAD_BLOCK.get(), 10, 0);
 

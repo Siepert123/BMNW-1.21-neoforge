@@ -1,5 +1,6 @@
 package com.siepert.bmnw.misc;
 
+import com.siepert.bmnw.BMNW;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -18,5 +19,11 @@ public class BMNWDamageSources {
             = ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath("bmnw", "nuclear_blast"));
     public static DamageSource nuclear_blast(Level level) {
         return new DamageSource(level.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(NUCLEAR_BLAST));
+    }
+
+    public static final ResourceKey<DamageType> SHOT
+            = ResourceKey.create(Registries.DAMAGE_TYPE, BMNW.namespace("pistol_shot"));
+    public static DamageSource shot(Level level) {
+        return new DamageSource(level.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(SHOT));
     }
 }

@@ -2,13 +2,16 @@ package com.siepert.bmnw.item;
 
 import com.siepert.bmnw.block.BMNWBlocks;
 import com.siepert.bmnw.effect.BMNWEffects;
+import com.siepert.bmnw.entity.custom.LeadBulletEntity;
 import com.siepert.bmnw.item.custom.*;
 import com.siepert.bmnw.misc.Categories;
 import com.siepert.bmnw.misc.ExcavationVein;
+import com.siepert.bmnw.misc.GunOptions;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
@@ -166,6 +169,18 @@ public class BMNWItems {
             () -> new InfiniteBatteryItem(new Item.Properties()));
     public static final DeferredItem<InfiniteBatteryItem> CREATIVE_CAR_BATTERY = ITEMS.register("creative_car_battery",
             () -> new InfiniteBatteryItem(new Item.Properties()));
+
+    //endregion
+
+    //region Weapons
+
+    public static final DeferredItem<GunItem> REVOLVER = ITEMS.register("revolver",
+            () -> new GunItem(new Item.Properties().stacksTo(1), GunOptions.of().withRange(64).withInaccuracy(0.005f).withMaxAmmo(6)));
+    public static final DeferredItem<RapidFireGunItem> RAPID_FIRE_GUN_TEST = ITEMS.register("rapid_fire_gun_test",
+            () -> new RapidFireGunItem(new Item.Properties().stacksTo(1), GunOptions.of().withRange(64).withInaccuracy(0.1f).withMaxAmmo(64)));
+
+    public static final DeferredItem<BulletItem> LEAD_BULLET = ITEMS.register("lead_bullet",
+            () -> new BulletItem(new Item.Properties(), LeadBulletEntity.class));
 
     //endregion
 

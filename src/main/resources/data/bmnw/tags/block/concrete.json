@@ -1,6 +1,8 @@
 {
   "values": [
     "bmnw:concrete",
+    "bmnw:concrete_lamp",
+    "bmnw:concrete_ceiling_lamp",
     "bmnw:concrete_slab",
     "bmnw:concrete_stairs",
     "bmnw:concrete_bricks",

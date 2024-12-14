@@ -17,6 +17,7 @@ import com.siepert.bmnw.recipe.BMNWRecipeSerializers;
 import com.siepert.bmnw.recipe.BMNWRecipeTypes;
 import eu.midnightdust.lib.config.MidnightConfig;
 import net.minecraft.commands.Commands;
+import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -109,5 +110,9 @@ public class BMNW {
         public static void onClientSetup(FMLClientSetupEvent event) {
 
         }
+    }
+
+    public static ResourceLocation namespace(String key) {
+        return ResourceLocation.fromNamespaceAndPath("bmnw", key);
     }
 }

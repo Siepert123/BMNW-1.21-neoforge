@@ -81,6 +81,14 @@ public class BMNWEntityTypes {
                     .build("bmnw:nuclear_missile")
     );
 
+    public static final DeferredHolder<EntityType<?>, EntityType<LeadBulletEntity>> LEAD_BULLET = ENTITY_TYPES.register(
+            "lead_bullet",
+            () -> EntityType.Builder.of(LeadBulletEntity::new, MobCategory.MISC)
+                    .sized(0.1f, 0.1f)
+                    .clientTrackingRange(5)
+                    .build("bmnw:lead_bullet")
+    );
+
     public static void register(IEventBus eventBus) {
         ENTITY_TYPES.register(eventBus);
     }

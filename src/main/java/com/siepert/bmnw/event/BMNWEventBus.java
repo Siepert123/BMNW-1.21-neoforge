@@ -385,6 +385,8 @@ public class BMNWEventBus {
             registerEntityRenderingHandler(event, BMNWEntityTypes.EXAMPLE_MISSILE, ExampleMissileRenderer::new);
             registerEntityRenderingHandler(event, BMNWEntityTypes.HE_MISSILE, HighExplosiveMissileRenderer::new);
             registerEntityRenderingHandler(event, BMNWEntityTypes.NUCLEAR_MISSILE, NuclearMissileRenderer::new);
+
+            registerEntityRenderingHandler(event, BMNWEntityTypes.LEAD_BULLET, LeadBulletRenderer::new);
         }
 
         /**

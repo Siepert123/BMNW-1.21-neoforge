@@ -28,6 +28,20 @@ public class BMNWDataComponents {
                     .networkSynchronized(ByteBufCodecs.VAR_INT)
     );
 
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> AMMUNITION = COMPONENTS.registerComponentType(
+            "ammunition",
+            builder -> builder
+                    .persistent(ExtraCodecs.NON_NEGATIVE_INT)
+                    .networkSynchronized(ByteBufCodecs.VAR_INT)
+    );
+
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Boolean>> IN_USE = COMPONENTS.registerComponentType(
+            "in_use",
+            builder -> builder
+                    .persistent(Codec.BOOL)
+                    .networkSynchronized(ByteBufCodecs.BOOL)
+    );
+
     public static void register(IEventBus eventBus) {
         COMPONENTS.register(eventBus);
     }
