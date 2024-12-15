@@ -1,8 +1,10 @@
 package com.siepert.bmnw.event;
 
 import com.siepert.bmnw.block.BMNWBlocks;
+import com.siepert.bmnw.block.entity.BMNWBlockEntities;
 import com.siepert.bmnw.block.entity.custom.IronBarrelBlockEntity;
 import com.siepert.bmnw.block.entity.custom.MissileLaunchPadBlockEntity;
+import com.siepert.bmnw.block.entity.renderer.HatchRenderer;
 import com.siepert.bmnw.datagen.BMNWAdvancementGenerator;
 import com.siepert.bmnw.datagen.BMNWItemTagGenerator;
 import com.siepert.bmnw.effect.BMNWEffects;
@@ -18,6 +20,7 @@ import com.siepert.bmnw.particle.custom.*;
 import com.siepert.bmnw.radiation.ChunkRecalculatorThread;
 import com.siepert.bmnw.radiation.RadHelper;
 import com.siepert.bmnw.radiation.ShieldingValues;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
@@ -39,6 +42,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -365,10 +370,15 @@ public class BMNWEventBus {
                                                                                            EntityRendererProvider<T> renderer) {
             event.registerEntityRenderer(type.get(), renderer);
         }
+        private static <T extends BlockEntity, V extends T> void registerBlockEntityRenderingHandler(EntityRenderersEvent.RegisterRenderers event,
+                                                                                                     Supplier<BlockEntityType<V>> type,
+                                                                                                     BlockEntityRendererProvider<T> renderer) {
+            event.registerBlockEntityRenderer(type.get(), renderer);
+        }
 
         @OnlyIn(Dist.CLIENT)
         private static void registerBlockEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
-
+            registerBlockEntityRenderingHandler(event, BMNWBlockEntities.HATCH, HatchRenderer::new);
         }
 
         @OnlyIn(Dist.CLIENT)

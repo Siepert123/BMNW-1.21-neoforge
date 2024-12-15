@@ -57,6 +57,15 @@ public class BMNWBlockEntities {
             )
     );
 
+    public static final Supplier<BlockEntityType<HatchBlockEntity>> HATCH = BLOCK_ENTITIES.register(
+            "hatch",
+            () -> new BlockEntityType<>(
+                    HatchBlockEntity::new,
+                    Set.of(BMNWBlocks.HATCH.get()),
+                    null
+            )
+    );
+
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);
     }

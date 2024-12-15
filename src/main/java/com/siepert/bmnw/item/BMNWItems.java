@@ -370,6 +370,13 @@ public class BMNWItems {
             () -> new BlockItem(BMNWBlocks.CONCRETE_CEILING_LAMP.get(), new Item.Properties()));
     //endregion
 
+    //region Doors & hatches
+
+    public static final DeferredItem<BlockItem> HATCH = ITEMS.register("hatch",
+            () -> new BlockItem(BMNWBlocks.HATCH.get(), new Item.Properties()));
+
+    //endregion
+
     //region Nuclear after effects
     public static final DeferredItem<BlockItem> SLAKED_NUCLEAR_REMAINS = ITEMS.register("slaked_nuclear_remains",
             () -> new BlockItem(BMNWBlocks.SLAKED_NUCLEAR_REMAINS.get(), new Item.Properties()));

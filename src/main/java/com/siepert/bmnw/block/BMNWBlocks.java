@@ -135,13 +135,13 @@ public class BMNWBlocks {
 
     //region Bombs & Missiles
     public static final DeferredBlock<FracturizerBlock> FRACTURIZER = BLOCKS.register("fracturizer",
-            () -> new FracturizerBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.COPPER_BLOCK), 5, false, 0.1f));
+            () -> new FracturizerBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.COPPER_BLOCK), 5, false, 0));
     public static final DeferredBlock<FracturizerBlock> VOLCANIC_FRACTURIZER = BLOCKS.register("volcanic_fracturizer",
-            () -> new FracturizerBlock(BlockBehaviour.Properties.ofFullCopy(FRACTURIZER.get()), 5, true, 0.1f));
+            () -> new FracturizerBlock(BlockBehaviour.Properties.ofFullCopy(FRACTURIZER.get()), 5, true, 0));
     public static final DeferredBlock<FracturizerBlock> STRONG_FRACTURIZER = BLOCKS.register("strong_fracturizer",
-            () -> new FracturizerBlock(BlockBehaviour.Properties.ofFullCopy(FRACTURIZER.get()), 10, false, 0.5f));
+            () -> new FracturizerBlock(BlockBehaviour.Properties.ofFullCopy(FRACTURIZER.get()), 10, false, 0));
     public static final DeferredBlock<FracturizerBlock> STRONG_VOLCANIC_FRACTURIZER = BLOCKS.register("strong_volcanic_fracturizer",
-            () -> new FracturizerBlock(BlockBehaviour.Properties.ofFullCopy(FRACTURIZER.get()), 10, true, 0.5f));
+            () -> new FracturizerBlock(BlockBehaviour.Properties.ofFullCopy(FRACTURIZER.get()), 10, true, 0));
 
     public static final DeferredBlock<NuclearChargeBlock> NUCLEAR_CHARGE = BLOCKS.register("nuclear_charge",
             () -> new NuclearChargeBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)));
@@ -210,6 +210,13 @@ public class BMNWBlocks {
             () -> new ConcreteCeilingLampBlock(BlockBehaviour.Properties.ofFullCopy(CONCRETE_BRICKS.get())));
     public static final DeferredBlock<ConcreteCeilingLampBlock> CONCRETE_CEILING_LAMP = BLOCKS.register("concrete_ceiling_lamp",
             () -> new ConcreteCeilingLampBlock(BlockBehaviour.Properties.ofFullCopy(CONCRETE_LAMP.get())));
+    //endregion
+
+    //region Doors & hatches
+
+    public static final DeferredBlock<HatchBlock> HATCH = BLOCKS.register("hatch",
+            () -> new HatchBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)));
+
     //endregion
 
     //region Fluids
