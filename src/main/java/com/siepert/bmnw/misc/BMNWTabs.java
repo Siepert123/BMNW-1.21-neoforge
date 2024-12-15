@@ -308,8 +308,6 @@ public class BMNWTabs {
                         items.accept(getEmptyBattery(DURAPIXEL_CAR_BATTERY.get()));
                         items.accept(getFullBattery(DURAPIXEL_CAR_BATTERY.get()));
                         items.accept(CREATIVE_CAR_BATTERY);
-
-                        items.accept(REVOLVER);
                     })
                     .build()
     );
