@@ -50,7 +50,7 @@ public class FracturizerBlock extends Block implements IDetonatable, IBombBlock 
                     BlockPos target = pos.offset(x, y, z);
                     if (target.distSqr(pos) > radius * radius) continue;
                     if (level.getBlockState(target).isAir()) continue;
-                    if (level.getBlockState(target).getBlock().getExplosionResistance() > 10) continue;
+                    if (level.getBlockState(target).getBlock().getExplosionResistance() > 3) continue;
                     if (level.random.nextFloat() > debrisDecayRate) debrisStates.add(level.getBlockState(MiddleMouseButton.clipBlocks(level, pos, target, true, dummy).getBlockPos()));
                     level.setBlock(MiddleMouseButton.clipBlocks(level, pos, target, true, dummy).getBlockPos(), Blocks.AIR.defaultBlockState(), 3);
                 }
