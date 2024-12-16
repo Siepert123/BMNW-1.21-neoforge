@@ -131,6 +131,8 @@ public class BMNWTabs {
                         items.accept(IRRADIATED_PLANT);
 
                         items.accept(NUCLEAR_WASTE_BARREL);
+
+                        items.accept(STEEL_DECO_BLOCK);
                     })
                     .build()
     );

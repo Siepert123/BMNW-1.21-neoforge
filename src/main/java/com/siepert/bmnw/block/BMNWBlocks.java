@@ -70,6 +70,10 @@ public class BMNWBlocks {
             () -> new SimpleRadioactiveBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK), 1.0f));
     public static final DeferredBlock<SimpleRadioactiveBlock> PLUTONIUM_BLOCK = BLOCKS.register("plutonium_block",
             () -> new SimpleRadioactiveBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK), 75.0f));
+
+    public static final DeferredBlock<Block> STEEL_DECO_BLOCK = BLOCKS.register("steel_deco_block",
+            () -> new Block(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get())));
+
     //endregion
 
     //region Isotope blocks

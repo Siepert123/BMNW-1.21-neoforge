@@ -58,6 +58,7 @@
   "block.bmnw.reactor_grade_plutonium_block": "Block of Reactor Grade Plutonium",
   "block.bmnw.slaked_nuclear_remains": "Slaked Nuclear Remains",
   "block.bmnw.steel_block": "Block of Steel",
+  "block.bmnw.steel_deco_block": "Steel Deco Block",
   "block.bmnw.steel_reinforced_glass": "Steel Reinforced Glass",
   "block.bmnw.strong_fracturizer": "Upgraded Fracturizer",
   "block.bmnw.strong_volcanic_fracturizer": "Upgraded Volcanic Fracturizer",
@@ -230,6 +231,7 @@
   "itemGroup.bmnw": "BMNW",
   "itemGroup.bmnw.blocks": "BMNW: Blocks",
   "itemGroup.bmnw.bombs": "BMNW: Bombs & Missiles",
+  "itemGroup.bmnw.books": "Books",
   "itemGroup.bmnw.machines": "BMNW: Machines",
   "itemGroup.bmnw.main": "BMNW",
   "itemGroup.bmnw.materials": "BMNW: Materials & Parts",
@@ -317,6 +319,5 @@
   "tooltip.bmnw.fully_charged": "Fully charged!",
   "tooltip.bmnw.radiation_shielding": "[Radiation Shielding]",
   "tooltip.bmnw.radioactive": "[Radioactive]",
-  "tooltip.bmnw.radius": "Radius: ~%s",
-  "itemGroup.bmnw.books": "Books"
+  "tooltip.bmnw.radius": "Radius: ~%s"
 }

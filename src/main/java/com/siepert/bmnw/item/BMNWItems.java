@@ -281,6 +281,10 @@ public class BMNWItems {
             () -> new SimpleRadioactiveBlockItem(BMNWBlocks.REACTOR_GRADE_PLUTONIUM_BLOCK.get(), new Item.Properties()));
     public static final DeferredItem<SimpleRadioactiveBlockItem> PLUTONIUM_FUEL_BLOCK = ITEMS.register("plutonium_fuel_block",
             () -> new SimpleRadioactiveBlockItem(BMNWBlocks.PLUTONIUM_FUEL_BLOCK.get(), new Item.Properties()));
+
+    public static final DeferredItem<BlockItem> STEEL_DECO_BLOCK = ITEMS.register("steel_deco_block",
+            () -> new BlockItem(BMNWBlocks.STEEL_DECO_BLOCK.get(), new Item.Properties()));
+
     //endregion
 
     public static final DeferredItem<GeigerCounterItem> GEIGER_COUNTER = ITEMS.register("geiger_counter",

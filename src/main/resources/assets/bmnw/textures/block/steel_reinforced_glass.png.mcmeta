@@ -1,0 +1,10 @@
+{
+  "ctm":{
+    "ctm_version": 1,
+    "type":"CTM",
+    "layer":"CUTOUT",
+    "textures":[
+      "bmnw:block/steel_reinforced_glass_ctm"
+    ]
+  }
+}

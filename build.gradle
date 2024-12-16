@@ -136,6 +136,8 @@ dependencies {
     localRuntime "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
     compileOnly "maven.modrinth:midnightlib:${project.midnightlib_version}"
     runtimeOnly "maven.modrinth:midnightlib:${project.midnightlib_version}"
+
+    runtimeOnly "curse.maven:ctm-267602:5587515"
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.
