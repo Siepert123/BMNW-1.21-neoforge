@@ -6,18 +6,15 @@ import com.siepert.bmnw.block.entity.custom.IronBarrelBlockEntity;
 import com.siepert.bmnw.block.entity.custom.MissileLaunchPadBlockEntity;
 import com.siepert.bmnw.block.entity.renderer.HatchRenderer;
 import com.siepert.bmnw.datagen.BMNWAdvancementGenerator;
-import com.siepert.bmnw.datagen.BMNWItemTagGenerator;
 import com.siepert.bmnw.effect.BMNWEffects;
 import com.siepert.bmnw.entity.BMNWEntityTypes;
 import com.siepert.bmnw.entity.renderer.*;
 import com.siepert.bmnw.interfaces.IItemHazard;
 import com.siepert.bmnw.item.BMNWItems;
-import com.siepert.bmnw.item.custom.BatteryItem;
 import com.siepert.bmnw.item.custom.CoreSampleItem;
 import com.siepert.bmnw.misc.*;
 import com.siepert.bmnw.particle.BMNWParticleTypes;
 import com.siepert.bmnw.particle.custom.*;
-import com.siepert.bmnw.radiation.ChunkRecalculatorThread;
 import com.siepert.bmnw.radiation.RadHelper;
 import com.siepert.bmnw.radiation.ShieldingValues;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
@@ -39,11 +36,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -57,9 +53,7 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 import net.neoforged.neoforge.common.data.AdvancementProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
-import net.neoforged.neoforge.common.util.TriState;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
-import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.level.ChunkEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
@@ -246,6 +240,8 @@ public class BMNWEventBus {
                 }
             }
         }
+
+        //endregion
 
         /**
          * Calculates source radioactivity of a chunk when it's generated.

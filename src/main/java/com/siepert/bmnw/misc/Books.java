@@ -18,6 +18,8 @@ public class Books {
     private static final Logger LOGGER = LogManager.getLogger();
 
     private static final Map<String, ItemStack> booksRegistry = new HashMap<>();
+    private static final List<String> creativeMenuBlacklist = new ArrayList<>();
+
     public static void registerBook(String key, ItemStack book) {
         booksRegistry.put(key, book.copy());
     }
@@ -26,6 +28,25 @@ public class Books {
     }
     public static boolean isReal(String key) {
         return booksRegistry.containsKey(key);
+    }
+
+    public static void blacklistCreativeMenu(String id) {
+        if (creativeMenuBlacklist.contains(id)) return;
+        creativeMenuBlacklist.add(id);
+    }
+    public static boolean blacklisted(String id) {
+        return creativeMenuBlacklist.contains(id);
+    }
+    public static boolean whitelisted(String id) {
+        return !blacklisted(id);
+    }
+
+    public static Collection<ItemStack> getWhitelistedBooks() {
+        List<ItemStack> books = new ArrayList<>();
+        for (Map.Entry<String, ItemStack> entry : booksRegistry.entrySet()) {
+            if (whitelisted(entry.getKey())) books.add(entry.getValue().copy());
+        }
+        return books;
     }
 
     public static Collection<String> getAllIDs() {

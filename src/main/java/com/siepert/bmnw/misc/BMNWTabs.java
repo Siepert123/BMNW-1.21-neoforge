@@ -59,7 +59,8 @@ public class BMNWTabs {
                             ResourceLocation.parse("bmnw:materials"),
                             ResourceLocation.parse("bmnw:tools"),
                             ResourceLocation.parse("bmnw:machines"),
-                            ResourceLocation.parse("bmnw:bombs")
+                            ResourceLocation.parse("bmnw:bombs"),
+                            ResourceLocation.parse("bmnw:books")
                     )
                     .displayItems((parameters, items) -> {
                         items.accept(CONCRETE);
@@ -167,7 +168,8 @@ public class BMNWTabs {
                     .withTabsAfter(
                             ResourceLocation.parse("bmnw:tools"),
                             ResourceLocation.parse("bmnw:machines"),
-                            ResourceLocation.parse("bmnw:bombs")
+                            ResourceLocation.parse("bmnw:bombs"),
+                            ResourceLocation.parse("bmnw:books")
                     )
                     .displayItems((parameters, items) -> {items.accept(RAW_LEAD);
                         //region Materials
@@ -265,28 +267,6 @@ public class BMNWTabs {
         return stack;
     }
 
-    private static <T> Filterable<T> filterable(T contents) {
-        return new Filterable<T>(contents, Optional.of(contents));
-    }
-    private static ItemStack getManifesto() {
-        ItemStack manifesto = new ItemStack(Items.WRITTEN_BOOK);
-        manifesto.set(DataComponents.WRITTEN_BOOK_CONTENT, new WrittenBookContent(
-                        filterable("Communist Manifesto"),
-                        "Karl Marx",
-                        0,
-                        List.of(
-                                filterable(Component.translatable("book.bmnw.communist_manifesto.page1")),
-                                filterable(Component.translatable("book.bmnw.communist_manifesto.page2")),
-                                filterable(Component.translatable("book.bmnw.communist_manifesto.page3")),
-                                filterable(Component.translatable("book.bmnw.communist_manifesto.page4")),
-                                filterable(Component.translatable("book.bmnw.communist_manifesto.page5"))
-                        ),
-                        true
-                )
-        );
-        return manifesto;
-    }
-
     @NoUnused
     public static final Supplier<CreativeModeTab> TOOLS = CREATIVE_TABS.register("tools",
             () -> CreativeModeTab.builder()
@@ -308,7 +288,8 @@ public class BMNWTabs {
                     )
                     .withTabsAfter(
                             ResourceLocation.parse("bmnw:machines"),
-                            ResourceLocation.parse("bmnw:bombs")
+                            ResourceLocation.parse("bmnw:bombs"),
+                            ResourceLocation.parse("bmnw:books")
                     )
                     .displayItems((parameters, items) -> {
                         items.accept(GEIGER_COUNTER);
@@ -336,9 +317,6 @@ public class BMNWTabs {
                         items.accept(getEmptyBattery(DURAPIXEL_CAR_BATTERY.get()));
                         items.accept(getFullBattery(DURAPIXEL_CAR_BATTERY.get()));
                         items.accept(CREATIVE_CAR_BATTERY);
-
-
-                        items.accept(Books.getBook("bmnw:test"));
                     })
                     .build()
     );
@@ -364,7 +342,8 @@ public class BMNWTabs {
                             ResourceLocation.parse("bmnw:tools")
                     )
                     .withTabsAfter(
-                            ResourceLocation.parse("bmnw:bombs")
+                            ResourceLocation.parse("bmnw:bombs"),
+                            ResourceLocation.parse("bmnw:books")
                     )
                     .displayItems((parameters, items) -> {
                         //this comment removes a warning! [remove once there are 2 or more entries here]
@@ -416,6 +395,35 @@ public class BMNWTabs {
                         items.accept(HE_MISSILE);
                         items.accept(NUCLEAR_MISSILE);
                         items.accept(ANTI_MISSILE_MISSILE);
+                    })
+                    .build()
+    );
+
+    public static final Supplier<CreativeModeTab> BOOKS = CREATIVE_TABS.register("books",
+            () -> CreativeModeTab.builder()
+                    .title(Component.translatable("itemGroup.bmnw.books"))
+                    .icon(Items.BOOK::getDefaultInstance)
+                    .withTabsBefore(
+                            CreativeModeTabs.BUILDING_BLOCKS.location(),
+                            CreativeModeTabs.COLORED_BLOCKS.location(),
+                            CreativeModeTabs.NATURAL_BLOCKS.location(),
+                            CreativeModeTabs.FUNCTIONAL_BLOCKS.location(),
+                            CreativeModeTabs.REDSTONE_BLOCKS.location(),
+                            CreativeModeTabs.TOOLS_AND_UTILITIES.location(),
+                            CreativeModeTabs.COMBAT.location(),
+                            CreativeModeTabs.FOOD_AND_DRINKS.location(),
+                            CreativeModeTabs.INGREDIENTS.location(),
+                            CreativeModeTabs.SPAWN_EGGS.location(),
+                            ResourceLocation.parse("bmnw:blocks"),
+                            ResourceLocation.parse("bmnw:materials"),
+                            ResourceLocation.parse("bmnw:tools"),
+                            ResourceLocation.parse("bmnw:machines"),
+                            ResourceLocation.parse("bmnw:bombs")
+                    )
+                    .displayItems((parameters, items) -> {
+                        for (ItemStack book : Books.getWhitelistedBooks()) {
+                            items.accept(book);
+                        }
                     })
                     .build()
     );

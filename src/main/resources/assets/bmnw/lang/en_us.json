@@ -317,5 +317,6 @@
   "tooltip.bmnw.fully_charged": "Fully charged!",
   "tooltip.bmnw.radiation_shielding": "[Radiation Shielding]",
   "tooltip.bmnw.radioactive": "[Radioactive]",
-  "tooltip.bmnw.radius": "Radius: ~%s"
+  "tooltip.bmnw.radius": "Radius: ~%s",
+  "itemGroup.bmnw.books": "Books"
 }

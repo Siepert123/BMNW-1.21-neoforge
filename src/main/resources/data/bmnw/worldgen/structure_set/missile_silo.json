@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "bmnw:missile_silo",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "salt": 446984001,
+    "spacing": 20,
+    "separation": 6,
+    "type": "minecraft:random_spread"
+  }
+}
