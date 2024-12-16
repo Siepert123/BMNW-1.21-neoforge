@@ -2,16 +2,22 @@ package com.siepert.bmnw.misc;
 
 import com.siepert.bmnw.item.components.BMNWDataComponents;
 import com.siepert.bmnw.item.custom.BatteryItem;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.network.Filterable;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.WrittenBookContent;
 import net.minecraft.world.level.ItemLike;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 import java.util.function.Supplier;
 
@@ -259,6 +265,28 @@ public class BMNWTabs {
         return stack;
     }
 
+    private static <T> Filterable<T> filterable(T contents) {
+        return new Filterable<T>(contents, Optional.of(contents));
+    }
+    private static ItemStack getManifesto() {
+        ItemStack manifesto = new ItemStack(Items.WRITTEN_BOOK);
+        manifesto.set(DataComponents.WRITTEN_BOOK_CONTENT, new WrittenBookContent(
+                        filterable("Communist Manifesto"),
+                        "Karl Marx",
+                        0,
+                        List.of(
+                                filterable(Component.translatable("book.bmnw.communist_manifesto.page1")),
+                                filterable(Component.translatable("book.bmnw.communist_manifesto.page2")),
+                                filterable(Component.translatable("book.bmnw.communist_manifesto.page3")),
+                                filterable(Component.translatable("book.bmnw.communist_manifesto.page4")),
+                                filterable(Component.translatable("book.bmnw.communist_manifesto.page5"))
+                        ),
+                        true
+                )
+        );
+        return manifesto;
+    }
+
     @NoUnused
     public static final Supplier<CreativeModeTab> TOOLS = CREATIVE_TABS.register("tools",
             () -> CreativeModeTab.builder()
@@ -308,6 +336,9 @@ public class BMNWTabs {
                         items.accept(getEmptyBattery(DURAPIXEL_CAR_BATTERY.get()));
                         items.accept(getFullBattery(DURAPIXEL_CAR_BATTERY.get()));
                         items.accept(CREATIVE_CAR_BATTERY);
+
+
+                        items.accept(Books.getBook("bmnw:test"));
                     })
                     .build()
     );

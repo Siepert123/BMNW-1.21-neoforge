@@ -82,6 +82,7 @@ public class BMNW {
     private void commonSetup(final FMLCommonSetupEvent event) {
         ShieldingValues.initialize();
         ExcavationVein.initialize();
+        Books.registerBooks();
     }
 
     // Add the example block item to the building blocks tab
