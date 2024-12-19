@@ -1,6 +1,5 @@
 package com.siepert.bmnw.radiation;
 
-import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.siepert.bmnw.block.BMNWBlocks;
 import com.siepert.bmnw.misc.BMNWConfig;
 import com.siepert.bmnw.misc.BMNWAttachments;
@@ -64,7 +63,7 @@ public class RadHelper {
             chunk.getData(BMNWAttachments.SOURCE_RADIOACTIVITY);
             return;
         }
-        ChunkRecalculatorThread thread = new ChunkRecalculatorThread(chunk);
+        ChunkRecalculationThread thread = new ChunkRecalculationThread(chunk);
         Level level = chunk.getLevel();
         if (level == null || level.isClientSide()) return;
 
@@ -75,7 +74,7 @@ public class RadHelper {
             thread.run();
         }
     }
-    public static final List<ChunkRecalculatorThread> chunk_calculator_threads = new ArrayList<>();
+    public static final List<ChunkRecalculationThread> chunk_calculator_threads = new ArrayList<>();
 
     public static void modifySourceRadioactivity(ChunkAccess chunk, float rads) {
         chunk.setData(BMNWAttachments.SOURCE_RADIOACTIVITY, Math.max(chunk.getData(BMNWAttachments.SOURCE_RADIOACTIVITY) + rads, 0));

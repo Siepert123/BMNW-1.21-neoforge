@@ -1,5 +1,6 @@
 package com.siepert.bmnw.interfaces;
 
+@Deprecated
 public interface IItemHazard {
     default float getRadioactivity() {
         return 0.0f;

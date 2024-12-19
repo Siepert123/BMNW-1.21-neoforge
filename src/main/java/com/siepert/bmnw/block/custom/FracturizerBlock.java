@@ -38,6 +38,7 @@ public class FracturizerBlock extends Block implements IDetonatable, IBombBlock 
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public void detonate(Level level, BlockPos pos) {
         level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
         List<BlockState> debrisStates = new ArrayList<>();

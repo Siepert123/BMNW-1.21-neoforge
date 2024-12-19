@@ -9,6 +9,7 @@ import com.siepert.bmnw.datagen.BMNWAdvancementGenerator;
 import com.siepert.bmnw.effect.BMNWEffects;
 import com.siepert.bmnw.entity.BMNWEntityTypes;
 import com.siepert.bmnw.entity.renderer.*;
+import com.siepert.bmnw.hazard.HazardRegistry;
 import com.siepert.bmnw.interfaces.IItemHazard;
 import com.siepert.bmnw.item.BMNWItems;
 import com.siepert.bmnw.item.custom.CoreSampleItem;
@@ -84,7 +85,7 @@ public class BMNWEventBus {
         @SubscribeEvent
         public static void serverTickEventPre(ServerTickEvent.Pre event) {
             if (BMNWConfig.radiationSetting.chunk()) {
-                final float radiationRemoveRate = 0.9999f;
+                final float radiationRemoveRate = 0.5f;
                 try {
                     for (ServerLevel level : event.getServer().getAllLevels()) {
                         if (level == null) continue;
@@ -99,8 +100,11 @@ public class BMNWEventBus {
                             if (chunk.getData(BMNWAttachments.SOURCED_RADIOACTIVITY_THIS_TICK))
                                 chunk.setData(BMNWAttachments.SOURCED_RADIOACTIVITY_THIS_TICK, false);
 
-                            float rads = chunk.getData(BMNWAttachments.RADIATION);
-                            chunk.setData(BMNWAttachments.RADIATION, (rads * radiationRemoveRate));
+                            if (chunk.getLevel().getGameTime() % 20 == 0) {
+                                float rads = chunk.getData(BMNWAttachments.RADIATION);
+                                boolean flag = rads < 0.0001f;
+                                chunk.setData(BMNWAttachments.RADIATION, flag ? 0 : (rads * radiationRemoveRate));
+                            }
 
                             if (BMNWConfig.recalculateChunks) {
                                 if (level.getGameTime() % BMNWConfig.chunkRecalculationInterval == 0) {
@@ -151,7 +155,7 @@ public class BMNWEventBus {
 
                             float rads = RadHelper.getChunkRadiation(chunk);
 
-                            if (rads > Float.MAX_VALUE || rads < 0 || Float.isNaN(rads))
+                            if (rads > Float.MAX_VALUE || Float.isNaN(rads))
                                 chunk.setData(BMNWAttachments.RADIATION, 15000.0f);
 
                             if (rads > 100 && level.random.nextInt(50) == 0)
@@ -264,18 +268,16 @@ public class BMNWEventBus {
                 Player player = event.getEntity();
                 if (player.isCreative()) return;
                 for (ItemStack stack : player.getInventory().items) {
-                    if (stack.getItem() instanceof IItemHazard itemHazard) {
-                        if (itemHazard.getRadioactivity() > 0.0f) {
-                            RadHelper.addEntityRadiation(player, (itemHazard.getRadioactivity() * stack.getCount()) / 20);
-                        }
+                    Item item = stack.getItem();
 
-                        if (itemHazard.isBurning()) {
-                            player.setRemainingFireTicks(20);
-                        }
-
-                        if (itemHazard.isBlinding()) {
-                            player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 20, 0, false, false));
-                        }
+                    if (HazardRegistry.getRadRegistry(item) > 0) {
+                        RadHelper.addEntityRadiation(player, HazardRegistry.getRadRegistry(item) * stack.getCount() / 20);
+                    }
+                    if (HazardRegistry.getBurningRegistry(item)) {
+                        player.setRemainingFireTicks(20);
+                    }
+                    if (HazardRegistry.getBlindingRegistry(item)) {
+                        player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 20, 0, false, false));
                     }
                 }
             }
@@ -285,13 +287,15 @@ public class BMNWEventBus {
         //region Block events
         @SubscribeEvent
         public static void blockEventPlace(BlockEvent.EntityPlaceEvent event) {
-            if (ShieldingValues.shields(event.getPlacedBlock()) || BMNWConfig.recalculateOnBlockEvent) {
+            if (ShieldingValues.shields(event.getPlacedBlock()) || BMNWConfig.recalculateOnBlockEvent
+                    || HazardRegistry.getRadRegistry(event.getPlacedBlock().getBlock()) > 0) {
                 RadHelper.recalculateChunkRadioactivity(event.getLevel().getChunk(event.getPos()));
             }
         }
         @SubscribeEvent
         public static void blockEventBreak(BlockEvent.BreakEvent event) {
-            if (ShieldingValues.shields(event.getState()) || BMNWConfig.recalculateOnBlockEvent) {
+            if (ShieldingValues.shields(event.getState()) || BMNWConfig.recalculateOnBlockEvent
+                    || HazardRegistry.getRadRegistry(event.getState().getBlock()) > 0) {
                 RadHelper.recalculateChunkRadioactivity(event.getLevel().getChunk(event.getPos()));
             }
         }
@@ -323,20 +327,22 @@ public class BMNWEventBus {
                     }
                 }
             }
-            if (stack.getItem() instanceof IItemHazard hazard && BMNWConfig.itemHazardInfo.id() > 0) {
-                if (hazard.getRadioactivity() > 0) {
+            if (BMNWConfig.itemHazardInfo.id() > 0) {
+                Item item = stack.getItem();
+                float itemRads = HazardRegistry.getRadRegistry(item);
+                if (itemRads > 0) {
                     if (BMNWConfig.itemHazardInfo.id() == 2) {
                         event.addTooltipLines(Component.translatable("tooltip.bmnw.radioactive")
-                                .append(" - ").append(String.valueOf(hazard.getRadioactivity())).append("RAD/s").withColor(0x00ff00));
+                                .append(" - ").append(String.valueOf(itemRads)).append("RAD/s").withColor(0x00ff00));
                     } else {
                         event.addTooltipLines(Component.translatable("tooltip.bmnw.radioactive").withColor(0x00ff00));
                     }
                 }
-                if (hazard.isBurning()) {
+                if (HazardRegistry.getBurningRegistry(item)) {
                     event.addTooltipLines(Component.translatable("tooltip.bmnw.burning").withColor(0xffff00));
                 }
-                if (hazard.isBlinding()) {
-                    event.addTooltipLines(Component.translatable("tooltip.bmnw.blinding").withColor(0x0000ff));
+                if (HazardRegistry.getBlindingRegistry(item)) {
+                    event.addTooltipLines(Component.translatable("tooltip.bmnw.blinding").withColor(0x7777ff));
                 }
             }
             if (stack.getItem() instanceof CoreSampleItem) {

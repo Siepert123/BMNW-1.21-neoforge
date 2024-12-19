@@ -1,14 +1,9 @@
 package com.siepert.bmnw.item.custom;
 
 import com.siepert.bmnw.block.custom.SimpleRadioactiveBlock;
+import com.siepert.bmnw.hazard.HazardRegistry;
 import com.siepert.bmnw.interfaces.IItemHazard;
-import com.siepert.bmnw.radiation.UnitConvertor;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
-
-import java.util.List;
 
 /**
  * Simple radioactive item implementation.
@@ -20,6 +15,7 @@ public class SimpleRadioactiveItem extends Item implements IItemHazard {
     public SimpleRadioactiveItem(Properties properties, float rads) {
         super(properties);
         this.rads = rads;
+        HazardRegistry.addRadRegistry(this, rads);
     }
 
     public SimpleRadioactiveItem(float rads) {

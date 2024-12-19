@@ -1,17 +1,14 @@
 package com.siepert.bmnw.item.custom;
 
-import com.siepert.bmnw.interfaces.IItemHazard;
+import com.siepert.bmnw.hazard.HazardRegistry;
 import net.minecraft.world.item.Item;
 
-public class SimpleHazardItem extends Item implements IItemHazard {
-    private final float rads;
-    private final boolean burning;
-    private final boolean blinding;
+public class SimpleHazardItem extends Item {
     public SimpleHazardItem(Properties properties, float rads, boolean burning, boolean blinding) {
         super(properties);
-        this.rads = rads;
-        this.burning = burning;
-        this.blinding = blinding;
+        HazardRegistry.addRadRegistry(this, rads);
+        HazardRegistry.addBurningRegistry(this, burning);
+        HazardRegistry.addBlindingRegistry(this, blinding);
     }
     public SimpleHazardItem(float rads, boolean burning, boolean blinding) {
         this(new Properties(), rads, burning, blinding);
@@ -21,20 +18,5 @@ public class SimpleHazardItem extends Item implements IItemHazard {
     }
     public SimpleHazardItem(float rads, boolean burning) {
         this(new Properties(), rads, burning, false);
-    }
-
-    @Override
-    public float getRadioactivity() {
-        return rads;
-    }
-
-    @Override
-    public boolean isBurning() {
-        return burning;
-    }
-
-    @Override
-    public boolean isBlinding() {
-        return blinding;
     }
 }

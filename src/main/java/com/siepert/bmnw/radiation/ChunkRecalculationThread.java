@@ -1,16 +1,14 @@
 package com.siepert.bmnw.radiation;
 
-import com.siepert.bmnw.interfaces.IRadioactiveBlock;
+import com.siepert.bmnw.hazard.HazardRegistry;
 import com.siepert.bmnw.misc.BMNWAttachments;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
 
-import static com.siepert.bmnw.radiation.RadHelper.getInsertedRadiation;
-
-public class ChunkRecalculatorThread implements Runnable {
-    public ChunkRecalculatorThread(ChunkAccess chunk) {
+public class ChunkRecalculationThread implements Runnable {
+    public ChunkRecalculationThread(ChunkAccess chunk) {
         this.chunk = chunk;
     }
 
@@ -32,9 +30,7 @@ public class ChunkRecalculatorThread implements Runnable {
                     BlockPos pos = new BlockPos(x, y, z);
                     BlockState state = level.getBlockState(pos);
 
-                    if (state.getBlock() instanceof IRadioactiveBlock block) {
-                        calculatedRads += getInsertedRadiation(level, pos, block.getRadioactivity(level, pos, state));
-                    }
+                    calculatedRads += HazardRegistry.getRadRegistry(state.getBlock());
                 }
             }
         }

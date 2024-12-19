@@ -6,6 +6,7 @@ import com.siepert.bmnw.block.entity.BMNWBlockEntities;
 import com.siepert.bmnw.critereon.BMNWAdvancementTriggers;
 import com.siepert.bmnw.effect.BMNWEffects;
 import com.siepert.bmnw.entity.BMNWEntityTypes;
+import com.siepert.bmnw.hazard.HazardRegistry;
 import com.siepert.bmnw.item.BMNWItems;
 import com.siepert.bmnw.item.components.BMNWDataComponents;
 import com.siepert.bmnw.misc.*;
@@ -83,6 +84,7 @@ public class BMNW {
         ShieldingValues.initialize();
         ExcavationVein.initialize();
         Books.registerBooks();
+        HazardRegistry.register();
     }
 
     // Add the example block item to the building blocks tab

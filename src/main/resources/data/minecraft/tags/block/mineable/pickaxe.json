@@ -44,7 +44,8 @@
     "bmnw:fracturizer",
     "bmnw:volcanic_fracturizer",
     "bmnw:strong_fracturizer",
-    "bmnw:strong_volcanic_fracturizer"
+    "bmnw:strong_volcanic_fracturizer",
+    "bmnw:steel_deco_block"
   ],
   "replace": false
 }
