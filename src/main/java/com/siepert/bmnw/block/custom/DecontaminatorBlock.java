@@ -1,7 +1,7 @@
 package com.siepert.bmnw.block.custom;
 
 import com.siepert.bmnw.effect.BMNWEffects;
-import com.siepert.bmnw.radiation.RadHelper;
+import com.siepert.bmnw.radiation.RadiationManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -17,7 +17,7 @@ public class DecontaminatorBlock extends Block {
     @Override
     public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity) {
         if (entity instanceof LivingEntity living) {
-            RadHelper.removeEntityRadiation(living, 1);
+            RadiationManager.getInstance().addEntityRadiation(living, -1);
 
             if (living.hasEffect(BMNWEffects.CONTAMINATION)) {
                 living.removeEffect(BMNWEffects.CONTAMINATION);

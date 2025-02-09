@@ -13,44 +13,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ShieldingValues {
-    public static int max_shielding_distance = 5;
-    public static final int default_shielding_distance = 5;
-    public static final float default_shielding_modifier = 0.75f;
-
     private static final Map<Block, Tuple<Integer, Double>> shielding_map = new HashMap<>();
 
     public static void addShielding(Block block, int distance, double modifier) {
-        if (distance > max_shielding_distance) max_shielding_distance = distance;
         shielding_map.put(block, new Tuple<>(distance, modifier));
-    }
-
-    public static int getShieldingDistance(BlockState block) {
-        if (shields(block)) {
-            if (shielding_map.containsKey(block.getBlock())) return shielding_map.get(block.getBlock()).getA();
-            else return default_shielding_distance;
-        } else return 0;
     }
     public static double getShieldingModifier(BlockState block) {
         if (shields(block)) {
-            if (shielding_map.containsKey(block.getBlock())) return shielding_map.get(block.getBlock()).getB();
-            else return default_shielding_modifier;
-        } else return 1.0f;
+            return shielding_map.get(block.getBlock()).getB();
+        } else return block.isAir() ? RadiationManager.default_decay_air : RadiationManager.default_decay_solid;
     }
 
     public static boolean shields(BlockState block) {
-        return block.is(BMNWTags.Blocks.RADIATION_SHIELDING);
-    }
-
-    public static double getShieldingModifierForPosition(Level level, BlockPos pos) {
-        double mod = 1;
-        for (int y = 1; y <= max_shielding_distance; y++) {
-            if (shields(level.getBlockState(pos.above(y)))) {
-                if (y <= getShieldingDistance(level.getBlockState(pos.above(y)))) {
-                    mod *= getShieldingModifier(level.getBlockState(pos.above(y)));
-                }
-            }
-        }
-        return mod;
+        return shielding_map.containsKey(block.getBlock());
     }
 
     private static boolean initialized = false;
@@ -66,6 +41,8 @@ public class ShieldingValues {
         addShielding(BMNWBlocks.CONCRETE_BRICKS.get(), 10, 0);
         addShielding(BMNWBlocks.CONCRETE_BRICKS_SLAB.get(), 10, 0);
         addShielding(BMNWBlocks.CONCRETE_BRICKS_STAIRS.get(), 10, 0);
+        addShielding(BMNWBlocks.MOSSY_CONCRETE_BRICKS.get(), 10, 0);
+        addShielding(BMNWBlocks.CRACKED_CONCRETE_BRICKS.get(), 10, 0.5);
         addShielding(BMNWBlocks.FOUNDATION_CONCRETE.get(), 10, 0);
         addShielding(BMNWBlocks.STEEL_REINFORCED_GLASS.get(), 10, 0);
         addShielding(BMNWBlocks.CREATIVE_CONCRETE_BRICKS.get(), 10, 0);

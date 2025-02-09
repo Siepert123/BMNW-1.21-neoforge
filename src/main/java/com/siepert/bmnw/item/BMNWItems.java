@@ -11,7 +11,6 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
@@ -229,8 +228,8 @@ public class BMNWItems {
     public static final DeferredItem<SimpleRadioactiveBlockItem> THORIUM_FUEL_BLOCK = ITEMS.register("thorium_fuel_block",
             () -> new SimpleRadioactiveBlockItem(BMNWBlocks.THORIUM_FUEL_BLOCK.get(), new Item.Properties()));
 
-    public static final DeferredItem<SimpleHazardItem> PLUTONIUM_238_NUGGET = ITEMS.register("plutonium_238_nugget",
-            () -> new SimpleHazardItem(1.0f, true));
+    public static final DeferredItem<SimpleRadioactiveItem> PLUTONIUM_238_NUGGET = ITEMS.register("plutonium_238_nugget",
+            () -> new SimpleRadioactiveItem(1.0f));
     public static final DeferredItem<SimpleRadioactiveItem> PLUTONIUM_239_NUGGET = ITEMS.register("plutonium_239_nugget",
             () -> new SimpleRadioactiveItem(0.5f));
     public static final DeferredItem<SimpleRadioactiveItem> PLUTONIUM_240_NUGGET = ITEMS.register("plutonium_240_nugget",
@@ -242,8 +241,8 @@ public class BMNWItems {
     public static final DeferredItem<SimpleRadioactiveItem> PLUTONIUM_FUEL_NUGGET = ITEMS.register("plutonium_fuel_nugget",
             () -> new SimpleRadioactiveItem(0.425f));
 
-    public static final DeferredItem<SimpleHazardItem> PLUTONIUM_238_INGOT = ITEMS.register("plutonium_238_ingot",
-            () -> new SimpleHazardItem(10.0f, true));
+    public static final DeferredItem<SimpleRadioactiveItem> PLUTONIUM_238_INGOT = ITEMS.register("plutonium_238_ingot",
+            () -> new SimpleRadioactiveItem(10.0f));
     public static final DeferredItem<SimpleRadioactiveItem> PLUTONIUM_239_INGOT = ITEMS.register("plutonium_239_ingot",
             () -> new SimpleRadioactiveItem(5.0f));
     public static final DeferredItem<SimpleRadioactiveItem> PLUTONIUM_240_INGOT = ITEMS.register("plutonium_240_ingot",
@@ -255,8 +254,8 @@ public class BMNWItems {
     public static final DeferredItem<SimpleRadioactiveItem> PLUTONIUM_FUEL_INGOT = ITEMS.register("plutonium_fuel_ingot",
             () -> new SimpleRadioactiveItem(4.25f));
 
-    public static final DeferredItem<SimpleHazardItem> PLUTONIUM_238_BILLET = ITEMS.register("plutonium_238_billet",
-            () -> new SimpleHazardItem(5.0f, true));
+    public static final DeferredItem<SimpleRadioactiveItem> PLUTONIUM_238_BILLET = ITEMS.register("plutonium_238_billet",
+            () -> new SimpleRadioactiveItem(5.0f));
     public static final DeferredItem<SimpleRadioactiveItem> PLUTONIUM_239_BILLET = ITEMS.register("plutonium_239_billet",
             () -> new SimpleRadioactiveItem(2.5f));
     public static final DeferredItem<SimpleRadioactiveItem> PLUTONIUM_240_BILLET = ITEMS.register("plutonium_240_billet",
@@ -359,6 +358,12 @@ public class BMNWItems {
             () -> new BlockItem(BMNWBlocks.CONCRETE_BRICKS_SLAB.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> CONCRETE_BRICKS_STAIRS = ITEMS.register("concrete_bricks_stairs",
             () -> new BlockItem(BMNWBlocks.CONCRETE_BRICKS_STAIRS.get(), new Item.Properties()));
+
+    public static final DeferredItem<BlockItem> MOSSY_CONCRETE_BRICKS = ITEMS.register("mossy_concrete_bricks",
+            () -> new BlockItem(BMNWBlocks.MOSSY_CONCRETE_BRICKS.get(), new Item.Properties()));
+    public static final DeferredItem<BlockItem> CRACKED_CONCRETE_BRICKS = ITEMS.register("cracked_concrete_bricks",
+            () -> new BlockItem(BMNWBlocks.CRACKED_CONCRETE_BRICKS.get(), new Item.Properties()));
+
     public static final DeferredItem<BlockItem> FOUNDATION_CONCRETE = ITEMS.register("foundation_concrete",
             () -> new BlockItem(BMNWBlocks.FOUNDATION_CONCRETE.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> STEEL_REINFORCED_GLASS = ITEMS.register("steel_reinforced_glass",
@@ -372,6 +377,17 @@ public class BMNWItems {
             () -> new BlockItem(BMNWBlocks.CONCRETE_LAMP.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> CONCRETE_CEILING_LAMP = ITEMS.register("concrete_ceiling_lamp",
             () -> new BlockItem(BMNWBlocks.CONCRETE_CEILING_LAMP.get(), new Item.Properties()));
+    //endregion
+
+    //region Basic defense
+
+    public static final DeferredItem<BlockItem> BARBED_WIRE = ITEMS.register("barbed_wire",
+            () -> new BlockItem(BMNWBlocks.BARBED_WIRE.get(), new Item.Properties()));
+    public static final DeferredItem<BlockItem> FLAMING_BARBED_WIRE = ITEMS.register("flaming_barbed_wire",
+            () -> new BlockItem(BMNWBlocks.FLAMING_BARBED_WIRE.get(), new Item.Properties()));
+    public static final DeferredItem<BlockItem> POISONOUS_BARBED_WIRE = ITEMS.register("poisonous_barbed_wire",
+            () -> new BlockItem(BMNWBlocks.POISONOUS_BARBED_WIRE.get(), new Item.Properties()));
+
     //endregion
 
     //region Doors & hatches

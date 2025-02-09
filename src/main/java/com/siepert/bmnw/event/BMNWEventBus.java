@@ -16,14 +16,15 @@ import com.siepert.bmnw.item.custom.CoreSampleItem;
 import com.siepert.bmnw.misc.*;
 import com.siepert.bmnw.particle.BMNWParticleTypes;
 import com.siepert.bmnw.particle.custom.*;
-import com.siepert.bmnw.radiation.RadHelper;
-import com.siepert.bmnw.radiation.ShieldingValues;
+import com.siepert.bmnw.radiation.*;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtIo;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ChunkHolder;
 import net.minecraft.server.level.ChunkMap;
@@ -40,7 +41,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -85,7 +85,7 @@ public class BMNWEventBus {
         @SubscribeEvent
         public static void serverTickEventPre(ServerTickEvent.Pre event) {
             if (BMNWConfig.radiationSetting.chunk()) {
-                final float radiationRemoveRate = 0.5f;
+                final float radiationRemoveRate = 0.9f;
                 try {
                     for (ServerLevel level : event.getServer().getAllLevels()) {
                         if (level == null) continue;
@@ -97,25 +97,12 @@ public class BMNWEventBus {
                         for (ChunkHolder chunkHolder : chunkHolders) {
                             LevelChunk chunk = chunkHolder.getTickingChunk();
                             if (chunk == null || !level.isLoaded(chunk.getPos().getMiddleBlockPosition(64))) continue;
-                            if (chunk.getData(BMNWAttachments.SOURCED_RADIOACTIVITY_THIS_TICK))
-                                chunk.setData(BMNWAttachments.SOURCED_RADIOACTIVITY_THIS_TICK, false);
-
-                            if (chunk.getLevel().getGameTime() % 20 == 0) {
-                                float rads = chunk.getData(BMNWAttachments.RADIATION);
-                                boolean flag = rads < 0.0001f;
-                                chunk.setData(BMNWAttachments.RADIATION, flag ? 0 : (rads * radiationRemoveRate));
-                            }
 
                             if (BMNWConfig.recalculateChunks) {
                                 if (level.getGameTime() % BMNWConfig.chunkRecalculationInterval == 0) {
-                                    RadHelper.recalculateChunkRadioactivity(chunk);
+                                    RadiationManager.getInstance().recalculateChunkSources(chunk);
                                 }
                             }
-
-                            chunk.setData(BMNWAttachments.RADIATION, chunk.getData(BMNWAttachments.RADIATION) + (chunk.getData(BMNWAttachments.SOURCE_RADIOACTIVITY) / 200));
-
-                            if (RadHelper.getChunkRadiation(chunk) > 1)
-                                RadHelper.disperseChunkRadiation(chunk);
                         }
                     }
                 } catch (Exception ignored) {
@@ -130,38 +117,9 @@ public class BMNWEventBus {
          */
         @SubscribeEvent
         public static void serverTickEventPost(ServerTickEvent.Post event) {
-            if (BMNWConfig.threadChunkRecalculation) {
-                boolean unpassable = !RadHelper.chunk_calculator_threads.isEmpty();
-                while (unpassable) {
-                    RadHelper.chunk_calculator_threads.removeIf(thread -> !thread.working);
-                    if (RadHelper.chunk_calculator_threads.isEmpty()) unpassable = false;
-                }
-            }
             if (BMNWConfig.radiationSetting.chunk()) {
                 try {
-                    for (ServerLevel level : event.getServer().getAllLevels()) {
-                        if (level == null) continue;
-                        Iterable<ChunkHolder> chunkHolders = (Iterable<ChunkHolder>)
-                                ObfuscationReflectionHelper.findMethod(ChunkMap.class, "getChunks")
-                                        .invoke(level.getChunkSource().chunkMap);
-                        if (chunkHolders == null) continue;
-
-                        for (ChunkHolder chunkHolder : chunkHolders) {
-                            LevelChunk chunk = chunkHolder.getTickingChunk();
-                            if (chunk == null) continue;
-
-                            chunk.setData(BMNWAttachments.RADIATION, chunk.getData(BMNWAttachments.RADIATION) + chunk.getData(BMNWAttachments.QUEUED_RADIATION));
-                            chunk.setData(BMNWAttachments.QUEUED_RADIATION, 0.0f);
-
-                            float rads = RadHelper.getChunkRadiation(chunk);
-
-                            if (rads > Float.MAX_VALUE || Float.isNaN(rads))
-                                chunk.setData(BMNWAttachments.RADIATION, 15000.0f);
-
-                            if (rads > 100 && level.random.nextInt(50) == 0)
-                                RadHelper.createChunkRadiationEffects(chunk);
-                        }
-                    }
+                    RadiationManager.getInstance().tick(event.getServer());
                 } catch (Exception ignored) {
 
                 }
@@ -175,18 +133,10 @@ public class BMNWEventBus {
          */
         @SubscribeEvent
         public static void entityTickEventPre(EntityTickEvent.Pre event) {
-            if (BMNWConfig.radiationSetting.chunk()) {
+            if (BMNWConfig.radiationSetting.chunk() && !event.getEntity().level().isClientSide()) {
                 if (event.getEntity() instanceof LivingEntity entity) {
                     if (entity instanceof Player player && (player.isCreative() || player.isSpectator())) return;
                     CompoundTag nbt = entity.getPersistentData();
-
-                    RadHelper.addEntityRadiation(entity, (RadHelper.getAdjustedRadiation(entity.level(), entity.getOnPos()) / 20f));
-
-                    float rads = nbt.getFloat(RadHelper.RAD_NBT_TAG);
-
-                    if (rads > 15000 || rads < 0)
-                        nbt.putFloat(RadHelper.RAD_NBT_TAG, 15000.0f);
-                    else nbt.putFloat(RadHelper.RAD_NBT_TAG, rads * 0.9999f);
                 }
             }
         }
@@ -196,11 +146,11 @@ public class BMNWEventBus {
          */
         @SubscribeEvent
         public static void entityTickEventPost(EntityTickEvent.Post event) {
-            if (event.getEntity() instanceof LivingEntity entity) {
+            if (event.getEntity() instanceof LivingEntity entity && !event.getEntity().level().isClientSide()) {
                 if (entity instanceof Player player && (player.isCreative() || player.isSpectator())) return;
                 CompoundTag nbt = entity.getPersistentData();
 
-                float rads = nbt.getFloat(RadHelper.RAD_NBT_TAG);
+                float rads = nbt.getFloat(RadiationManager.rad_nbt_tag);
                 if (rads > 15000 || rads < 0) rads = 15000.0f;
 
                 if (rads > 1000) {
@@ -254,7 +204,9 @@ public class BMNWEventBus {
         public static void chunkEventLoad(ChunkEvent.Load event) {
             if (BMNWConfig.radiationSetting.chunk()) {
                 if (event.isNewChunk()) {
-                    RadHelper.recalculateChunkRadioactivity(event.getChunk());
+                    if (RadiationManager.getInstance() != null) {
+                        RadiationManager.getInstance().recalculateChunkSources(event.getChunk());
+                    } else RadiationManager.addToQueue(event.getChunk());
                 }
             }
         }
@@ -266,12 +218,12 @@ public class BMNWEventBus {
         public static void playerTickEventPre(PlayerTickEvent.Pre event) {
             if (BMNWConfig.radiationSetting.item()) {
                 Player player = event.getEntity();
-                if (player.isCreative()) return;
+                if (player.isCreative() || player.level().isClientSide()) return;
                 for (ItemStack stack : player.getInventory().items) {
                     Item item = stack.getItem();
 
                     if (HazardRegistry.getRadRegistry(item) > 0) {
-                        RadHelper.addEntityRadiation(player, HazardRegistry.getRadRegistry(item) * stack.getCount() / 20);
+                        RadiationManager.getInstance().addEntityRadiation(player, HazardRegistry.getRadRegistry(item) * stack.getCount() / 20);
                     }
                     if (HazardRegistry.getBurningRegistry(item)) {
                         player.setRemainingFireTicks(20);
@@ -287,16 +239,17 @@ public class BMNWEventBus {
         //region Block events
         @SubscribeEvent
         public static void blockEventPlace(BlockEvent.EntityPlaceEvent event) {
-            if (ShieldingValues.shields(event.getPlacedBlock()) || BMNWConfig.recalculateOnBlockEvent
+            if (BMNWConfig.recalculateOnBlockEvent
                     || HazardRegistry.getRadRegistry(event.getPlacedBlock().getBlock()) > 0) {
-                RadHelper.recalculateChunkRadioactivity(event.getLevel().getChunk(event.getPos()));
+                RadiationManager.getInstance().putSource(event.getEntity().level().dimension().location(), event.getPos(),
+                        HazardRegistry.getRadRegistry(event.getPlacedBlock().getBlock()), true);
             }
         }
         @SubscribeEvent
         public static void blockEventBreak(BlockEvent.BreakEvent event) {
-            if (ShieldingValues.shields(event.getState()) || BMNWConfig.recalculateOnBlockEvent
+            if (BMNWConfig.recalculateOnBlockEvent
                     || HazardRegistry.getRadRegistry(event.getState().getBlock()) > 0) {
-                RadHelper.recalculateChunkRadioactivity(event.getLevel().getChunk(event.getPos()));
+                RadiationManager.getInstance().removeSource(event.getPlayer().level().dimension().location(), event.getPos());
             }
         }
         //endregion

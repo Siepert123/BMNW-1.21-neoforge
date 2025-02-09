@@ -1,10 +1,9 @@
 package com.siepert.bmnw.entity.custom;
 
 import com.siepert.bmnw.block.BMNWBlocks;
-import com.siepert.bmnw.misc.DistributionType;
 import com.siepert.bmnw.misc.BMNWDamageSources;
 import com.siepert.bmnw.misc.BMNWTags;
-import com.siepert.bmnw.radiation.RadHelper;
+import com.siepert.bmnw.radiation.RadiationManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
@@ -89,28 +88,6 @@ public abstract class BombEntity extends Entity {
     @Override
     protected void addAdditionalSaveData(CompoundTag compound) {
         compound.putInt("progress", progress);
-    }
-
-    protected void placeRadiation(int distance, long femtoRads, DistributionType distribution) {
-        ChunkPos pos = level().getChunk(worldPosition).getPos();
-
-        for (int x = -distance; x <= distance; x++) {
-            for (int z = -distance; z <= distance; z++) {
-                switch (distribution) {
-                    case SQUARE -> RadHelper.addChunkRadiation(level().getChunk(pos.x+x, pos.z+z), femtoRads);
-                    case MANHATTAN -> {
-                        if (x + z <= distance) {
-                            RadHelper.addChunkRadiation(level().getChunk(pos.x+x, pos.z+z), femtoRads);
-                        }
-                    }
-                    case CIRCLE -> {
-                        if ((Math.pow(2, x) + Math.pow(2, z)) <= distance * distance) {
-                            RadHelper.addChunkRadiation(level().getChunk(pos.x+x, pos.z+z), femtoRads);
-                        }
-                    }
-                }
-            }
-        }
     }
 
     @Override
@@ -280,7 +257,7 @@ public abstract class BombEntity extends Entity {
                 for (int y = grassRadius; y >= -grassRadius; y--) {
                     if (Math.sqrt(Math.pow(x, 2) + Math.pow(z, 2) + Math.pow(y, 2)) > grassRadius) continue;
                     BlockPos pos = worldPosition.offset(x, y, z);
-                    if (RadHelper.blockExposedToAir(level(), pos) || level().clip(new ClipContext(this.position(), convertVec3i(pos),
+                    if (RadiationManager.exposedToAir(level(), pos) || level().clip(new ClipContext(this.position(), convertVec3i(pos),
                             ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this)).getBlockPos().equals(pos)) {
                         if (level().getBlockState(pos).isAir()) continue;
                         if (level().getBlockState(pos).canBeReplaced())
@@ -292,7 +269,7 @@ public abstract class BombEntity extends Entity {
             }
         }
 
-        RadHelper.insertRadiation(level(), worldPosition, insertedRads);
+        RadiationManager.getInstance().putSource(level().dimension().location(), worldPosition, insertedRads);
     }
     protected void dry(int radius) {
         final BlockState air = Blocks.AIR.defaultBlockState();
@@ -320,7 +297,7 @@ public abstract class BombEntity extends Entity {
                 for (int y = radius; y >= -radius; y--) {
                     if (Math.sqrt(Math.pow(x, 2) + Math.pow(z, 2)) > radius) continue;
                     BlockPos pos = worldPosition.offset(x, y, z);
-                    if (RadHelper.blockExposedToAir(level(), pos) || level().clip(new ClipContext(this.position(), convertVec3i(pos),
+                    if (RadiationManager.exposedToAir(level(), pos) || level().clip(new ClipContext(this.position(), convertVec3i(pos),
                             ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this)).getBlockPos().equals(pos)) {
                         if (level().getBlockState(pos).is(BlockTags.LOGS_THAT_BURN)) {
                             level().setBlock(pos, log, 3);

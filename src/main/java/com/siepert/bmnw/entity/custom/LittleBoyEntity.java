@@ -81,7 +81,7 @@ public class LittleBoyEntity extends BombEntity {
             LOGGER.info("Burn!");
             burn(radius * 2);
             LOGGER.info("Irradiate!");
-            irradiate((int) (radius * 1.5), radius * 2, 10_000, BMNWBlocks.BLAZING_NUCLEAR_REMAINS.get().defaultBlockState());
+            irradiate((int) (radius * 1.5), radius * 2, 100_000, BMNWBlocks.BLAZING_NUCLEAR_REMAINS.get().defaultBlockState());
             LOGGER.info("Inflammate!");
             effectEntities(radius * 3);
             recalcPos();

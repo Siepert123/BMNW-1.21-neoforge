@@ -54,7 +54,8 @@ public class BMNWTags {
         }
     }
     public static class Items {
-
+        public static final TagKey<Item> EXTREMELY_HOT = itemTag("bmnw:extremely_hot");
+        public static final TagKey<Item> BLINDING = itemTag("bmnw:blinding");
     }
 
     public static class Neoforge {

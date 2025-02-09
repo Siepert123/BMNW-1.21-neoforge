@@ -1,5 +1,6 @@
 package com.siepert.bmnw.hazard;
 
+import com.siepert.bmnw.misc.BMNWTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 
@@ -43,6 +44,7 @@ public class HazardRegistry {
 
     private static final Map<Item, Boolean> burningRegistry = new HashMap<>();
 
+    @Deprecated(since = "0.2.0")
     public static void addBurningRegistry(Item item, boolean burning) {
         if (burningRegistry.containsKey(item)) {
             burningRegistry.replace(item, burning);
@@ -52,16 +54,18 @@ public class HazardRegistry {
         }
     }
 
+    @Deprecated(since = "0.2.0")
     public static void deleteBurningRegistry(Item item) {
         burningRegistry.remove(item);
     }
 
     public static boolean getBurningRegistry(Item item) {
-        return burningRegistry.getOrDefault(item, false);
+        return burningRegistry.getOrDefault(item, item.getDefaultInstance().is(BMNWTags.Items.EXTREMELY_HOT));
     }
 
     private static final Map<Item, Boolean> blindingRegistry = new HashMap<>();
 
+    @Deprecated(since = "0.2.0")
     public static void addBlindingRegistry(Item item, boolean blinding) {
         if (blindingRegistry.containsKey(item)) {
             blindingRegistry.replace(item, blinding);
@@ -71,11 +75,24 @@ public class HazardRegistry {
         }
     }
 
+    @Deprecated(since = "0.2.0")
     public static void deleteBlindingRegistry(Item item) {
         blindingRegistry.remove(item);
     }
 
     public static boolean getBlindingRegistry(Item item) {
-        return blindingRegistry.getOrDefault(item, false);
+        return blindingRegistry.getOrDefault(item, item.getDefaultInstance().is(BMNWTags.Items.BLINDING));
+    }
+
+    private static final Map<Item, Float> radiation_protection_armor = new HashMap<>();
+
+    public static void addArmorRadResRegistry(Item item, float multiplier) {
+        radiation_protection_armor.put(item, multiplier);
+    }
+    public static void deleteArmorRadResRegistry(Item item) {
+        radiation_protection_armor.remove(item);
+    }
+    public static float getArmorRadResRegistry(Item item) {
+        return radiation_protection_armor.getOrDefault(item, 1f);
     }
 }

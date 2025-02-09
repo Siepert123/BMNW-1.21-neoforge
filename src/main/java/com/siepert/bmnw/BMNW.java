@@ -11,14 +11,14 @@ import com.siepert.bmnw.item.BMNWItems;
 import com.siepert.bmnw.item.components.BMNWDataComponents;
 import com.siepert.bmnw.misc.*;
 import com.siepert.bmnw.particle.BMNWParticleTypes;
-import com.siepert.bmnw.radiation.RadFiler;
-import com.siepert.bmnw.radiation.RadHelper;
+import com.siepert.bmnw.radiation.RadiationManager;
 import com.siepert.bmnw.radiation.ShieldingValues;
 import com.siepert.bmnw.recipe.BMNWRecipeSerializers;
 import com.siepert.bmnw.recipe.BMNWRecipeTypes;
 import eu.midnightdust.lib.config.MidnightConfig;
 import net.minecraft.commands.Commands;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -95,7 +95,7 @@ public class BMNW {
     // You can use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {
-        RadFiler.rerun(event.getServer());
+        RadiationManager.create(event.getServer());
 
         Commands commands = event.getServer().getCommands();
         BMNWCommands.register(commands);
@@ -103,7 +103,7 @@ public class BMNW {
 
     @SubscribeEvent
     public void onServerStopping(ServerStoppingEvent event) {
-        RadHelper.chunk_calculator_threads.clear();
+        RadiationManager.delete(event.getServer());
     }
 
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent

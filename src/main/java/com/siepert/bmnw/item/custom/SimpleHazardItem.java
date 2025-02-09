@@ -3,6 +3,7 @@ package com.siepert.bmnw.item.custom;
 import com.siepert.bmnw.hazard.HazardRegistry;
 import net.minecraft.world.item.Item;
 
+@Deprecated(since = "0.2.0")
 public class SimpleHazardItem extends Item {
     public SimpleHazardItem(Properties properties, float rads, boolean burning, boolean blinding) {
         super(properties);

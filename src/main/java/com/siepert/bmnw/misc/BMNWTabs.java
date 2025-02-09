@@ -69,6 +69,8 @@ public class BMNWTabs {
                         items.accept(CONCRETE_BRICKS);
                         items.accept(CONCRETE_BRICKS_STAIRS);
                         items.accept(CONCRETE_BRICKS_SLAB);
+                        items.accept(MOSSY_CONCRETE_BRICKS);
+                        items.accept(CRACKED_CONCRETE_BRICKS);
                         items.accept(FOUNDATION_CONCRETE);
                         items.accept(CHISELED_CONCRETE_BRICKS);
                         items.accept(STEEL_REINFORCED_GLASS);
@@ -133,6 +135,12 @@ public class BMNWTabs {
                         items.accept(NUCLEAR_WASTE_BARREL);
 
                         items.accept(STEEL_DECO_BLOCK);
+
+                        addItems(items,
+                                BARBED_WIRE,
+                                FLAMING_BARBED_WIRE,
+                                POISONOUS_BARBED_WIRE
+                        );
                     })
                     .build()
     );
