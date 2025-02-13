@@ -45,7 +45,17 @@
     "bmnw:volcanic_fracturizer",
     "bmnw:strong_fracturizer",
     "bmnw:strong_volcanic_fracturizer",
-    "bmnw:steel_deco_block"
+    "bmnw:steel_deco_block",
+    "bmnw:steel_pole",
+    "bmnw:steel_quad_pole",
+    "bmnw:steel_tripole",
+    "bmnw:antenna_dish",
+    "bmnw:antenna_top",
+    "bmnw:steel_scaffold",
+    "bmnw:barbed_wire",
+    "bmnw:flaming_barbed_wire",
+    "bmnw:poisonous_barbed_wire",
+    "bmnw:office_door"
   ],
   "replace": false
 }

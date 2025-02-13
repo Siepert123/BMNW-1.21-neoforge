@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "bmnw:block/antenna_dish"
+    },
+    "facing=east": {
+      "model": "bmnw:block/antenna_dish",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "bmnw:block/antenna_dish",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "bmnw:block/antenna_dish",
+      "y": 270
+    }
+  }
+}

@@ -2,18 +2,33 @@
   "geiger_click": {
     "sounds": [
       "bmnw:geiger_click"
-    ]
+    ],
+    "subtitle": "subtitles.bmnw.geiger_click"
   },
   "large_explosion": {
     "sounds": [
       "bmnw:large_explosion"
-    ]
+    ],
+    "subtitle": "subtitles.bmnw.large_explosion"
   },
   "small_explosion": {
     "sounds": [
       "bmnw:bomb_1",
       "bmnw:bomb_2",
       "bmnw:bomb_3"
-    ]
+    ],
+    "subtitle": "subtitles.bmnw.small_explosion"
+  },
+  "door_lol_open": {
+    "sounds": [
+      "bmnw:door_lol"
+    ],
+    "subtitle": "subtitles.bmnw.door_open"
+  },
+  "door_lol_close": {
+    "sounds": [
+      "bmnw:door_lol_2"
+    ],
+    "subtitle": "subtitles.bmnw.door_close"
   }
 }

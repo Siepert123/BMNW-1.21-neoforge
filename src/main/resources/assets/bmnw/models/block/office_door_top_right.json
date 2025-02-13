@@ -1,0 +1,8 @@
+{
+  "render_type": "cutout",
+  "parent": "minecraft:block/door_top_right",
+  "textures": {
+    "bottom": "bmnw:block/office_door_bottom",
+    "top": "bmnw:block/office_door_top"
+  }
+}

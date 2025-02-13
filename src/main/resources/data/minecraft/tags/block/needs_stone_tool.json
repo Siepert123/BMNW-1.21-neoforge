@@ -20,7 +20,8 @@
     "bmnw:lead_block",
     "bmnw:raw_lead_block",
     "bmnw:lead_ore",
-    "bmnw:deepslate_lead_ore"
+    "bmnw:deepslate_lead_ore",
+    "office_door"
   ],
   "replace": false
 }

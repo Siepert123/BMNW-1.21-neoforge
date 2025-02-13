@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 0,
+  "ingredient": {
+    "item": "bmnw:concrete_bricks"
+  },
+  "result": {
+    "id": "bmnw:cracked_concrete_bricks"
+  }
+}
