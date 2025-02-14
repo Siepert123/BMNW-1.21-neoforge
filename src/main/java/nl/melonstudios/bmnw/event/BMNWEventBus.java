@@ -1,5 +1,9 @@
 package nl.melonstudios.bmnw.event;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.LevelChunk;
+import net.minecraft.world.level.chunk.LevelChunkSection;
 import nl.melonstudios.bmnw.block.BMNWBlocks;
 import nl.melonstudios.bmnw.block.entity.BMNWBlockEntities;
 import nl.melonstudios.bmnw.block.entity.custom.IronBarrelBlockEntity;
@@ -11,6 +15,7 @@ import nl.melonstudios.bmnw.entity.BMNWEntityTypes;
 import nl.melonstudios.bmnw.entity.renderer.*;
 import nl.melonstudios.bmnw.hazard.HazardRegistry;
 import nl.melonstudios.bmnw.hazard.radiation.RadiationTools;
+import nl.melonstudios.bmnw.interfaces.IOnBlockAdded;
 import nl.melonstudios.bmnw.item.BMNWItems;
 import nl.melonstudios.bmnw.item.custom.CoreSampleItem;
 import nl.melonstudios.bmnw.misc.*;
@@ -181,6 +186,20 @@ public class BMNWEventBus {
          */
         @SubscribeEvent
         public static void chunkEventLoad(ChunkEvent.Load event) {
+            int sectionCount = event.getChunk().getSectionsCount();
+            int minSectionIndex = event.getChunk().getMinSection();
+            for (int i = 0; i < sectionCount; i++) {
+                for (int x = 0; x < 16; x++) {
+                    for (int y = 0; y < 16; y++) {
+                        for (int z = 0; z < 16; z++) {
+                            BlockState state = event.getChunk().getSection(i).getBlockState(x, y, z);
+                            if (state.getBlock() instanceof IOnBlockAdded added) {
+                                added.onBlockAdded(event.getLevel(), new BlockPos(x, (i+minSectionIndex)<<4 + y, z));
+                            }
+                        }
+                    }
+                }
+            }
             if (!DELEGATE_STRUCTURES.containsKey(event.getLevel())) {
                 DELEGATE_STRUCTURES.put(event.getLevel(), new ArrayList<>());
             }
