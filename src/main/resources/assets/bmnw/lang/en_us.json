@@ -3,6 +3,7 @@
   "advancement.bmnw.nuke.desc": "Obtain a nuke",
   "advancement.bmnw.root": "BMNW",
   "advancement.bmnw.root.desc": "radiation ahead!",
+  "tooltip.bmnw.blast_resistance": "Blast Resistance",
   "block.bmnw.antenna_dish": "Antenna Dish",
   "block.bmnw.antenna_top": "Antenna Top",
   "block.bmnw.anti_missile_missile": "Anti-Air Missile",

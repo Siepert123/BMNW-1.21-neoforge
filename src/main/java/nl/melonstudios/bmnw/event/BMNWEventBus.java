@@ -262,19 +262,13 @@ public class BMNWEventBus {
             }
             if (stack.getItem() instanceof BlockItem && BMNWConfig.itemHazardInfo.id() > 0) {
                 Block block = ((BlockItem) stack.getItem()).getBlock();
-                if (ShieldingValues.shields(block.defaultBlockState())) {
+                if (block.getExplosionResistance() >= 100) {
                     if (BMNWConfig.itemHazardInfo.id() == 2) {
                         event.addTooltipLines(
-                                Component.translatable("tooltip.bmnw.radiation_shielding")
-                                        .append(" - ")
-                                        .append(String.valueOf(Math.round(100 * (1.0f - ShieldingValues.getShieldingModifier(block.defaultBlockState())))))
-                                        .append("%")
-                                        .withColor(0x00ff00)
-                        );
-                    } else {
-                        event.addTooltipLines(
-                                Component.translatable("tooltip.bmnw.radiation_shielding")
-                                        .withColor(0x00ff00)
+                                Component.translatable("tooltip.bmnw.blast_resistance")
+                                        .append(": ")
+                                        .append(String.valueOf(block.getExplosionResistance()))
+                                        .withColor(0xffff00)
                         );
                     }
                 }

@@ -5,6 +5,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.DoorBlock;
@@ -15,6 +16,7 @@ import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.block.state.properties.Half;
 import net.minecraft.world.level.chunk.status.ChunkStatus;
 import net.neoforged.neoforge.registries.DeferredBlock;
+import nl.melonstudios.bmnw.hazard.radiation.ChunkRadiationManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -63,6 +65,7 @@ public abstract class Structure {
         if (!level.isOutsideBuildHeight(pos)) {
             level.getChunk(new ChunkPos(pos).x, new ChunkPos(pos).z, ChunkStatus.EMPTY, true);
             level.setBlock(pos, state, 2);
+            ChunkRadiationManager.handler.notifyBlockChange((Level)level, pos);
         }
     }
     protected void placeBlock(LevelAccessor level, BlockPos pos, DeferredBlock<?> block) {
@@ -121,6 +124,7 @@ public abstract class Structure {
                 while (type.canReplace(level.getBlockState(pos))) {
                     level.setBlock(pos, block, 2);
                     pos = pos.below();
+                    ChunkRadiationManager.handler.notifyBlockChange((Level)level, pos);
                 }
             }
         }
