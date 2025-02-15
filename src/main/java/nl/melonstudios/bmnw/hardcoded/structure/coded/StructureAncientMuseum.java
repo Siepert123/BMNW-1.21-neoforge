@@ -30,8 +30,8 @@ public class StructureAncientMuseum extends Structure {
         fillBlocks(level, origin.above(2), origin.offset(10, 2, 10), Blocks.CHISELED_TUFF_BRICKS.defaultBlockState());
         fillBlocks(level, origin.offset(1, 1, 1), origin.offset(9, 4, 9), Blocks.AIR.defaultBlockState());
         fillBlocks(level, origin.offset(0, 5, 0), origin.offset(10, 5, 10), BMNWBlocks.FOUNDATION_CONCRETE.get().defaultBlockState());
-        fillBlocks(level, origin.offset(1, 0, 4), origin.offset(9, 0, 4), Blocks.CHISELED_TUFF_BRICKS.defaultBlockState());
-        fillBlocks(level, origin.offset(1, 0, 6), origin.offset(9, 0, 6), Blocks.CHISELED_TUFF_BRICKS.defaultBlockState());
+        fillBlocks(level, origin.offset(0, 0, 4), origin.offset(10, 0, 4), Blocks.CHISELED_TUFF_BRICKS.defaultBlockState());
+        fillBlocks(level, origin.offset(0, 0, 6), origin.offset(10, 0, 6), Blocks.CHISELED_TUFF_BRICKS.defaultBlockState());
 
         fillBlocks(level, origin.offset(0, 1, 4), origin.offset(0, 3, 6), BMNWBlocks.STEEL_SCAFFOLD.get().defaultBlockState());
         fillBlocks(level, origin.offset(10, 1, 4), origin.offset(10, 3, 6), BMNWBlocks.STEEL_SCAFFOLD.get().defaultBlockState());
