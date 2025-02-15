@@ -33,7 +33,8 @@ public class StructureAncientMuseum extends Structure {
         fillBlocks(level, origin.offset(1, 0, 4), origin.offset(9, 0, 4), Blocks.CHISELED_TUFF_BRICKS.defaultBlockState());
         fillBlocks(level, origin.offset(1, 0, 6), origin.offset(9, 0, 6), Blocks.CHISELED_TUFF_BRICKS.defaultBlockState());
 
-        fillBlocks(level, origin.offset(3, 1, 0), origin.offset(5, 3, 0), BMNWBlocks.STEEL_SCAFFOLD.get().defaultBlockState());
+        fillBlocks(level, origin.offset(0, 1, 4), origin.offset(0, 3, 6), BMNWBlocks.STEEL_SCAFFOLD.get().defaultBlockState());
+        fillBlocks(level, origin.offset(10, 1, 4), origin.offset(10, 3, 6), BMNWBlocks.STEEL_SCAFFOLD.get().defaultBlockState());
 
         for (Vec3i offset : offsetValues) {
             BlockPos bp = origin.offset(offset);
