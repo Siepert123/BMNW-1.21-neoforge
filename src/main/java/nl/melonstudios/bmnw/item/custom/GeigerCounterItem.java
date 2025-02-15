@@ -1,5 +1,9 @@
 package nl.melonstudios.bmnw.item.custom;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.Vec3;
+import nl.melonstudios.bmnw.hazard.HazardRegistry;
+import nl.melonstudios.bmnw.hazard.radiation.ChunkRadiationManager;
 import nl.melonstudios.bmnw.interfaces.IItemHazard;
 import nl.melonstudios.bmnw.misc.BMNWConfig;
 import nl.melonstudios.bmnw.radiation.RadiationManager;
@@ -24,15 +28,16 @@ public class GeigerCounterItem extends Item {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand usedHand) {
         if (!level.isClientSide()) {
-            ChunkAccess myChunk = level.getChunk(player.getOnPos());
-            float chunkRads = 0;
-            float playerRads = player.getPersistentData().getFloat(RadiationManager.rad_nbt_tag);
+            Vec3 mid = player.position().add(0, player.getBbHeight() / 2, 0);
+            BlockPos pos = new BlockPos((int) mid.x, (int) mid.y, (int) mid.z);
+            float chunkRads = ChunkRadiationManager.handler.getRadiation(level, pos);
+            float playerRads = player.getPersistentData().getFloat("bmnw_RAD");
 
-            player.sendSystemMessage(Component.literal(String.format("World radiation: %sRAD\nPlayer radiation: %sRAD",
-                    "WIP!",
+            player.sendSystemMessage(Component.literal(String.format("World radiation: %sRAD\nInventory radiation: %sRAD/s\nPlayer radiation: %sRAD",
+                    BMNWConfig.radiationSetting.chunk() ? chunkRads : 0,
+                    BMNWConfig.radiationSetting.item() ? invRads(player) : 0,
                     BMNWConfig.radiationSetting.item() ? playerRads : 0
             )));
-
         }
         return InteractionResultHolder.success(player.getItemInHand(usedHand));
     }
@@ -43,9 +48,7 @@ public class GeigerCounterItem extends Item {
         float inventoryRads = 0;
 
         for (ItemStack stack : player.getInventory().items) {
-            if (stack.getItem() instanceof IItemHazard) {
-                inventoryRads += (((IItemHazard) stack.getItem()).getRadioactivity() * stack.getCount());
-            }
+            inventoryRads += HazardRegistry.getRadRegistry(stack.getItem()) * stack.getCount();
         }
         return inventoryRads;
     }

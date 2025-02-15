@@ -1,9 +1,8 @@
 package nl.melonstudios.bmnw.event;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.chunk.LevelChunk;
-import net.minecraft.world.level.chunk.LevelChunkSection;
 import nl.melonstudios.bmnw.block.BMNWBlocks;
 import nl.melonstudios.bmnw.block.entity.BMNWBlockEntities;
 import nl.melonstudios.bmnw.block.entity.custom.IronBarrelBlockEntity;
@@ -14,6 +13,7 @@ import nl.melonstudios.bmnw.effect.BMNWEffects;
 import nl.melonstudios.bmnw.entity.BMNWEntityTypes;
 import nl.melonstudios.bmnw.entity.renderer.*;
 import nl.melonstudios.bmnw.hazard.HazardRegistry;
+import nl.melonstudios.bmnw.hazard.radiation.ChunkRadiationManager;
 import nl.melonstudios.bmnw.hazard.radiation.RadiationTools;
 import nl.melonstudios.bmnw.interfaces.IOnBlockAdded;
 import nl.melonstudios.bmnw.item.BMNWItems;
@@ -102,7 +102,7 @@ public class BMNWEventBus {
                     LevelAccessor level = (LevelAccessor) array[0];
                     List<ChunkPos> list = DELEGATE_STRUCTURES.remove(level);
                     for (ChunkPos pos : list) {
-                        Structures.tryGenerate(level, pos, 0);
+                        Structures.tryGenerate(level, pos, Structures.seedCache);
                     }
                 }
             }
@@ -224,12 +224,11 @@ public class BMNWEventBus {
         public static void playerTickEventPre(PlayerTickEvent.Pre event) {
             if (BMNWConfig.radiationSetting.item()) {
                 Player player = event.getEntity();
-                if (player.isCreative() || player.level().isClientSide()) return;
+                if (player.isCreative() || player.isSpectator() || player.level().isClientSide()) return;
                 for (ItemStack stack : player.getInventory().items) {
                     Item item = stack.getItem();
-
                     if (HazardRegistry.getRadRegistry(item) > 0) {
-                        //RadiationManager.getInstance().addEntityRadiation(player, HazardRegistry.getRadRegistry(item) * stack.getCount() / 20);
+                        RadiationTools.contaminate(player, HazardRegistry.getRadRegistry(item) / 20 * stack.getCount());
                     }
                     if (HazardRegistry.getBurningRegistry(item)) {
                         player.setRemainingFireTicks(20);
@@ -245,12 +244,12 @@ public class BMNWEventBus {
         //region Block events
         @SubscribeEvent
         public static void blockEventPlace(BlockEvent.EntityPlaceEvent event) {
-
+            if (!event.getLevel().isClientSide()) ChunkRadiationManager.handler.notifyBlockChange((Level)event.getLevel(), event.getPos());
         }
         @SuppressWarnings("all")
         @SubscribeEvent
         public static void blockEventBreak(BlockEvent.BreakEvent event) {
-
+            if (!event.getLevel().isClientSide()) ChunkRadiationManager.handler.notifyBlockChange((Level)event.getLevel(), event.getPos());
         }
         //endregion
 

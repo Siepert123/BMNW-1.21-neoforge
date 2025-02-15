@@ -54,8 +54,7 @@ public class BMNWTabs {
                             ResourceLocation.parse("bmnw:materials"),
                             ResourceLocation.parse("bmnw:tools"),
                             ResourceLocation.parse("bmnw:machines"),
-                            ResourceLocation.parse("bmnw:bombs"),
-                            ResourceLocation.parse("bmnw:books")
+                            ResourceLocation.parse("bmnw:bombs")
                     )
                     .displayItems((parameters, items) -> {
                         items.accept(CONCRETE);
@@ -181,8 +180,7 @@ public class BMNWTabs {
                     .withTabsAfter(
                             ResourceLocation.parse("bmnw:tools"),
                             ResourceLocation.parse("bmnw:machines"),
-                            ResourceLocation.parse("bmnw:bombs"),
-                            ResourceLocation.parse("bmnw:books")
+                            ResourceLocation.parse("bmnw:bombs")
                     )
                     .displayItems((parameters, items) -> {items.accept(RAW_LEAD);
                         //region Materials
@@ -301,8 +299,7 @@ public class BMNWTabs {
                     )
                     .withTabsAfter(
                             ResourceLocation.parse("bmnw:machines"),
-                            ResourceLocation.parse("bmnw:bombs"),
-                            ResourceLocation.parse("bmnw:books")
+                            ResourceLocation.parse("bmnw:bombs")
                     )
                     .displayItems((parameters, items) -> {
                         items.accept(GEIGER_COUNTER);
@@ -355,8 +352,7 @@ public class BMNWTabs {
                             ResourceLocation.parse("bmnw:tools")
                     )
                     .withTabsAfter(
-                            ResourceLocation.parse("bmnw:bombs"),
-                            ResourceLocation.parse("bmnw:books")
+                            ResourceLocation.parse("bmnw:bombs")
                     )
                     .displayItems((parameters, items) -> {
                         //this comment removes a warning! [remove once there are 2 or more entries here]
@@ -408,35 +404,6 @@ public class BMNWTabs {
                         items.accept(HE_MISSILE);
                         items.accept(NUCLEAR_MISSILE);
                         items.accept(ANTI_MISSILE_MISSILE);
-                    })
-                    .build()
-    );
-
-    public static final Supplier<CreativeModeTab> BOOKS = CREATIVE_TABS.register("books",
-            () -> CreativeModeTab.builder()
-                    .title(Component.translatable("itemGroup.bmnw.books"))
-                    .icon(Items.BOOK::getDefaultInstance)
-                    .withTabsBefore(
-                            CreativeModeTabs.BUILDING_BLOCKS.location(),
-                            CreativeModeTabs.COLORED_BLOCKS.location(),
-                            CreativeModeTabs.NATURAL_BLOCKS.location(),
-                            CreativeModeTabs.FUNCTIONAL_BLOCKS.location(),
-                            CreativeModeTabs.REDSTONE_BLOCKS.location(),
-                            CreativeModeTabs.TOOLS_AND_UTILITIES.location(),
-                            CreativeModeTabs.COMBAT.location(),
-                            CreativeModeTabs.FOOD_AND_DRINKS.location(),
-                            CreativeModeTabs.INGREDIENTS.location(),
-                            CreativeModeTabs.SPAWN_EGGS.location(),
-                            ResourceLocation.parse("bmnw:blocks"),
-                            ResourceLocation.parse("bmnw:materials"),
-                            ResourceLocation.parse("bmnw:tools"),
-                            ResourceLocation.parse("bmnw:machines"),
-                            ResourceLocation.parse("bmnw:bombs")
-                    )
-                    .displayItems((parameters, items) -> {
-                        for (ItemStack book : Books.getWhitelistedBooks()) {
-                            items.accept(book);
-                        }
                     })
                     .build()
     );

@@ -148,7 +148,7 @@ public class ChunkRadiationHandlerSimple extends ChunkRadiationHandler {
     private static final String NBT_KEY_CHUNK_RADIATION = "bmnw_simple_radiation";
 
     @Override
-    public void onChunkLoad(ChunkDataEvent.Load event) {
+    public void onChunkDataLoad(ChunkDataEvent.Load event) {
         if (event.getLevel() != null && !event.getLevel().isClientSide()) {
             SimpleRadiationPerWorld radWorld = perWorld.get((Level)event.getLevel());
 

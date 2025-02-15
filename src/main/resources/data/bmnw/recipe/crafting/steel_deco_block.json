@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "c:ingots/steel"
+    },
+    {
+      "item": "bmnw:steel_scaffold"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "bmnw:steel_deco_block"
+  }
+}

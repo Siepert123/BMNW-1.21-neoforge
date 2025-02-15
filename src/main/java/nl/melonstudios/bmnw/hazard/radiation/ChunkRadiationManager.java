@@ -23,8 +23,11 @@ public class ChunkRadiationManager {
         if (BMNWConfig.radiationSetting.chunk()) handler.onWorldUnload(event);
     }
 
-    public static void onChunkLoad(ChunkDataEvent.Load event) {
+    public static void onChunkLoad(ChunkEvent.Load event) {
         if (BMNWConfig.radiationSetting.chunk() && event.getLevel() != null) handler.onChunkLoad(event);
+    }
+    public static void onChunkDataLoad(ChunkDataEvent.Load event) {
+        if (BMNWConfig.radiationSetting.chunk() && event.getLevel() != null) handler.onChunkDataLoad(event);
     }
 
     public static void onChunkSave(ChunkDataEvent.Save event) {

@@ -2,32 +2,33 @@ package nl.melonstudios.bmnw.hazard.radiation;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.server.level.ServerChunkCache;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.level.chunk.LevelChunkSection;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.neoforged.neoforge.event.level.ChunkDataEvent;
 import net.neoforged.neoforge.event.level.ChunkEvent;
 import net.neoforged.neoforge.event.level.LevelEvent;
+import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import nl.melonstudios.bmnw.BMNW;
 import nl.melonstudios.bmnw.block.BMNWBlocks;
+import nl.melonstudios.bmnw.misc.BMNWAttachments;
 import nl.melonstudios.bmnw.misc.BMNWStateProperties;
 import nl.melonstudios.bmnw.misc.BMNWTags;
 import nl.melonstudios.bmnw.particle.BMNWParticleTypes;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.Contract;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -59,6 +60,7 @@ import java.util.concurrent.ConcurrentHashMap;
  *
  */
 public class ChunkRadiationHandlerPRISM extends ChunkRadiationHandler {
+    public static final Logger LOGGER = LogManager.getLogger("Radiation System PRISM");
 
     public ConcurrentHashMap<Level, RadPerWorld> perWorld = new ConcurrentHashMap<>();
     public static int cycles = 0;
@@ -102,6 +104,7 @@ public class ChunkRadiationHandlerPRISM extends ChunkRadiationHandler {
                             }
                         }
 
+                        /* This sucks, actually
                         if (!triedRebuild && Math.abs(pos.x * pos.z) % 5 == cycles % 5 && level.isLoaded(pos.getMiddleBlockPosition((i-4) << 4))) {
                             LevelChunk chunk = level.getChunk(pos.x, pos.z);
                             LevelChunkSection section = chunk.getSection(i);
@@ -118,6 +121,7 @@ public class ChunkRadiationHandlerPRISM extends ChunkRadiationHandler {
                                 sub.rebuild(level, pos.getBlockAt(0, (i + minSection) << 4, 0));
                             }
                         }
+                        */
                     }
                 }
             }
@@ -142,27 +146,38 @@ public class ChunkRadiationHandlerPRISM extends ChunkRadiationHandler {
                         sub.radiation += (sub.prevRadiation - radSpread) * 0.95f;
                         sub.radiation -= 1;
                         sub.radiation = Mth.clamp(sub.radiation, 0, MAX_RADIATION);
-
-                        int realY = (i+minSection) << 4;
-
-                        if (sub.radiation > BMNW.Constants.evil_fog_rads &&
-                                level.random.nextInt(BMNW.Constants.evil_fog_chance) == 0 &&
-                                level.isLoaded(chunk.getKey().getMiddleBlockPosition(realY))) {
-                            int x = level.random.nextInt(16);
-                            int y = level.random.nextInt(16) + realY;
-                            int z = level.random.nextInt(16);
-                            BlockPos bp = chunk.getKey().getBlockAt(x, y, z);
-                            if (level.getBlockState(bp).isAir()) {
-                                level.sendParticles(BMNWParticleTypes.EVIL_FOG.get(), x + 0.5, y + 0.5, z + 0.5,
-                                        1, 0, 0, 0, 0);
-                            }
-                        }
                     }
                 }
             }
 
             system.radiation.putAll(newAdditions);
             newAdditions.clear();
+        }
+    }
+
+
+    @Override
+    public void notifyBlockChange(Level level, BlockPos pos) {
+        RadPerWorld system = perWorld.get(level);
+
+        if (system != null) {
+            ChunkPos cp = new ChunkPos(pos);
+            SubChunk[] chunk = system.radiation.get(cp);
+
+            if (chunk != null) {
+                int sectionCount = level.getSectionsCount();
+                int minSection = level.getMinSection();
+
+                int yReg = Mth.clamp(pos.getY() >> 4, minSection, sectionCount+minSection) - minSection;
+
+                SubChunk sub = chunk[yReg];
+
+                if (sub == null) {
+                    sub = new SubChunk();
+                    chunk[yReg] = sub;
+                }
+                sub.needsRebuild = true;
+            }
         }
     }
 
@@ -277,7 +292,58 @@ public class ChunkRadiationHandlerPRISM extends ChunkRadiationHandler {
     }
 
     @Override
-    public void onChunkLoad(ChunkDataEvent.Load event) {
+    public void onChunkLoad(ChunkEvent.Load event) {
+        if (!event.getLevel().isClientSide()) {
+            ChunkPos cp = event.getChunk().getPos();
+            RadPerWorld system = perWorld.get((Level)event.getLevel());
+
+            if (system != null && !system.radiation.containsKey(cp)) {
+                system.uncheckedChunks.add(cp);
+                int sectionCount = event.getLevel().getSectionsCount();
+                int minSection = event.getLevel().getMinSection();
+
+                SubChunk[] chunk = new SubChunk[sectionCount];
+
+                for (int i = 0; i < sectionCount; i++) {
+                    chunk[i] = new SubChunk().rebuild(event.getLevel(), cp.getBlockAt(
+                            0, (i + minSection) << 4, 0
+                    ), event.getChunk(), true);
+                }
+
+                system.radiation.put(cp, chunk);
+            }
+        }
+    }
+
+    @Override
+    public void onWorldTick(ServerTickEvent event) {
+        for (Map.Entry<Level, RadPerWorld> entry : perWorld.entrySet()) {
+            RadPerWorld system = entry.getValue();
+            Level level = entry.getKey();
+
+            final int sectionCount = level.getSectionsCount();
+            final int minSection = level.getMinSection();
+
+            while (!system.uncheckedChunks.isEmpty()) {
+                ChunkPos cp = system.uncheckedChunks.removeFirst();
+                if (!system.radiation.containsKey(cp)) {
+
+                    SubChunk[] chunk = new SubChunk[sectionCount];
+
+                    for (int i = 0; i < sectionCount; i++) {
+                        chunk[i] = new SubChunk().rebuild(level, cp.getBlockAt(
+                                0, (i + minSection) << 4, 0
+                        ), level.getChunk(cp.x, cp.z), true);
+                    }
+
+                    system.radiation.put(cp, chunk);
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onChunkDataLoad(ChunkDataEvent.Load event) {
         if (!event.getLevel().isClientSide()) {
             ChunkPos cp = event.getChunk().getPos();
             RadPerWorld system = perWorld.get((Level)event.getLevel());
@@ -384,7 +450,7 @@ public class ChunkRadiationHandlerPRISM extends ChunkRadiationHandler {
                         int radLevel = rads > min_rads_3 ? 3 : rads > min_rads_2 ? 2 : 1;
 
                         if (level.isLoaded(pos.getBlockAt(0, (y + minSection) << 4, 0))) {
-                            int realY = (i - 4) << 4;
+                            int realY = (y + minSection) << 4;
                             for (int x = 0; x < 16; x++) {
                                 for (int z = 0; z < 16; z++) {
                                     for (int yH = 0; yH < 16; yH++) {
@@ -409,6 +475,22 @@ public class ChunkRadiationHandlerPRISM extends ChunkRadiationHandler {
                         }
                     }
                 }
+
+                int x = level.random.nextInt(16);
+                int z = level.random.nextInt(16);
+
+                BlockPos bp = pos.getBlockAt(x, 0, z);
+                bp = new BlockPos(bp.getX(), level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, bp.getX(), bp.getZ()), bp.getZ());
+
+                int ySection = Mth.clamp(bp.getY() >> 4, minSection, sectionsCount+minSection)-minSection;
+
+                if (level instanceof ServerLevel serverLevel &&
+                        randEnt.getValue()[ySection] != null &&
+                        randEnt.getValue()[ySection].radiation > BMNW.Constants.evil_fog_rads &&
+                        level.random.nextInt(BMNW.Constants.evil_fog_chance) == 0) {
+                    serverLevel.sendParticles(BMNWParticleTypes.EVIL_FOG.get(), bp.getX() + 0.5, bp.getY() + 0.5, bp.getZ() + 0.5,
+                            1, 0, 0, 0, 0);
+                }
             }
         }
     }
@@ -424,6 +506,7 @@ public class ChunkRadiationHandlerPRISM extends ChunkRadiationHandler {
 
     public static class RadPerWorld {
         public ConcurrentHashMap<ChunkPos, SubChunk[]> radiation = new ConcurrentHashMap<>();
+        public List<ChunkPos> uncheckedChunks = new ArrayList<>();
     }
 
     public static class SubChunk {

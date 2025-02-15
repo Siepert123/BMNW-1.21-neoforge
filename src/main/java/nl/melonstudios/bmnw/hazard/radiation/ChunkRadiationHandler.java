@@ -25,11 +25,14 @@ public abstract class ChunkRadiationHandler {
     public abstract void decreaseRadiation(Level level, BlockPos pos, float rads);
     public abstract void clearSystem(Level level);
 
+    public void notifyBlockChange(Level level, BlockPos pos) {}
+
     public void onWorldLoad(LevelEvent.Load event) {}
     public void onWorldUnload(LevelEvent.Unload event) {}
     public void onWorldTick(ServerTickEvent event) {}
 
-    public void onChunkLoad(ChunkDataEvent.Load event) {}
+    public void onChunkLoad(ChunkEvent.Load event) {}
+    public void onChunkDataLoad(ChunkDataEvent.Load event) {}
     public void onChunkSave(ChunkDataEvent.Save event) {}
     public void onChunkUnload(ChunkEvent.Unload event) {}
 

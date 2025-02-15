@@ -2,6 +2,7 @@ package nl.melonstudios.bmnw;
 
 import net.minecraft.server.level.ServerLevel;
 import nl.melonstudios.bmnw.hardcoded.structure.*;
+import nl.melonstudios.bmnw.hardcoded.structure.coded.StructureAncientMuseum;
 import nl.melonstudios.bmnw.hardcoded.structure.coded.StructureBrickBuilding;
 import com.mojang.logging.LogUtils;
 import nl.melonstudios.bmnw.block.BMNWBlocks;
@@ -85,6 +86,7 @@ public class BMNW {
         NeoForge.EVENT_BUS.addListener(ChunkRadiationManager::onWorldLoad);
         NeoForge.EVENT_BUS.addListener(ChunkRadiationManager::onWorldUnload);
         NeoForge.EVENT_BUS.addListener(ChunkRadiationManager::onChunkLoad);
+        NeoForge.EVENT_BUS.addListener(ChunkRadiationManager::onChunkDataLoad);
         NeoForge.EVENT_BUS.addListener(ChunkRadiationManager::onChunkSave);
         NeoForge.EVENT_BUS.addListener(ChunkRadiationManager::onChunkUnload);
         NeoForge.EVENT_BUS.addListener(ChunkRadiationManager::updateSystem);
@@ -109,6 +111,9 @@ public class BMNW {
                         .setSalt("bmnw:brick_building".hashCode()))
                         .addBlockModifier(new ConcreteBricksDecayModifier(0.3f))
                         .addBlockModifier(new BlockModifierGlassPaneDecay()));
+        Structures.registerStructure("bmnw:ancient_museum",
+                new StructureData(new StructureAncientMuseum(), new StructureSpawningLogic(0.0005f)
+                        .setSalt("bmnw:ancient_museum".hashCode())));
     }
 
     // Add the example block item to the building blocks tab
@@ -123,12 +128,28 @@ public class BMNW {
 
         ChunkRadiationHandler.server = event.getServer();
 
+        {
+            Iterable<ServerLevel> levels = event.getServer().getAllLevels();
+            boolean first = true;
+            for (ServerLevel level : levels) {
+                if (first) Structures.seedCache = level.getSeed();
+                else {
+                    if (level.getSeed() != Structures.seedCache) {
+                        Structures.LOGGER.warn("Seed mismatch in levels: got {} while original was {}", level.getSeed(), Structures.seedCache);
+                    }
+                }
+                first = false;
+            }
+            Structures.validCache = true;
+        }
+
         Commands commands = event.getServer().getCommands();
         BMNWCommands.register(commands);
     }
 
     @SubscribeEvent
     public void onServerStopping(ServerStoppingEvent event) {
+        Structures.validCache = false;
         for (ServerLevel level : event.getServer().getAllLevels()) {
             ChunkRadiationManager.handler.clearSystem(level);
         }

@@ -1,11 +1,13 @@
 package nl.melonstudios.bmnw.hazard.radiation;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import nl.melonstudios.bmnw.hazard.HazardRegistry;
@@ -67,5 +69,16 @@ public class RadiationTools {
 
             if (rads > 0) addEntityRadiation(entity, rads);
         }
+    }
+
+    public static boolean exposedToAir(Level level, BlockPos pos) {
+        int h = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, pos.getX(), pos.getZ());
+        if (pos.getY() >= h-1) return true;
+        for (Direction direction : Direction.values()) {
+            BlockPos sidePos = pos.offset(direction.getNormal());
+            int sideH = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, sidePos.getX(), sidePos.getZ());
+            if (pos.getY() >= sideH-1) return true;
+        }
+        return false;
     }
 }

@@ -12,7 +12,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.*;
 
 public class Structures {
-    private static final Logger LOGGER = LogManager.getLogger("BMNW Structures");
+    public static final Logger LOGGER = LogManager.getLogger("BMNW Structures");
     public static Collection<ResourceLocation> getAllStructureResourceLocations() {
         return STRUCTURE_REGISTRY.keySet();
     }
@@ -37,6 +37,7 @@ public class Structures {
         );
     }
     public static void tryGenerate(LevelAccessor level, ChunkPos pos, long seed) {
+        if (!validCache) LOGGER.warn("Warning: seedCache is invalid, structure generation may mismatch with true results!");
         boolean placed = false;
         for (Map.Entry<ResourceLocation, StructureData> entry : STRUCTURE_REGISTRY.entrySet()) {
             ResourceLocation id = entry.getKey();
@@ -50,10 +51,12 @@ public class Structures {
         }
     }
     public static boolean structurePotentiallyInChunk(Level level, ChunkPos pos, ResourceLocation id) {
+        if (!validCache) LOGGER.warn("Warning: seedCache is invalid, may yield unexpected results!");
         StructureData structure = STRUCTURE_REGISTRY.get(id);
-        Random random = createRandom(pos, structure.spawningLogic.getSalt(), 0);
+        Random random = createRandom(pos, structure.spawningLogic.getSalt(), seedCache);
         return structure.spawningLogic.canSpawn(level, pos, random);
     }
 
     public static long seedCache = 0;
+    public static boolean validCache = false;
 }
