@@ -2,7 +2,6 @@ package nl.melonstudios.bmnw.block.custom;
 
 import nl.melonstudios.bmnw.effect.BMNWEffects;
 import nl.melonstudios.bmnw.hazard.radiation.RadiationTools;
-import nl.melonstudios.bmnw.radiation.RadiationManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;

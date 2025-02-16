@@ -1,9 +1,14 @@
 package nl.melonstudios.bmnw.block.custom;
 
 import com.mojang.serialization.MapCodec;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.phys.shapes.Shapes;
+import nl.melonstudios.bmnw.BMNW;
+import nl.melonstudios.bmnw.block.BMNWBlocks;
 import nl.melonstudios.bmnw.block.entity.BMNWBlockEntities;
 import nl.melonstudios.bmnw.block.entity.custom.HatchBlockEntity;
-import nl.melonstudios.bmnw.misc.BMNWSounds;
+import nl.melonstudios.bmnw.audio.BMNWSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvent;
@@ -34,11 +39,10 @@ import javax.annotation.Nullable;
 public class HatchBlock extends HorizontalDirectionalBlock implements EntityBlock {
     public static final BooleanProperty OPEN = BlockStateProperties.OPEN;
 
-    protected static final VoxelShape EAST_OPEN_AABB = Block.box(0.0, 0.0, 0.0, 3.0, 16.0, 16.0);
-    protected static final VoxelShape WEST_OPEN_AABB = Block.box(13.0, 0.0, 0.0, 16.0, 16.0, 16.0);
-    protected static final VoxelShape SOUTH_OPEN_AABB = Block.box(0.0, 0.0, 0.0, 16.0, 16.0, 3.0);
-    protected static final VoxelShape NORTH_OPEN_AABB = Block.box(0.0, 0.0, 13.0, 16.0, 16.0, 16.0);
-    protected static final VoxelShape CLOSED_AABB = Block.box(0.0, 0.0, 0.0, 16.0, 3.0, 16.0);
+    protected static final VoxelShape CLOSED_AABB = Shapes.or(
+            ConcreteEncapsulatedLadderBlock.SHAPE,
+            BMNW.shape(0, 15, 0, 16, 16, 16)
+    );
 
     public HatchBlock(Properties properties) {
         super(properties);
@@ -46,8 +50,8 @@ public class HatchBlock extends HorizontalDirectionalBlock implements EntityBloc
                 .setValue(FACING, Direction.NORTH)
                 .setValue(OPEN, false));
         //FIXME: replace with actual values
-        open = BMNWSounds.GEIGER_CLICK.get();
-        close = BMNWSounds.SMALL_EXPLOSION.get();
+        open = BMNWSounds.HATCH_OPEN.get();
+        close = BMNWSounds.HATCH_CLOSE.get();
     }
 
     @Override
@@ -59,16 +63,11 @@ public class HatchBlock extends HorizontalDirectionalBlock implements EntityBloc
     private final SoundEvent open, close;
 
     @Override
-    protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        if (!state.getValue(OPEN)) {
-            return CLOSED_AABB;
+    protected VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        if (state.getValue(OPEN)) {
+            return ConcreteEncapsulatedLadderBlock.SHAPE;
         } else {
-            return switch (state.getValue(FACING)) {
-                default -> NORTH_OPEN_AABB;
-                case SOUTH -> SOUTH_OPEN_AABB;
-                case WEST -> WEST_OPEN_AABB;
-                case EAST -> EAST_OPEN_AABB;
-            };
+            return CLOSED_AABB;
         }
     }
 
@@ -79,13 +78,20 @@ public class HatchBlock extends HorizontalDirectionalBlock implements EntityBloc
     }
 
     private void toggle(BlockState state, Level level, BlockPos pos, Player player) {
+        if (level.getBlockState(pos.above()).canOcclude() && !state.getValue(OPEN)) {
+            return;
+        }
+        HatchBlockEntity be = getEntityOrNull(level, pos);
+        if (be != null && be.ticks > 0) return;
+
+
         BlockState blockState = state.cycle(OPEN);
         level.setBlock(pos, blockState, 2);
 
         BlockEntity entity = level.getBlockEntity(pos);
         if (entity instanceof HatchBlockEntity hatch) {
             hatch.ticks = 20;
-            hatch.open = state.getValue(OPEN);
+            hatch.open = blockState.getValue(OPEN);
         }
 
         this.playSound(player, level, pos, blockState.getValue(OPEN));
@@ -110,8 +116,32 @@ public class HatchBlock extends HorizontalDirectionalBlock implements EntityBloc
     }
 
     @Override
+    protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, BlockPos neighborPos, boolean movedByPiston) {
+        if (level.getBlockState(pos.above()).canOcclude() && state.getValue(OPEN)) {
+            level.setBlock(pos, state.setValue(OPEN, false), 2);
+            HatchBlockEntity hatch = getEntityOrNull(level, pos);
+            if (hatch != null) hatch.open = false;
+        }
+    }
+
+    @Nullable
+    private HatchBlockEntity getEntityOrNull(Level level, BlockPos pos) {
+        BlockEntity be = level.getBlockEntity(pos);
+        return be instanceof HatchBlockEntity entity ? entity : null;
+    }
+
+    @Override
+    protected void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
+        BlockEntity be = level.getBlockEntity(pos);
+        if (be instanceof HatchBlockEntity hatch) {
+            hatch.open = false;
+        }
+    }
+
+    private static final MapCodec<HatchBlock> CODEC = simpleCodec(HatchBlock::new);
+    @Override
     protected MapCodec<? extends HorizontalDirectionalBlock> codec() {
-        return null;
+        return CODEC;
     }
 
     @Nullable
@@ -123,11 +153,43 @@ public class HatchBlock extends HorizontalDirectionalBlock implements EntityBloc
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
-        return blockEntityType == BMNWBlockEntities.HATCH.get() ? HatchBlockEntity::tick : null;
+        return blockEntityType == BMNWBlockEntities.HATCH.get() ? (level1, pos1, state1, beType) -> {
+            BlockEntity be = level1.getBlockEntity(pos1);
+            if (be instanceof HatchBlockEntity hatchBlockEntity) hatchBlockEntity.tick();
+        } : null;
     }
 
     @Override
     protected RenderShape getRenderShape(BlockState state) {
         return RenderShape.ENTITYBLOCK_ANIMATED;
+    }
+
+    @Override
+    public boolean isLadder(BlockState state, LevelReader level, BlockPos pos, LivingEntity entity) {
+        return true;
+    }
+
+    @Override
+    protected float getShadeBrightness(BlockState state, BlockGetter level, BlockPos pos) {
+        return 1;
+    }
+
+    @Override
+    protected boolean propagatesSkylightDown(BlockState state, BlockGetter level, BlockPos pos) {
+        return false;
+    }
+
+    @Override
+    protected int getLightBlock(BlockState state, BlockGetter level, BlockPos pos) {
+        return 0;
+    }
+
+    @Override
+    protected boolean skipRendering(BlockState state, BlockState adjacentState, Direction direction) {
+        if (direction.getAxis() == Direction.Axis.Y) {
+            if (adjacentState.is(BMNWBlocks.CONCRETE_ENCAPSULATED_LADDER.get())) return true;
+            if (adjacentState.is(BMNWBlocks.HATCH.get())) return true;
+        }
+        return super.skipRendering(state, adjacentState, direction);
     }
 }

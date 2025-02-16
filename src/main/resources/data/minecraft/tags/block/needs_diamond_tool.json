@@ -1,5 +1,7 @@
 {
   "values": [
+    "bmnw:titanium_block",
+    "bmnw:raw_titanium_block",
     "bmnw:titanium_ore",
     "bmnw:deepslate_titanium_ore"
   ],

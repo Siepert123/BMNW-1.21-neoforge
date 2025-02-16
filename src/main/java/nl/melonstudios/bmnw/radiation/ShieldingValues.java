@@ -15,10 +15,9 @@ public class ShieldingValues {
     public static void addShielding(Block block, int distance, double modifier) {
         shielding_map.put(block, new Tuple<>(distance, modifier));
     }
+    @Deprecated
     public static double getShieldingModifier(BlockState block) {
-        if (shields(block)) {
-            return shielding_map.get(block.getBlock()).getB();
-        } else return block.isAir() ? RadiationManager.default_decay_air : RadiationManager.default_decay_solid;
+        return block.getBlock().getExplosionResistance();
     }
 
     public static boolean shields(BlockState block) {

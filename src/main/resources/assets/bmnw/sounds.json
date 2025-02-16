@@ -11,10 +11,20 @@
     ],
     "subtitle": "subtitles.bmnw.large_explosion"
   },
-  "small_explosion": {
+  "bomb_1": {
     "sounds": [
-      "bmnw:bomb_1",
-      "bmnw:bomb_2",
+      "bmnw:bomb_1"
+    ],
+    "subtitle": "subtitles.bmnw.small_explosion"
+  },
+  "bomb_2": {
+    "sounds": [
+      "bmnw:bomb_2"
+    ],
+    "subtitle": "subtitles.bmnw.small_explosion"
+  },
+  "bomb_3": {
+    "sounds": [
       "bmnw:bomb_3"
     ],
     "subtitle": "subtitles.bmnw.small_explosion"
@@ -30,5 +40,17 @@
       "bmnw:door_lol_2"
     ],
     "subtitle": "subtitles.bmnw.door_close"
+  },
+  "hatch_open": {
+    "sounds": [
+      "bmnw:hatch_open"
+    ],
+    "subtitle": "subtitles.bmnw.hatch_open"
+  },
+  "hatch_close": {
+    "sounds": [
+      "bmnw:hatch_close"
+    ],
+    "subtitle": "subtitles.bmnw.hatch_close"
   }
 }

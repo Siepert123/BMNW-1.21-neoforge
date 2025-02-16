@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "bmnw:block/hatch"
+    },
+    "facing=east": {
+      "model": "bmnw:block/hatch",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "bmnw:block/hatch",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "bmnw:block/hatch",
+      "y": 270
+    }
+  }
+}

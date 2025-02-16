@@ -3,7 +3,7 @@
   "category": "misc",
   "ingredients": [
     {
-      "tag": "c:plates/steel"
+      "tag": "c:plates/lead"
     },
     {
       "item": "bmnw:steel_scaffold"
@@ -11,6 +11,6 @@
   ],
   "result": {
     "count": 1,
-    "id": "bmnw:steel_deco_block"
+    "id": "bmnw:lead_deco_block"
   }
 }

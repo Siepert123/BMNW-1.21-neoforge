@@ -1,7 +1,6 @@
 package nl.melonstudios.bmnw.effect.custom;
 
 import nl.melonstudios.bmnw.hazard.radiation.RadiationTools;
-import nl.melonstudios.bmnw.radiation.RadiationManager;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;

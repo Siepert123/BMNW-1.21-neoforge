@@ -1,4 +1,4 @@
-package nl.melonstudios.bmnw.misc;
+package nl.melonstudios.bmnw.audio;
 
 import nl.melonstudios.bmnw.BMNW;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -22,9 +22,17 @@ public class BMNWSounds {
             () -> SoundEvent.createFixedRangeEvent(ResourceLocation.fromNamespaceAndPath("bmnw", "large_explosion"), 128)
     );
 
-    public static final DeferredHolder<SoundEvent, SoundEvent> SMALL_EXPLOSION = SOUND_EVENTS.register(
-            "small_explosion",
-            () -> SoundEvent.createFixedRangeEvent(ResourceLocation.fromNamespaceAndPath("bmnw", "small_explosion"), 64)
+    public static final DeferredHolder<SoundEvent, SoundEvent> BOMB_1 = SOUND_EVENTS.register(
+            "bomb_1",
+            () -> SoundEvent.createFixedRangeEvent(ResourceLocation.fromNamespaceAndPath("bmnw", "bomb_1"), 64)
+    );
+    public static final DeferredHolder<SoundEvent, SoundEvent> BOMB_2 = SOUND_EVENTS.register(
+            "bomb_2",
+            () -> SoundEvent.createFixedRangeEvent(ResourceLocation.fromNamespaceAndPath("bmnw", "bomb_2"), 64)
+    );
+    public static final DeferredHolder<SoundEvent, SoundEvent> BOMB_3 = SOUND_EVENTS.register(
+            "bomb_3",
+            () -> SoundEvent.createFixedRangeEvent(ResourceLocation.fromNamespaceAndPath("bmnw", "bomb_3"), 64)
     );
 
     public static final DeferredHolder<SoundEvent, SoundEvent> DOOR_LOL_OPEN = SOUND_EVENTS.register(
@@ -35,6 +43,19 @@ public class BMNWSounds {
             "door_lol_close",
             () -> SoundEvent.createFixedRangeEvent(BMNW.namespace("door_lol_close"), 16)
     );
+
+    public static final DeferredHolder<SoundEvent, SoundEvent> HATCH_OPEN = SOUND_EVENTS.register(
+            "hatch_open",
+            () -> SoundEvent.createFixedRangeEvent(BMNW.namespace("hatch_open"), 16)
+    );
+    public static final DeferredHolder<SoundEvent, SoundEvent> HATCH_CLOSE = createDefaultSound("hatch_close");
+
+    private static DeferredHolder<SoundEvent, SoundEvent> createDefaultSound(String name) {
+        return SOUND_EVENTS.register(
+                name,
+                () -> SoundEvent.createFixedRangeEvent(BMNW.namespace(name), 16)
+        );
+    }
 
     public static void register(IEventBus eventBus) {
         SOUND_EVENTS.register(eventBus);

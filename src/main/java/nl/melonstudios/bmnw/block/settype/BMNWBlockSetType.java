@@ -1,6 +1,6 @@
 package nl.melonstudios.bmnw.block.settype;
 
-import nl.melonstudios.bmnw.misc.BMNWSounds;
+import nl.melonstudios.bmnw.audio.BMNWSounds;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
 

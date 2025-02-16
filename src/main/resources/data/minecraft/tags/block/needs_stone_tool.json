@@ -18,10 +18,12 @@
     "#bmnw:container_barrels",
     "bmnw:brick_charge",
     "bmnw:lead_block",
+    "bmnw:conductive_copper_block",
     "bmnw:raw_lead_block",
     "bmnw:lead_ore",
     "bmnw:deepslate_lead_ore",
-    "bmnw:office_door"
+    "bmnw:office_door",
+    "bmnw:lead_deco_block"
   ],
   "replace": false
 }

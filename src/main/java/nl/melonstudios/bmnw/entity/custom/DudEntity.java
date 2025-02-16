@@ -1,10 +1,10 @@
 package nl.melonstudios.bmnw.entity.custom;
 
 import nl.melonstudios.bmnw.block.BMNWBlocks;
-import nl.melonstudios.bmnw.misc.BMNWSounds;
+import nl.melonstudios.bmnw.hazard.radiation.RadiationTools;
+import nl.melonstudios.bmnw.audio.BMNWSounds;
 import nl.melonstudios.bmnw.misc.BMNWTags;
 import nl.melonstudios.bmnw.particle.BMNWParticleTypes;
-import nl.melonstudios.bmnw.radiation.RadiationManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundSource;
@@ -150,7 +150,7 @@ public class DudEntity extends BombEntity {
                 for (int y = burnRadius; y >= -burnRadius; y--) {
                     if (Math.sqrt(Math.pow(x, 2) + Math.pow(z, 2)) > burnRadius) continue;
                     BlockPos pos = worldPosition.offset(x, y, z);
-                    if (RadiationManager.exposedToAir(level(), pos) || level().clip(new ClipContext(this.position(), convertVec3i(pos),
+                    if (RadiationTools.exposedToAir(level(), pos) || level().clip(new ClipContext(this.position(), convertVec3i(pos),
                             ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this)).getBlockPos().equals(pos)) {
                         if (level().getBlockState(pos).is(BlockTags.LOGS_THAT_BURN)) {
                             level().setBlock(pos, log, 3);

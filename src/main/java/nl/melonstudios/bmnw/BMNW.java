@@ -1,6 +1,9 @@
 package nl.melonstudios.bmnw;
 
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import nl.melonstudios.bmnw.audio.BMNWSounds;
 import nl.melonstudios.bmnw.hardcoded.structure.*;
 import nl.melonstudios.bmnw.hardcoded.structure.coded.StructureAncientMuseum;
 import nl.melonstudios.bmnw.hardcoded.structure.coded.StructureBrickBuilding;
@@ -166,6 +169,9 @@ public class BMNW {
 
     public static ResourceLocation namespace(String key) {
         return ResourceLocation.fromNamespaceAndPath("bmnw", key);
+    }
+    public static VoxelShape shape(double x1, double y1, double z1, double x2, double y2, double z2) {
+        return Shapes.box(x1 / 16, y1 / 16, z1 / 16, x2 / 16, y2 / 16, z2 / 16);
     }
 
     public static final class Constants {

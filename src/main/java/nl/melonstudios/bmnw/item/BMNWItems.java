@@ -284,6 +284,10 @@ public class BMNWItems {
 
     public static final DeferredItem<BlockItem> STEEL_DECO_BLOCK = ITEMS.register("steel_deco_block",
             () -> new BlockItem(BMNWBlocks.STEEL_DECO_BLOCK.get(), new Item.Properties()));
+    public static final DeferredItem<BlockItem> LEAD_DECO_BLOCK = ITEMS.register("lead_deco_block",
+            () -> new BlockItem(BMNWBlocks.LEAD_DECO_BLOCK.get(), new Item.Properties()));
+    public static final DeferredItem<BlockItem> TUNGSTEN_DECO_BLOCK = ITEMS.register("tungsten_deco_block",
+            () -> new BlockItem(BMNWBlocks.TUNGSTEN_DECO_BLOCK.get(), new Item.Properties()));
 
     //endregion
 
@@ -378,6 +382,9 @@ public class BMNWItems {
             () -> new BlockItem(BMNWBlocks.CONCRETE_LAMP.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> CONCRETE_CEILING_LAMP = ITEMS.register("concrete_ceiling_lamp",
             () -> new BlockItem(BMNWBlocks.CONCRETE_CEILING_LAMP.get(), new Item.Properties()));
+
+    public static final DeferredItem<BlockItem> CONCRETE_ENCAPSULATED_LADDER = ITEMS.register("concrete_encapsulated_ladder",
+            () -> new BlockItem(BMNWBlocks.CONCRETE_ENCAPSULATED_LADDER.get(), new Item.Properties()));
 
     public static final DeferredItem<BlockItem> STEEL_POLE = ITEMS.register("steel_pole",
             () -> new BlockItem(BMNWBlocks.STEEL_POLE.get(), new Item.Properties()));

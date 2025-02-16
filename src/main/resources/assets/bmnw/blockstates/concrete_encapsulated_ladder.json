@@ -1,0 +1,23 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "bmnw:block/concrete_encapsulated_ladder",
+      "uvlock": true
+    },
+    "facing=east": {
+      "model": "bmnw:block/concrete_encapsulated_ladder",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=south": {
+      "model": "bmnw:block/concrete_encapsulated_ladder",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=west": {
+      "model": "bmnw:block/concrete_encapsulated_ladder",
+      "uvlock": true,
+      "y": 270
+    }
+  }
+}

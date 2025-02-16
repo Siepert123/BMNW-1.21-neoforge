@@ -13,7 +13,6 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -80,6 +79,10 @@ public class BMNWBlocks {
 
     public static final DeferredBlock<Block> STEEL_DECO_BLOCK = BLOCKS.register("steel_deco_block",
             () -> new Block(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get())));
+    public static final DeferredBlock<Block> LEAD_DECO_BLOCK = BLOCKS.register("lead_deco_block",
+            () -> new Block(BlockBehaviour.Properties.ofFullCopy(LEAD_BLOCK.get())));
+    public static final DeferredBlock<Block> TUNGSTEN_DECO_BLOCK = BLOCKS.register("tungsten_deco_block",
+            () -> new Block(BlockBehaviour.Properties.ofFullCopy(TUNGSTEN_BLOCK.get())));
 
     //endregion
 
@@ -228,6 +231,9 @@ public class BMNWBlocks {
     public static final DeferredBlock<ConcreteCeilingLampBlock> CONCRETE_CEILING_LAMP = BLOCKS.register("concrete_ceiling_lamp",
             () -> new ConcreteCeilingLampBlock(BlockBehaviour.Properties.ofFullCopy(CONCRETE_LAMP.get())));
 
+    public static final DeferredBlock<ConcreteEncapsulatedLadderBlock> CONCRETE_ENCAPSULATED_LADDER = BLOCKS.register("concrete_encapsulated_ladder",
+            () -> new ConcreteEncapsulatedLadderBlock(BlockBehaviour.Properties.ofFullCopy(CONCRETE_BRICKS.get()).noOcclusion()));
+
     public static final DeferredBlock<PoleBlock> STEEL_POLE = BLOCKS.register("steel_pole",
             () -> new PoleBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_DECO_BLOCK.get()).noOcclusion()));
     public static final DeferredBlock<QuadPoleBlock> STEEL_QUAD_POLE = BLOCKS.register("steel_quad_pole",
@@ -271,7 +277,7 @@ public class BMNWBlocks {
     //region Doors & hatches
 
     public static final DeferredBlock<HatchBlock> HATCH = BLOCKS.register("hatch",
-            () -> new HatchBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)));
+            () -> new HatchBlock(BlockBehaviour.Properties.ofFullCopy(CONCRETE_ENCAPSULATED_LADDER.get()).noOcclusion()));
 
     //endregion
 

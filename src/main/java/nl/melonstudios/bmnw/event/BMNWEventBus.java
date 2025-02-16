@@ -91,19 +91,24 @@ public class BMNWEventBus {
         }
 
         /**
-         * Spreads radiation in chunks.
-         * Could break at any moment, really.
+         * Handles custom structures
          */
         @SubscribeEvent
         public static void serverTickEventPost(ServerTickEvent.Post event) {
             while (!DELEGATE_STRUCTURES.isEmpty()) {
-                Object[] array = DELEGATE_STRUCTURES.keySet().toArray();
-                if (array.length != 0) {
-                    LevelAccessor level = (LevelAccessor) array[0];
-                    List<ChunkPos> list = DELEGATE_STRUCTURES.remove(level);
-                    for (ChunkPos pos : list) {
-                        Structures.tryGenerate(level, pos, Structures.seedCache);
+                try {
+                    if (DELEGATE_STRUCTURES.keySet().size() > 0) {
+                        Object[] array = DELEGATE_STRUCTURES.keySet().toArray();
+                        if (array.length != 0) {
+                            LevelAccessor level = (LevelAccessor) array[0];
+                            List<ChunkPos> list = DELEGATE_STRUCTURES.remove(level);
+                            for (ChunkPos pos : list) {
+                                Structures.tryGenerate(level, pos, Structures.seedCache);
+                            }
+                        }
                     }
+                } catch (ArrayIndexOutOfBoundsException e) {
+
                 }
             }
         }
@@ -203,19 +208,12 @@ public class BMNWEventBus {
             if (!DELEGATE_STRUCTURES.containsKey(event.getLevel())) {
                 DELEGATE_STRUCTURES.put(event.getLevel(), new ArrayList<>());
             }
-            if (!DELEGATE_RADIATION.containsKey(event.getLevel())) {
-                DELEGATE_RADIATION.put(event.getLevel(), new ArrayList<>());
-            }
             if (event.isNewChunk()) {
                 DELEGATE_STRUCTURES.get(event.getLevel()).add(event.getChunk().getPos());
-            }
-            if (BMNWConfig.radiationSetting.chunk()) {
-                DELEGATE_RADIATION.get(event.getLevel()).add(event.getChunk().getPos());
             }
         }
 
         private static final Map<LevelAccessor, List<ChunkPos>> DELEGATE_STRUCTURES = new HashMap<>();
-        private static final Map<LevelAccessor, List<ChunkPos>> DELEGATE_RADIATION = new HashMap<>();
 
         /**
          * Handles evil item effects.
@@ -262,12 +260,16 @@ public class BMNWEventBus {
             }
             if (stack.getItem() instanceof BlockItem && BMNWConfig.itemHazardInfo.id() > 0) {
                 Block block = ((BlockItem) stack.getItem()).getBlock();
-                if (block.getExplosionResistance() >= 100) {
+                if (block.getExplosionResistance() >= 100 || HazardRegistry.enableResistanceDisplay(block)) {
                     if (BMNWConfig.itemHazardInfo.id() == 2) {
                         event.addTooltipLines(
                                 Component.translatable("tooltip.bmnw.blast_resistance")
                                         .append(": ")
                                         .append(String.valueOf(block.getExplosionResistance()))
+                                        .withColor(0xffff00),
+                                Component.translatable("tooltip.bmnw.hardness")
+                                        .append(": ")
+                                        .append(String.valueOf(block.defaultDestroyTime()))
                                         .withColor(0xffff00)
                         );
                     }

@@ -5,7 +5,9 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class HazardRegistry {
@@ -18,6 +20,16 @@ public class HazardRegistry {
         addArmorRadResRegistry(Items.GOLDEN_CHESTPLATE, 0.15f);
         addArmorRadResRegistry(Items.GOLDEN_LEGGINGS, 0.15f);
         addArmorRadResRegistry(Items.GOLDEN_BOOTS, 0.1f);
+    }
+
+    private static final boolean universalResistanceDisplay = true;
+    private static final List<Block> enableResistanceDisplay = new ArrayList<>();
+    public static void addEnableResistanceDisplay(Block block) {
+        enableResistanceDisplay.add(block);
+    }
+
+    public static boolean enableResistanceDisplay(Block block) {
+        return universalResistanceDisplay || enableResistanceDisplay.contains(block);
     }
 
     private static final Map<Item, Float> radRegistryItems = new HashMap<>();

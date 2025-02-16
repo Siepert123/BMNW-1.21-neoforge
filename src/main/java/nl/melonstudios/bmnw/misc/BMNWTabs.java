@@ -8,7 +8,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -72,7 +71,8 @@ public class BMNWTabs {
 
                         addItems(items,
                                 CONCRETE_LAMP,
-                                CONCRETE_CEILING_LAMP
+                                CONCRETE_CEILING_LAMP,
+                                CONCRETE_ENCAPSULATED_LADDER
                         );
 
                         addItems(items,
@@ -129,6 +129,8 @@ public class BMNWTabs {
                         items.accept(NUCLEAR_WASTE_BARREL);
 
                         items.accept(STEEL_DECO_BLOCK);
+                        items.accept(LEAD_DECO_BLOCK);
+                        items.accept(TUNGSTEN_DECO_BLOCK);
                         items.accept(STEEL_POLE);
                         items.accept(STEEL_QUAD_POLE);
                         items.accept(STEEL_TRIPOLE);
