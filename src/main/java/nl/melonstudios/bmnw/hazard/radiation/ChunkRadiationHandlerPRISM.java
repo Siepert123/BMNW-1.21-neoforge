@@ -299,6 +299,7 @@ public class ChunkRadiationHandlerPRISM extends ChunkRadiationHandler {
 
             if (system != null && !system.radiation.containsKey(cp)) {
                 system.uncheckedChunks.add(cp);
+                /* Let's see if this fixes anything
                 int sectionCount = event.getLevel().getSectionsCount();
                 int minSection = event.getLevel().getMinSection();
 
@@ -311,6 +312,7 @@ public class ChunkRadiationHandlerPRISM extends ChunkRadiationHandler {
                 }
 
                 system.radiation.put(cp, chunk);
+                */
             }
         }
     }
@@ -377,7 +379,7 @@ public class ChunkRadiationHandlerPRISM extends ChunkRadiationHandler {
         }
     }
 
-    @Override
+    @Override //NOTE: This lags out the game for some reason.
     public void onChunkSave(ChunkDataEvent.Save event) {
         Level level = (Level)event.getLevel();
         if (!level.isClientSide()) {
