@@ -72,7 +72,8 @@ public class BMNWTabs {
                         addItems(items,
                                 CONCRETE_LAMP,
                                 CONCRETE_CEILING_LAMP,
-                                CONCRETE_ENCAPSULATED_LADDER
+                                CONCRETE_ENCAPSULATED_LADDER,
+                                STEEL_LADDER
                         );
 
                         addItems(items,

@@ -1,5 +1,6 @@
 package nl.melonstudios.bmnw.block;
 
+import net.minecraft.world.level.material.PushReaction;
 import nl.melonstudios.bmnw.block.custom.*;
 import nl.melonstudios.bmnw.block.settype.BMNWBlockSetType;
 import nl.melonstudios.bmnw.category.MissileCategory;
@@ -233,6 +234,9 @@ public class BMNWBlocks {
 
     public static final DeferredBlock<ConcreteEncapsulatedLadderBlock> CONCRETE_ENCAPSULATED_LADDER = BLOCKS.register("concrete_encapsulated_ladder",
             () -> new ConcreteEncapsulatedLadderBlock(BlockBehaviour.Properties.ofFullCopy(CONCRETE_BRICKS.get()).noOcclusion()));
+
+    public static final DeferredBlock<CustomLadderBlock> STEEL_LADDER = BLOCKS.register("steel_ladder",
+            () -> new CustomLadderBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_DECO_BLOCK.get()).noOcclusion().pushReaction(PushReaction.DESTROY)));
 
     public static final DeferredBlock<PoleBlock> STEEL_POLE = BLOCKS.register("steel_pole",
             () -> new PoleBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_DECO_BLOCK.get()).noOcclusion()));

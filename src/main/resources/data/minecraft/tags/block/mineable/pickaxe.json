@@ -57,7 +57,8 @@
     "bmnw:barbed_wire",
     "bmnw:flaming_barbed_wire",
     "bmnw:poisonous_barbed_wire",
-    "bmnw:office_door"
+    "bmnw:office_door",
+    "bmnw:steel_ladder"
   ],
   "replace": false
 }

@@ -1,0 +1,19 @@
+{
+	"render_type": "cutout",
+	"textures": {
+		"particle": "bmnw:block/steel_ladder",
+		"texture": "bmnw:block/steel_ladder"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 15],
+			"to": [16, 16, 15],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0, 15]},
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#texture"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#texture"}
+			}
+		}
+	],
+	"display": {}
+}

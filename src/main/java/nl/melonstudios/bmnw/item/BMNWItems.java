@@ -386,6 +386,9 @@ public class BMNWItems {
     public static final DeferredItem<BlockItem> CONCRETE_ENCAPSULATED_LADDER = ITEMS.register("concrete_encapsulated_ladder",
             () -> new BlockItem(BMNWBlocks.CONCRETE_ENCAPSULATED_LADDER.get(), new Item.Properties()));
 
+    public static final DeferredItem<BlockItem> STEEL_LADDER = ITEMS.register("steel_ladder",
+            () -> new BlockItem(BMNWBlocks.STEEL_LADDER.get(), new Item.Properties()));
+
     public static final DeferredItem<BlockItem> STEEL_POLE = ITEMS.register("steel_pole",
             () -> new BlockItem(BMNWBlocks.STEEL_POLE.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> STEEL_QUAD_POLE = ITEMS.register("steel_quad_pole",

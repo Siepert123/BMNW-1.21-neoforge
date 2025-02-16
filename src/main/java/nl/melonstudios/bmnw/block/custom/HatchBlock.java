@@ -99,7 +99,7 @@ public class HatchBlock extends HorizontalDirectionalBlock implements EntityBloc
     private void playSound(@Nullable Player player, Level level, BlockPos pos, boolean opened) {
         level.playSound(
                 player, pos, opened ? open : close,
-                SoundSource.BLOCKS, 1.0f, level.getRandom().nextFloat() * 0.1f + 0.95f
+                SoundSource.BLOCKS, 0.25f, level.getRandom().nextFloat() * 0.1f + 0.95f
         );
         level.gameEvent(player, opened ? GameEvent.BLOCK_OPEN : GameEvent.BLOCK_CLOSE, pos);
     }
@@ -176,12 +176,12 @@ public class HatchBlock extends HorizontalDirectionalBlock implements EntityBloc
 
     @Override
     protected boolean propagatesSkylightDown(BlockState state, BlockGetter level, BlockPos pos) {
-        return false;
+        return state.getValue(OPEN);
     }
 
     @Override
     protected int getLightBlock(BlockState state, BlockGetter level, BlockPos pos) {
-        return 0;
+        return state.getValue(OPEN) ? 0 : 7;
     }
 
     @Override

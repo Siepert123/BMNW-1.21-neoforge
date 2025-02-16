@@ -28,7 +28,8 @@
     "bmnw:steel_scaffold",
     "bmnw:barbed_wire",
     "bmnw:flaming_barbed_wire",
-    "bmnw:poisonous_barbed_wire"
+    "bmnw:poisonous_barbed_wire",
+    "bmnw:steel_ladder"
   ],
   "replace": false
 }

@@ -2,7 +2,7 @@
 	"render_type": "cutout",
 	"textures": {
 		"particle": "bmnw:block/concrete_bricks",
-		"ladder": "block/ladder",
+		"ladder": "bmnw:block/steel_ladder",
 		"block": "bmnw:block/concrete_bricks",
 		"hole": "bmnw:block/concrete_bricks_hole"
 	},

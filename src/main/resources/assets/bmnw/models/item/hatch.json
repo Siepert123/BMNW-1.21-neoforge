@@ -1,10 +1,9 @@
 {
-	"credit": "Made with Blockbench",
 	"textures": {
 		"particle": "bmnw:block/steel_block",
 		"block": "bmnw:block/concrete_bricks",
 		"hole": "bmnw:block/concrete_bricks_hole",
-		"ladder": "block/ladder",
+		"ladder": "bmnw:block/steel_ladder",
 		"steel": "bmnw:block/steel_block"
 	},
 	"elements": [
