@@ -20,13 +20,11 @@ import net.neoforged.neoforge.event.level.LevelEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import nl.melonstudios.bmnw.BMNW;
 import nl.melonstudios.bmnw.block.BMNWBlocks;
-import nl.melonstudios.bmnw.misc.BMNWAttachments;
 import nl.melonstudios.bmnw.misc.BMNWStateProperties;
 import nl.melonstudios.bmnw.misc.BMNWTags;
 import nl.melonstudios.bmnw.particle.BMNWParticleTypes;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.jetbrains.annotations.Contract;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -59,6 +57,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author HBM the bobcat
  *
  */
+@SuppressWarnings("all") //i do not care!!!
 public class ChunkRadiationHandlerPRISM extends ChunkRadiationHandler {
     public static final Logger LOGGER = LogManager.getLogger("Radiation System PRISM");
 
