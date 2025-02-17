@@ -259,16 +259,16 @@ public class BMNWBlocks {
     //region Basic defense
 
     public static final DeferredBlock<BarbedWireBlock> BARBED_WIRE = BLOCKS.register("barbed_wire",
-            () -> new BarbedWireBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).noOcclusion() ,
-                    entity -> entity.hurt(entity.damageSources().cactus(), 1)));
+            () -> new BarbedWireBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).noOcclusion(),
+                    entity -> entity.hurt(entity.damageSources().cactus(), 5)));
     public static final DeferredBlock<BarbedWireBlock> FLAMING_BARBED_WIRE = BLOCKS.register("flaming_barbed_wire",
             () -> new BarbedWireBlock(BlockBehaviour.Properties.ofFullCopy(BARBED_WIRE.get()), entity -> {
-                entity.hurt(entity.damageSources().cactus(), 1);
+                entity.hurt(entity.damageSources().cactus(), 5);
                 entity.setRemainingFireTicks(100);
             }));
     public static final DeferredBlock<BarbedWireBlock> POISONOUS_BARBED_WIRE = BLOCKS.register("poisonous_barbed_wire",
             () -> new BarbedWireBlock(BlockBehaviour.Properties.ofFullCopy(BARBED_WIRE.get()), entity -> {
-                entity.hurt(entity.damageSources().cactus(), 1);
+                entity.hurt(entity.damageSources().cactus(), 5);
                 if (entity instanceof LivingEntity living) {
                     living.addEffect(new MobEffectInstance(
                             MobEffects.POISON, 100, 1

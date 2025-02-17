@@ -141,6 +141,8 @@ public class BMNWTabs {
 
                         items.accept(OFFICE_DOOR);
 
+                        items.accept(HATCH);
+
                         addItems(items,
                                 BARBED_WIRE,
                                 FLAMING_BARBED_WIRE,
@@ -265,6 +267,8 @@ public class BMNWTabs {
                         items.accept(BASIC_CIRCUIT);
                         items.accept(ENHANCED_CIRCUIT);
                         items.accept(ADVANCED_CIRCUIT);
+
+                        items.accept(HATCH_LID);
                         //endregion
                     })
                     .build()

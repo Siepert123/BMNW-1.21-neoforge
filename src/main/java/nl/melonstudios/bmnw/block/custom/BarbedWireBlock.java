@@ -2,6 +2,8 @@ package nl.melonstudios.bmnw.block.custom;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -14,6 +16,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import nl.melonstudios.bmnw.block.BMNWBlocks;
 import org.jetbrains.annotations.Nullable;
 
 public class BarbedWireBlock extends Block {
@@ -24,6 +27,17 @@ public class BarbedWireBlock extends Block {
     public BarbedWireBlock(Properties properties, BarbedWireEffect effect) {
         super(properties);
         this.effect = effect;
+    }
+
+    @Override
+    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
+        if (this == BMNWBlocks.FLAMING_BARBED_WIRE.get()) {
+            level.addParticle(ParticleTypes.FLAME,
+                    pos.getX() + random.nextDouble(),
+                    pos.getY() + random.nextDouble(),
+                    pos.getZ() + random.nextDouble(),
+                    0, 0, 0);
+        }
     }
 
     @Override

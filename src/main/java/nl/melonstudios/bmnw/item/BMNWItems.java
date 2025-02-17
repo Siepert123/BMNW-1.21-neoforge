@@ -420,6 +420,8 @@ public class BMNWItems {
 
     //region Doors & hatches
 
+    public static final DeferredItem<Item> HATCH_LID = ITEMS.register("hatch_lid",
+            () -> new Item(new Item.Properties()));
     public static final DeferredItem<BlockItem> HATCH = ITEMS.register("hatch",
             () -> new BlockItem(BMNWBlocks.HATCH.get(), new Item.Properties()));
 

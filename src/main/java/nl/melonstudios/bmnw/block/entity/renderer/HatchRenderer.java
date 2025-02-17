@@ -2,6 +2,7 @@ package nl.melonstudios.bmnw.block.entity.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.inventory.InventoryMenu;
@@ -57,9 +58,8 @@ public class HatchRenderer implements BlockEntityRenderer<HatchBlockEntity> {
             poseStack.pushPose();
             poseStack.translate(0, 1, 0);
             rotateStack(poseStack, direction, open, ticks);
-            var model = this.dispatcher.getBlockModel(blockstate);
-            for (var renderType : model.getRenderTypes(blockstate, RandomSource.create(blockstate.getSeed(pos.above())),
-                    net.neoforged.neoforge.client.model.data.ModelData.EMPTY))
+            BakedModel model = this.dispatcher.getBlockModel(blockstate);
+            for (var renderType : model.getRenderTypes(blockstate, RandomSource.create(blockstate.getSeed(pos.above())), ModelData.EMPTY))
                 this.dispatcher
                         .getModelRenderer()
                         .tesselateWithoutAO(
@@ -73,7 +73,7 @@ public class HatchRenderer implements BlockEntityRenderer<HatchBlockEntity> {
                                 RandomSource.create(),
                                 blockstate.getSeed(pos.above()),
                                 OverlayTexture.NO_OVERLAY,
-                                net.neoforged.neoforge.client.model.data.ModelData.EMPTY,
+                                ModelData.EMPTY,
                                 renderType
                         );
             poseStack.popPose();
@@ -81,9 +81,8 @@ public class HatchRenderer implements BlockEntityRenderer<HatchBlockEntity> {
 
         {
             poseStack.pushPose();
-            var model = this.dispatcher.getBlockModel(be.getOtherPart());
-            for (var renderType : model.getRenderTypes(be.getOtherPart(), RandomSource.create(be.getOtherPart().getSeed(pos)),
-                    net.neoforged.neoforge.client.model.data.ModelData.EMPTY))
+            BakedModel model = this.dispatcher.getBlockModel(be.getOtherPart());
+            for (RenderType renderType : model.getRenderTypes(be.getOtherPart(), RandomSource.create(be.getOtherPart().getSeed(pos)), ModelData.EMPTY))
                 this.dispatcher
                         .getModelRenderer()
                         .tesselateBlock(
@@ -97,7 +96,7 @@ public class HatchRenderer implements BlockEntityRenderer<HatchBlockEntity> {
                                 RandomSource.create(),
                                 be.getOtherPart().getSeed(pos),
                                 OverlayTexture.NO_OVERLAY,
-                                net.neoforged.neoforge.client.model.data.ModelData.EMPTY,
+                                ModelData.EMPTY,
                                 renderType
                         );
             poseStack.popPose();

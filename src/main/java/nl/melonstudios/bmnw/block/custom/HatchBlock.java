@@ -73,8 +73,10 @@ public class HatchBlock extends HorizontalDirectionalBlock implements EntityBloc
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-        toggle(state, level, pos, player);
-        return InteractionResult.sidedSuccess(level.isClientSide());
+        if (hitResult.getDirection().getAxis() == Direction.Axis.Y) {
+            toggle(state, level, pos, player);
+            return InteractionResult.sidedSuccess(level.isClientSide());
+        } else return InteractionResult.PASS;
     }
 
     private void toggle(BlockState state, Level level, BlockPos pos, Player player) {
@@ -82,7 +84,7 @@ public class HatchBlock extends HorizontalDirectionalBlock implements EntityBloc
             return;
         }
         HatchBlockEntity be = getEntityOrNull(level, pos);
-        if (be != null && be.ticks > 0) return;
+        if (be != null && !be.toggleable()) return;
 
 
         BlockState blockState = state.cycle(OPEN);
@@ -90,7 +92,7 @@ public class HatchBlock extends HorizontalDirectionalBlock implements EntityBloc
 
         BlockEntity entity = level.getBlockEntity(pos);
         if (entity instanceof HatchBlockEntity hatch) {
-            hatch.ticks = 20;
+            hatch.resetAnimTicks();
             hatch.open = blockState.getValue(OPEN);
         }
 
@@ -106,13 +108,7 @@ public class HatchBlock extends HorizontalDirectionalBlock implements EntityBloc
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        BlockState blockstate = this.defaultBlockState();
-        Direction direction = context.getClickedFace();
-        if (!context.replacingClickedOnBlock() && direction.getAxis().isHorizontal()) {
-            return blockstate.setValue(FACING, direction);
-        } else {
-            return blockstate.setValue(FACING, context.getHorizontalDirection().getOpposite());
-        }
+        return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
     }
 
     @Override
