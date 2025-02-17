@@ -146,7 +146,8 @@ public class BMNWTabs {
                         addItems(items,
                                 BARBED_WIRE,
                                 FLAMING_BARBED_WIRE,
-                                POISONOUS_BARBED_WIRE
+                                POISONOUS_BARBED_WIRE,
+                                WP_BARBED_WIRE
                         );
                     })
                     .build()

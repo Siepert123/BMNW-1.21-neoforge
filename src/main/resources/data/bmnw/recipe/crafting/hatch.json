@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "bmnw:hatch_lid"
+    },
+    "N": {
+      "item": "bmnw:concrete_encapsulated_ladder"
+    }
+  },
+  "pattern": [
+    "#",
+    "N"
+  ],
+  "result": {
+    "id": "bmnw:hatch"
+  }
+}

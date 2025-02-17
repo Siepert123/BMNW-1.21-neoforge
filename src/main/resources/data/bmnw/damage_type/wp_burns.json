@@ -1,0 +1,7 @@
+{
+  "message_id": "wp_burns",
+  "scaling": "never",
+  "exhaustion": 5,
+  "effects": "hurt",
+  "death_message_type": "default"
+}

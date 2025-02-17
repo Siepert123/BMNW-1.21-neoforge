@@ -26,4 +26,10 @@ public class BMNWDamageSources {
     public static DamageSource shot(Level level) {
         return new DamageSource(level.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(SHOT));
     }
+
+    public static final ResourceKey<DamageType> WP_BURNS
+            = ResourceKey.create(Registries.DAMAGE_TYPE, BMNW.namespace("wp_burns"));
+    public static DamageSource wp_burns(Level level) {
+        return new DamageSource(level.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(WP_BURNS));
+    }
 }

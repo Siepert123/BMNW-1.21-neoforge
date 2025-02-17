@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "bmnw:barbed_wire"
+    },
+    "N": {
+      "tag": "bmnw:barbed_wire_modifier/poisonous"
+    }
+  },
+  "pattern": [
+    "###",
+    "#N#",
+    "###"
+  ],
+  "result": {
+    "count": 8,
+    "id": "bmnw:poisonous_barbed_wire"
+  }
+}

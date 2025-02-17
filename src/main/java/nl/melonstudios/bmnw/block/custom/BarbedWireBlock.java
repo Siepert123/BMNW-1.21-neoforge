@@ -5,6 +5,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -12,12 +13,15 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import nl.melonstudios.bmnw.block.BMNWBlocks;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public class BarbedWireBlock extends Block {
     public static final EnumProperty<Direction.Axis> AXIS =
@@ -31,7 +35,7 @@ public class BarbedWireBlock extends Block {
 
     @Override
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
-        if (this == BMNWBlocks.FLAMING_BARBED_WIRE.get()) {
+        if (this == BMNWBlocks.FLAMING_BARBED_WIRE.get() || this == BMNWBlocks.WP_BARBED_WIRE.get()) {
             level.addParticle(ParticleTypes.FLAME,
                     pos.getX() + random.nextDouble(),
                     pos.getY() + random.nextDouble(),
@@ -65,5 +69,10 @@ public class BarbedWireBlock extends Block {
     protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
         entity.makeStuckInBlock(state, new Vec3(0.25, 0.05, 0.25));
         effect.entityInside(entity);
+    }
+
+    @Override
+    public boolean isPossibleToRespawnInThis(BlockState state) {
+        return false;
     }
 }

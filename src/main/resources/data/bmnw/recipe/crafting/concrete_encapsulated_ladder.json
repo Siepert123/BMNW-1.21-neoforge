@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "bmnw:concrete_bricks"
+    },
+    {
+      "item": "bmnw:steel_ladder"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "bmnw:concrete_encapsulated_ladder"
+  }
+}

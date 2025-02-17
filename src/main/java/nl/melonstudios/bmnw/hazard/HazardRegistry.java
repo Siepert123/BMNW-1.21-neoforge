@@ -1,5 +1,6 @@
 package nl.melonstudios.bmnw.hazard;
 
+import net.minecraft.world.item.ItemStack;
 import nl.melonstudios.bmnw.misc.BMNWTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -112,5 +113,9 @@ public class HazardRegistry {
     }
     public static float getArmorRadResRegistry(Item item) {
         return radiation_protection_armor.getOrDefault(item, 0f);
+    }
+
+    public static boolean isWP(ItemStack stack) {
+        return stack.is(BMNWTags.Items.SLIGHT_WP) || stack.is(BMNWTags.Items.WP) || stack.is(BMNWTags.Items.BIG_WP);
     }
 }

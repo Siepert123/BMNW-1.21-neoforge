@@ -1,5 +1,6 @@
 package nl.melonstudios.bmnw.item;
 
+import net.minecraft.world.item.Rarity;
 import nl.melonstudios.bmnw.block.BMNWBlocks;
 import nl.melonstudios.bmnw.effect.BMNWEffects;
 import nl.melonstudios.bmnw.entity.custom.LeadBulletEntity;
@@ -415,6 +416,8 @@ public class BMNWItems {
             () -> new BlockItem(BMNWBlocks.FLAMING_BARBED_WIRE.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> POISONOUS_BARBED_WIRE = ITEMS.register("poisonous_barbed_wire",
             () -> new BlockItem(BMNWBlocks.POISONOUS_BARBED_WIRE.get(), new Item.Properties()));
+    public static final DeferredItem<BlockItem> WP_BARBED_WIRE = ITEMS.register("wp_barbed_wire",
+            () -> new BlockItem(BMNWBlocks.WP_BARBED_WIRE.get(), new Item.Properties().rarity(Rarity.UNCOMMON)));
 
     //endregion
 

@@ -1,0 +1,6 @@
+{
+  "parent": "bmnw:block/barbed_wire",
+  "textures": {
+    "texture": "bmnw:block/wp_barbed_wire"
+  }
+}

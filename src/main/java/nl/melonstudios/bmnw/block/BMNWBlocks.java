@@ -4,6 +4,8 @@ import net.minecraft.world.level.material.PushReaction;
 import nl.melonstudios.bmnw.block.custom.*;
 import nl.melonstudios.bmnw.block.settype.BMNWBlockSetType;
 import nl.melonstudios.bmnw.category.MissileCategory;
+import nl.melonstudios.bmnw.effect.BMNWEffects;
+import nl.melonstudios.bmnw.effect.custom.WPEffect;
 import nl.melonstudios.bmnw.entity.custom.AntiMissileMissileEntity;
 import nl.melonstudios.bmnw.entity.custom.ExampleMissileEntity;
 import nl.melonstudios.bmnw.entity.custom.HighExplosiveMissileEntity;
@@ -275,7 +277,13 @@ public class BMNWBlocks {
                     ));
                 }
             }));
-
+    public static final DeferredBlock<BarbedWireBlock> WP_BARBED_WIRE = BLOCKS.register("wp_barbed_wire",
+            () -> new BarbedWireBlock(BlockBehaviour.Properties.ofFullCopy(BARBED_WIRE.get()), entity -> {
+                entity.hurt(entity.damageSources().cactus(), 5);
+                if (entity instanceof LivingEntity living) {
+                    WPEffect.inflictWP(living, 1);
+                }
+            }));
     //endregion
 
     //region Doors & hatches

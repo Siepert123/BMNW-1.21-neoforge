@@ -1,0 +1,8 @@
+{
+  "values": [
+    "bmnw:nuclear_blast",
+    "bmnw:radiation",
+    "bmnw:wp_burns"
+  ],
+  "replace": false
+}

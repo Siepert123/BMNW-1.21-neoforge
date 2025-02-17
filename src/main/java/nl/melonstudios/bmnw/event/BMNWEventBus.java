@@ -10,6 +10,7 @@ import nl.melonstudios.bmnw.block.entity.custom.MissileLaunchPadBlockEntity;
 import nl.melonstudios.bmnw.block.entity.renderer.HatchRenderer;
 import nl.melonstudios.bmnw.datagen.BMNWAdvancementGenerator;
 import nl.melonstudios.bmnw.effect.BMNWEffects;
+import nl.melonstudios.bmnw.effect.custom.WPEffect;
 import nl.melonstudios.bmnw.entity.BMNWEntityTypes;
 import nl.melonstudios.bmnw.entity.renderer.*;
 import nl.melonstudios.bmnw.hazard.HazardRegistry;
@@ -234,6 +235,13 @@ public class BMNWEventBus {
                     if (HazardRegistry.getBlindingRegistry(item)) {
                         player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 20, 0, false, false));
                     }
+                    if (stack.is(BMNWTags.Items.BIG_WP)) {
+                        WPEffect.inflictWP(player, 2);
+                    } else if (stack.is(BMNWTags.Items.WP)) {
+                        WPEffect.inflictWP(player, 1);
+                    } else if (stack.is(BMNWTags.Items.SLIGHT_WP)) {
+                        WPEffect.inflictWP(player, 0);
+                    }
                 }
             }
         }
@@ -258,32 +266,15 @@ public class BMNWEventBus {
                 event.addTooltipLines(Component.translatable("tooltip.bmnw.crafting_part").withColor(0x888888));
                 return;
             }
-            if (stack.getItem() instanceof BlockItem && BMNWConfig.itemHazardInfo.id() > 0) {
-                Block block = ((BlockItem) stack.getItem()).getBlock();
-                if (block.getExplosionResistance() >= 100 || HazardRegistry.enableResistanceDisplay(block)) {
-                    if (BMNWConfig.itemHazardInfo.id() == 2) {
-                        event.addTooltipLines(
-                                Component.translatable("tooltip.bmnw.blast_resistance")
-                                        .append(": ")
-                                        .append(String.valueOf(block.getExplosionResistance()))
-                                        .withColor(0xffff00),
-                                Component.translatable("tooltip.bmnw.hardness")
-                                        .append(": ")
-                                        .append(String.valueOf(block.defaultDestroyTime()))
-                                        .withColor(0xffff00)
-                        );
-                    }
-                }
-            }
             if (BMNWConfig.itemHazardInfo.id() > 0) {
                 Item item = stack.getItem();
                 float itemRads = HazardRegistry.getRadRegistry(item);
                 if (itemRads > 0) {
                     if (BMNWConfig.itemHazardInfo.id() == 2) {
                         event.addTooltipLines(Component.translatable("tooltip.bmnw.radioactive")
-                                .append(" - ").append(String.valueOf(itemRads)).append("RAD/s").withColor(0x00ff00));
+                                .append(" - ").append(String.valueOf(itemRads)).append("RAD/s").withColor(0x00FF00));
                     } else {
-                        event.addTooltipLines(Component.translatable("tooltip.bmnw.radioactive").withColor(0x00ff00));
+                        event.addTooltipLines(Component.translatable("tooltip.bmnw.radioactive").withColor(0x00FF00));
                     }
                 }
                 float armorProtect = HazardRegistry.getArmorRadResRegistry(item);
@@ -297,10 +288,35 @@ public class BMNWEventBus {
                     }
                 }
                 if (HazardRegistry.getBurningRegistry(item)) {
-                    event.addTooltipLines(Component.translatable("tooltip.bmnw.burning").withColor(0xffff00));
+                    event.addTooltipLines(Component.translatable("tooltip.bmnw.burning").withColor(0xFFFF00));
                 }
                 if (HazardRegistry.getBlindingRegistry(item)) {
-                    event.addTooltipLines(Component.translatable("tooltip.bmnw.blinding").withColor(0x7777ff));
+                    event.addTooltipLines(Component.translatable("tooltip.b mnw.blinding").withColor(0x7777FF));
+                }
+                if (HazardRegistry.isWP(stack)) {
+                    event.addTooltipLines(Component.translatable("tooltip.bmnw.wp").withColor(0xFFF2B2));
+                }
+            }
+            if (stack.getItem() instanceof BlockItem) {
+                Block block = ((BlockItem) stack.getItem()).getBlock();
+                if (HazardRegistry.enableResistanceDisplay(block)) {
+                    if (event.getContext().flag().hasAltDown()) {
+                        event.addTooltipLines(
+                                Component.translatable("tooltip.bmnw.blast_resistance")
+                                        .append(": ")
+                                        .append(String.valueOf(block.getExplosionResistance()))
+                                        .withColor(0x888888),
+                                Component.translatable("tooltip.bmnw.hardness")
+                                        .append(": ")
+                                        .append(String.valueOf(block.defaultDestroyTime()))
+                                        .withColor(0x888888)
+                        );
+                    } else {
+                        event.addTooltipLines(
+                                Component.translatable("tooltip.bmnw.alt_for_resistance")
+                                        .withColor(0x888888)
+                        );
+                    }
                 }
             }
             if (stack.getItem() instanceof CoreSampleItem) {

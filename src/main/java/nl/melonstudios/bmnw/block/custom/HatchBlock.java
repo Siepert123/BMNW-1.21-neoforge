@@ -49,7 +49,6 @@ public class HatchBlock extends HorizontalDirectionalBlock implements EntityBloc
         registerDefaultState(stateDefinition.any()
                 .setValue(FACING, Direction.NORTH)
                 .setValue(OPEN, false));
-        //FIXME: replace with actual values
         open = BMNWSounds.HATCH_OPEN.get();
         close = BMNWSounds.HATCH_CLOSE.get();
     }

@@ -29,7 +29,10 @@
     "bmnw:barbed_wire",
     "bmnw:flaming_barbed_wire",
     "bmnw:poisonous_barbed_wire",
-    "bmnw:steel_ladder"
+    "bmnw:wp_barbed_wire",
+    "bmnw:steel_ladder",
+    "bmnw:concrete_encapsulated_ladder",
+    "bmnw:hatch"
   ],
   "replace": false
 }

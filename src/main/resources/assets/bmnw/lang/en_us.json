@@ -96,6 +96,7 @@
   "block.bmnw.uranium_fuel_block": "Block of Uranium Fuel",
   "block.bmnw.uranium_ore": "Uranium Ore",
   "block.bmnw.volcanic_fracturizer": "Volcanic Fracturizer",
+  "block.bmnw.wp_barbed_wire": "White Phosphorus Barbed Wire",
   "bmnw.midnightconfig.category.experimental": "Experimental config",
   "bmnw.midnightconfig.category.gameplay": "Gameplay config",
   "bmnw.midnightconfig.category.radiation": "Radiation config",
@@ -146,8 +147,10 @@
   "commands.bmnw.radiation.chunk.set": "Set chunk radiation to %s",
   "death.attack.nuclear_blast": "%ss organs got reorganized by a nuclear blast",
   "death.attack.radiation": "%s suffered acute radiation poisoning",
+  "death.attack.wp_burns": "%s died to white phosphorus burns",
   "effect.bmnw.contamination": "Contamination",
   "effect.bmnw.vomiting": "Vomiting",
+  "effect.bmnw.white_phosphorus": "Phosphorus Burns",
   "entity.bmnw.caseoh": "Fat Man Explosion",
   "entity.bmnw.dud": "Dropped Soulfire Bomb Explosion",
   "entity.bmnw.little_boy": "Little Boy Explosion",
@@ -333,6 +336,7 @@
   "text.bmnw.position_invalid": "Invalid position!",
   "text.bmnw.position_missing": "No position set!",
   "text.bmnw.position_set": "Position set!",
+  "tooltip.bmnw.alt_for_resistance": "[ALT] for resistance values",
   "tooltip.bmnw.ammo": "Ammunition",
   "tooltip.bmnw.armor_rad_resistance": "Radiation resistance: %s",
   "tooltip.bmnw.battery_overcharge": "WARNING: Overcharge!",
@@ -350,5 +354,6 @@
   "tooltip.bmnw.hardness": "Hardness",
   "tooltip.bmnw.radiation_shielding": "[Radiation Shielding]",
   "tooltip.bmnw.radioactive": "[Radioactive]",
-  "tooltip.bmnw.radius": "Radius: ~%s"
+  "tooltip.bmnw.radius": "Radius: ~%s",
+  "tooltip.bmnw.wp": "[White Phosphorus]"
 }

@@ -1,9 +1,9 @@
 {
 	"render_type": "cutout",
 	"textures": {
-		"particle": "bmnw:block/steel_block",
 		"texture": "bmnw:block/barbed_wire",
-		"plank": "block/oak_planks"
+		"plank": "block/oak_planks",
+		"particle": "#texture"
 	},
 	"elements": [
 		{
