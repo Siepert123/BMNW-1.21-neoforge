@@ -346,6 +346,7 @@
   "tooltip.bmnw.discharge_rate_mega": "Transfer rate: %sMRF/t",
   "tooltip.bmnw.fracturizer": "(Not the virus)",
   "tooltip.bmnw.fully_charged": "Fully charged!",
+  "tooltip.bmnw.hardness": "Hardness",
   "tooltip.bmnw.radiation_shielding": "[Radiation Shielding]",
   "tooltip.bmnw.radioactive": "[Radioactive]",
   "tooltip.bmnw.radius": "Radius: ~%s"
