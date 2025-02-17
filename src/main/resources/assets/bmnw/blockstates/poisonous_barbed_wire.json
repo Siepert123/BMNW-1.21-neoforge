@@ -1,0 +1,11 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "bmnw:block/poisonous_barbed_wire"
+    },
+    "axis=z": {
+      "model": "bmnw:block/poisonous_barbed_wire",
+      "y": 90
+    }
+  }
+}

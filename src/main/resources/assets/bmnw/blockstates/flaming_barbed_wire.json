@@ -1,0 +1,11 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "bmnw:block/flaming_barbed_wire"
+    },
+    "axis=z": {
+      "model": "bmnw:block/flaming_barbed_wire",
+      "y": 90
+    }
+  }
+}

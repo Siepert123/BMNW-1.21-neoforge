@@ -1,0 +1,6 @@
+{
+  "parent": "bmnw:block/barbed_wire",
+  "textures": {
+    "texture": "bmnw:block/poisonous_barbed_wire"
+  }
+}

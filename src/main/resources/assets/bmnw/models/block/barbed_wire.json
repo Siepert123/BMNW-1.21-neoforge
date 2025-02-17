@@ -1,0 +1,149 @@
+{
+	"render_type": "cutout",
+	"textures": {
+		"particle": "bmnw:block/steel_block",
+		"texture": "bmnw:block/barbed_wire",
+		"plank": "block/oak_planks"
+	},
+	"elements": [
+		{
+			"from": [-0.5, -3, 7.5],
+			"to": [0.5, 19, 8.5],
+			"rotation": {"angle": 45, "axis": "x", "origin": [0, 8, 8]},
+			"faces": {
+				"north": {"uv": [0, 0, 1, 16], "texture": "#plank"},
+				"east": {"uv": [0, 0, 1, 16], "texture": "#plank"},
+				"south": {"uv": [0, 0, 1, 16], "texture": "#plank"},
+				"west": {"uv": [0, 0, 1, 16], "texture": "#plank"},
+				"up": {"uv": [0, 0, 1, 1], "texture": "#plank"},
+				"down": {"uv": [0, 0, 1, 1], "texture": "#plank"}
+			}
+		},
+		{
+			"from": [15.5, -3, 7.5],
+			"to": [16.5, 19, 8.5],
+			"rotation": {"angle": -45, "axis": "x", "origin": [16, 8, 8]},
+			"faces": {
+				"north": {"uv": [0, 0, 1, 16], "texture": "#plank"},
+				"east": {"uv": [0, 0, 1, 16], "texture": "#plank"},
+				"south": {"uv": [0, 0, 1, 16], "texture": "#plank"},
+				"west": {"uv": [0, 0, 1, 16], "texture": "#plank"},
+				"up": {"uv": [0, 0, 1, 1], "texture": "#plank"},
+				"down": {"uv": [0, 0, 1, 1], "texture": "#plank"}
+			}
+		},
+		{
+			"from": [0, 2, 4],
+			"to": [16, 2, 12],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 2, 4]},
+			"faces": {
+				"up": {"uv": [0, 8, 16, 16], "texture": "#texture"},
+				"down": {"uv": [0, 0, 16, 8], "texture": "#texture"}
+			}
+		},
+		{
+			"from": [0, 4, 0],
+			"to": [16, 4, 8],
+			"rotation": {"angle": 45, "axis": "x", "origin": [8, 4, 4]},
+			"faces": {
+				"up": {"uv": [0, 8, 16, 16], "texture": "#texture"},
+				"down": {"uv": [0, 0, 16, 8], "texture": "#texture"}
+			}
+		},
+		{
+			"from": [0, 4, 8],
+			"to": [16, 4, 16],
+			"rotation": {"angle": -45, "axis": "x", "origin": [8, 4, 12]},
+			"faces": {
+				"up": {"uv": [0, 8, 16, 16], "texture": "#texture"},
+				"down": {"uv": [0, 0, 16, 8], "texture": "#texture"}
+			}
+		},
+		{
+			"from": [0, 14, 4],
+			"to": [16, 14, 12],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 14, 4]},
+			"faces": {
+				"up": {"uv": [0, 0, 16, 8], "texture": "#texture"},
+				"down": {"uv": [0, 8, 16, 16], "texture": "#texture"}
+			}
+		},
+		{
+			"from": [0, 12, 8],
+			"to": [16, 12, 16],
+			"rotation": {"angle": 45, "axis": "x", "origin": [8, 12, 12]},
+			"faces": {
+				"up": {"uv": [0, 0, 16, 8], "texture": "#texture"},
+				"down": {"uv": [0, 8, 16, 16], "texture": "#texture"}
+			}
+		},
+		{
+			"from": [0, 12, 0],
+			"to": [16, 12, 8],
+			"rotation": {"angle": -45, "axis": "x", "origin": [8, 12, 4]},
+			"faces": {
+				"up": {"uv": [0, 0, 16, 8], "texture": "#texture"},
+				"down": {"uv": [0, 8, 16, 16], "texture": "#texture"}
+			}
+		},
+		{
+			"from": [0, 4, 2],
+			"to": [16, 12, 2],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 4, 2]},
+			"faces": {
+				"north": {"uv": [0, 0, 16, 8], "texture": "#texture"},
+				"south": {"uv": [0, 8, 16, 16], "texture": "#texture"}
+			}
+		},
+		{
+			"from": [0, 4, 14],
+			"to": [16, 12, 14],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 4, 14]},
+			"faces": {
+				"north": {"uv": [0, 8, 16, 16], "texture": "#texture"},
+				"south": {"uv": [0, 0, 16, 8], "texture": "#texture"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, 45, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, 225, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"ground": {
+			"translation": [0, 3, 0],
+			"scale": [0.25, 0.25, 0.25]
+		},
+		"gui": {
+			"rotation": [30, 225, 0],
+			"scale": [0.625, 0.625, 0.625]
+		},
+		"fixed": {
+			"scale": [0.5, 0.5, 0.5]
+		}
+	},
+	"groups": [
+		0,
+		1,
+		{
+			"name": "wire",
+			"origin": [8, 8, 8],
+			"color": 0,
+			"children": [2, 3, 4, 5, 6, 7, 8, 9]
+		}
+	]
+}
