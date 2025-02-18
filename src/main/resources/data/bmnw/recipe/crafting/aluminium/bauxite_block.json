@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "bauxite_block",
+  "key": {
+    "#": {
+      "tag": "c:raw_materials/bauxite"
+    },
+    "N": {
+      "item": "bmnw:bauxite"
+    }
+  },
+  "pattern": [
+    "###",
+    "#N#",
+    "###"
+  ],
+  "result": {
+    "count": 1,
+    "id": "bmnw:bauxite_block"
+  }
+}

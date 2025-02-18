@@ -16,7 +16,8 @@
     "bmnw:plutonium_240_nugget",
     "bmnw:plutonium_241_nugget",
     "bmnw:reactor_grade_plutonium_nugget",
-    "bmnw:plutonium_fuel_nugget"
+    "bmnw:plutonium_fuel_nugget",
+    "bmnw:aluminium_nugget"
   ],
   "replace": false
 }

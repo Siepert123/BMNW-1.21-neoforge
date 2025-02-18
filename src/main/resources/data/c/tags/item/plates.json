@@ -4,10 +4,11 @@
     "bmnw:copper_plate",
     "bmnw:gold_plate",
     "bmnw:conductive_copper_plate",
-    "bmnw:steel_plate",
     "bmnw:lead_plate",
+    "bmnw:aluminium_plate",
     "bmnw:tungsten_plate",
-    "bmnw:titanium_plate"
+    "bmnw:titanium_plate",
+    "bmnw:steel_plate"
   ],
   "replace": false
 }

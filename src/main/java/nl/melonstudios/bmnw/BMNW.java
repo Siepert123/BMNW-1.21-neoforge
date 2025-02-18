@@ -20,7 +20,6 @@ import nl.melonstudios.bmnw.item.BMNWItems;
 import nl.melonstudios.bmnw.item.components.BMNWDataComponents;
 import nl.melonstudios.bmnw.misc.*;
 import nl.melonstudios.bmnw.particle.BMNWParticleTypes;
-import nl.melonstudios.bmnw.radiation.ShieldingValues;
 import nl.melonstudios.bmnw.recipe.BMNWRecipeSerializers;
 import nl.melonstudios.bmnw.recipe.BMNWRecipeTypes;
 import nl.melonstudios.bmnw.hardcoded.structure.coded.StructureRadioAntenna;
@@ -98,7 +97,6 @@ public class BMNW {
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
-        ShieldingValues.initialize();
         ExcavationVein.initialize();
         Books.registerBooks();
         HazardRegistry.register();

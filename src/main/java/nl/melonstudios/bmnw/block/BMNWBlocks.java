@@ -1,5 +1,6 @@
 package nl.melonstudios.bmnw.block;
 
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.level.material.PushReaction;
 import nl.melonstudios.bmnw.block.custom.*;
 import nl.melonstudios.bmnw.block.settype.BMNWBlockSetType;
@@ -47,17 +48,21 @@ public class BMNWBlocks {
             () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.DIAMOND_BLOCK).sound(SoundType.METAL)));
 
     public static final DeferredBlock<Block> LEAD_ORE = ore("lead_ore");
+    public static final DeferredBlock<Block> BAUXITE_ORE = ore("bauxite_ore");
     public static final DeferredBlock<Block> TUNGSTEN_ORE = ore("tungsten_ore");
     public static final DeferredBlock<Block> TITANIUM_ORE = ore("titanium_ore");
     public static final DeferredBlock<Block> DEEPSLATE_LEAD_ORE = deepslateOre("deepslate_lead_ore");
+    public static final DeferredBlock<Block> DEEPSLATE_BAUXITE_ORE = deepslateOre("deepslate_bauxite_ore");
     public static final DeferredBlock<Block> DEEPSLATE_TUNGSTEN_ORE = deepslateOre("deepslate_tungsten_ore");
     public static final DeferredBlock<Block> DEEPSLATE_TITANIUM_ORE = deepslateOre("deepslate_titanium_ore");
     public static final DeferredBlock<Block> RAW_LEAD_BLOCK = rawBlock("raw_lead_block");
+    public static final DeferredBlock<Block> BAUXITE_BLOCK = rawBlock("bauxite_block");
     public static final DeferredBlock<Block> RAW_TUNGSTEN_BLOCK = rawBlock("raw_tungsten_block");
     public static final DeferredBlock<Block> RAW_TITANIUM_BLOCK = rawBlock("raw_titanium_block");
     public static final DeferredBlock<Block> CONDUCTIVE_COPPER_BLOCK = BLOCKS.register("conductive_copper_block",
             () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.COPPER_BLOCK)));
     public static final DeferredBlock<Block> LEAD_BLOCK = storageBlock("lead_block");
+    public static final DeferredBlock<Block> ALUMINIUM_BLOCK = storageBlock("aluminium_block");
     public static final DeferredBlock<Block> TUNGSTEN_BLOCK = storageBlock("tungsten_block");
     public static final DeferredBlock<Block> TITANIUM_BLOCK = storageBlock("titanium_block");
 
@@ -261,29 +266,42 @@ public class BMNWBlocks {
     //region Basic defense
 
     public static final DeferredBlock<BarbedWireBlock> BARBED_WIRE = BLOCKS.register("barbed_wire",
-            () -> new BarbedWireBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).noOcclusion(),
-                    entity -> entity.hurt(entity.damageSources().cactus(), 5)));
+            () -> new BarbedWireBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).noOcclusion(), (entity, entityMoving) -> {
+                if (entityMoving && !(entity instanceof ItemEntity item && item.getAge() < 20)) {
+                    entity.hurt(entity.damageSources().cactus(), 5);
+                }
+            })
+    );
     public static final DeferredBlock<BarbedWireBlock> FLAMING_BARBED_WIRE = BLOCKS.register("flaming_barbed_wire",
-            () -> new BarbedWireBlock(BlockBehaviour.Properties.ofFullCopy(BARBED_WIRE.get()), entity -> {
-                entity.hurt(entity.damageSources().cactus(), 5);
+            () -> new BarbedWireBlock(BlockBehaviour.Properties.ofFullCopy(BARBED_WIRE.get()), (entity, entityMoving) -> {
+                if (entityMoving && !(entity instanceof ItemEntity item && item.getAge() < 20)) {
+                    entity.hurt(entity.damageSources().cactus(), 5);
+                }
                 entity.setRemainingFireTicks(100);
-            }));
+            })
+    );
     public static final DeferredBlock<BarbedWireBlock> POISONOUS_BARBED_WIRE = BLOCKS.register("poisonous_barbed_wire",
-            () -> new BarbedWireBlock(BlockBehaviour.Properties.ofFullCopy(BARBED_WIRE.get()), entity -> {
-                entity.hurt(entity.damageSources().cactus(), 5);
+            () -> new BarbedWireBlock(BlockBehaviour.Properties.ofFullCopy(BARBED_WIRE.get()), (entity, entityMoving) -> {
+                if (entityMoving && !(entity instanceof ItemEntity item && item.getAge() < 20)) {
+                    entity.hurt(entity.damageSources().cactus(), 5);
+                }
                 if (entity instanceof LivingEntity living) {
                     living.addEffect(new MobEffectInstance(
-                            MobEffects.POISON, 100, 1
+                            MobEffects.POISON, 200, 1
                     ));
                 }
-            }));
+            })
+    );
     public static final DeferredBlock<BarbedWireBlock> WP_BARBED_WIRE = BLOCKS.register("wp_barbed_wire",
-            () -> new BarbedWireBlock(BlockBehaviour.Properties.ofFullCopy(BARBED_WIRE.get()), entity -> {
-                entity.hurt(entity.damageSources().cactus(), 5);
+            () -> new BarbedWireBlock(BlockBehaviour.Properties.ofFullCopy(BARBED_WIRE.get()), (entity, entityMoving) -> {
+                if (entityMoving && !(entity instanceof ItemEntity item && item.getAge() < 20)) {
+                    entity.hurt(entity.damageSources().cactus(), 5);
+                }
                 if (entity instanceof LivingEntity living) {
                     WPEffect.inflictWP(living, 1);
                 }
-            }));
+            })
+    );
     //endregion
 
     //region Doors & hatches

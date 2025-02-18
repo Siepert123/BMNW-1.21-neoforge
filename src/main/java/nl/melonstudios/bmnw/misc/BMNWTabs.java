@@ -78,11 +78,13 @@ public class BMNWTabs {
 
                         addItems(items,
                                 LEAD_ORE,
+                                BAUXITE_ORE,
                                 TUNGSTEN_ORE,
                                 TITANIUM_ORE,
                                 URANIUM_ORE,
                                 THORIUM_ORE,
                                 DEEPSLATE_LEAD_ORE,
+                                DEEPSLATE_BAUXITE_ORE,
                                 DEEPSLATE_TUNGSTEN_ORE,
                                 DEEPSLATE_TITANIUM_ORE,
                                 DEEPSLATE_URANIUM_ORE,
@@ -91,12 +93,14 @@ public class BMNWTabs {
 
                         addItems(items,
                                 RAW_LEAD_BLOCK,
+                                BAUXITE_BLOCK,
                                 RAW_TUNGSTEN_BLOCK,
                                 RAW_TITANIUM_BLOCK,
                                 RAW_URANIUM_BLOCK,
                                 RAW_THORIUM_BLOCK,
                                 CONDUCTIVE_COPPER_BLOCK,
                                 LEAD_BLOCK,
+                                ALUMINIUM_BLOCK,
                                 TUNGSTEN_BLOCK,
                                 TITANIUM_BLOCK,
                                 STEEL_BLOCK,
@@ -155,12 +159,13 @@ public class BMNWTabs {
 
     private static Supplier<ItemStack> getMaterialsIcon() {
         Random random = new Random();
-        return switch (random.nextInt(5)) {
+        return switch (random.nextInt(6)) {
             case 0 -> () -> new ItemStack(STEEL_INGOT.get());
             case 1 -> () -> new ItemStack(URANIUM_INGOT.get());
             case 2 -> () -> new ItemStack(TUNGSTEN_INGOT.get());
             case 3 -> () -> new ItemStack(TITANIUM_INGOT.get());
             case 4 -> () -> new ItemStack(THORIUM_INGOT.get());
+            case 5 -> () -> new ItemStack(ALUMINIUM_INGOT.get());
             default -> () -> new ItemStack(PLAYSTATION.get());
         };
     }
@@ -188,14 +193,17 @@ public class BMNWTabs {
                             ResourceLocation.parse("bmnw:machines"),
                             ResourceLocation.parse("bmnw:bombs")
                     )
-                    .displayItems((parameters, items) -> {items.accept(RAW_LEAD);
+                    .displayItems((parameters, items) -> {
+                        items.accept(RAW_LEAD);
                         //region Materials
+                        items.accept(BAUXITE);
                         items.accept(RAW_TUNGSTEN);
                         items.accept(RAW_TITANIUM);
                         items.accept(RAW_URANIUM);
                         items.accept(RAW_THORIUM);
 
                         items.accept(LEAD_NUGGET);
+                        items.accept(ALUMINIUM_NUGGET);
                         items.accept(TUNGSTEN_NUGGET);
                         items.accept(TITANIUM_NUGGET);
                         items.accept(URANIUM_NUGGET);
@@ -215,6 +223,7 @@ public class BMNWTabs {
 
                         items.accept(CONDUCTIVE_COPPER_INGOT);
                         items.accept(LEAD_INGOT);
+                        items.accept(ALUMINIUM_INGOT);
                         items.accept(TUNGSTEN_INGOT);
                         items.accept(TITANIUM_INGOT);
                         items.accept(STEEL_INGOT);
@@ -238,6 +247,7 @@ public class BMNWTabs {
                         items.accept(GOLD_PLATE);
                         items.accept(CONDUCTIVE_COPPER_PLATE);
                         items.accept(LEAD_PLATE);
+                        items.accept(ALUMINIUM_PLATE);
                         items.accept(TUNGSTEN_PLATE);
                         items.accept(TITANIUM_PLATE);
                         items.accept(STEEL_PLATE);
@@ -246,6 +256,10 @@ public class BMNWTabs {
                         items.accept(COPPER_WIRE);
                         items.accept(GOLD_WIRE);
                         items.accept(CONDUCTIVE_COPPER_WIRE);
+                        items.accept(LEAD_WIRE);
+                        items.accept(ALUMINIUM_WIRE);
+                        items.accept(TUNGSTEN_WIRE);
+                        items.accept(TITANIUM_WIRE);
                         items.accept(STEEL_WIRE);
 
                         items.accept(URANIUM_BILLET);
@@ -324,6 +338,8 @@ public class BMNWTabs {
                         items.accept(IRRADIATED_PLANT_FIBERS);
                         items.accept(URANIUM_SANDWICH);
 
+                        items.accept(TUNGSTEN_REACHERS);
+
                         items.accept(getEmptyBattery(LEAD_ACID_BATTERY.get()));
                         items.accept(getFullBattery(LEAD_ACID_BATTERY.get()));
                         items.accept(getEmptyBattery(DURAPIXEL_BATTERY.get()));
@@ -335,6 +351,14 @@ public class BMNWTabs {
                         items.accept(getEmptyBattery(DURAPIXEL_CAR_BATTERY.get()));
                         items.accept(getFullBattery(DURAPIXEL_CAR_BATTERY.get()));
                         items.accept(CREATIVE_CAR_BATTERY);
+
+                        addItems(items,
+                                STEEL_SHOVEL,
+                                STEEL_PICKAXE,
+                                STEEL_AXE,
+                                STEEL_HOE,
+                                STEEL_SWORD
+                        );
                     })
                     .build()
     );

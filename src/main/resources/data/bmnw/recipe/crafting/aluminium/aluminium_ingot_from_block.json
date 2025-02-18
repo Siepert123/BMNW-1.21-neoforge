@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "aluminium_ingot",
+  "key": {
+    "#": {
+      "item": "bmnw:aluminium_block"
+    }
+  },
+  "pattern": [
+    "#"
+  ],
+  "result": {
+    "count": 9,
+    "id": "bmnw:aluminium_ingot"
+  }
+}

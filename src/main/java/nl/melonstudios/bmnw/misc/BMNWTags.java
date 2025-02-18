@@ -64,9 +64,17 @@ public class BMNWTags {
         public static final TagKey<Item> SLIGHT_WP = itemTag("bmnw:slight_white_phosphorus");
         public static final TagKey<Item> WP = itemTag("bmnw:white_phosphorus");
         public static final TagKey<Item> BIG_WP = itemTag("bmnw:big_white_phosphorus");
+
+        public static final TagKey<Item> REACHERS = itemTag("bmnw:reachers");
     }
     public static class Biomes {
         public static final TagKey<Biome> HAS_RADIO_ANTENNA = biomeTag("bmnw:has_structure/radio_antenna");
         public static final TagKey<Biome> HAS_BRICK_BUILDING = biomeTag("bmnw:has_structure/brick_building");
+    }
+
+    public static class NeoForge {
+        public static class Items {
+            public static final TagKey<Item> INGOTS_STEEL = itemTag("c:ingots/steel");
+        }
     }
 }

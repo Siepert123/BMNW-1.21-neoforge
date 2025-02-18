@@ -1,6 +1,6 @@
 package nl.melonstudios.bmnw.item;
 
-import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.*;
 import nl.melonstudios.bmnw.block.BMNWBlocks;
 import nl.melonstudios.bmnw.effect.BMNWEffects;
 import nl.melonstudios.bmnw.entity.custom.LeadBulletEntity;
@@ -10,9 +10,6 @@ import nl.melonstudios.bmnw.misc.ExcavationVein;
 import nl.melonstudios.bmnw.misc.GunOptions;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.DoubleHighBlockItem;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
@@ -51,6 +48,7 @@ public class BMNWItems {
     public static final DeferredItem<Item> STEEL_PLATE = ITEMS.register("steel_plate",
             () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> LEAD_PLATE = item("lead_plate");
+    public static final DeferredItem<Item> ALUMINIUM_PLATE = item("aluminium_plate");
     public static final DeferredItem<Item> TUNGSTEN_PLATE = item("tungsten_plate");
     public static final DeferredItem<Item> TITANIUM_PLATE = item("titanium_plate");
 
@@ -64,41 +62,57 @@ public class BMNWItems {
             () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> STEEL_WIRE = ITEMS.register("steel_wire",
             () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> LEAD_WIRE = ITEMS.register("lead_wire",
+            () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> ALUMINIUM_WIRE = item("aluminium_wire");
+    public static final DeferredItem<Item> TUNGSTEN_WIRE = item("tungsten_wire");
+    public static final DeferredItem<Item> TITANIUM_WIRE = item("titanium_wire");
 
     public static final DeferredItem<BlockItem> LEAD_ORE = ITEMS.register("lead_ore",
             () -> new BlockItem(BMNWBlocks.LEAD_ORE.get(), new Item.Properties()));
+    public static final DeferredItem<BlockItem> BAUXITE_ORE = ITEMS.register("bauxite_ore",
+            () -> new BlockItem(BMNWBlocks.BAUXITE_ORE.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> TUNGSTEN_ORE = ITEMS.register("tungsten_ore",
             () -> new BlockItem(BMNWBlocks.TUNGSTEN_ORE.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> TITANIUM_ORE = ITEMS.register("titanium_ore",
             () -> new BlockItem(BMNWBlocks.TITANIUM_ORE.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> DEEPSLATE_LEAD_ORE = ITEMS.register("deepslate_lead_ore",
             () -> new BlockItem(BMNWBlocks.DEEPSLATE_LEAD_ORE.get(), new Item.Properties()));
+    public static final DeferredItem<BlockItem> DEEPSLATE_BAUXITE_ORE = ITEMS.register("deepslate_bauxite_ore",
+            () -> new BlockItem(BMNWBlocks.DEEPSLATE_BAUXITE_ORE.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> DEEPSLATE_TUNGSTEN_ORE = ITEMS.register("deepslate_tungsten_ore",
             () -> new BlockItem(BMNWBlocks.DEEPSLATE_TUNGSTEN_ORE.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> DEEPSLATE_TITANIUM_ORE = ITEMS.register("deepslate_titanium_ore",
             () -> new BlockItem(BMNWBlocks.DEEPSLATE_TITANIUM_ORE.get(), new Item.Properties()));
 
     public static final DeferredItem<Item> RAW_LEAD = item("raw_lead");
+    public static final DeferredItem<Item> BAUXITE = item("bauxite");
     public static final DeferredItem<Item> RAW_TUNGSTEN = item("raw_tungsten");
     public static final DeferredItem<Item> RAW_TITANIUM = item("raw_titanium");
     public static final DeferredItem<BlockItem> RAW_LEAD_BLOCK = ITEMS.register("raw_lead_block",
             () -> new BlockItem(BMNWBlocks.RAW_LEAD_BLOCK.get(), new Item.Properties()));
+    public static final DeferredItem<BlockItem> BAUXITE_BLOCK = ITEMS.register("bauxite_block",
+            () -> new BlockItem(BMNWBlocks.BAUXITE_BLOCK.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> RAW_TUNGSTEN_BLOCK = ITEMS.register("raw_tungsten_block",
             () -> new BlockItem(BMNWBlocks.RAW_TUNGSTEN_BLOCK.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> RAW_TITANIUM_BLOCK = ITEMS.register("raw_titanium_block",
             () -> new BlockItem(BMNWBlocks.RAW_TITANIUM_BLOCK.get(), new Item.Properties()));
 
     public static final DeferredItem<Item> LEAD_NUGGET = item("lead_nugget");
+    public static final DeferredItem<Item> ALUMINIUM_NUGGET = item("aluminium_nugget");
     public static final DeferredItem<Item> TUNGSTEN_NUGGET = item("tungsten_nugget");
     public static final DeferredItem<Item> TITANIUM_NUGGET = item("titanium_nugget");
     public static final DeferredItem<Item> CONDUCTIVE_COPPER_INGOT = item("conductive_copper_ingot");
     public static final DeferredItem<Item> LEAD_INGOT = item("lead_ingot"); //base color: #3a4899
+    public static final DeferredItem<Item> ALUMINIUM_INGOT = item("aluminium_ingot");
     public static final DeferredItem<Item> TUNGSTEN_INGOT = item("tungsten_ingot");
     public static final DeferredItem<Item> TITANIUM_INGOT = item("titanium_ingot");
     public static final DeferredItem<BlockItem> CONDUCTIVE_COPPER_BLOCK = ITEMS.register("conductive_copper_block",
             () -> new BlockItem(BMNWBlocks.CONDUCTIVE_COPPER_BLOCK.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> LEAD_BLOCK = ITEMS.register("lead_block",
             () -> new BlockItem(BMNWBlocks.LEAD_BLOCK.get(), new Item.Properties()));
+    public static final DeferredItem<BlockItem> ALUMINIUM_BLOCK = ITEMS.register("aluminium_block",
+            () -> new BlockItem(BMNWBlocks.ALUMINIUM_BLOCK.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> TUNGSTEN_BLOCK = ITEMS.register("tungsten_block",
             () -> new BlockItem(BMNWBlocks.TUNGSTEN_BLOCK.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> TITANIUM_BLOCK = ITEMS.register("titanium_block",
@@ -478,6 +492,21 @@ public class BMNWItems {
 
     //endregion
 
+    //region Tools
+
+    public static final DeferredItem<ShovelItem> STEEL_SHOVEL = ITEMS.register("steel_shovel",
+            () -> new ShovelItem(BMNWTiers.STEEL, new Item.Properties().stacksTo(1)));
+    public static final DeferredItem<PickaxeItem> STEEL_PICKAXE = ITEMS.register("steel_pickaxe",
+            () -> new PickaxeItem(BMNWTiers.STEEL, new Item.Properties().stacksTo(1)));
+    public static final DeferredItem<AxeItem> STEEL_AXE = ITEMS.register("steel_axe",
+            () -> new AxeItem(BMNWTiers.STEEL, new Item.Properties().stacksTo(1)));
+    public static final DeferredItem<HoeItem> STEEL_HOE = ITEMS.register("steel_hoe",
+            () -> new HoeItem(BMNWTiers.STEEL, new Item.Properties().stacksTo(1)));
+    public static final DeferredItem<SwordItem> STEEL_SWORD = ITEMS.register("steel_sword",
+            () -> new SwordItem(BMNWTiers.STEEL, new Item.Properties().stacksTo(1)));
+
+    //endregion
+
     public static final DeferredItem<SimpleRadioactiveBlockItem> NUCLEAR_WASTE_BARREL = ITEMS.register("nuclear_waste_barrel",
             () -> new SimpleRadioactiveBlockItem(BMNWBlocks.NUCLEAR_WASTE_BARREL.get(), new Item.Properties()));
 
@@ -487,6 +516,9 @@ public class BMNWItems {
                     () -> new MobEffectInstance(BMNWEffects.CONTAMINATION, 100, 1), 0.5f
             )))), 6.9f)
     );
+
+    public static final DeferredItem<Item> TUNGSTEN_REACHERS = ITEMS.register("tungsten_reachers",
+            () -> new Item(new Item.Properties().stacksTo(1)));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);

@@ -4,6 +4,10 @@
     "bmnw:copper_wire",
     "bmnw:gold_wire",
     "bmnw:conductive_copper_wire",
+    "bmnw:lead_wire",
+    "bmnw:aluminium_wire",
+    "bmnw:tungsten_wire",
+    "bmnw:titanium_wire",
     "bmnw:steel_wire"
   ],
   "replace": false

@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "group": "aluminium_ingot",
+  "cookingtime": 200,
+  "experience": 0.35,
+  "ingredient": {
+    "tag": "c:raw_materials/bauxite"
+  },
+  "result": {
+    "id": "bmnw:aluminium_ingot"
+  }
+}

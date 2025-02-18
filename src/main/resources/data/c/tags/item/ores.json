@@ -9,7 +9,9 @@
     "bmnw:deepslate_tungsten_ore",
     "bmnw:deepslate_titanium_ore",
     "bmnw:lead_ore",
-    "bmnw:deepslate_lead_ore"
+    "bmnw:deepslate_lead_ore",
+    "bmnw:bauxite_ore",
+    "bmnw:deepslate_bauxite_ore"
   ],
   "replace": false
 }

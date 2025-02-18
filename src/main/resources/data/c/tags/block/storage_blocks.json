@@ -23,7 +23,9 @@
     "bmnw:plutonium_240_block",
     "bmnw:plutonium_241_block",
     "bmnw:reactor_grade_plutonium_block",
-    "bmnw:plutonium_fuel_block"
+    "bmnw:plutonium_fuel_block",
+    "bmnw:bauxite_block",
+    "bmnw:aluminium_block"
   ],
   "replace": false
 }

@@ -22,7 +22,6 @@ import nl.melonstudios.bmnw.item.custom.CoreSampleItem;
 import nl.melonstudios.bmnw.misc.*;
 import nl.melonstudios.bmnw.particle.BMNWParticleTypes;
 import nl.melonstudios.bmnw.particle.custom.*;
-import nl.melonstudios.bmnw.radiation.*;
 import nl.melonstudios.bmnw.hardcoded.structure.Structures;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -229,18 +228,20 @@ public class BMNWEventBus {
                     if (HazardRegistry.getRadRegistry(item) > 0) {
                         RadiationTools.contaminate(player, HazardRegistry.getRadRegistry(item) / 20 * stack.getCount());
                     }
-                    if (HazardRegistry.getBurningRegistry(item)) {
-                        player.setRemainingFireTicks(20);
-                    }
                     if (HazardRegistry.getBlindingRegistry(item)) {
                         player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 20, 0, false, false));
                     }
-                    if (stack.is(BMNWTags.Items.BIG_WP)) {
-                        WPEffect.inflictWP(player, 2);
-                    } else if (stack.is(BMNWTags.Items.WP)) {
-                        WPEffect.inflictWP(player, 1);
-                    } else if (stack.is(BMNWTags.Items.SLIGHT_WP)) {
-                        WPEffect.inflictWP(player, 0);
+                    if (HazardRegistry.shouldSkinContact(player)) {
+                        if (HazardRegistry.getBurningRegistry(item)) {
+                            player.setRemainingFireTicks(20);
+                        }
+                        if (stack.is(BMNWTags.Items.BIG_WP)) {
+                            WPEffect.inflictWP(player, 2);
+                        } else if (stack.is(BMNWTags.Items.WP)) {
+                            WPEffect.inflictWP(player, 1);
+                        } else if (stack.is(BMNWTags.Items.SLIGHT_WP)) {
+                            WPEffect.inflictWP(player, 0);
+                        }
                     }
                 }
             }
@@ -300,7 +301,7 @@ public class BMNWEventBus {
             if (stack.getItem() instanceof BlockItem) {
                 Block block = ((BlockItem) stack.getItem()).getBlock();
                 if (HazardRegistry.enableResistanceDisplay(block)) {
-                    if (event.getContext().flag().hasAltDown()) {
+                    if (true) {
                         event.addTooltipLines(
                                 Component.translatable("tooltip.bmnw.blast_resistance")
                                         .append(": ")

@@ -61,7 +61,11 @@
     "bmnw:office_door",
     "bmnw:steel_ladder",
     "bmnw:concrete_encapsulated_ladder",
-    "bmnw:hatch"
+    "bmnw:hatch",
+    "bmnw:bauxite_ore",
+    "bmnw:deepslate_bauxite_ore",
+    "bmnw:bauxite_block",
+    "bmnw:aluminium_block"
   ],
   "replace": false
 }

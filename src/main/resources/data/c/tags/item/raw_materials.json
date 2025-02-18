@@ -2,7 +2,8 @@
   "values": [
     "bmnw:raw_uranium",
     "bmnw:raw_thorium",
-    "bmnw:raw_lead"
+    "bmnw:raw_lead",
+    "bmnw:bauxite"
   ],
   "replace": false
 }

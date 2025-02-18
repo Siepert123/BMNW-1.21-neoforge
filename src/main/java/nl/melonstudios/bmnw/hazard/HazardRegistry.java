@@ -1,5 +1,7 @@
 package nl.melonstudios.bmnw.hazard;
 
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import nl.melonstudios.bmnw.misc.BMNWTags;
 import net.minecraft.world.item.Item;
@@ -117,5 +119,9 @@ public class HazardRegistry {
 
     public static boolean isWP(ItemStack stack) {
         return stack.is(BMNWTags.Items.SLIGHT_WP) || stack.is(BMNWTags.Items.WP) || stack.is(BMNWTags.Items.BIG_WP);
+    }
+
+    public static boolean shouldSkinContact(Player player) {
+        return !player.getItemInHand(InteractionHand.OFF_HAND).is(BMNWTags.Items.REACHERS);
     }
 }
