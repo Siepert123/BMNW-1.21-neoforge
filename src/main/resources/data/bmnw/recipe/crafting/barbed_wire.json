@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "tag": "c:ingots/iron"
+    },
+    "W": {
+      "tag": "c:wires/aluminium"
+    }
+  },
+  "pattern": [
+    "W#W",
+    "# #",
+    "W#W"
+  ],
+  "result": {
+    "count": 16,
+    "id": "bmnw:barbed_wire"
+  }
+}
