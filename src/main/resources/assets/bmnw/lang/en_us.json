@@ -377,5 +377,6 @@
   "tooltip.bmnw.radiation_shielding": "[Radiation Shielding]",
   "tooltip.bmnw.radioactive": "[Radioactive]",
   "tooltip.bmnw.radius": "Radius: ~%s",
-  "tooltip.bmnw.wp": "[White Phosphorus]"
+  "tooltip.bmnw.wp": "[White Phosphorus]",
+  "recipe.bmnw.pressing": "Mold Pressing"
 }

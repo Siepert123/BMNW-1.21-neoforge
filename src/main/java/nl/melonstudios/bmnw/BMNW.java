@@ -20,8 +20,6 @@ import nl.melonstudios.bmnw.item.BMNWItems;
 import nl.melonstudios.bmnw.item.components.BMNWDataComponents;
 import nl.melonstudios.bmnw.misc.*;
 import nl.melonstudios.bmnw.particle.BMNWParticleTypes;
-import nl.melonstudios.bmnw.recipe.BMNWRecipeSerializers;
-import nl.melonstudios.bmnw.recipe.BMNWRecipeTypes;
 import nl.melonstudios.bmnw.hardcoded.structure.coded.StructureRadioAntenna;
 import eu.midnightdust.lib.config.MidnightConfig;
 import net.minecraft.commands.Commands;
@@ -67,8 +65,6 @@ public class BMNW {
         BMNWBlocks.register(modEventBus);
         BMNWBlockEntities.register(modEventBus);
         BMNWItems.register(modEventBus);
-        BMNWRecipeTypes.register(modEventBus);
-        BMNWRecipeSerializers.register(modEventBus);
         BMNWTabs.register(modEventBus);
         BMNWDataComponents.register(modEventBus);
         BMNWAttachments.register(modEventBus);
