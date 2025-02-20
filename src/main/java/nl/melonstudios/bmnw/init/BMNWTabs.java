@@ -284,6 +284,8 @@ public class BMNWTabs {
                         items.accept(PLUTONIUM_241_BILLET);
                         items.accept(REACTOR_GRADE_PLUTONIUM_BILLET);
                         items.accept(PLUTONIUM_FUEL_BILLET);
+
+                        items.accept(FIRE_MARBLE);
                         //endregion
 
                         //region Parts

@@ -534,6 +534,9 @@ public class BMNWItems {
     public static final DeferredItem<Item> TUNGSTEN_REACHERS = ITEMS.register("tungsten_reachers",
             () -> new Item(new Item.Properties().stacksTo(1)));
 
+    public static final DeferredItem<Item> FIRE_MARBLE = ITEMS.register("fire_marble",
+            () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
+
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
     }
