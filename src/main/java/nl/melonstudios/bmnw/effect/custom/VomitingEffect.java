@@ -1,6 +1,6 @@
 package nl.melonstudios.bmnw.effect.custom;
 
-import nl.melonstudios.bmnw.particle.BMNWParticleTypes;
+import nl.melonstudios.bmnw.init.BMNWParticleTypes;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;

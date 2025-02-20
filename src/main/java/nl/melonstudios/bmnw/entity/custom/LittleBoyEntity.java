@@ -1,6 +1,6 @@
 package nl.melonstudios.bmnw.entity.custom;
 
-import nl.melonstudios.bmnw.block.BMNWBlocks;
+import nl.melonstudios.bmnw.init.BMNWBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.ClipContext;

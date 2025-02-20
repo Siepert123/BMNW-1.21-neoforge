@@ -1,8 +1,8 @@
 package nl.melonstudios.bmnw.block.entity.custom;
 
-import nl.melonstudios.bmnw.block.entity.BMNWBlockEntities;
-import nl.melonstudios.bmnw.misc.BMNWAttachments;
-import nl.melonstudios.bmnw.misc.BMNWConfig;
+import nl.melonstudios.bmnw.init.BMNWBlockEntities;
+import nl.melonstudios.bmnw.init.BMNWAttachments;
+import nl.melonstudios.bmnw.init.BMNWConfig;
 import nl.melonstudios.bmnw.misc.ExcavationVein;
 import nl.melonstudios.bmnw.misc.StackMover;
 import net.minecraft.core.BlockPos;

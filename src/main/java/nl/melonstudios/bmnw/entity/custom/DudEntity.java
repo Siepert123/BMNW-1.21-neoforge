@@ -1,10 +1,10 @@
 package nl.melonstudios.bmnw.entity.custom;
 
-import nl.melonstudios.bmnw.block.BMNWBlocks;
+import nl.melonstudios.bmnw.init.BMNWBlocks;
 import nl.melonstudios.bmnw.hazard.radiation.RadiationTools;
-import nl.melonstudios.bmnw.audio.BMNWSounds;
-import nl.melonstudios.bmnw.misc.BMNWTags;
-import nl.melonstudios.bmnw.particle.BMNWParticleTypes;
+import nl.melonstudios.bmnw.init.BMNWSounds;
+import nl.melonstudios.bmnw.init.BMNWTags;
+import nl.melonstudios.bmnw.init.BMNWParticleTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundSource;

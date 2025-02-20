@@ -1,8 +1,6 @@
-package nl.melonstudios.bmnw.item;
+package nl.melonstudios.bmnw.init;
 
 import net.minecraft.world.item.*;
-import nl.melonstudios.bmnw.block.BMNWBlocks;
-import nl.melonstudios.bmnw.effect.BMNWEffects;
 import nl.melonstudios.bmnw.entity.custom.LeadBulletEntity;
 import nl.melonstudios.bmnw.item.custom.*;
 import nl.melonstudios.bmnw.misc.Categories;

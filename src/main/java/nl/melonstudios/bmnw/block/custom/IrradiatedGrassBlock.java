@@ -1,7 +1,7 @@
 package nl.melonstudios.bmnw.block.custom;
 
-import nl.melonstudios.bmnw.effect.BMNWEffects;
-import nl.melonstudios.bmnw.misc.BMNWStateProperties;
+import nl.melonstudios.bmnw.init.BMNWEffects;
+import nl.melonstudios.bmnw.init.BMNWStateProperties;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.tags.ItemTags;

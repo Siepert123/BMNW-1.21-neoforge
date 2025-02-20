@@ -1,4 +1,4 @@
-package nl.melonstudios.bmnw.misc;
+package nl.melonstudios.bmnw.init;
 
 import eu.midnightdust.lib.config.MidnightConfig;
 

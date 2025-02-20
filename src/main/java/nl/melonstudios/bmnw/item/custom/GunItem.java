@@ -1,8 +1,8 @@
 package nl.melonstudios.bmnw.item.custom;
 
 import nl.melonstudios.bmnw.entity.custom.AbstractBulletEntity;
-import nl.melonstudios.bmnw.item.BMNWItems;
-import nl.melonstudios.bmnw.item.components.BMNWDataComponents;
+import nl.melonstudios.bmnw.init.BMNWItems;
+import nl.melonstudios.bmnw.init.BMNWDataComponents;
 import nl.melonstudios.bmnw.misc.GunOptions;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;

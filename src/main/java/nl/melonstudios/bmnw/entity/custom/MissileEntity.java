@@ -1,6 +1,6 @@
 package nl.melonstudios.bmnw.entity.custom;
 
-import nl.melonstudios.bmnw.particle.BMNWParticleTypes;
+import nl.melonstudios.bmnw.init.BMNWParticleTypes;
 import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;

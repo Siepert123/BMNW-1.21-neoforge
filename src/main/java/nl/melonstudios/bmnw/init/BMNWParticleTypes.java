@@ -1,4 +1,4 @@
-package nl.melonstudios.bmnw.particle;
+package nl.melonstudios.bmnw.init;
 
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.SimpleParticleType;

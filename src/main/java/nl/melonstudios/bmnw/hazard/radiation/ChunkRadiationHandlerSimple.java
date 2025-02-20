@@ -13,8 +13,8 @@ import net.neoforged.neoforge.event.level.ChunkDataEvent;
 import net.neoforged.neoforge.event.level.ChunkEvent;
 import net.neoforged.neoforge.event.level.LevelEvent;
 import nl.melonstudios.bmnw.BMNW;
-import nl.melonstudios.bmnw.block.BMNWBlocks;
-import nl.melonstudios.bmnw.particle.BMNWParticleTypes;
+import nl.melonstudios.bmnw.init.BMNWBlocks;
+import nl.melonstudios.bmnw.init.BMNWParticleTypes;
 
 import java.util.HashMap;
 import java.util.Map;

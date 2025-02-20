@@ -1,10 +1,10 @@
 package nl.melonstudios.bmnw.block.custom;
 
-import nl.melonstudios.bmnw.block.BMNWBlocks;
+import nl.melonstudios.bmnw.init.BMNWBlocks;
 import nl.melonstudios.bmnw.block.entity.custom.MissileLaunchPadBlockEntity;
 import nl.melonstudios.bmnw.interfaces.IDetonatable;
 import nl.melonstudios.bmnw.interfaces.ITargetHolder;
-import nl.melonstudios.bmnw.misc.BMNWStateProperties;
+import nl.melonstudios.bmnw.init.BMNWStateProperties;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;

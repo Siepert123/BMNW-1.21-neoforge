@@ -1,6 +1,6 @@
 package nl.melonstudios.bmnw.entity.custom;
 
-import nl.melonstudios.bmnw.entity.BMNWEntityTypes;
+import nl.melonstudios.bmnw.init.BMNWEntityTypes;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 

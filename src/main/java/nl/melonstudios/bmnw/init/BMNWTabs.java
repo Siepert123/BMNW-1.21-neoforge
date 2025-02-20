@@ -1,6 +1,5 @@
-package nl.melonstudios.bmnw.misc;
+package nl.melonstudios.bmnw.init;
 
-import nl.melonstudios.bmnw.item.components.BMNWDataComponents;
 import nl.melonstudios.bmnw.item.custom.BatteryItem;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -11,11 +10,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import nl.melonstudios.bmnw.misc.NoUnused;
 
 import java.util.Random;
 import java.util.function.Supplier;
 
-import static nl.melonstudios.bmnw.item.BMNWItems.*;
+import static nl.melonstudios.bmnw.init.BMNWItems.*;
 
 public class BMNWTabs {
     private static void addItems(CreativeModeTab.Output items, ItemLike... itemLikes) {

@@ -1,7 +1,7 @@
 package nl.melonstudios.bmnw.block.custom;
 
-import nl.melonstudios.bmnw.block.BMNWBlocks;
-import nl.melonstudios.bmnw.effect.BMNWEffects;
+import nl.melonstudios.bmnw.init.BMNWBlocks;
+import nl.melonstudios.bmnw.init.BMNWEffects;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;

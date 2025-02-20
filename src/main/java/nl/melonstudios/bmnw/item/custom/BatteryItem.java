@@ -1,7 +1,7 @@
 package nl.melonstudios.bmnw.item.custom;
 
 import nl.melonstudios.bmnw.interfaces.IBatteryItem;
-import nl.melonstudios.bmnw.item.components.BMNWDataComponents;
+import nl.melonstudios.bmnw.init.BMNWDataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.Item;

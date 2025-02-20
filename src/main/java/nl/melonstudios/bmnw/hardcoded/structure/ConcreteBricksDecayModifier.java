@@ -1,7 +1,6 @@
 package nl.melonstudios.bmnw.hardcoded.structure;
 
-import nl.melonstudios.bmnw.block.BMNWBlocks;
-import net.minecraft.util.RandomSource;
+import nl.melonstudios.bmnw.init.BMNWBlocks;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.Random;

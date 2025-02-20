@@ -1,4 +1,4 @@
-package nl.melonstudios.bmnw.block;
+package nl.melonstudios.bmnw.init;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
@@ -11,7 +11,6 @@ import net.minecraft.world.level.material.PushReaction;
 import nl.melonstudios.bmnw.block.custom.*;
 import nl.melonstudios.bmnw.block.settype.BMNWBlockSetType;
 import nl.melonstudios.bmnw.category.MissileCategory;
-import nl.melonstudios.bmnw.effect.BMNWEffects;
 import nl.melonstudios.bmnw.effect.custom.WPEffect;
 import nl.melonstudios.bmnw.entity.custom.AntiMissileMissileEntity;
 import nl.melonstudios.bmnw.entity.custom.ExampleMissileEntity;

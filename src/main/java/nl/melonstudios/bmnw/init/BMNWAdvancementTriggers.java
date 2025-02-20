@@ -1,9 +1,10 @@
-package nl.melonstudios.bmnw.critereon;
+package nl.melonstudios.bmnw.init;
 
 import net.minecraft.advancements.CriterionTrigger;
 import net.minecraft.core.registries.Registries;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import nl.melonstudios.bmnw.critereon.NukeCritereonTrigger;
 
 import java.util.function.Supplier;
 

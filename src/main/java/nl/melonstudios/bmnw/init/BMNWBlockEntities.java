@@ -1,6 +1,5 @@
-package nl.melonstudios.bmnw.block.entity;
+package nl.melonstudios.bmnw.init;
 
-import nl.melonstudios.bmnw.block.BMNWBlocks;
 import nl.melonstudios.bmnw.block.entity.custom.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.entity.BlockEntityType;

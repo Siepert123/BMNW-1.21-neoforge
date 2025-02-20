@@ -1,6 +1,6 @@
 package nl.melonstudios.bmnw.block.custom;
 
-import nl.melonstudios.bmnw.block.entity.BMNWBlockEntities;
+import nl.melonstudios.bmnw.init.BMNWBlockEntities;
 import nl.melonstudios.bmnw.block.entity.custom.TestExcavatorBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;

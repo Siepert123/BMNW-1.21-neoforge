@@ -1,4 +1,4 @@
-package nl.melonstudios.bmnw.misc;
+package nl.melonstudios.bmnw.init;
 
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;

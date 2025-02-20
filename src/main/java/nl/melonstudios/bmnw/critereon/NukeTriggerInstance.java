@@ -7,6 +7,7 @@ import net.minecraft.advancements.critereon.ContextAwarePredicate;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
 import net.minecraft.world.entity.player.Player;
+import nl.melonstudios.bmnw.init.BMNWAdvancementTriggers;
 
 import java.util.Optional;
 

@@ -1,7 +1,6 @@
 package nl.melonstudios.bmnw.entity.custom;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -16,9 +15,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import nl.melonstudios.bmnw.block.BMNWBlocks;
-import nl.melonstudios.bmnw.entity.BMNWEntityTypes;
-import nl.melonstudios.bmnw.particle.BMNWParticleTypes;
+import nl.melonstudios.bmnw.init.BMNWBlocks;
+import nl.melonstudios.bmnw.init.BMNWEntityTypes;
+import nl.melonstudios.bmnw.init.BMNWParticleTypes;
 import org.joml.Quaternionf;
 
 import java.util.Random;

@@ -1,9 +1,9 @@
 package nl.melonstudios.bmnw.item.custom;
 
-import nl.melonstudios.bmnw.critereon.BMNWAdvancementTriggers;
+import nl.melonstudios.bmnw.init.BMNWAdvancementTriggers;
 import nl.melonstudios.bmnw.interfaces.IDetonatable;
-import nl.melonstudios.bmnw.item.components.BMNWDataComponents;
-import nl.melonstudios.bmnw.misc.BMNWTags;
+import nl.melonstudios.bmnw.init.BMNWDataComponents;
+import nl.melonstudios.bmnw.init.BMNWTags;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;

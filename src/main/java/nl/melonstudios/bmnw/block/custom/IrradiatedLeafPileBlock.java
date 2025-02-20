@@ -1,6 +1,6 @@
 package nl.melonstudios.bmnw.block.custom;
 
-import nl.melonstudios.bmnw.misc.BMNWStateProperties;
+import nl.melonstudios.bmnw.init.BMNWStateProperties;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;

@@ -1,7 +1,7 @@
 package nl.melonstudios.bmnw.entity.custom;
 
-import nl.melonstudios.bmnw.entity.BMNWEntityTypes;
-import nl.melonstudios.bmnw.misc.BMNWConfig;
+import nl.melonstudios.bmnw.init.BMNWEntityTypes;
+import nl.melonstudios.bmnw.init.BMNWConfig;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;

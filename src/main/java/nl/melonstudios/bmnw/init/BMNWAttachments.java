@@ -1,4 +1,4 @@
-package nl.melonstudios.bmnw.misc;
+package nl.melonstudios.bmnw.init;
 
 import com.mojang.serialization.Codec;
 import net.neoforged.bus.api.IEventBus;

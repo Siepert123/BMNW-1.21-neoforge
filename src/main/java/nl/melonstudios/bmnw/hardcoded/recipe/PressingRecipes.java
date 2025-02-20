@@ -8,7 +8,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import nl.melonstudios.bmnw.hardcoded.recipe.jei.PressingRecipe;
-import nl.melonstudios.bmnw.item.BMNWItems;
+import nl.melonstudios.bmnw.init.BMNWItems;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

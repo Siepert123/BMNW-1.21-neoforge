@@ -1,4 +1,4 @@
-package nl.melonstudios.bmnw.misc;
+package nl.melonstudios.bmnw.init;
 
 import nl.melonstudios.bmnw.BMNW;
 import net.minecraft.core.registries.Registries;

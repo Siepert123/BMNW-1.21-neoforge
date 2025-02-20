@@ -1,4 +1,4 @@
-package nl.melonstudios.bmnw.item.components;
+package nl.melonstudios.bmnw.init;
 
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;

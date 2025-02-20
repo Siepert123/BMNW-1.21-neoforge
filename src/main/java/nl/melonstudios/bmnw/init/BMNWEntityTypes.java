@@ -1,4 +1,4 @@
-package nl.melonstudios.bmnw.entity;
+package nl.melonstudios.bmnw.init;
 
 import nl.melonstudios.bmnw.entity.custom.*;
 import net.minecraft.core.registries.BuiltInRegistries;

@@ -1,4 +1,4 @@
-package nl.melonstudios.bmnw.item;
+package nl.melonstudios.bmnw.init;
 
 import com.google.common.base.Suppliers;
 import net.minecraft.tags.BlockTags;
@@ -6,7 +6,6 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
-import nl.melonstudios.bmnw.misc.BMNWTags;
 
 import java.util.function.Supplier;
 

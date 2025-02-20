@@ -1,6 +1,5 @@
-package nl.melonstudios.bmnw.datagen;
+package nl.melonstudios.bmnw.init;
 
-import nl.melonstudios.bmnw.misc.BMNWTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
@@ -10,7 +9,7 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 import java.util.concurrent.CompletableFuture;
 
-import static nl.melonstudios.bmnw.item.BMNWItems.*;
+import static nl.melonstudios.bmnw.init.BMNWItems.*;
 
 public class BMNWItemTagGenerator extends ItemTagsProvider {
     public BMNWItemTagGenerator(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider,

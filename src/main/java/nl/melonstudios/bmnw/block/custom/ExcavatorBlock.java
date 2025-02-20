@@ -1,9 +1,9 @@
 package nl.melonstudios.bmnw.block.custom;
 
-import nl.melonstudios.bmnw.block.entity.BMNWBlockEntities;
+import nl.melonstudios.bmnw.init.BMNWBlockEntities;
 import nl.melonstudios.bmnw.block.entity.custom.ExcavatorBlockEntity;
 import nl.melonstudios.bmnw.block.entity.custom.ExcavatorBlockEntitySlave;
-import nl.melonstudios.bmnw.misc.BMNWStateProperties;
+import nl.melonstudios.bmnw.init.BMNWStateProperties;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;

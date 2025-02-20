@@ -1,6 +1,6 @@
 package nl.melonstudios.bmnw.block.custom;
 
-import nl.melonstudios.bmnw.entity.BMNWEntityTypes;
+import nl.melonstudios.bmnw.init.BMNWEntityTypes;
 import nl.melonstudios.bmnw.entity.custom.DudEntity;
 import nl.melonstudios.bmnw.interfaces.IBombBlock;
 import nl.melonstudios.bmnw.interfaces.IDetonatable;

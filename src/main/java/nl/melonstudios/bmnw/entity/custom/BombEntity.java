@@ -1,10 +1,10 @@
 package nl.melonstudios.bmnw.entity.custom;
 
-import nl.melonstudios.bmnw.block.BMNWBlocks;
+import nl.melonstudios.bmnw.init.BMNWBlocks;
 import nl.melonstudios.bmnw.hazard.radiation.ChunkRadiationManager;
 import nl.melonstudios.bmnw.hazard.radiation.RadiationTools;
-import nl.melonstudios.bmnw.misc.BMNWDamageSources;
-import nl.melonstudios.bmnw.misc.BMNWTags;
+import nl.melonstudios.bmnw.init.BMNWDamageSources;
+import nl.melonstudios.bmnw.init.BMNWTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;

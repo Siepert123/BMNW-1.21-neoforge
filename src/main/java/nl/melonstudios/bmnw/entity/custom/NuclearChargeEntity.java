@@ -1,6 +1,6 @@
 package nl.melonstudios.bmnw.entity.custom;
 
-import nl.melonstudios.bmnw.audio.BMNWSounds;
+import nl.melonstudios.bmnw.init.BMNWSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.EntityType;

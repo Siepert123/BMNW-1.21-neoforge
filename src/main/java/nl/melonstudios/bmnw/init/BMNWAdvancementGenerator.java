@@ -1,6 +1,5 @@
-package nl.melonstudios.bmnw.datagen;
+package nl.melonstudios.bmnw.init;
 
-import nl.melonstudios.bmnw.item.BMNWItems;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementRequirements;

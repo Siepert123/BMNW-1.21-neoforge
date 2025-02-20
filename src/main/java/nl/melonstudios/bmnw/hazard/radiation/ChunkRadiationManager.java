@@ -5,7 +5,7 @@ import net.neoforged.neoforge.event.level.ChunkDataEvent;
 import net.neoforged.neoforge.event.level.ChunkEvent;
 import net.neoforged.neoforge.event.level.LevelEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
-import nl.melonstudios.bmnw.misc.BMNWConfig;
+import nl.melonstudios.bmnw.init.BMNWConfig;
 
 import java.util.HashMap;
 import java.util.Map;

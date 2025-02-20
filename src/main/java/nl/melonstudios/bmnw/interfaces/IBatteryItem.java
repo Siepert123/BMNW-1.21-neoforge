@@ -1,7 +1,7 @@
 package nl.melonstudios.bmnw.interfaces;
 
 import net.minecraft.world.item.ItemStack;
-import nl.melonstudios.bmnw.item.components.BMNWDataComponents;
+import nl.melonstudios.bmnw.init.BMNWDataComponents;
 
 /**
  * Interface for all items containing RF (or FE or Flux or whatever you wish to call it)

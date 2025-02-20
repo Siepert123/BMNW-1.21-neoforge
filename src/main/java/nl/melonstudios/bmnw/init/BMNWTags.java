@@ -1,4 +1,4 @@
-package nl.melonstudios.bmnw.misc;
+package nl.melonstudios.bmnw.init;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;

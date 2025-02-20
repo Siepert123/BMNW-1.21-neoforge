@@ -1,10 +1,10 @@
 package nl.melonstudios.bmnw.block.entity.custom;
 
-import nl.melonstudios.bmnw.block.BMNWBlocks;
+import nl.melonstudios.bmnw.init.BMNWBlocks;
 import nl.melonstudios.bmnw.block.custom.MissileBlock;
-import nl.melonstudios.bmnw.block.entity.BMNWBlockEntities;
+import nl.melonstudios.bmnw.init.BMNWBlockEntities;
 import nl.melonstudios.bmnw.entity.custom.MissileEntity;
-import nl.melonstudios.bmnw.misc.BMNWStateProperties;
+import nl.melonstudios.bmnw.init.BMNWStateProperties;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;

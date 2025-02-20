@@ -5,7 +5,7 @@ import net.minecraft.core.Vec3i;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Blocks;
-import nl.melonstudios.bmnw.block.BMNWBlocks;
+import nl.melonstudios.bmnw.init.BMNWBlocks;
 import nl.melonstudios.bmnw.hardcoded.lootpool.LootPools;
 import nl.melonstudios.bmnw.hardcoded.structure.Structure;
 import nl.melonstudios.bmnw.hardcoded.structure.StructureBlockModifier;

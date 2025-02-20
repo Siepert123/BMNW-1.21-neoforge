@@ -5,10 +5,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import nl.melonstudios.bmnw.block.BMNWBlocks;
+import nl.melonstudios.bmnw.init.BMNWBlocks;
 import nl.melonstudios.bmnw.hardcoded.lootpool.coded.LootPoolItemStack;
 import nl.melonstudios.bmnw.hardcoded.lootpool.coded.LootPoolStateSupplier;
-import nl.melonstudios.bmnw.item.BMNWItems;
+import nl.melonstudios.bmnw.init.BMNWItems;
 import net.minecraft.world.item.Items;
 
 public class LootPools {

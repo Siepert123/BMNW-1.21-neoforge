@@ -1,6 +1,6 @@
 package nl.melonstudios.bmnw.block.entity.custom;
 
-import nl.melonstudios.bmnw.block.entity.BMNWBlockEntities;
+import nl.melonstudios.bmnw.init.BMNWBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;

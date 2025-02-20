@@ -1,7 +1,7 @@
 package nl.melonstudios.bmnw.item.custom;
 
 import nl.melonstudios.bmnw.interfaces.ITargetHolder;
-import nl.melonstudios.bmnw.item.components.BMNWDataComponents;
+import nl.melonstudios.bmnw.init.BMNWDataComponents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;

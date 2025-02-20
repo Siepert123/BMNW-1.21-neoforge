@@ -1,7 +1,7 @@
 package nl.melonstudios.bmnw.item.custom;
 
-import nl.melonstudios.bmnw.misc.BMNWAttachments;
-import nl.melonstudios.bmnw.misc.BMNWConfig;
+import nl.melonstudios.bmnw.init.BMNWAttachments;
+import nl.melonstudios.bmnw.init.BMNWConfig;
 import nl.melonstudios.bmnw.misc.ExcavationVein;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;

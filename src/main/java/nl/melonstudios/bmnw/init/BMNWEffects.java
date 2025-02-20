@@ -1,4 +1,4 @@
-package nl.melonstudios.bmnw.effect;
+package nl.melonstudios.bmnw.init;
 
 import nl.melonstudios.bmnw.effect.custom.ContaminationEffect;
 import nl.melonstudios.bmnw.effect.custom.VomitingEffect;
