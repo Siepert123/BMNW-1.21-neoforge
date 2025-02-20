@@ -1,10 +1,5 @@
 package nl.melonstudios.bmnw.block;
 
-import nl.melonstudios.bmnw.init.BMNWEntityTypes;
-import nl.melonstudios.bmnw.entity.BlockDebrisEntity;
-import nl.melonstudios.bmnw.interfaces.IBombBlock;
-import nl.melonstudios.bmnw.interfaces.IDetonatable;
-import nl.melonstudios.bmnw.misc.MiddleMouseButton;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
@@ -16,6 +11,11 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import nl.melonstudios.bmnw.entity.BlockDebrisEntity;
+import nl.melonstudios.bmnw.init.BMNWEntityTypes;
+import nl.melonstudios.bmnw.interfaces.IBombBlock;
+import nl.melonstudios.bmnw.interfaces.IDetonatable;
+import nl.melonstudios.bmnw.misc.MiddleMouseButton;
 
 import java.util.ArrayList;
 import java.util.List;

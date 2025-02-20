@@ -2,11 +2,11 @@ package nl.melonstudios.bmnw.hazard;
 
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import nl.melonstudios.bmnw.init.BMNWTags;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
+import nl.melonstudios.bmnw.init.BMNWTags;
 
 import java.util.ArrayList;
 import java.util.HashMap;

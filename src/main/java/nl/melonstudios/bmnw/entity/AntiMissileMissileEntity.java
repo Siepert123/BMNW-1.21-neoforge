@@ -1,7 +1,5 @@
 package nl.melonstudios.bmnw.entity;
 
-import nl.melonstudios.bmnw.init.BMNWEntityTypes;
-import nl.melonstudios.bmnw.init.BMNWConfig;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
@@ -9,6 +7,8 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import nl.melonstudios.bmnw.init.BMNWConfig;
+import nl.melonstudios.bmnw.init.BMNWEntityTypes;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

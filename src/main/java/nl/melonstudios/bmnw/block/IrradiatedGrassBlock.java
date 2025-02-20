@@ -1,7 +1,5 @@
 package nl.melonstudios.bmnw.block;
 
-import nl.melonstudios.bmnw.init.BMNWEffects;
-import nl.melonstudios.bmnw.init.BMNWStateProperties;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.tags.ItemTags;
@@ -15,6 +13,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import nl.melonstudios.bmnw.init.BMNWEffects;
+import nl.melonstudios.bmnw.init.BMNWStateProperties;
 
 public class IrradiatedGrassBlock extends Block {
     public static final IntegerProperty RAD_LEVEL = BMNWStateProperties.RAD_LEVEL;

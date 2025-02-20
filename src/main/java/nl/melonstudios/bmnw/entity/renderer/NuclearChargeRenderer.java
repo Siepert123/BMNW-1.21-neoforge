@@ -2,7 +2,6 @@ package nl.melonstudios.bmnw.entity.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import nl.melonstudios.bmnw.entity.NuclearChargeEntity;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.culling.Frustum;
@@ -13,6 +12,7 @@ import net.minecraft.util.FastColor;
 import net.minecraft.util.RandomSource;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
+import nl.melonstudios.bmnw.entity.NuclearChargeEntity;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 

@@ -1,9 +1,5 @@
 package nl.melonstudios.bmnw.item;
 
-import nl.melonstudios.bmnw.init.BMNWAdvancementTriggers;
-import nl.melonstudios.bmnw.interfaces.IDetonatable;
-import nl.melonstudios.bmnw.init.BMNWDataComponents;
-import nl.melonstudios.bmnw.init.BMNWTags;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -17,6 +13,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+import nl.melonstudios.bmnw.init.BMNWAdvancementTriggers;
+import nl.melonstudios.bmnw.init.BMNWDataComponents;
+import nl.melonstudios.bmnw.init.BMNWTags;
+import nl.melonstudios.bmnw.interfaces.IDetonatable;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;

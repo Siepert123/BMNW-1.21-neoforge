@@ -1,6 +1,5 @@
 package nl.melonstudios.bmnw.block;
 
-import nl.melonstudios.bmnw.init.BMNWStateProperties;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -16,6 +15,7 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import nl.melonstudios.bmnw.init.BMNWStateProperties;
 
 public class IrradiatedLeafPileBlock extends Block {
     public static final IntegerProperty RAD_LEVEL = BMNWStateProperties.RAD_LEVEL;

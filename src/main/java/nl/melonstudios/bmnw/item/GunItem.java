@@ -1,9 +1,5 @@
 package nl.melonstudios.bmnw.item;
 
-import nl.melonstudios.bmnw.entity.AbstractBulletEntity;
-import nl.melonstudios.bmnw.init.BMNWItems;
-import nl.melonstudios.bmnw.init.BMNWDataComponents;
-import nl.melonstudios.bmnw.misc.GunOptions;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -15,6 +11,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
+import nl.melonstudios.bmnw.entity.AbstractBulletEntity;
+import nl.melonstudios.bmnw.init.BMNWDataComponents;
+import nl.melonstudios.bmnw.init.BMNWItems;
+import nl.melonstudios.bmnw.misc.GunOptions;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;

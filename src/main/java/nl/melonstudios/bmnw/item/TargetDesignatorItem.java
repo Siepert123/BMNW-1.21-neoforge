@@ -1,7 +1,5 @@
 package nl.melonstudios.bmnw.item;
 
-import nl.melonstudios.bmnw.interfaces.ITargetHolder;
-import nl.melonstudios.bmnw.init.BMNWDataComponents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
@@ -9,6 +7,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
+import nl.melonstudios.bmnw.init.BMNWDataComponents;
+import nl.melonstudios.bmnw.interfaces.ITargetHolder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.Nullable;

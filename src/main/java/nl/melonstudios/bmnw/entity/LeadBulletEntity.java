@@ -1,8 +1,8 @@
 package nl.melonstudios.bmnw.entity;
 
-import nl.melonstudios.bmnw.init.BMNWEntityTypes;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
+import nl.melonstudios.bmnw.init.BMNWEntityTypes;
 
 public class LeadBulletEntity extends AbstractBulletEntity {
     public LeadBulletEntity(EntityType<LeadBulletEntity> entityType, Level level) {

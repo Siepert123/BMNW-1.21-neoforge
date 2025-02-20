@@ -1,7 +1,5 @@
 package nl.melonstudios.bmnw.block;
 
-import nl.melonstudios.bmnw.init.BMNWBlocks;
-import nl.melonstudios.bmnw.init.BMNWStateProperties;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -17,6 +15,8 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.common.IShearable;
+import nl.melonstudios.bmnw.init.BMNWBlocks;
+import nl.melonstudios.bmnw.init.BMNWStateProperties;
 
 public class IrradiatedLeavesBlock extends Block implements IShearable {
     public static final IntegerProperty RAD_LEVEL = BMNWStateProperties.RAD_LEVEL;

@@ -1,7 +1,5 @@
 package nl.melonstudios.bmnw.block;
 
-import nl.melonstudios.bmnw.category.MissileCategory;
-import nl.melonstudios.bmnw.entity.MissileEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
@@ -11,6 +9,8 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import nl.melonstudios.bmnw.category.MissileCategory;
+import nl.melonstudios.bmnw.entity.MissileEntity;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;

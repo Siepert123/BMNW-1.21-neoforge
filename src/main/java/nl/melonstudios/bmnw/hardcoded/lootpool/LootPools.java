@@ -2,14 +2,14 @@ package nl.melonstudios.bmnw.hardcoded.lootpool;
 
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import nl.melonstudios.bmnw.init.BMNWBlocks;
 import nl.melonstudios.bmnw.hardcoded.lootpool.coded.LootPoolItemStack;
 import nl.melonstudios.bmnw.hardcoded.lootpool.coded.LootPoolStateSupplier;
+import nl.melonstudios.bmnw.init.BMNWBlocks;
 import nl.melonstudios.bmnw.init.BMNWItems;
-import net.minecraft.world.item.Items;
 
 public class LootPools {
     public static final LootPoolItemStack CHEST_RADIO_ANTENNA = new LootPoolItemStack(

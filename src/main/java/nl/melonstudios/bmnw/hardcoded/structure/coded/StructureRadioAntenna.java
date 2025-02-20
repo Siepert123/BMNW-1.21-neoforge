@@ -1,10 +1,5 @@
 package nl.melonstudios.bmnw.hardcoded.structure.coded;
 
-import nl.melonstudios.bmnw.init.BMNWBlocks;
-import nl.melonstudios.bmnw.hardcoded.lootpool.LootPool;
-import nl.melonstudios.bmnw.hardcoded.lootpool.LootPools;
-import nl.melonstudios.bmnw.hardcoded.structure.Structure;
-import nl.melonstudios.bmnw.hardcoded.structure.StructureBlockModifier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
@@ -15,6 +10,11 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import nl.melonstudios.bmnw.hardcoded.lootpool.LootPool;
+import nl.melonstudios.bmnw.hardcoded.lootpool.LootPools;
+import nl.melonstudios.bmnw.hardcoded.structure.Structure;
+import nl.melonstudios.bmnw.hardcoded.structure.StructureBlockModifier;
+import nl.melonstudios.bmnw.init.BMNWBlocks;
 
 import java.util.List;
 import java.util.Random;

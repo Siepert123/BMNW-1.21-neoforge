@@ -1,11 +1,11 @@
 package nl.melonstudios.bmnw.entity.renderer;
 
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import nl.melonstudios.bmnw.BMNW;
 import nl.melonstudios.bmnw.entity.LeadBulletEntity;
-import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.resources.ResourceLocation;
 
 @OnlyIn(Dist.CLIENT)
 public class LeadBulletRenderer extends BulletRenderer<LeadBulletEntity> {

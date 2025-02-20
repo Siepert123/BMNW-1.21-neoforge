@@ -1,7 +1,5 @@
 package nl.melonstudios.bmnw.block;
 
-import nl.melonstudios.bmnw.init.BMNWBlocks;
-import nl.melonstudios.bmnw.init.BMNWEffects;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -12,6 +10,8 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import nl.melonstudios.bmnw.init.BMNWBlocks;
+import nl.melonstudios.bmnw.init.BMNWEffects;
 
 public class NuclearRemainsBlock extends SimpleRadioactiveBlock {
     private static final int decayChanceTo0 = 2;

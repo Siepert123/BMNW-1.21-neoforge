@@ -3,7 +3,6 @@ package nl.melonstudios.bmnw.hardcoded.lootpool;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.Random;
-import java.util.function.Supplier;
 
 public class StateSupplierPoolEntry {
     private final RandomStateSupplier supplier;

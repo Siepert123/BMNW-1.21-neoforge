@@ -1,6 +1,5 @@
 package nl.melonstudios.bmnw.block;
 
-import nl.melonstudios.bmnw.block.entity.IronBarrelBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
@@ -15,6 +14,7 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import nl.melonstudios.bmnw.block.entity.IronBarrelBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
 public class IronBarrelBlock extends FluidBarrelBlock {

@@ -1,12 +1,12 @@
 package nl.melonstudios.bmnw.item;
 
-import nl.melonstudios.bmnw.entity.AbstractBulletEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Position;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ProjectileItem;
 import net.minecraft.world.level.Level;
+import nl.melonstudios.bmnw.entity.AbstractBulletEntity;
 
 import java.lang.reflect.Constructor;
 

@@ -1,7 +1,7 @@
 package nl.melonstudios.bmnw.item;
 
-import nl.melonstudios.bmnw.hazard.HazardRegistry;
 import net.minecraft.world.item.Item;
+import nl.melonstudios.bmnw.hazard.HazardRegistry;
 
 @Deprecated(since = "0.2.0")
 public class SimpleHazardItem extends Item {

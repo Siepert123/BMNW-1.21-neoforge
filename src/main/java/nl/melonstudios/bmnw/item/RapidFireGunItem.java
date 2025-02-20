@@ -1,8 +1,5 @@
 package nl.melonstudios.bmnw.item;
 
-import nl.melonstudios.bmnw.init.BMNWItems;
-import nl.melonstudios.bmnw.init.BMNWDataComponents;
-import nl.melonstudios.bmnw.misc.GunOptions;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
@@ -11,6 +8,9 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import nl.melonstudios.bmnw.init.BMNWDataComponents;
+import nl.melonstudios.bmnw.init.BMNWItems;
+import nl.melonstudios.bmnw.misc.GunOptions;
 
 import java.util.List;
 

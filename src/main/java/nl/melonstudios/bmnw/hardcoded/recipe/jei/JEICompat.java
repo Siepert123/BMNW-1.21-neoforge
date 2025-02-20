@@ -4,8 +4,8 @@ import mezz.jei.api.IModPlugin;
 import mezz.jei.api.registration.*;
 import net.minecraft.resources.ResourceLocation;
 import nl.melonstudios.bmnw.BMNW;
-import nl.melonstudios.bmnw.init.BMNWBlocks;
 import nl.melonstudios.bmnw.hardcoded.recipe.PressingRecipes;
+import nl.melonstudios.bmnw.init.BMNWBlocks;
 
 import javax.annotation.Nonnull;
 

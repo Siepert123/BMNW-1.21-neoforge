@@ -1,16 +1,16 @@
 package nl.melonstudios.bmnw.block.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import nl.melonstudios.bmnw.init.BMNWBlocks;
-import nl.melonstudios.bmnw.block.HatchBlock;
-import nl.melonstudios.bmnw.init.BMNWBlockEntities;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import nl.melonstudios.bmnw.block.HatchBlock;
+import nl.melonstudios.bmnw.init.BMNWBlockEntities;
+import nl.melonstudios.bmnw.init.BMNWBlocks;
 import org.joml.Quaternionf;
 
 public class HatchBlockEntity extends BlockEntity {

@@ -1,9 +1,9 @@
 package nl.melonstudios.bmnw.block.entity;
 
-import nl.melonstudios.bmnw.init.BMNWBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import nl.melonstudios.bmnw.init.BMNWBlockEntities;
 
 public class ExcavatorBlockEntitySlave extends BlockEntity {
     public ExcavatorBlockEntitySlave(BlockPos pos, BlockState blockState) {

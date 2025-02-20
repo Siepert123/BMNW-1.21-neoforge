@@ -4,9 +4,9 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.world.item.ItemStack;
 import nl.melonstudios.bmnw.hardcoded.lootpool.LootPool;
 import nl.melonstudios.bmnw.hardcoded.lootpool.StackPoolEntry;
-import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,23 +1,17 @@
 package nl.melonstudios.bmnw.block;
 
 import com.mojang.serialization.MapCodec;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.phys.shapes.Shapes;
-import nl.melonstudios.bmnw.BMNW;
-import nl.melonstudios.bmnw.init.BMNWBlocks;
-import nl.melonstudios.bmnw.init.BMNWBlockEntities;
-import nl.melonstudios.bmnw.block.entity.HatchBlockEntity;
-import nl.melonstudios.bmnw.init.BMNWSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
@@ -32,7 +26,13 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import nl.melonstudios.bmnw.BMNW;
+import nl.melonstudios.bmnw.block.entity.HatchBlockEntity;
+import nl.melonstudios.bmnw.init.BMNWBlockEntities;
+import nl.melonstudios.bmnw.init.BMNWBlocks;
+import nl.melonstudios.bmnw.init.BMNWSounds;
 
 import javax.annotation.Nullable;
 

@@ -1,12 +1,12 @@
 package nl.melonstudios.bmnw.item;
 
-import nl.melonstudios.bmnw.category.BombCategory;
-import nl.melonstudios.bmnw.interfaces.IBombBlock;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.block.Block;
+import nl.melonstudios.bmnw.category.BombCategory;
+import nl.melonstudios.bmnw.interfaces.IBombBlock;
 
 import java.util.List;
 

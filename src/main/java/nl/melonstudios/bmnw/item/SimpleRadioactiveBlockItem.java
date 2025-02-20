@@ -1,9 +1,9 @@
 package nl.melonstudios.bmnw.item;
 
-import nl.melonstudios.bmnw.hazard.HazardRegistry;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.block.Block;
 import nl.melonstudios.bmnw.block.SimpleRadioactiveBlock;
+import nl.melonstudios.bmnw.hazard.HazardRegistry;
 
 /**
  * Simple radioactive block item implementation.

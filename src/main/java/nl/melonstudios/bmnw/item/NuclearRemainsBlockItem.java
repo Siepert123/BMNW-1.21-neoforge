@@ -1,7 +1,7 @@
 package nl.melonstudios.bmnw.item;
 
-import nl.melonstudios.bmnw.hazard.HazardRegistry;
 import net.minecraft.world.level.block.Block;
+import nl.melonstudios.bmnw.hazard.HazardRegistry;
 
 public class NuclearRemainsBlockItem extends SimpleRadioactiveBlockItem {
     public <T extends Block> NuclearRemainsBlockItem(T block, Properties properties) {

@@ -1,7 +1,6 @@
 package nl.melonstudios.bmnw.entity.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import nl.melonstudios.bmnw.entity.MissileEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -14,6 +13,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.client.model.data.ModelData;
+import nl.melonstudios.bmnw.entity.MissileEntity;
 import org.joml.AxisAngle4d;
 import org.joml.Quaternionf;
 

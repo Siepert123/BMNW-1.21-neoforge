@@ -1,6 +1,5 @@
 package nl.melonstudios.bmnw.entity;
 
-import nl.melonstudios.bmnw.init.BMNWBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.ClipContext;
@@ -8,6 +7,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import nl.melonstudios.bmnw.init.BMNWBlocks;
 
 public class CaseohEntity extends BombEntity {
     public final int radius = 128;

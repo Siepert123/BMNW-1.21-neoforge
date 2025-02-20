@@ -1,9 +1,5 @@
 package nl.melonstudios.bmnw.block;
 
-import nl.melonstudios.bmnw.init.BMNWEntityTypes;
-import nl.melonstudios.bmnw.entity.LittleBoyEntity;
-import nl.melonstudios.bmnw.interfaces.IBombBlock;
-import nl.melonstudios.bmnw.interfaces.IDetonatable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -12,6 +8,10 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import nl.melonstudios.bmnw.entity.LittleBoyEntity;
+import nl.melonstudios.bmnw.init.BMNWEntityTypes;
+import nl.melonstudios.bmnw.interfaces.IBombBlock;
+import nl.melonstudios.bmnw.interfaces.IDetonatable;
 
 public class LittleBoyBlock extends Block implements IDetonatable, IBombBlock {
     public LittleBoyBlock(Properties properties) {

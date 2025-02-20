@@ -1,8 +1,8 @@
 package nl.melonstudios.bmnw.block.settype;
 
-import nl.melonstudios.bmnw.init.BMNWSounds;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
+import nl.melonstudios.bmnw.init.BMNWSounds;
 
 public class BMNWBlockSetType {
     public static final BlockSetType DOOR_LOL = new BlockSetType(

@@ -1,14 +1,14 @@
 package nl.melonstudios.bmnw.block;
 
-import nl.melonstudios.bmnw.init.BMNWEntityTypes;
-import nl.melonstudios.bmnw.entity.NuclearChargeEntity;
-import nl.melonstudios.bmnw.interfaces.IBombBlock;
-import nl.melonstudios.bmnw.interfaces.IDetonatable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import nl.melonstudios.bmnw.entity.NuclearChargeEntity;
+import nl.melonstudios.bmnw.init.BMNWEntityTypes;
+import nl.melonstudios.bmnw.interfaces.IBombBlock;
+import nl.melonstudios.bmnw.interfaces.IDetonatable;
 
 public class NuclearChargeBlock extends Block implements IDetonatable, IBombBlock {
     public NuclearChargeBlock(Properties properties) {

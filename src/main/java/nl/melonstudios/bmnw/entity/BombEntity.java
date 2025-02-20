@@ -1,10 +1,5 @@
 package nl.melonstudios.bmnw.entity;
 
-import nl.melonstudios.bmnw.init.BMNWBlocks;
-import nl.melonstudios.bmnw.hazard.radiation.ChunkRadiationManager;
-import nl.melonstudios.bmnw.hazard.radiation.RadiationTools;
-import nl.melonstudios.bmnw.init.BMNWDamageSources;
-import nl.melonstudios.bmnw.init.BMNWTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
@@ -29,6 +24,11 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.Tags;
+import nl.melonstudios.bmnw.hazard.radiation.ChunkRadiationManager;
+import nl.melonstudios.bmnw.hazard.radiation.RadiationTools;
+import nl.melonstudios.bmnw.init.BMNWBlocks;
+import nl.melonstudios.bmnw.init.BMNWDamageSources;
+import nl.melonstudios.bmnw.init.BMNWTags;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

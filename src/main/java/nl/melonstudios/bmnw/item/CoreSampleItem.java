@@ -1,7 +1,7 @@
 package nl.melonstudios.bmnw.item;
 
-import nl.melonstudios.bmnw.misc.ExcavationVein;
 import net.minecraft.world.item.Item;
+import nl.melonstudios.bmnw.misc.ExcavationVein;
 
 public class CoreSampleItem extends Item {
     private final ExcavationVein vein;

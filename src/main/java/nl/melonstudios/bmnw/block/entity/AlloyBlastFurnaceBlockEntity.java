@@ -1,11 +1,11 @@
 package nl.melonstudios.bmnw.block.entity;
 
-import nl.melonstudios.bmnw.interfaces.IMachineBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.energy.IEnergyStorage;
+import nl.melonstudios.bmnw.interfaces.IMachineBlockEntity;
 
 public class AlloyBlastFurnaceBlockEntity extends BlockEntity implements IEnergyStorage, IMachineBlockEntity {
     public AlloyBlastFurnaceBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState) {

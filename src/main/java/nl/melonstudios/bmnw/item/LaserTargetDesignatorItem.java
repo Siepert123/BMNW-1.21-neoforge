@@ -1,8 +1,5 @@
 package nl.melonstudios.bmnw.item;
 
-import nl.melonstudios.bmnw.interfaces.ITargetHolder;
-import nl.melonstudios.bmnw.init.BMNWDataComponents;
-import nl.melonstudios.bmnw.misc.MiddleMouseButton;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
@@ -13,6 +10,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
+import nl.melonstudios.bmnw.init.BMNWDataComponents;
+import nl.melonstudios.bmnw.interfaces.ITargetHolder;
+import nl.melonstudios.bmnw.misc.MiddleMouseButton;
 
 import javax.annotation.Nullable;
 import java.util.List;

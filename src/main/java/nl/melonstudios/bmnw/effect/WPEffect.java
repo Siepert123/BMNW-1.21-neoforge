@@ -5,8 +5,8 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.neoforged.neoforge.common.EffectCure;
-import nl.melonstudios.bmnw.init.BMNWEffects;
 import nl.melonstudios.bmnw.init.BMNWDamageSources;
+import nl.melonstudios.bmnw.init.BMNWEffects;
 
 import java.util.Set;
 

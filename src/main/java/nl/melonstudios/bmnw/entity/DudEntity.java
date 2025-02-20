@@ -1,10 +1,5 @@
 package nl.melonstudios.bmnw.entity;
 
-import nl.melonstudios.bmnw.init.BMNWBlocks;
-import nl.melonstudios.bmnw.hazard.radiation.RadiationTools;
-import nl.melonstudios.bmnw.init.BMNWSounds;
-import nl.melonstudios.bmnw.init.BMNWTags;
-import nl.melonstudios.bmnw.init.BMNWParticleTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundSource;
@@ -19,6 +14,11 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.neoforged.neoforge.common.Tags;
+import nl.melonstudios.bmnw.hazard.radiation.RadiationTools;
+import nl.melonstudios.bmnw.init.BMNWBlocks;
+import nl.melonstudios.bmnw.init.BMNWParticleTypes;
+import nl.melonstudios.bmnw.init.BMNWSounds;
+import nl.melonstudios.bmnw.init.BMNWTags;
 
 import java.util.List;
 

@@ -1,12 +1,12 @@
 package nl.melonstudios.bmnw.init;
 
-import nl.melonstudios.bmnw.effect.ContaminationEffect;
-import nl.melonstudios.bmnw.effect.VomitingEffect;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.effect.MobEffect;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import nl.melonstudios.bmnw.effect.ContaminationEffect;
+import nl.melonstudios.bmnw.effect.VomitingEffect;
 import nl.melonstudios.bmnw.effect.WPEffect;
 
 public class BMNWEffects {

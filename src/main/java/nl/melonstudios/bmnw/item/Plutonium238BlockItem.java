@@ -1,7 +1,7 @@
 package nl.melonstudios.bmnw.item;
 
-import nl.melonstudios.bmnw.init.BMNWBlocks;
 import nl.melonstudios.bmnw.hazard.HazardRegistry;
+import nl.melonstudios.bmnw.init.BMNWBlocks;
 
 public class Plutonium238BlockItem extends SimpleRadioactiveBlockItem {
     public Plutonium238BlockItem() {

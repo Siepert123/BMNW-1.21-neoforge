@@ -9,8 +9,8 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.event.level.BlockDropsEvent;
-import nl.melonstudios.bmnw.init.BMNWBlockEntities;
 import nl.melonstudios.bmnw.hardcoded.lootpool.coded.LootPoolItemStack;
+import nl.melonstudios.bmnw.init.BMNWBlockEntities;
 
 import java.util.ArrayList;
 import java.util.List;

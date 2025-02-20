@@ -1,20 +1,15 @@
 package nl.melonstudios.bmnw.init;
 
-import net.minecraft.commands.arguments.coordinates.BlockPosArgument;
-import net.minecraft.commands.arguments.coordinates.WorldCoordinates;
-import nl.melonstudios.bmnw.entity.MeteoriteEntity;
-import nl.melonstudios.bmnw.hardcoded.recipe.PressingRecipes;
-import nl.melonstudios.bmnw.hazard.radiation.ChunkRadiationManager;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
-import nl.melonstudios.bmnw.interfaces.IBatteryItem;
-import nl.melonstudios.bmnw.hardcoded.structure.Structures;
 import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.commands.arguments.ResourceLocationArgument;
+import net.minecraft.commands.arguments.coordinates.BlockPosArgument;
+import net.minecraft.commands.arguments.coordinates.WorldCoordinates;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.Component;
@@ -25,6 +20,11 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.phys.Vec3;
+import nl.melonstudios.bmnw.entity.MeteoriteEntity;
+import nl.melonstudios.bmnw.hardcoded.recipe.PressingRecipes;
+import nl.melonstudios.bmnw.hardcoded.structure.Structures;
+import nl.melonstudios.bmnw.hazard.radiation.ChunkRadiationManager;
+import nl.melonstudios.bmnw.interfaces.IBatteryItem;
 import nl.melonstudios.bmnw.misc.Books;
 
 import java.util.ArrayList;

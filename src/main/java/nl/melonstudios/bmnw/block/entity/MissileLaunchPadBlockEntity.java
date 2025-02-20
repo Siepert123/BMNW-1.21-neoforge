@@ -1,10 +1,5 @@
 package nl.melonstudios.bmnw.block.entity;
 
-import nl.melonstudios.bmnw.init.BMNWBlocks;
-import nl.melonstudios.bmnw.block.MissileBlock;
-import nl.melonstudios.bmnw.init.BMNWBlockEntities;
-import nl.melonstudios.bmnw.entity.MissileEntity;
-import nl.melonstudios.bmnw.init.BMNWStateProperties;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -13,6 +8,11 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.energy.EnergyStorage;
 import net.neoforged.neoforge.energy.IEnergyStorage;
+import nl.melonstudios.bmnw.block.MissileBlock;
+import nl.melonstudios.bmnw.entity.MissileEntity;
+import nl.melonstudios.bmnw.init.BMNWBlockEntities;
+import nl.melonstudios.bmnw.init.BMNWBlocks;
+import nl.melonstudios.bmnw.init.BMNWStateProperties;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.joml.Vector2i;

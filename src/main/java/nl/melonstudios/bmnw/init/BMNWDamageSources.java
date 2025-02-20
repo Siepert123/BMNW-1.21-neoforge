@@ -1,12 +1,12 @@
 package nl.melonstudios.bmnw.init;
 
-import nl.melonstudios.bmnw.BMNW;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.level.Level;
+import nl.melonstudios.bmnw.BMNW;
 
 public class BMNWDamageSources {
     public static final ResourceKey<DamageType> RADIATION

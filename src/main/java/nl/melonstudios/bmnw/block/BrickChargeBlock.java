@@ -1,9 +1,5 @@
 package nl.melonstudios.bmnw.block;
 
-import nl.melonstudios.bmnw.init.BMNWEntityTypes;
-import nl.melonstudios.bmnw.entity.BlockDebrisEntity;
-import nl.melonstudios.bmnw.interfaces.IBombBlock;
-import nl.melonstudios.bmnw.interfaces.IDetonatable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
@@ -12,6 +8,10 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import nl.melonstudios.bmnw.entity.BlockDebrisEntity;
+import nl.melonstudios.bmnw.init.BMNWEntityTypes;
+import nl.melonstudios.bmnw.interfaces.IBombBlock;
+import nl.melonstudios.bmnw.interfaces.IDetonatable;
 
 public class BrickChargeBlock extends Block implements IDetonatable, IBombBlock {
     public BrickChargeBlock(Properties properties) {

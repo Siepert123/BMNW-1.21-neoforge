@@ -1,10 +1,5 @@
 package nl.melonstudios.bmnw.block.entity;
 
-import nl.melonstudios.bmnw.init.BMNWBlockEntities;
-import nl.melonstudios.bmnw.init.BMNWAttachments;
-import nl.melonstudios.bmnw.init.BMNWConfig;
-import nl.melonstudios.bmnw.misc.ExcavationVein;
-import nl.melonstudios.bmnw.misc.StackMover;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.Container;
@@ -16,6 +11,11 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
+import nl.melonstudios.bmnw.init.BMNWAttachments;
+import nl.melonstudios.bmnw.init.BMNWBlockEntities;
+import nl.melonstudios.bmnw.init.BMNWConfig;
+import nl.melonstudios.bmnw.misc.ExcavationVein;
+import nl.melonstudios.bmnw.misc.StackMover;
 
 public class TestExcavatorBlockEntity extends BlockEntity {
     public TestExcavatorBlockEntity(BlockPos pos, BlockState blockState) {

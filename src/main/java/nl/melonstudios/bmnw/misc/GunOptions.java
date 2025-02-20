@@ -1,9 +1,9 @@
 package nl.melonstudios.bmnw.misc;
 
-import nl.melonstudios.bmnw.item.GunItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import nl.melonstudios.bmnw.item.GunItem;
 
 import java.util.function.Predicate;
 

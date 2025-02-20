@@ -1,6 +1,5 @@
 package nl.melonstudios.bmnw.effect;
 
-import nl.melonstudios.bmnw.init.BMNWParticleTypes;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
@@ -8,6 +7,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.EffectCure;
+import nl.melonstudios.bmnw.init.BMNWParticleTypes;
 
 import java.util.Set;
 

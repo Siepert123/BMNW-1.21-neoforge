@@ -1,12 +1,12 @@
 package nl.melonstudios.bmnw.item;
 
-import nl.melonstudios.bmnw.interfaces.IBatteryItem;
-import nl.melonstudios.bmnw.init.BMNWDataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import nl.melonstudios.bmnw.init.BMNWDataComponents;
+import nl.melonstudios.bmnw.interfaces.IBatteryItem;
 
 import java.util.List;
 

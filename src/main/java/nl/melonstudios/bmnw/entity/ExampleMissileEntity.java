@@ -1,9 +1,9 @@
 package nl.melonstudios.bmnw.entity;
 
-import nl.melonstudios.bmnw.init.BMNWEntityTypes;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
+import nl.melonstudios.bmnw.init.BMNWEntityTypes;
 
 public class ExampleMissileEntity extends MissileEntity {
 

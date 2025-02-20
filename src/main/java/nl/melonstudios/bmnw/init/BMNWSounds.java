@@ -1,12 +1,12 @@
 package nl.melonstudios.bmnw.init;
 
-import nl.melonstudios.bmnw.BMNW;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import nl.melonstudios.bmnw.BMNW;
 
 public class BMNWSounds {
     private static final DeferredRegister<SoundEvent> SOUND_EVENTS =
