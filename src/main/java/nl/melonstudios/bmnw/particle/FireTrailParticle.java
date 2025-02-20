@@ -33,7 +33,8 @@ public class FireTrailParticle extends TextureSheetParticle {
             this.remove();
         }
         setSpriteFromAge(spriteSet);
-        setColor(Math.min(1.5f - (float) age / lifetime, 1), 0, 0);
+        float baseColor = Math.min(1.5f - (float) age / lifetime, 1);
+        setColor(baseColor, baseColor / 2, 0);
     }
 
     private final SpriteSet spriteSet;
