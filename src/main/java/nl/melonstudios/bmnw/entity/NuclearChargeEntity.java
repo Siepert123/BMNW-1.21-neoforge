@@ -1,5 +1,6 @@
 package nl.melonstudios.bmnw.entity;
 
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.EntityType;
@@ -9,6 +10,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import nl.melonstudios.bmnw.init.BMNWSounds;
+import nl.melonstudios.bmnw.misc.NukeUtils;
+import nl.melonstudios.bmnw.particle.FireTrailParticle;
 
 public class NuclearChargeEntity extends BombEntity {
     public final int radius = 32;
@@ -27,6 +30,9 @@ public class NuclearChargeEntity extends BombEntity {
 
         if (level().isClientSide()) {
             progress = entityData.get(PROGRESS_DATA);
+            if (this.progress == 0) {
+                //TODO: mushroom cloud dammit
+            }
             return;
         }
         recalcPos();
