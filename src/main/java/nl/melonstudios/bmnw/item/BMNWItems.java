@@ -314,6 +314,19 @@ public class BMNWItems {
             () -> new ExcavationVeinDetectorItem(new Item.Properties().stacksTo(1)));
     public static final DeferredItem<BlockItem> TEST_EXCAVATOR = ITEMS.register("test_excavator",
             () -> new BlockItem(BMNWBlocks.TEST_EXCAVATOR.get(), new Item.Properties()));
+    public static final DeferredItem<BlockItem> MACHINE_SCRAP = ITEMS.register("machine_scrap",
+            () -> new BlockItem(BMNWBlocks.MACHINE_SCRAP.get(), new Item.Properties()));
+
+    public static final DeferredItem<BlockItem> METEORITE_COBBLESTONE = ITEMS.register("meteorite_cobblestone",
+            () -> new BlockItem(BMNWBlocks.METEORITE_COBBLESTONE.get(), new Item.Properties()));
+    public static final DeferredItem<BlockItem> HOT_METEORITE_COBBLESTONE = ITEMS.register("hot_meteorite_cobblestone",
+            () -> new BlockItem(BMNWBlocks.HOT_METEORITE_COBBLESTONE.get(), new Item.Properties()));
+    public static final DeferredItem<BlockItem> METEORITE_IRON_ORE = ITEMS.register("meteorite_iron_ore",
+            () -> new BlockItem(BMNWBlocks.METEORITE_IRON_ORE.get(), new Item.Properties()));
+    public static final DeferredItem<BlockItem> METEORITE_TREASURE = ITEMS.register("meteorite_treasure",
+            () -> new BlockItem(BMNWBlocks.METEORITE_TREASURE.get(), new Item.Properties().rarity(Rarity.UNCOMMON)));
+    public static final DeferredItem<BlockItem> METEORITE_FIRE_MARBLE_ORE = ITEMS.register("meteorite_fire_marble_ore",
+            () -> new BlockItem(BMNWBlocks.METEORITE_FIRE_MARBLE_ORE.get(), new Item.Properties().rarity(Rarity.UNCOMMON)));
 
     //region Bombs & Missiles
     public static final DeferredItem<BombBlockItem> FRACTURIZER = ITEMS.register("fracturizer",

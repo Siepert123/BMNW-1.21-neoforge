@@ -17,7 +17,6 @@ import nl.melonstudios.bmnw.item.BMNWItems;
 
 import javax.annotation.Nonnull;
 
-@JeiPlugin
 public class JEICompat implements IModPlugin {
     @Override
     @Nonnull

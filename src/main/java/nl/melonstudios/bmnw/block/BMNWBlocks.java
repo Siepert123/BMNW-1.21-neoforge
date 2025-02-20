@@ -1,6 +1,12 @@
 package nl.melonstudios.bmnw.block;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.PushReaction;
 import nl.melonstudios.bmnw.block.custom.*;
 import nl.melonstudios.bmnw.block.settype.BMNWBlockSetType;
@@ -20,6 +26,9 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.ParametersAreNonnullByDefault;
 
 public class BMNWBlocks {
     @SuppressWarnings("deprecation")
@@ -202,6 +211,28 @@ public class BMNWBlocks {
 
     public static final DeferredBlock<TestExcavatorBlock> TEST_EXCAVATOR = BLOCKS.register("test_excavator",
             () -> new TestExcavatorBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get())));
+
+    public static final DeferredBlock<MachineScrapBlock> MACHINE_SCRAP = BLOCKS.register("machine_scrap",
+            () -> new MachineScrapBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_DECO_BLOCK.get()).noOcclusion().noLootTable()));
+    //endregion
+
+    //region meteorite
+    public static final DeferredBlock<Block> METEORITE_COBBLESTONE = BLOCKS.register("meteorite_cobblestone",
+            () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.COBBLESTONE)));
+    public static final DeferredBlock<HotMeteoriteBlock> HOT_METEORITE_COBBLESTONE = BLOCKS.register("hot_meteorite_cobblestone",
+            () -> new HotMeteoriteBlock(BlockBehaviour.Properties.ofFullCopy(METEORITE_COBBLESTONE.get()).noLootTable()));
+    public static final DeferredBlock<Block> METEORITE_IRON_ORE = BLOCKS.register("meteorite_iron_ore",
+            () -> new Block(BlockBehaviour.Properties.ofFullCopy(METEORITE_COBBLESTONE.get())));
+    public static final DeferredBlock<MeteoriteTreasureBlock> METEORITE_TREASURE = BLOCKS.register("meteorite_treasure",
+            () -> new MeteoriteTreasureBlock(BlockBehaviour.Properties.ofFullCopy(METEORITE_COBBLESTONE.get()).noLootTable()));
+    public static final DeferredBlock<Block> METEORITE_FIRE_MARBLE_ORE = BLOCKS.register("meteorite_fire_marble_ore",
+            () -> new Block(BlockBehaviour.Properties.ofFullCopy(METEORITE_COBBLESTONE.get())) {
+                @Override
+                @ParametersAreNonnullByDefault
+                public int getExpDrop(BlockState state, LevelAccessor level, BlockPos pos, @Nullable BlockEntity blockEntity, @Nullable Entity breaker, ItemStack tool) {
+                    return 10;
+                }
+            });
     //endregion
 
     //region Concrete & similar

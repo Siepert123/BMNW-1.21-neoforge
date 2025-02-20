@@ -1,7 +1,10 @@
 package nl.melonstudios.bmnw.misc;
 
+import mezz.jei.api.neoforge.NeoForgeTypes;
 import net.minecraft.commands.arguments.coordinates.BlockPosArgument;
 import net.minecraft.commands.arguments.coordinates.WorldCoordinates;
+import nl.melonstudios.bmnw.entity.custom.MeteoriteEntity;
+import nl.melonstudios.bmnw.hardcoded.recipe.PressingRecipes;
 import nl.melonstudios.bmnw.hazard.radiation.ChunkRadiationManager;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
@@ -35,7 +38,6 @@ public class BMNWCommands {
     private static final SuggestionProvider<CommandSourceStack> SUGGEST_STRUCTURES
             = (i, j) -> SharedSuggestionProvider.suggestResource(Structures.getAllStructureResourceLocations(), j);
     public static void register(Commands commands) {
-
         commands.getDispatcher().register(Commands.literal("bmnw")
                 .then(Commands.literal("radiation")
                         .then(Commands.literal("get")
@@ -177,13 +179,41 @@ public class BMNWCommands {
                                         )
                                 )
                         )
+                ).then(Commands.literal("debug")
+                        .then(Commands.literal("recipe")
+                                .then(Commands.literal("pressing_blank")
+                                        .executes(context -> {
+                                            context.getSource().sendSuccess(() -> Component.literal(
+                                                    String.format("%s blank pressing recipes",
+                                                            PressingRecipes.instance.recipeCount(PressingRecipes.MoldType.BLANK))
+                                            ), false);
+                                            return Command.SINGLE_SUCCESS;
+                                        }))
+                                .then(Commands.literal("pressing_plate")
+                                        .executes(context -> {
+                                            context.getSource().sendSuccess(() -> Component.literal(
+                                                    String.format("%s plate pressing recipes",
+                                                            PressingRecipes.instance.recipeCount(PressingRecipes.MoldType.PLATE))
+                                            ), false);
+                                            return Command.SINGLE_SUCCESS;
+                                        }))
+                                .then(Commands.literal("pressing_wire")
+                                        .executes(context -> {
+                                            context.getSource().sendSuccess(() -> Component.literal(
+                                                    String.format("%s wire pressing recipes",
+                                                            PressingRecipes.instance.recipeCount(PressingRecipes.MoldType.WIRE))
+                                            ), false);
+                                            return Command.SINGLE_SUCCESS;
+                                        }))
+                        ).then(Commands.literal("meteor")
+                                .executes(context -> {
+                                    Player player = context.getSource().getPlayerOrException();
+                                    if (player.level().isClientSide()) return 1;
+                                    MeteoriteEntity.spawn(player);
+                                    return Command.SINGLE_SUCCESS;
+                                })
+                        )
                 )
         );
-    }
-
-    private static float dist(int x1, int z1, int x2, int z2) {
-        int i = x2 - x1;
-        int j = z2 - z1;
-        return Mth.sqrt((float)(i * i + j * j));
     }
 }

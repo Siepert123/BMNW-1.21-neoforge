@@ -42,6 +42,10 @@ public class BMNWParticleTypes {
             "dusty_fire",
             () -> new SimpleParticleType(true)
     );
+    public static final Supplier<SimpleParticleType> FIRE_TRAIL = PARTICLE_TYPES.register(
+            "fire_trail",
+            () -> new SimpleParticleType(true)
+    );
 
 
     public static void register(IEventBus eventBus) {

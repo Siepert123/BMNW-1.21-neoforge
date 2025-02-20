@@ -27,7 +27,12 @@
     "bmnw:bauxite_ore",
     "bmnw:deepslate_bauxite_ore",
     "bmnw:bauxite_block",
-    "bmnw:aluminium_block"
+    "bmnw:aluminium_block",
+    "bmnw:meteorite_cobblestone",
+    "bmnw:hot_meteorite_cobblestone",
+    "bmnw:meteorite_treasure",
+    "bmnw:meteorite_fire_marble_ore",
+    "bmnw:meteorite_iron_ore"
   ],
   "replace": false
 }

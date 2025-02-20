@@ -1,18 +1,18 @@
 package nl.melonstudios.bmnw.hardcoded.lootpool;
 
 import net.minecraft.core.Direction;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import nl.melonstudios.bmnw.block.BMNWBlocks;
-import nl.melonstudios.bmnw.hardcoded.lootpool.coded.LootPoolChest;
+import nl.melonstudios.bmnw.hardcoded.lootpool.coded.LootPoolItemStack;
 import nl.melonstudios.bmnw.hardcoded.lootpool.coded.LootPoolStateSupplier;
 import nl.melonstudios.bmnw.item.BMNWItems;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
 public class LootPools {
-    public static final LootPool<ItemStack> CHEST_RADIO_ANTENNA = new LootPoolChest(
+    public static final LootPoolItemStack CHEST_RADIO_ANTENNA = new LootPoolItemStack(
             0.2f,
             new StackPoolEntry(BMNWItems.STEEL_INGOT.get(), 1, 3, 10),
             new StackPoolEntry(BMNWItems.TITANIUM_INGOT.get(), 1, 3, 7),
@@ -22,7 +22,7 @@ public class LootPools {
             new StackPoolEntry(BMNWItems.ANTENNA_TOP.get(), 1, 1, 1),
             new StackPoolEntry(BMNWItems.BASIC_CIRCUIT.get(), 1, 1, 1)
     );
-    public static final LootPool<ItemStack> CHEST_BRICK_BUILDING_SECRET = new LootPoolChest(
+    public static final LootPoolItemStack CHEST_BRICK_BUILDING_SECRET = new LootPoolItemStack(
            0.5f,
            new StackPoolEntry(BMNWItems.STEEL_INGOT.get(), 2,5, 15),
            new StackPoolEntry(BMNWItems.TITANIUM_INGOT.get(), 1,3, 15),
@@ -46,5 +46,8 @@ public class LootPools {
                     .setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.from2DDataValue(random.nextInt(4)))), 100),
             new StateSupplierPoolEntry((random -> Blocks.IRON_BLOCK.defaultBlockState()), 25),
             new StateSupplierPoolEntry((random -> BMNWBlocks.STEEL_BLOCK.get().defaultBlockState()), 25)
+    );
+    public static final LootPool<ItemStack> DROPS_METEORITE_TREASURE = new LootPoolItemStack(
+            new StackPoolEntry(BMNWItems.PLUTONIUM_238_INGOT.get(), 1, 1, 25)
     );
 }

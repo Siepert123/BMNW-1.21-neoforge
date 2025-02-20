@@ -1,17 +1,21 @@
 package nl.melonstudios.bmnw.event;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.event.level.BlockDropsEvent;
 import nl.melonstudios.bmnw.block.BMNWBlocks;
 import nl.melonstudios.bmnw.block.entity.BMNWBlockEntities;
 import nl.melonstudios.bmnw.block.entity.custom.IronBarrelBlockEntity;
+import nl.melonstudios.bmnw.block.entity.custom.MachineScrapBlockEntity;
 import nl.melonstudios.bmnw.block.entity.custom.MissileLaunchPadBlockEntity;
 import nl.melonstudios.bmnw.block.entity.renderer.HatchRenderer;
 import nl.melonstudios.bmnw.datagen.BMNWAdvancementGenerator;
 import nl.melonstudios.bmnw.effect.BMNWEffects;
 import nl.melonstudios.bmnw.effect.custom.WPEffect;
 import nl.melonstudios.bmnw.entity.BMNWEntityTypes;
+import nl.melonstudios.bmnw.entity.custom.MeteoriteEntity;
 import nl.melonstudios.bmnw.entity.renderer.*;
 import nl.melonstudios.bmnw.hazard.HazardRegistry;
 import nl.melonstudios.bmnw.hazard.radiation.ChunkRadiationManager;
@@ -126,6 +130,19 @@ public class BMNWEventBus {
                     CompoundTag nbt = entity.getPersistentData();
 
                     RadiationTools.handleRads(entity);
+                }
+                if (event.getEntity() instanceof ItemEntity entity) {
+                    ItemStack stack = entity.getItem();
+                    float rads = HazardRegistry.getRadRegistry(stack.getItem());
+                    if (rads > 0) {
+                        float calculated = rads * stack.getCount() / 20;
+                        BlockPos pos = new BlockPos(
+                                (int) entity.getX(),
+                                (int) entity.getY(),
+                                (int) entity.getZ()
+                        );
+                        ChunkRadiationManager.handler.increaseRadiation(entity.level(), pos, calculated);
+                    }
                 }
             }
         }
@@ -245,8 +262,12 @@ public class BMNWEventBus {
                     }
                 }
             }
+
+            MeteoriteEntity.spawnIfReady(event.getEntity());
         }
         //endregion
+
+
 
         //region Block events
         @SubscribeEvent
@@ -347,6 +368,7 @@ public class BMNWEventBus {
                                                                                            EntityRendererProvider<T> renderer) {
             event.registerEntityRenderer(type.get(), renderer);
         }
+        @OnlyIn(Dist.CLIENT)
         private static <T extends BlockEntity, V extends T> void registerBlockEntityRenderingHandler(EntityRenderersEvent.RegisterRenderers event,
                                                                                                      Supplier<BlockEntityType<V>> type,
                                                                                                      BlockEntityRendererProvider<T> renderer) {
@@ -374,6 +396,8 @@ public class BMNWEventBus {
             registerEntityRenderingHandler(event, BMNWEntityTypes.NUCLEAR_MISSILE, NuclearMissileRenderer::new);
 
             registerEntityRenderingHandler(event, BMNWEntityTypes.LEAD_BULLET, LeadBulletRenderer::new);
+
+            registerEntityRenderingHandler(event, BMNWEntityTypes.METEORITE, MeteoriteRenderer::new);
         }
 
         /**
@@ -400,6 +424,7 @@ public class BMNWEventBus {
             event.registerSpriteSet(BMNWParticleTypes.SHOCKWAVE.get(), ShockwaveParticleProvider::new);
             event.registerSpriteSet(BMNWParticleTypes.LARGE_MISSILE_SMOKE.get(), LargeMissileSmokeParticle.Provider::new);
             event.registerSpriteSet(BMNWParticleTypes.DUSTY_FIRE.get(), DustyFireParticle.Provider::new);
+            event.registerSpriteSet(BMNWParticleTypes.FIRE_TRAIL.get(), FireTrailParticle.Provider::new);
         }
 
         @SubscribeEvent

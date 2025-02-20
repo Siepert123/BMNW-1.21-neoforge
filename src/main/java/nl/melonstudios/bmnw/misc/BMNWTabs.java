@@ -25,7 +25,7 @@ public class BMNWTabs {
     }
 
     //General item order:
-    //iron copper gold conductive_copper lead tungsten titanium steel uranium thorium plutonium
+    //iron copper gold conductive_copper lead aluminium tungsten titanium steel uranium thorium plutonium
     private static final DeferredRegister<CreativeModeTab> CREATIVE_TABS =
             DeferredRegister.create(Registries.CREATIVE_MODE_TAB, "bmnw");
 
@@ -152,6 +152,14 @@ public class BMNWTabs {
                                 FLAMING_BARBED_WIRE,
                                 POISONOUS_BARBED_WIRE,
                                 WP_BARBED_WIRE
+                        );
+
+                        addItems(items,
+                                METEORITE_COBBLESTONE,
+                                HOT_METEORITE_COBBLESTONE,
+                                METEORITE_IRON_ORE,
+                                METEORITE_TREASURE,
+                                METEORITE_FIRE_MARBLE_ORE
                         );
                     })
                     .build()

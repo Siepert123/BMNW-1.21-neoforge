@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "c:plates/tungsten"
+    },
+    {
+      "item": "bmnw:steel_scaffold"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "bmnw:tungsten_deco_block"
+  }
+}

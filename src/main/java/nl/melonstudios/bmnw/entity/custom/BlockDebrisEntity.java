@@ -136,7 +136,7 @@ public class BlockDebrisEntity extends Entity {
         if (previousPos.y > position().y) {
             fallDistance += (float) (previousPos.y - position().y);
         }
-        if (placeOnLand && previousPos.y == position().y) {
+        if (placeOnLand && this.horizontalCollision) {
             this.placeSelf();
         }
     }

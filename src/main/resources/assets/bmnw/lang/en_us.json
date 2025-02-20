@@ -43,6 +43,7 @@
   "block.bmnw.fracturizer": "Fracturizer",
   "block.bmnw.hatch": "Hatch",
   "block.bmnw.he_missile": "HE Missile",
+  "block.bmnw.hot_meteorite_cobblestone": "Hot Meteorite Cobblestone",
   "block.bmnw.iron_barrel": "Iron Fluid Barrel",
   "block.bmnw.irradiated_grass_block": "Irradiated Grass Block",
   "block.bmnw.irradiated_leaf_pile": "Irradiated Leaf Pile",
@@ -52,6 +53,10 @@
   "block.bmnw.lead_deco_block": "Lead Deco Block",
   "block.bmnw.lead_ore": "Lead Ore",
   "block.bmnw.little_boy": "Little Boy",
+  "block.bmnw.machine_scrap": "Machine Scraps",
+  "block.bmnw.meteorite_cobblestone": "Meteorite Cobblestone",
+  "block.bmnw.meteorite_fire_marble_ore": "Meteorite Fire Marble Ore",
+  "block.bmnw.meteorite_treasure": "Meteorite Treasure",
   "block.bmnw.missile_launch_pad": "Missile Launch Pad",
   "block.bmnw.mossy_concrete_bricks": "Mossy Concrete Bricks",
   "block.bmnw.nuclear_charge": "Nuclear Charge",
@@ -283,6 +288,7 @@
   "itemGroup.bmnw.materials": "BMNW: Materials & Parts",
   "itemGroup.bmnw.tools": "BMNW: Tools & Consumables",
   "recipe.bmnw.alloy_blast_furnace": "Alloying",
+  "recipe.bmnw.pressing": "Mold Pressing",
   "subtitles.bmnw.door_close": "Door closes",
   "subtitles.bmnw.door_open": "Door opens",
   "subtitles.bmnw.geiger_click": "Geiger click",
@@ -377,6 +383,5 @@
   "tooltip.bmnw.radiation_shielding": "[Radiation Shielding]",
   "tooltip.bmnw.radioactive": "[Radioactive]",
   "tooltip.bmnw.radius": "Radius: ~%s",
-  "tooltip.bmnw.wp": "[White Phosphorus]",
-  "recipe.bmnw.pressing": "Mold Pressing"
+  "tooltip.bmnw.wp": "[White Phosphorus]"
 }

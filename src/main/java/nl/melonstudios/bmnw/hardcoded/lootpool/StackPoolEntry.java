@@ -1,5 +1,7 @@
 package nl.melonstudios.bmnw.hardcoded.lootpool;
 
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -28,5 +30,23 @@ public class StackPoolEntry {
 
     public ItemStack getStack(Random random) {
         return new ItemStack(this.item, random.nextInt(this.min, this.max+1));
+    }
+
+    public CompoundTag serialize(HolderLookup.Provider registries) {
+        CompoundTag nbt = new CompoundTag();
+        nbt.putInt("min", this.min);
+        nbt.putInt("max", this.max);
+        nbt.putInt("weight", this.weight);
+        nbt.putInt("item", Item.getId(this.item));
+
+        return nbt;
+    }
+    public static StackPoolEntry deserialize(CompoundTag nbt, HolderLookup.Provider registries) {
+        return new StackPoolEntry(
+                Item.byId(nbt.getInt("item")),
+                nbt.getInt("min"),
+                nbt.getInt("max"),
+                nbt.getInt("weight")
+        );
     }
 }

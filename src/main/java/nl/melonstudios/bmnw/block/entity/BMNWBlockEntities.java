@@ -10,6 +10,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import java.util.Set;
 import java.util.function.Supplier;
 
+@SuppressWarnings("all")
 public class BMNWBlockEntities {
     private static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES
             = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, "bmnw");
@@ -62,6 +63,15 @@ public class BMNWBlockEntities {
             () -> new BlockEntityType<>(
                     HatchBlockEntity::new,
                     Set.of(BMNWBlocks.HATCH.get()),
+                    null
+            )
+    );
+
+    public static final Supplier<BlockEntityType<MachineScrapBlockEntity>> MACHINE_SCRAP = BLOCK_ENTITIES.register(
+            "machine_scrap",
+            () -> new BlockEntityType<>(
+                    MachineScrapBlockEntity::new,
+                    Set.of(BMNWBlocks.MACHINE_SCRAP.get()),
                     null
             )
     );
