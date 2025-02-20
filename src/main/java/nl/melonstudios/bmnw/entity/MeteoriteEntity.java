@@ -5,6 +5,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
@@ -20,6 +21,8 @@ import nl.melonstudios.bmnw.init.BMNWEntityTypes;
 import nl.melonstudios.bmnw.init.BMNWParticleTypes;
 import org.joml.Quaternionf;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class MeteoriteEntity extends Entity {
@@ -176,8 +179,21 @@ public class MeteoriteEntity extends Entity {
         return Math.sqrt(x*x + y*y + z*z);
     }
 
+    public static void invalidateDimension(ResourceLocation dimension) {
+        invalidDimensions.add(dimension);
+    }
+    private static final List<ResourceLocation> invalidDimensions = new ArrayList<>();
+    public static boolean dimensionInvalid(ResourceLocation dimension) {
+        return invalidDimensions.contains(dimension);
+    }
+
+    static {
+        invalidateDimension(ResourceLocation.withDefaultNamespace("the_nether"));
+        invalidateDimension(ResourceLocation.withDefaultNamespace("the_end"));
+    }
+
     public static void spawnIfReady(Player player) {
-        if (player.level().isClientSide()) return;
+        if (player.level().isClientSide() || dimensionInvalid(player.level().dimension().location())) return;
         long totalTime = player.level().getGameTime();
         if (totalTime % 10000 == (player.hashCode() % 10000)) {
             spawn(player);

@@ -92,7 +92,7 @@ public class BMNWEntityTypes {
     public static final DeferredHolder<EntityType<?>, EntityType<MeteoriteEntity>> METEORITE = ENTITY_TYPES.register(
             "meteorite",
             () -> EntityType.Builder.<MeteoriteEntity>of(((entityType, level) -> new MeteoriteEntity(entityType, level)), MobCategory.MISC)
-                    .sized(3, 3)
+                    .sized(1, 1)
                     .clientTrackingRange(512)
                     .build("bmnw:meteorite")
     );
