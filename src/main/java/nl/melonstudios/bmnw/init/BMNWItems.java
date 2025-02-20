@@ -3,7 +3,6 @@ package nl.melonstudios.bmnw.init;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
-import net.minecraft.world.level.block.Block;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -23,10 +22,7 @@ public class BMNWItems {
     private static DeferredItem<Item> item(String name) {
         return ITEMS.register(name, () -> new Item(new Item.Properties()));
     }
-    @Deprecated
-    private static DeferredItem<BlockItem> blockItem(String name, Block block) {
-        return ITEMS.register(name, () -> new BlockItem(block, new Item.Properties()));
-    }
+
     private static final DeferredRegister.Items ITEMS = DeferredRegister.createItems("bmnw");
 
     public static final DeferredItem<Item> PLAYSTATION = ITEMS.register("playstation",
@@ -509,15 +505,20 @@ public class BMNWItems {
     //region Tools
 
     public static final DeferredItem<ShovelItem> STEEL_SHOVEL = ITEMS.register("steel_shovel",
-            () -> new ShovelItem(BMNWTiers.STEEL, new Item.Properties().stacksTo(1)));
+            () -> new ShovelItem(BMNWTiers.STEEL, new Item.Properties().stacksTo(1)
+                    .attributes(ShovelItem.createAttributes(BMNWTiers.STEEL, 1.5F, -3.0F))));
     public static final DeferredItem<PickaxeItem> STEEL_PICKAXE = ITEMS.register("steel_pickaxe",
-            () -> new PickaxeItem(BMNWTiers.STEEL, new Item.Properties().stacksTo(1)));
+            () -> new PickaxeItem(BMNWTiers.STEEL, new Item.Properties().stacksTo(1)
+                    .attributes(PickaxeItem.createAttributes(BMNWTiers.STEEL, 1.0F, -2.8F))));
     public static final DeferredItem<AxeItem> STEEL_AXE = ITEMS.register("steel_axe",
-            () -> new AxeItem(BMNWTiers.STEEL, new Item.Properties().stacksTo(1)));
+            () -> new AxeItem(BMNWTiers.STEEL, new Item.Properties().stacksTo(1)
+                    .attributes(AxeItem.createAttributes(BMNWTiers.STEEL, 5.0F, -3.0F))));
     public static final DeferredItem<HoeItem> STEEL_HOE = ITEMS.register("steel_hoe",
-            () -> new HoeItem(BMNWTiers.STEEL, new Item.Properties().stacksTo(1)));
+            () -> new HoeItem(BMNWTiers.STEEL, new Item.Properties().stacksTo(1)
+                    .attributes(HoeItem.createAttributes(BMNWTiers.STEEL, -3.0F, 0.0F))));
     public static final DeferredItem<SwordItem> STEEL_SWORD = ITEMS.register("steel_sword",
-            () -> new SwordItem(BMNWTiers.STEEL, new Item.Properties().stacksTo(1)));
+            () -> new SwordItem(BMNWTiers.STEEL, new Item.Properties().stacksTo(1)
+                    .attributes(SwordItem.createAttributes(BMNWTiers.STEEL, 3, -2.4F))));
 
     //endregion
 

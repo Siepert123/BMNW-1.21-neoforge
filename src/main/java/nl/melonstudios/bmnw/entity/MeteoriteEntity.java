@@ -194,8 +194,7 @@ public class MeteoriteEntity extends Entity {
 
     public static void spawnIfReady(Player player) {
         if (player.level().isClientSide() || dimensionInvalid(player.level().dimension().location())) return;
-        long totalTime = player.level().getGameTime();
-        if (totalTime % 10000 == (player.hashCode() % 10000)) {
+        if (random.nextDouble() < 0.00001) {
             spawn(player);
         }
     }

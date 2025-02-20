@@ -124,7 +124,7 @@ public class BMNWEventBus {
 
                     RadiationTools.handleRads(entity);
                 }
-                if (event.getEntity() instanceof ItemEntity entity) {
+                if (!event.getEntity().isInWaterOrBubble() && event.getEntity() instanceof ItemEntity entity) {
                     ItemStack stack = entity.getItem();
                     float rads = HazardRegistry.getRadRegistry(stack.getItem());
                     if (rads > 0) {
