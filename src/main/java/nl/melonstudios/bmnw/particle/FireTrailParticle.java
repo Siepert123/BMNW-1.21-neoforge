@@ -11,7 +11,7 @@ public class FireTrailParticle extends TextureSheetParticle {
     ) {
         super(level, x, y, z, vX, vY + level.random.nextFloat() * 0.5f, vZ);
         this.quadSize = 2f + (level.random.nextFloat() * 0.5f);
-        this.lifetime = 200;
+        this.lifetime = 500;
         this.gravity = 0;
         this.hasPhysics = false;
         this.speedUpWhenYMotionIsBlocked = false;

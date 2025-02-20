@@ -1,5 +1,6 @@
 package nl.melonstudios.bmnw.init;
 
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
@@ -15,6 +16,7 @@ import nl.melonstudios.bmnw.misc.Categories;
 import nl.melonstudios.bmnw.misc.ExcavationVein;
 import nl.melonstudios.bmnw.misc.GunOptions;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 import java.util.Optional;
 
@@ -64,6 +66,16 @@ public class BMNWItems {
     public static final DeferredItem<Item> ALUMINIUM_WIRE = item("aluminium_wire");
     public static final DeferredItem<Item> TUNGSTEN_WIRE = item("tungsten_wire");
     public static final DeferredItem<Item> TITANIUM_WIRE = item("titanium_wire");
+
+    public static final DeferredItem<Item> RED_PHOSPHORUS = item("red_phosphorus");
+    public static final DeferredItem<Item> WHITE_PHOSPHORUS = ITEMS.register("white_phosphorus",
+            () -> new Item(new Item.Properties()) {
+                @Override
+                @ParametersAreNonnullByDefault
+                public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+                    tooltipComponents.add(Component.translatable("item.bmnw.white_phosphorus.desc").withColor(0x888888));
+                }
+            });
 
     public static final DeferredItem<BlockItem> LEAD_ORE = ITEMS.register("lead_ore",
             () -> new BlockItem(BMNWBlocks.LEAD_ORE.get(), new Item.Properties()));
@@ -441,7 +453,7 @@ public class BMNWItems {
     public static final DeferredItem<BlockItem> POISONOUS_BARBED_WIRE = ITEMS.register("poisonous_barbed_wire",
             () -> new BlockItem(BMNWBlocks.POISONOUS_BARBED_WIRE.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> WP_BARBED_WIRE = ITEMS.register("wp_barbed_wire",
-            () -> new BlockItem(BMNWBlocks.WP_BARBED_WIRE.get(), new Item.Properties().rarity(Rarity.UNCOMMON)));
+            () -> new BlockItem(BMNWBlocks.WP_BARBED_WIRE.get(), new Item.Properties()));
 
     //endregion
 

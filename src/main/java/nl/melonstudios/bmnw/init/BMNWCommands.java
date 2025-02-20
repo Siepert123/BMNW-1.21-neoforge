@@ -208,7 +208,16 @@ public class BMNWCommands {
                                 .executes(context -> {
                                     Player player = context.getSource().getPlayerOrException();
                                     if (player.level().isClientSide()) return 1;
-                                    MeteoriteEntity.spawn(player);
+                                    new Thread(() -> {
+                                        try {
+                                            player.sendSystemMessage(Component.literal(String.format("<%s> neil of grass tyson pls send meteor",
+                                                    player.getDisplayName().getString())));
+                                            Thread.sleep(1000);
+                                            player.sendSystemMessage(Component.literal("<NeilDeGrasseTyson> Sure, one second"));
+                                            Thread.sleep(1000);
+                                            MeteoriteEntity.spawn(player);
+                                        } catch (Throwable ignored) {}
+                                    }).start();
                                     return Command.SINGLE_SUCCESS;
                                 })
                         )

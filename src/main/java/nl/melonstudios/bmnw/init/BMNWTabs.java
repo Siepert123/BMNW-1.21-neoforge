@@ -286,6 +286,9 @@ public class BMNWTabs {
                         items.accept(PLUTONIUM_FUEL_BILLET);
 
                         items.accept(FIRE_MARBLE);
+
+                        items.accept(RED_PHOSPHORUS);
+                        items.accept(WHITE_PHOSPHORUS);
                         //endregion
 
                         //region Parts
