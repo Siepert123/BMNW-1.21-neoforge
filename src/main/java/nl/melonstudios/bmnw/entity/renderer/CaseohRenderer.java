@@ -2,7 +2,7 @@ package nl.melonstudios.bmnw.entity.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import nl.melonstudios.bmnw.entity.custom.CaseohEntity;
+import nl.melonstudios.bmnw.entity.CaseohEntity;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.culling.Frustum;

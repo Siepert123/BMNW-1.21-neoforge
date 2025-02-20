@@ -1,6 +1,6 @@
 package nl.melonstudios.bmnw.init;
 
-import nl.melonstudios.bmnw.entity.custom.*;
+import nl.melonstudios.bmnw.entity.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;

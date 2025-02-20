@@ -1,7 +1,7 @@
 package nl.melonstudios.bmnw.entity.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import nl.melonstudios.bmnw.entity.custom.BlockDebrisEntity;
+import nl.melonstudios.bmnw.entity.BlockDebrisEntity;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.client.renderer.entity.EntityRenderer;

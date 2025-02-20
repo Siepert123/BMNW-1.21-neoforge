@@ -1,6 +1,6 @@
 package nl.melonstudios.bmnw.init;
 
-import nl.melonstudios.bmnw.block.entity.custom.*;
+import nl.melonstudios.bmnw.block.entity.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.bus.api.IEventBus;

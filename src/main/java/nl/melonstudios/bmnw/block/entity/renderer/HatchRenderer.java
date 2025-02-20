@@ -10,7 +10,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.client.model.data.ModelData;
 import nl.melonstudios.bmnw.BMNW;
-import nl.melonstudios.bmnw.block.entity.custom.HatchBlockEntity;
+import nl.melonstudios.bmnw.block.entity.HatchBlockEntity;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;

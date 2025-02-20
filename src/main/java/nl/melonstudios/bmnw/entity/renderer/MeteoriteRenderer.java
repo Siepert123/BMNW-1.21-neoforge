@@ -16,7 +16,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.client.model.data.ModelData;
 import nl.melonstudios.bmnw.init.BMNWBlocks;
-import nl.melonstudios.bmnw.entity.custom.MeteoriteEntity;
+import nl.melonstudios.bmnw.entity.MeteoriteEntity;
 
 @OnlyIn(Dist.CLIENT)
 public class MeteoriteRenderer extends EntityRenderer<MeteoriteEntity> {

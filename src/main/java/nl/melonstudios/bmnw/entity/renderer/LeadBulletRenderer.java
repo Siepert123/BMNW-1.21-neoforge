@@ -3,7 +3,7 @@ package nl.melonstudios.bmnw.entity.renderer;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import nl.melonstudios.bmnw.BMNW;
-import nl.melonstudios.bmnw.entity.custom.LeadBulletEntity;
+import nl.melonstudios.bmnw.entity.LeadBulletEntity;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 

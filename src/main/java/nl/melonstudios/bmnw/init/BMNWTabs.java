@@ -1,6 +1,6 @@
 package nl.melonstudios.bmnw.init;
 
-import nl.melonstudios.bmnw.item.custom.BatteryItem;
+import nl.melonstudios.bmnw.item.BatteryItem;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;

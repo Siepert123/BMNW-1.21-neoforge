@@ -1,7 +1,7 @@
 package nl.melonstudios.bmnw.entity.renderer;
 
 import nl.melonstudios.bmnw.init.BMNWBlocks;
-import nl.melonstudios.bmnw.entity.custom.NuclearMissileEntity;
+import nl.melonstudios.bmnw.entity.NuclearMissileEntity;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;

@@ -3,7 +3,7 @@ package nl.melonstudios.bmnw.misc;
 import nl.melonstudios.bmnw.init.BMNWAttachments;
 import nl.melonstudios.bmnw.init.BMNWConfig;
 import nl.melonstudios.bmnw.init.BMNWItems;
-import nl.melonstudios.bmnw.item.custom.CoreSampleItem;
+import nl.melonstudios.bmnw.item.CoreSampleItem;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.Item;

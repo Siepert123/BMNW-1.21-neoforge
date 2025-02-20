@@ -1,6 +1,6 @@
 package nl.melonstudios.bmnw.misc;
 
-import nl.melonstudios.bmnw.item.custom.GunItem;
+import nl.melonstudios.bmnw.item.GunItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;

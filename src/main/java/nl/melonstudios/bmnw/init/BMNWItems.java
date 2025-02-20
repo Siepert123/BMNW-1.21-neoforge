@@ -1,8 +1,8 @@
 package nl.melonstudios.bmnw.init;
 
 import net.minecraft.world.item.*;
-import nl.melonstudios.bmnw.entity.custom.LeadBulletEntity;
-import nl.melonstudios.bmnw.item.custom.*;
+import nl.melonstudios.bmnw.entity.LeadBulletEntity;
+import nl.melonstudios.bmnw.item.*;
 import nl.melonstudios.bmnw.misc.Categories;
 import nl.melonstudios.bmnw.misc.ExcavationVein;
 import nl.melonstudios.bmnw.misc.GunOptions;

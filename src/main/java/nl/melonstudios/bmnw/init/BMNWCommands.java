@@ -2,7 +2,7 @@ package nl.melonstudios.bmnw.init;
 
 import net.minecraft.commands.arguments.coordinates.BlockPosArgument;
 import net.minecraft.commands.arguments.coordinates.WorldCoordinates;
-import nl.melonstudios.bmnw.entity.custom.MeteoriteEntity;
+import nl.melonstudios.bmnw.entity.MeteoriteEntity;
 import nl.melonstudios.bmnw.hardcoded.recipe.PressingRecipes;
 import nl.melonstudios.bmnw.hazard.radiation.ChunkRadiationManager;
 import com.mojang.brigadier.Command;
