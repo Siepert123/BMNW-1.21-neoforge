@@ -8,7 +8,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.energy.EnergyStorage;
 import net.neoforged.neoforge.energy.IEnergyStorage;
-import nl.melonstudios.bmnw.block.MissileBlock;
+import nl.melonstudios.bmnw.block.weapons.MissileBlock;
 import nl.melonstudios.bmnw.entity.MissileEntity;
 import nl.melonstudios.bmnw.init.BMNWBlockEntities;
 import nl.melonstudios.bmnw.init.BMNWBlocks;

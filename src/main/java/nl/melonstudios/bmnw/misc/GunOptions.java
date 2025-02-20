@@ -3,7 +3,7 @@ package nl.melonstudios.bmnw.misc;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import nl.melonstudios.bmnw.item.GunItem;
+import nl.melonstudios.bmnw.item.weapons.GunItem;
 
 import java.util.function.Predicate;
 

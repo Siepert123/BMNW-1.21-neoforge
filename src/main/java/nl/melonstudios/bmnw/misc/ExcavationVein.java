@@ -10,7 +10,7 @@ import net.neoforged.fml.util.ObfuscationReflectionHelper;
 import nl.melonstudios.bmnw.init.BMNWAttachments;
 import nl.melonstudios.bmnw.init.BMNWConfig;
 import nl.melonstudios.bmnw.init.BMNWItems;
-import nl.melonstudios.bmnw.item.CoreSampleItem;
+import nl.melonstudios.bmnw.item.misc.CoreSampleItem;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

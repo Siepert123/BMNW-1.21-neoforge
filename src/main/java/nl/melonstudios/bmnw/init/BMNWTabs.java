@@ -9,7 +9,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import nl.melonstudios.bmnw.item.BatteryItem;
+import nl.melonstudios.bmnw.item.battery.BatteryItem;
 import nl.melonstudios.bmnw.misc.NoUnused;
 
 import java.util.Random;
