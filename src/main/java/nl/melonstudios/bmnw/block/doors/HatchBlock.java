@@ -188,4 +188,9 @@ public class HatchBlock extends HorizontalDirectionalBlock implements EntityBloc
         }
         return super.skipRendering(state, adjacentState, direction);
     }
+
+    @Override
+    public boolean hidesNeighborFace(BlockGetter level, BlockPos pos, BlockState state, BlockState neighborState, Direction dir) {
+        return state.getValue(OPEN) ? dir.getAxis() != Direction.Axis.Y : dir != Direction.DOWN;
+    }
 }

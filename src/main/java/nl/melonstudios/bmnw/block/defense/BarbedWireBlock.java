@@ -8,10 +8,16 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -19,13 +25,16 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import nl.melonstudios.bmnw.init.BMNWBlocks;
 import org.jetbrains.annotations.Nullable;
 
-public class BarbedWireBlock extends Block {
-    public static final EnumProperty<Direction.Axis> AXIS =
-            EnumProperty.create("axis", Direction.Axis.class, Direction.Axis.X, Direction.Axis.Z);
+public class BarbedWireBlock extends Block implements SimpleWaterloggedBlock {
+    public static final EnumProperty<Direction.Axis> AXIS = BlockStateProperties.HORIZONTAL_AXIS;
+    public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
     private final BarbedWireEffect effect;
     public BarbedWireBlock(Properties properties, BarbedWireEffect effect) {
         super(properties);
+        this.registerDefaultState(this.stateDefinition.any()
+                .setValue(AXIS, Direction.Axis.X)
+                .setValue(WATERLOGGED, false));
         this.effect = effect;
     }
 
@@ -43,12 +52,14 @@ public class BarbedWireBlock extends Block {
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(AXIS);
+        builder.add(WATERLOGGED);
     }
 
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return defaultBlockState().setValue(AXIS, context.getHorizontalDirection().getClockWise(Direction.Axis.Y).getAxis());
+        return defaultBlockState().setValue(AXIS, context.getHorizontalDirection().getClockWise(Direction.Axis.Y).getAxis())
+                .setValue(WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER);
     }
 
     @FunctionalInterface
@@ -70,5 +81,19 @@ public class BarbedWireBlock extends Block {
     @Override
     public boolean isPossibleToRespawnInThis(BlockState state) {
         return false;
+    }
+
+    @Override
+    protected BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+        if (state.getValue(WATERLOGGED)) {
+            level.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
+        }
+        return state;
+    }
+
+
+    @Override
+    protected FluidState getFluidState(BlockState state) {
+        return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
     }
 }

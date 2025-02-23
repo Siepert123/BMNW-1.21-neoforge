@@ -31,6 +31,13 @@ public class LootPools {
            new StackPoolEntry(BMNWItems.COPPER_WIRE.get(), 8,16, 10),
            new StackPoolEntry(BMNWItems.CONDUCTIVE_COPPER_WIRE.get(), 8,16, 10)
     );
+    public static final LootPoolItemStack CHEST_MISSILE_SILO = new LootPoolItemStack(
+            0.4f,
+            new StackPoolEntry(BMNWItems.BASIC_CIRCUIT.get(), 1, 2, 15),
+            new StackPoolEntry(BMNWItems.ENHANCED_CIRCUIT.get(), 1, 2, 5),
+            new StackPoolEntry(BMNWItems.BASE_MISSILE.get(), 1, 1, 1),
+            new StackPoolEntry(BMNWItems.STEEL_INGOT.get(), 2, 5, 15)
+    );
     public static final LootPool<BlockState> STATE_ANCIENT_MUSEUM = new LootPoolStateSupplier(
             new StateSupplierPoolEntry((random -> Blocks.HEAVY_CORE.defaultBlockState()), 1),
             new StateSupplierPoolEntry((random -> Blocks.POTTED_OAK_SAPLING.defaultBlockState()), 100),

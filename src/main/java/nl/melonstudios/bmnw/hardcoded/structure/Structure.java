@@ -81,6 +81,19 @@ public abstract class Structure {
             placeBlock(level, pos, state);
         }
     }
+    protected void fillBlocksIfAir(LevelAccessor level, BlockPos start, BlockPos end, BlockState state) {
+        Iterable<BlockPos> positions = BlockPos.betweenClosed(start, end);
+        for (BlockPos pos : positions) {
+            if (level.getBlockState(pos).canBeReplaced()) placeBlock(level, pos, state);
+        }
+    }
+
+    protected void fillBlocks(LevelAccessor level, BlockPos start, BlockPos end, DeferredBlock<?> block) {
+        Iterable<BlockPos> positions = BlockPos.betweenClosed(start, end);
+        for (BlockPos pos : positions) {
+            placeBlock(level, pos, block);
+        }
+    }
 
     protected enum FoundationReplaceType {
         AIR_ONLY {

@@ -20,9 +20,7 @@ import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.event.server.ServerStoppingEvent;
 import nl.melonstudios.bmnw.hardcoded.structure.*;
-import nl.melonstudios.bmnw.hardcoded.structure.coded.StructureAncientMuseum;
-import nl.melonstudios.bmnw.hardcoded.structure.coded.StructureBrickBuilding;
-import nl.melonstudios.bmnw.hardcoded.structure.coded.StructureRadioAntenna;
+import nl.melonstudios.bmnw.hardcoded.structure.coded.*;
 import nl.melonstudios.bmnw.hazard.HazardRegistry;
 import nl.melonstudios.bmnw.hazard.radiation.ChunkRadiationHandler;
 import nl.melonstudios.bmnw.hazard.radiation.ChunkRadiationManager;
@@ -105,6 +103,15 @@ public class BMNW {
         Structures.registerStructure("bmnw:ancient_museum",
                 new StructureData(new StructureAncientMuseum(), new StructureSpawningLogic(0.0005f)
                         .setSalt("bmnw:ancient_museum".hashCode())));
+        Structures.registerStructure("bmnw:missile_silo",
+                new StructureData(new StructureMissileSilo(), new StructureSpawningLogic(0.0001f)
+                        .setBiomeConstraint(biome -> biome.is(BMNWTags.Biomes.HAS_MISSILE_SILO))
+                        .setSalt("bmnw:missile_silo".hashCode()))
+                        .addBlockModifier(new ConcreteBricksDecayModifier(0.2f)));
+        Structures.registerStructure("bmnw:dud",
+                new StructureData(new StructureDud(), new StructureSpawningLogic(0.0005f)
+                        .setBiomeConstraint(biome -> biome.is(BMNWTags.Biomes.HAS_RADIO_ANTENNA))
+                        .setSalt("bmnw:dud".hashCode())));
     }
 
     // Add the example block item to the building blocks tab

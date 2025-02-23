@@ -70,6 +70,7 @@ public class BMNWTags {
     public static class Biomes {
         public static final TagKey<Biome> HAS_RADIO_ANTENNA = biomeTag("bmnw:has_structure/radio_antenna");
         public static final TagKey<Biome> HAS_BRICK_BUILDING = biomeTag("bmnw:has_structure/brick_building");
+        public static final TagKey<Biome> HAS_MISSILE_SILO = biomeTag("bmnw:has_structure/missile_silo");
     }
 
     public static class NeoForge {

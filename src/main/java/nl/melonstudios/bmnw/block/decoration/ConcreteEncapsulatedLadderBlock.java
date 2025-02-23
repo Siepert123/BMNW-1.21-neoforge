@@ -76,4 +76,9 @@ public class ConcreteEncapsulatedLadderBlock extends Block {
         }
         return super.skipRendering(state, adjacentState, direction);
     }
+
+    @Override
+    public boolean hidesNeighborFace(BlockGetter level, BlockPos pos, BlockState state, BlockState neighborState, Direction dir) {
+        return dir.getAxis() != Direction.Axis.Y;
+    }
 }

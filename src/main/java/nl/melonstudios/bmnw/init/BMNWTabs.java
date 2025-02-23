@@ -289,6 +289,7 @@ public class BMNWTabs {
 
                         items.accept(RED_PHOSPHORUS);
                         items.accept(WHITE_PHOSPHORUS);
+                        items.accept(POISON_POWDER);
                         //endregion
 
                         //region Parts

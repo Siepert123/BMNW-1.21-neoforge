@@ -54,6 +54,7 @@ public class NukeUtils {
         }
     }
 
+    @Deprecated //This doesn't even work smh
     public static void createMushroomCloudLegacy(Level level, double x, double y, double z, float yield, boolean soulLike) {
         ParticleOptions smokePart = BMNWParticleTypes.LARGE_MISSILE_SMOKE.get();
         ParticleOptions ring = BMNWParticleTypes.SHOCKWAVE.get();

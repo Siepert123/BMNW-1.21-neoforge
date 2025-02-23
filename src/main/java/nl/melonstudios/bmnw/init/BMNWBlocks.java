@@ -41,9 +41,9 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class BMNWBlocks {
     @SuppressWarnings("deprecation")
     private static final float obsidian_blast_res = Blocks.OBSIDIAN.getExplosionResistance();
-    private static final float concrete_blast_res = obsidian_blast_res / 5;
+    private static final float concrete_blast_res = 84;
     private static final float obsidian_hardness = Blocks.OBSIDIAN.defaultDestroyTime();
-    private static final float concrete_hardness = obsidian_hardness / 5;
+    private static final float concrete_hardness = 15;
 
     private static DeferredBlock<Block> ore(String name) {
         return BLOCKS.register(name, () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_ORE)));
@@ -251,23 +251,24 @@ public class BMNWBlocks {
     public static final DeferredBlock<StairBlock> CONCRETE_STAIRS = BLOCKS.register("concrete_stairs",
             () -> new StairBlock(CONCRETE.get().defaultBlockState(), BlockBehaviour.Properties.ofFullCopy(CONCRETE.get())));
     public static final DeferredBlock<Block> CONCRETE_BRICKS = BLOCKS.register("concrete_bricks",
-            () -> new Block(BlockBehaviour.Properties.ofFullCopy(CONCRETE.get())));
+            () -> new Block(BlockBehaviour.Properties.ofFullCopy(CONCRETE.get()).strength(15, 96)));
     public static final DeferredBlock<Block> CONCRETE_BRICKS_SLAB = BLOCKS.register("concrete_bricks_slab",
             () -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(CONCRETE_BRICKS.get())));
     public static final DeferredBlock<StairBlock> CONCRETE_BRICKS_STAIRS = BLOCKS.register("concrete_bricks_stairs",
             () -> new StairBlock(CONCRETE_BRICKS.get().defaultBlockState(), BlockBehaviour.Properties.ofFullCopy(CONCRETE_BRICKS.get())));
 
     public static final DeferredBlock<Block> MOSSY_CONCRETE_BRICKS = BLOCKS.register("mossy_concrete_bricks",
-            () -> new Block(BlockBehaviour.Properties.ofFullCopy(CONCRETE.get()).explosionResistance(concrete_blast_res * 0.8f)));
+            () -> new Block(BlockBehaviour.Properties.ofFullCopy(CONCRETE.get())));
     public static final DeferredBlock<Block> CRACKED_CONCRETE_BRICKS = BLOCKS.register("cracked_concrete_bricks",
             () -> new Block(BlockBehaviour.Properties.ofFullCopy(CONCRETE.get())
-                    .strength(concrete_hardness * 0.8f, concrete_blast_res * 0.8f)));
+                    .explosionResistance(36)));
 
     public static final DeferredBlock<Block> FOUNDATION_CONCRETE = BLOCKS.register("foundation_concrete",
-            () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.OBSIDIAN)
-                    .strength(concrete_hardness * 3, concrete_blast_res * 3)));
+            () -> new Block(BlockBehaviour.Properties.ofFullCopy(CONCRETE.get())
+                    .strength(15, 108)));
     public static final DeferredBlock<ReinforcedGlassBlock> STEEL_REINFORCED_GLASS = BLOCKS.register("steel_reinforced_glass",
-            () -> new ReinforcedGlassBlock(BlockBehaviour.Properties.ofFullCopy(CONCRETE_BRICKS.get()).noOcclusion()));
+            () -> new ReinforcedGlassBlock(BlockBehaviour.Properties.ofFullCopy(CONCRETE_BRICKS.get()).noOcclusion()
+                    .explosionResistance(15)));
     public static final DeferredBlock<Block> CHISELED_CONCRETE_BRICKS = BLOCKS.register("chiseled_concrete_bricks",
             () -> new Block(BlockBehaviour.Properties.ofFullCopy(CONCRETE_BRICKS.get())));
     public static final DeferredBlock<Block> CREATIVE_CONCRETE_BRICKS = BLOCKS.register("creative_concrete_bricks",
