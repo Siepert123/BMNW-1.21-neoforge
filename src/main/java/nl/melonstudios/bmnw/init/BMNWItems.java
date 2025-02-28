@@ -317,6 +317,8 @@ public class BMNWItems {
 
     public static final DeferredItem<GeigerCounterItem> GEIGER_COUNTER = ITEMS.register("geiger_counter",
             () -> new GeigerCounterItem(new Item.Properties().stacksTo(1)));
+    public static final DeferredItem<BlockItem> PRESSURIZED_PRESS = ITEMS.register("pressurized_press",
+            () -> new BlockItem(BMNWBlocks.PRESSURIZED_PRESS.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> DECONTAMINATOR = ITEMS.register("decontaminator",
             () -> new BlockItem(BMNWBlocks.DECONTAMINATOR.get(), new Item.Properties()));
     public static final DeferredItem<ExcavationVeinDetectorItem> EXCAVATION_VEIN_DETECTOR = ITEMS.register("excavation_vein_detector",

@@ -5,6 +5,7 @@ import eu.midnightdust.lib.config.MidnightConfig;
 import net.minecraft.commands.Commands;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.api.distmarker.Dist;
@@ -15,10 +16,12 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.event.server.ServerStoppingEvent;
+import nl.melonstudios.bmnw.gui.screen.PressurizedPressScreen;
 import nl.melonstudios.bmnw.hardcoded.structure.*;
 import nl.melonstudios.bmnw.hardcoded.structure.coded.*;
 import nl.melonstudios.bmnw.hazard.HazardRegistry;
@@ -65,6 +68,7 @@ public class BMNW {
         BMNWParticleTypes.register(modEventBus);
         BMNWSounds.register(modEventBus);
         BMNWAdvancementTriggers.register(modEventBus);
+        BMNWMenuTypes.register(modEventBus);
 
         MidnightConfig.init("bmnw", BMNWConfig.class);
 
@@ -80,6 +84,10 @@ public class BMNW {
         NeoForge.EVENT_BUS.addListener(ChunkRadiationManager::onChunkSave);
         NeoForge.EVENT_BUS.addListener(ChunkRadiationManager::onChunkUnload);
         NeoForge.EVENT_BUS.addListener(ChunkRadiationManager::updateSystem);
+
+        if (dist.isClient()) {
+            modEventBus.addListener(this::registerMenuScreens);
+        }
 
         LOGGER.info(splashes[new Random().nextInt(splashes.length)]);
     }
@@ -110,13 +118,17 @@ public class BMNW {
                         .addBlockModifier(new ConcreteBricksDecayModifier(0.2f)));
         Structures.registerStructure("bmnw:dud",
                 new StructureData(new StructureDud(), new StructureSpawningLogic(0.0005f)
-                        .setBiomeConstraint(biome -> biome.is(BMNWTags.Biomes.HAS_RADIO_ANTENNA))
+                        .setBiomeConstraint(biome -> !biome.is(BiomeTags.IS_OCEAN) && !biome.is(BiomeTags.IS_RIVER) && biome.is(BiomeTags.IS_OVERWORLD))
                         .setSalt("bmnw:dud".hashCode())));
     }
 
     // Add the example block item to the building blocks tab
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
 
+    }
+
+    private void registerMenuScreens(RegisterMenuScreensEvent event) {
+        event.register(BMNWMenuTypes.PRESSURIZED_PRESS.get(), PressurizedPressScreen::new);
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call

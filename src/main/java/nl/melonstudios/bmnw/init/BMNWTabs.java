@@ -401,7 +401,7 @@ public class BMNWTabs {
                             ResourceLocation.parse("bmnw:bombs")
                     )
                     .displayItems((parameters, items) -> {
-                        //this comment removes a warning! [remove once there are 2 or more entries here]
+                        items.accept(PRESSURIZED_PRESS);
                         items.accept(DECONTAMINATOR);
                         items.accept(TEST_EXCAVATOR);
                     })

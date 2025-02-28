@@ -20,10 +20,7 @@ import nl.melonstudios.bmnw.block.decoration.*;
 import nl.melonstudios.bmnw.block.defense.BarbedWireBlock;
 import nl.melonstudios.bmnw.block.defense.ReinforcedGlassBlock;
 import nl.melonstudios.bmnw.block.doors.HatchBlock;
-import nl.melonstudios.bmnw.block.machines.DecontaminatorBlock;
-import nl.melonstudios.bmnw.block.machines.IronBarrelBlock;
-import nl.melonstudios.bmnw.block.machines.MachineScrapBlock;
-import nl.melonstudios.bmnw.block.machines.TestExcavatorBlock;
+import nl.melonstudios.bmnw.block.machines.*;
 import nl.melonstudios.bmnw.block.misc.*;
 import nl.melonstudios.bmnw.block.settype.BMNWBlockSetType;
 import nl.melonstudios.bmnw.block.weapons.*;
@@ -214,6 +211,9 @@ public class BMNWBlocks {
     //endregion
 
     //region Basic machines
+    public static final DeferredBlock<PressurizedPressBlock> PRESSURIZED_PRESS = BLOCKS.register("pressurized_press",
+            () -> new PressurizedPressBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)));
+
     public static final DeferredBlock<DecontaminatorBlock> DECONTAMINATOR = BLOCKS.register("decontaminator",
             () -> new DecontaminatorBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)));
 

@@ -21,7 +21,7 @@ import java.util.Map;
 @SuppressWarnings("unused")
 public class PressingRecipes {
     private static final Logger LOGGER = LogManager.getLogger("BMNW Pressing Recipes");
-
+    private static final boolean debug = true;
     private static TagKey<Item> tag(String id) {
         return TagKey.create(Registries.ITEM, ResourceLocation.parse(id));
     }
@@ -41,6 +41,7 @@ public class PressingRecipes {
 
         @Nullable
         public static MoldType getMoldType(ItemStack item) {
+            if (debug) return MoldType.PLATE;
             if (item.isEmpty()) return null;
             for (MoldType type : values()) {
                 if (type.isItemThis(item)) return type;
