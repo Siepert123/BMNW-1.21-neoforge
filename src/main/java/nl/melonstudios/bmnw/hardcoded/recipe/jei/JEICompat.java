@@ -1,14 +1,18 @@
 package nl.melonstudios.bmnw.hardcoded.recipe.jei;
 
 import mezz.jei.api.IModPlugin;
+import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.registration.*;
 import net.minecraft.resources.ResourceLocation;
 import nl.melonstudios.bmnw.BMNW;
 import nl.melonstudios.bmnw.hardcoded.recipe.PressingRecipes;
 import nl.melonstudios.bmnw.init.BMNWBlocks;
+import nl.melonstudios.bmnw.init.BMNWItems;
+import nl.melonstudios.bmnw.item.subtype.FireMarbleSubtypeInterpreter;
 
 import javax.annotation.Nonnull;
 
+@JeiPlugin
 public class JEICompat implements IModPlugin {
     @Override
     @Nonnull
@@ -39,5 +43,10 @@ public class JEICompat implements IModPlugin {
     @Override
     public void registerGuiHandlers(IGuiHandlerRegistration registration) {
 
+    }
+
+    @Override
+    public void registerItemSubtypes(ISubtypeRegistration registration) {
+        registration.registerSubtypeInterpreter(BMNWItems.FIRE_MARBLE.get(), new FireMarbleSubtypeInterpreter());
     }
 }

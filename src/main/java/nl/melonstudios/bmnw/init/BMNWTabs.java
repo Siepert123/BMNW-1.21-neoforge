@@ -1,5 +1,6 @@
 package nl.melonstudios.bmnw.init;
 
+import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -287,6 +288,8 @@ public class BMNWTabs {
 
                         items.accept(FIRE_MARBLE);
 
+                        addFireMarbles(items);
+
                         items.accept(RED_PHOSPHORUS);
                         items.accept(WHITE_PHOSPHORUS);
                         items.accept(POISON_POWDER);
@@ -302,6 +305,29 @@ public class BMNWTabs {
                     })
                     .build()
     );
+
+    private static void addFireMarbles(CreativeModeTab.Output items) {
+        items.accept(createFM(0, false));
+        items.accept(createFM(1, false));
+        items.accept(createFM(2, false));
+        items.accept(createFM(3, false));
+        items.accept(createFM(4, false));
+        items.accept(createFM(5, false));
+        items.accept(createFM(0, true));
+        items.accept(createFM(1, true));
+        items.accept(createFM(2, true));
+        items.accept(createFM(3, true));
+        items.accept(createFM(4, true));
+        items.accept(createFM(5, true));
+    }
+    private static ItemStack createFM(int type, boolean charged) {
+        return set(set(new ItemStack(FIRE_MARBLE.get(), 1), BMNWDataComponents.FIRE_MARBLE_TYPE.get(), type),
+                BMNWDataComponents.FIRE_MARBLE_CHARGE.get(), charged ? 1.0f : 0.0f);
+    }
+    private static <T> ItemStack set(ItemStack stack, DataComponentType<T> component, T value) {
+        stack.set(component, value);
+        return stack;
+    }
 
     private static ItemStack getEmptyBattery(BatteryItem item) {
         ItemStack stack = new ItemStack(item);
