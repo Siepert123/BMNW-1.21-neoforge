@@ -142,7 +142,7 @@ public class BlockDebrisEntity extends Entity {
     }
 
     private void placeSelf() {
-        BlockPos pos = this.getOnPos().above();
+        BlockPos pos = new BlockPos((int)this.getX(), (int)this.getY(), (int)this.getZ());
         level().setBlock(pos, debrisState, 3);
         this.kill();
     }

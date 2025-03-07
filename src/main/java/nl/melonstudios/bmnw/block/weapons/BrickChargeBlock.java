@@ -36,12 +36,11 @@ public class BrickChargeBlock extends Block implements IDetonatable, IBombBlock 
         level.explode(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 4.0f, Level.ExplosionInteraction.TNT);
         int bricks = level.random.nextInt(50) + 50;
         for (int i = 0; i < bricks; i++) {
-            BlockDebrisEntity entity = new BlockDebrisEntity(BMNWEntityTypes.BLOCK_DEBRIS.get(), level);
+            BlockDebrisEntity entity = new BlockDebrisEntity(BMNWEntityTypes.BLOCK_DEBRIS.get(), level).setPickup(false);
             entity.setPos(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
             entity.setDeltaMovement(new Vec3((level.random.nextDouble() - level.random.nextDouble())*5,
                     (level.random.nextDouble() - level.random.nextDouble())*5,
                     (level.random.nextDouble() - level.random.nextDouble())*5));
-            entity.setPickup(false);
             int b = level.random.nextInt(5);
             if (b == 0) {
                 entity.setDebrisState(Blocks.NETHER_BRICKS.defaultBlockState());
