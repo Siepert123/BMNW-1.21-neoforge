@@ -33,6 +33,7 @@ import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.client.event.AddAttributeTooltipsEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 import net.neoforged.neoforge.common.data.AdvancementProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
@@ -42,6 +43,8 @@ import net.neoforged.neoforge.event.level.ChunkEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import nl.melonstudios.bmnw.block.entity.IronBarrelBlockEntity;
 import nl.melonstudios.bmnw.block.entity.MissileLaunchPadBlockEntity;
 import nl.melonstudios.bmnw.block.entity.PressurizedPressBlockEntity;
@@ -55,10 +58,12 @@ import nl.melonstudios.bmnw.hazard.radiation.ChunkRadiationManager;
 import nl.melonstudios.bmnw.hazard.radiation.RadiationTools;
 import nl.melonstudios.bmnw.init.*;
 import nl.melonstudios.bmnw.interfaces.IOnBlockAdded;
+import nl.melonstudios.bmnw.item.colorize.FireMarbleColorizer;
 import nl.melonstudios.bmnw.item.misc.CoreSampleItem;
 import nl.melonstudios.bmnw.misc.DistrictHolder;
 import nl.melonstudios.bmnw.misc.ExcavationVein;
 import nl.melonstudios.bmnw.particle.*;
+import nl.melonstudios.bmnw.wifi.PacketMushroomCloud;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -455,6 +460,22 @@ public class BMNWEventBus {
                             List.of(new BMNWAdvancementGenerator())
                     )
             );
+        }
+
+        @SubscribeEvent
+        public static void registerNetwork(RegisterPayloadHandlersEvent event) {
+            final PayloadRegistrar registrar = event.registrar("1");
+            registrar.playToClient(
+                    PacketMushroomCloud.TYPE,
+                    PacketMushroomCloud.STREAM_CODEC,
+                    PacketMushroomCloud::handle
+            );
+        }
+
+        @SubscribeEvent
+        @OnlyIn(Dist.CLIENT)
+        public static void registerColorHandlersItem(RegisterColorHandlersEvent.Item event) {
+            event.register(new FireMarbleColorizer(), BMNWItems.FIRE_MARBLE);
         }
     }
 }

@@ -549,8 +549,8 @@ public class BMNWItems {
     public static final DeferredItem<Item> TUNGSTEN_REACHERS = ITEMS.register("tungsten_reachers",
             () -> new Item(new Item.Properties().stacksTo(1)));
 
-    public static final DeferredItem<Item> FIRE_MARBLE = ITEMS.register("fire_marble",
-            () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
+    public static final DeferredItem<FireMarbleItem> FIRE_MARBLE = ITEMS.register("fire_marble",
+            () -> new FireMarbleItem(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
 
     public static final DeferredItem<Item> POISON_POWDER = ITEMS.register("poison_powder",
             () -> new Item(new Item.Properties()));

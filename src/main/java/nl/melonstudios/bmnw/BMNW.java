@@ -31,6 +31,7 @@ import nl.melonstudios.bmnw.init.*;
 import nl.melonstudios.bmnw.misc.Books;
 import nl.melonstudios.bmnw.misc.DistrictHolder;
 import nl.melonstudios.bmnw.misc.ExcavationVein;
+import nl.melonstudios.bmnw.misc.FireMarbleManager;
 import org.slf4j.Logger;
 
 import javax.annotation.Nonnull;
@@ -151,6 +152,7 @@ public class BMNW {
                 first = false;
             }
             Structures.validCache = true;
+            FireMarbleManager.create(Structures.seedCache);
         }
 
         Commands commands = event.getServer().getCommands();
