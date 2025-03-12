@@ -211,8 +211,8 @@ public class BMNWBlocks {
     //endregion
 
     //region Basic machines
-    public static final DeferredBlock<PressurizedPressBlock> PRESSURIZED_PRESS = BLOCKS.register("pressurized_press",
-            () -> new PressurizedPressBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)));
+    public static final DeferredBlock<PressBlock> PRESS = BLOCKS.register("press",
+            () -> new PressBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).noOcclusion()));
 
     public static final DeferredBlock<DecontaminatorBlock> DECONTAMINATOR = BLOCKS.register("decontaminator",
             () -> new DecontaminatorBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)));

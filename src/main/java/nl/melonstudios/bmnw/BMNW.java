@@ -21,7 +21,6 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.event.server.ServerStoppingEvent;
-import nl.melonstudios.bmnw.gui.screen.PressurizedPressScreen;
 import nl.melonstudios.bmnw.hardcoded.structure.*;
 import nl.melonstudios.bmnw.hardcoded.structure.coded.*;
 import nl.melonstudios.bmnw.hazard.HazardRegistry;
@@ -32,6 +31,7 @@ import nl.melonstudios.bmnw.misc.Books;
 import nl.melonstudios.bmnw.misc.DistrictHolder;
 import nl.melonstudios.bmnw.misc.ExcavationVein;
 import nl.melonstudios.bmnw.misc.FireMarbleManager;
+import nl.melonstudios.bmnw.screen.PressScreen;
 import org.slf4j.Logger;
 
 import javax.annotation.Nonnull;
@@ -129,7 +129,7 @@ public class BMNW {
     }
 
     private void registerMenuScreens(RegisterMenuScreensEvent event) {
-        event.register(BMNWMenuTypes.PRESSURIZED_PRESS.get(), PressurizedPressScreen::new);
+        event.register(BMNWMenuTypes.PRESS.get(), PressScreen::new);
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call

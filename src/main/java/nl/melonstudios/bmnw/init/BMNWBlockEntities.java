@@ -75,11 +75,11 @@ public class BMNWBlockEntities {
             )
     );
 
-    public static final Supplier<BlockEntityType<PressurizedPressBlockEntity>> PRESSURIZED_PRESS = BLOCK_ENTITIES.register(
-            "pressurized_press",
+    public static final Supplier<BlockEntityType<PressBlockEntity>> PRESS = BLOCK_ENTITIES.register(
+            "press",
             () -> new BlockEntityType<>(
-                    PressurizedPressBlockEntity::new,
-                    Set.of(BMNWBlocks.PRESSURIZED_PRESS.get()),
+                    PressBlockEntity::new,
+                    Set.of(BMNWBlocks.PRESS.get()),
                     null
             )
     );

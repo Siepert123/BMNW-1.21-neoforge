@@ -427,7 +427,6 @@ public class BMNWTabs {
                             ResourceLocation.parse("bmnw:bombs")
                     )
                     .displayItems((parameters, items) -> {
-                        items.accept(PRESSURIZED_PRESS);
                         items.accept(DECONTAMINATOR);
                         items.accept(TEST_EXCAVATOR);
                     })
