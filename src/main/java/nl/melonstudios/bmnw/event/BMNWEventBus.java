@@ -48,6 +48,7 @@ import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import nl.melonstudios.bmnw.block.entity.IronBarrelBlockEntity;
 import nl.melonstudios.bmnw.block.entity.MissileLaunchPadBlockEntity;
 import nl.melonstudios.bmnw.block.entity.renderer.HatchRenderer;
+import nl.melonstudios.bmnw.block.entity.renderer.PressRenderer;
 import nl.melonstudios.bmnw.effect.WPEffect;
 import nl.melonstudios.bmnw.entity.MeteoriteEntity;
 import nl.melonstudios.bmnw.entity.renderer.*;
@@ -63,6 +64,7 @@ import nl.melonstudios.bmnw.misc.DistrictHolder;
 import nl.melonstudios.bmnw.misc.ExcavationVein;
 import nl.melonstudios.bmnw.particle.*;
 import nl.melonstudios.bmnw.wifi.PacketMushroomCloud;
+import nl.melonstudios.bmnw.wifi.PacketUpdatePressState;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -376,6 +378,7 @@ public class BMNWEventBus {
         @OnlyIn(Dist.CLIENT)
         private static void registerBlockEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
             registerBlockEntityRenderingHandler(event, BMNWBlockEntities.HATCH, HatchRenderer::new);
+            registerBlockEntityRenderingHandler(event, BMNWBlockEntities.PRESS, PressRenderer::new);
         }
 
         @OnlyIn(Dist.CLIENT)
@@ -468,6 +471,11 @@ public class BMNWEventBus {
                     PacketMushroomCloud.TYPE,
                     PacketMushroomCloud.STREAM_CODEC,
                     PacketMushroomCloud::handle
+            );
+            registrar.playToClient(
+                    PacketUpdatePressState.TYPE,
+                    PacketUpdatePressState.STREAM_CODEC,
+                    PacketUpdatePressState::handle
             );
         }
 

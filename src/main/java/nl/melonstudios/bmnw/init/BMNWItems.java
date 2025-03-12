@@ -317,6 +317,8 @@ public class BMNWItems {
 
     public static final DeferredItem<GeigerCounterItem> GEIGER_COUNTER = ITEMS.register("geiger_counter",
             () -> new GeigerCounterItem(new Item.Properties().stacksTo(1)));
+    public static final DeferredItem<Item> PRESSING_PART = ITEMS.register("pressing_part",
+            () -> new Item(new Item.Properties()));
     public static final DeferredItem<BlockItem> PRESS = ITEMS.register("press",
             () -> new BlockItem(BMNWBlocks.PRESS.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> DECONTAMINATOR = ITEMS.register("decontaminator",
@@ -448,6 +450,8 @@ public class BMNWItems {
 
     //region Basic defense
 
+    public static final DeferredItem<BlockItem> CHAINLINK_FENCE = ITEMS.register("chainlink_fence",
+            () -> new BlockItem(BMNWBlocks.CHAINLINK_FENCE.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> BARBED_WIRE = ITEMS.register("barbed_wire",
             () -> new BlockItem(BMNWBlocks.BARBED_WIRE.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> FLAMING_BARBED_WIRE = ITEMS.register("flaming_barbed_wire",
@@ -533,6 +537,31 @@ public class BMNWItems {
     public static final DeferredItem<SwordItem> STEEL_SWORD = ITEMS.register("steel_sword",
             () -> new SwordItem(BMNWTiers.STEEL, new Item.Properties().stacksTo(1)
                     .attributes(SwordItem.createAttributes(BMNWTiers.STEEL, 3, -2.4F))));
+
+    //endregion
+
+    //region Stamps
+
+    public static final DeferredItem<Item> BLANK_IRON_STAMP = ITEMS.register("blank_iron_stamp",
+            () -> new Item(new Item.Properties().durability(128)));
+    public static final DeferredItem<Item> IRON_PLATE_STAMP = ITEMS.register("iron_plate_stamp",
+            () -> new Item(new Item.Properties().durability(128)));
+    public static final DeferredItem<Item> IRON_WIRE_STAMP = ITEMS.register("iron_wire_stamp",
+            () -> new Item(new Item.Properties().durability(128)));
+
+    public static final DeferredItem<Item> BLANK_STEEL_STAMP = ITEMS.register("blank_steel_stamp",
+            () -> new Item(new Item.Properties().durability(256)));
+    public static final DeferredItem<Item> STEEL_PLATE_STAMP = ITEMS.register("steel_plate_stamp",
+            () -> new Item(new Item.Properties().durability(256)));
+    public static final DeferredItem<Item> STEEL_WIRE_STAMP = ITEMS.register("steel_wire_stamp",
+            () -> new Item(new Item.Properties().durability(256)));
+
+    public static final DeferredItem<Item> BLANK_TITANIUM_STAMP = ITEMS.register("blank_titanium_stamp",
+            () -> new Item(new Item.Properties().durability(256)));
+    public static final DeferredItem<Item> TITANIUM_PLATE_STAMP = ITEMS.register("titanium_plate_stamp",
+            () -> new Item(new Item.Properties().durability(256)));
+    public static final DeferredItem<Item> TITANIUM_WIRE_STAMP = ITEMS.register("titanium_wire_stamp",
+            () -> new Item(new Item.Properties().durability(256)));
 
     //endregion
 

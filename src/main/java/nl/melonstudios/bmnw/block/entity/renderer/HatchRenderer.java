@@ -30,7 +30,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @MethodsReturnNonnullByDefault
 @OnlyIn(Dist.CLIENT)
 public class HatchRenderer implements BlockEntityRenderer<HatchBlockEntity> {
-    protected BlockRenderDispatcher dispatcher;
+    protected final BlockRenderDispatcher dispatcher;
     public HatchRenderer(BlockEntityRendererProvider.Context context) {
         dispatcher = context.getBlockRenderDispatcher();
     }

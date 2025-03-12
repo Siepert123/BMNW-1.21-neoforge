@@ -7,7 +7,9 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.ItemStack;
 import nl.melonstudios.bmnw.BMNW;
+import nl.melonstudios.bmnw.block.entity.PressBlockEntity;
 
 public class PressScreen extends AbstractContainerScreen<PressMenu> {
     public static final ResourceLocation GUI_TEXTURE = BMNW.namespace("textures/gui/press/gui.png");
@@ -24,5 +26,20 @@ public class PressScreen extends AbstractContainerScreen<PressMenu> {
         int y = (height - imageHeight) / 2;
 
         guiGraphics.blit(GUI_TEXTURE, x, y, 0, 0, imageWidth, imageHeight);
+        PressBlockEntity be = this.menu.blockEntity;
+        if (be.fuel >= 1) {
+            guiGraphics.blit(GUI_TEXTURE, x+34, y+54, 176, 0, 14, 14);
+        }
+        int scaledProgress = this.menu.scaledProgress(16);
+        if (scaledProgress > 0) {
+            guiGraphics.blit(GUI_TEXTURE, x+55, y+35, 176, 14, 18, this.menu.scaledProgress(16));
+        }
+    }
+
+    @Override
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+        super.render(guiGraphics, mouseX, mouseY, partialTick);
+
+        this.renderTooltip(guiGraphics, mouseX, mouseY);
     }
 }

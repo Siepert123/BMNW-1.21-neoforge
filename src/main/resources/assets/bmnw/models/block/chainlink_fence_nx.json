@@ -1,0 +1,18 @@
+{
+	"render_type": "cutout",
+	"textures": {
+		"particle": "bmnw:block/chainlink_fence",
+		"texture": "bmnw:block/chainlink_fence"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 8],
+			"to": [8, 16, 8],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0, 8]},
+			"faces": {
+				"north": {"uv": [8, 0, 16, 16], "texture": "#texture"},
+				"south": {"uv": [0, 0, 8, 16], "texture": "#texture"}
+			}
+		}
+	]
+}

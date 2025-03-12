@@ -3,8 +3,7 @@ package nl.melonstudios.bmnw.screen;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.ContainerLevelAccess;
-import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -12,16 +11,19 @@ import net.neoforged.neoforge.items.SlotItemHandler;
 import nl.melonstudios.bmnw.block.entity.PressBlockEntity;
 import nl.melonstudios.bmnw.init.BMNWBlocks;
 import nl.melonstudios.bmnw.init.BMNWMenuTypes;
+import nl.melonstudios.bmnw.screen.slot.FuelSlot;
+import nl.melonstudios.bmnw.screen.slot.MoldSlot;
+import nl.melonstudios.bmnw.screen.slot.ResultSlot;
 
 public class PressMenu extends AbstractBMNWContainerMenu {
     public final PressBlockEntity blockEntity;
     private final Level level;
 
     public PressMenu(int containerId, Inventory inv, FriendlyByteBuf extraData) {
-        this(containerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()));
+        this(containerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), DataSlot.standalone());
     }
 
-    public PressMenu(int containerId, Inventory inv, BlockEntity blockEntity) {
+    public PressMenu(int containerId, Inventory inv, BlockEntity blockEntity, DataSlot progressData) {
         super(BMNWMenuTypes.PRESS.get(), containerId);
         this.blockEntity = (PressBlockEntity) blockEntity;
         this.level = inv.player.level();
@@ -29,12 +31,19 @@ public class PressMenu extends AbstractBMNWContainerMenu {
         this.addPlayerInventory(inv, 8, 84);
         this.addPlayerHotbar(inv, 8, 142);
 
-        this.addSlot(new SlotItemHandler(this.blockEntity.inventory, 0, 34, 35));
-        this.addSlot(new SlotItemHandler(this.blockEntity.inventory, 1, 56, 17));
+        this.addSlot(new FuelSlot(this.blockEntity.inventory, 0, 34, 35));
+        this.addSlot(new MoldSlot(this.blockEntity.inventory, 1, 56, 17));
         this.addSlot(new SlotItemHandler(this.blockEntity.inventory, 2, 56, 53));
-        this.addSlot(new SlotItemHandler(this.blockEntity.inventory, 3, 116, 35));
+        this.addSlot(new ResultSlot(this.blockEntity.inventory, 3, 116, 35));
+
+        this.addDataSlot(progressData);
+
+        this.dataSlot = progressData;
     }
 
+    protected final DataSlot dataSlot;
+
+    //region quick move stack
     // CREDIT GOES TO: diesieben07 | https://github.com/diesieben07/SevenCommons
     // must assign a slot number to each of the slots used by the GUI.
     // For this container, we can see both the tile inventory's slots as well as the player inventory slots and the hotbar.
@@ -84,9 +93,14 @@ public class PressMenu extends AbstractBMNWContainerMenu {
         sourceSlot.onTake(playerIn, sourceStack);
         return copyOfSourceStack;
     }
+    //endregion
 
     @Override
     public boolean stillValid(Player player) {
         return stillValid(ContainerLevelAccess.create(this.level, this.blockEntity.getBlockPos()), player, BMNWBlocks.PRESS.get());
+    }
+
+    public int scaledProgress(int h) {
+        return this.dataSlot.get() * h / 40;
     }
 }

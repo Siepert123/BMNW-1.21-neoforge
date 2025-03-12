@@ -1,0 +1,41 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "bmnw:block/chainlink_fence_post"
+      }
+    },
+    {
+      "apply": {
+        "model": "bmnw:block/chainlink_fence_nz"
+      },
+      "when": {
+        "north": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "bmnw:block/chainlink_fence_px"
+      },
+      "when": {
+        "east": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "bmnw:block/chainlink_fence_pz"
+      },
+      "when": {
+        "south": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "bmnw:block/chainlink_fence_nx"
+      },
+      "when": {
+        "west": "true"
+      }
+    }
+  ]
+}

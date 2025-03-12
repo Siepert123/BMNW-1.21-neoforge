@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "tag": "c:ingots/steel"
+    },
+    "N": {
+      "tag": "c:wires/steel"
+    }
+  },
+  "pattern": [
+    "N#N",
+    "N#N"
+  ],
+  "result": {
+    "count": 16,
+    "id": "bmnw:chainlink_fence"
+  }
+}

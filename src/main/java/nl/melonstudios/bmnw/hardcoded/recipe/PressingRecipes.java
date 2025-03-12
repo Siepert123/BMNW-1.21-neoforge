@@ -21,7 +21,7 @@ import java.util.Map;
 @SuppressWarnings("unused")
 public class PressingRecipes {
     private static final Logger LOGGER = LogManager.getLogger("BMNW Pressing Recipes");
-    private static final boolean debug = true;
+    private static final boolean debug = false;
     private static TagKey<Item> tag(String id) {
         return TagKey.create(Registries.ITEM, ResourceLocation.parse(id));
     }

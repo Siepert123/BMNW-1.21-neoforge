@@ -149,6 +149,7 @@ public class BMNWTabs {
                         items.accept(HATCH);
 
                         addItems(items,
+                                CHAINLINK_FENCE,
                                 BARBED_WIRE,
                                 FLAMING_BARBED_WIRE,
                                 POISONOUS_BARBED_WIRE,
@@ -300,6 +301,7 @@ public class BMNWTabs {
                         items.accept(ENHANCED_CIRCUIT);
                         items.accept(ADVANCED_CIRCUIT);
 
+                        items.accept(PRESSING_PART);
                         items.accept(HATCH_LID);
                         //endregion
                     })
@@ -380,6 +382,18 @@ public class BMNWTabs {
 
                         items.accept(TUNGSTEN_REACHERS);
 
+                        addItems(items,
+                                BLANK_IRON_STAMP,
+                                IRON_PLATE_STAMP,
+                                IRON_WIRE_STAMP,
+                                BLANK_STEEL_STAMP,
+                                STEEL_PLATE_STAMP,
+                                STEEL_WIRE_STAMP,
+                                BLANK_TITANIUM_STAMP,
+                                TITANIUM_PLATE_STAMP,
+                                TITANIUM_WIRE_STAMP
+                        );
+
                         items.accept(getEmptyBattery(LEAD_ACID_BATTERY.get()));
                         items.accept(getFullBattery(LEAD_ACID_BATTERY.get()));
                         items.accept(getEmptyBattery(DURAPIXEL_BATTERY.get()));
@@ -427,6 +441,7 @@ public class BMNWTabs {
                             ResourceLocation.parse("bmnw:bombs")
                     )
                     .displayItems((parameters, items) -> {
+                        items.accept(PRESS);
                         items.accept(DECONTAMINATOR);
                         items.accept(TEST_EXCAVATOR);
                     })

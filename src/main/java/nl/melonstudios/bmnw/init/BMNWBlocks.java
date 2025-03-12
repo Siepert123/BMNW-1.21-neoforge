@@ -18,6 +18,7 @@ import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import nl.melonstudios.bmnw.block.decoration.*;
 import nl.melonstudios.bmnw.block.defense.BarbedWireBlock;
+import nl.melonstudios.bmnw.block.defense.ChainlinkFenceBlock;
 import nl.melonstudios.bmnw.block.defense.ReinforcedGlassBlock;
 import nl.melonstudios.bmnw.block.doors.HatchBlock;
 import nl.melonstudios.bmnw.block.machines.*;
@@ -305,8 +306,13 @@ public class BMNWBlocks {
 
     //region Basic defense
 
+    public static final DeferredBlock<ChainlinkFenceBlock> CHAINLINK_FENCE = BLOCKS.register("chainlink_fence",
+            () -> new ChainlinkFenceBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)
+                    .strength(10, 12)));
+
     public static final DeferredBlock<BarbedWireBlock> BARBED_WIRE = BLOCKS.register("barbed_wire",
-            () -> new BarbedWireBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).noOcclusion(), (entity, entityMoving) -> {
+            () -> new BarbedWireBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).noOcclusion()
+                    .strength(10, 12), (entity, entityMoving) -> {
                 if (entityMoving && !(entity instanceof ItemEntity item && item.getAge() < 20)) {
                     entity.hurt(entity.damageSources().cactus(), 5);
                 }
@@ -354,6 +360,9 @@ public class BMNWBlocks {
     //region Fluids
 
     //endregion
+
+    public static final DeferredBlock<Block> PRESS_HEAD = BLOCKS.register("press_head",
+            () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)));
 
     public static void register(IEventBus eventBus) {
         BLOCKS.register(eventBus);

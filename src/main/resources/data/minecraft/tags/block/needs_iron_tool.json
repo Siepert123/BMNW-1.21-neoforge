@@ -32,7 +32,8 @@
     "bmnw:wp_barbed_wire",
     "bmnw:steel_ladder",
     "bmnw:concrete_encapsulated_ladder",
-    "bmnw:hatch"
+    "bmnw:hatch",
+    "bmnw:chainlink_fence"
   ],
   "replace": false
 }
