@@ -1,3 +1,6 @@
 {
-  "parent": "bmnw:block/press"
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "bmnw:item/press_icon"
+  }
 }
