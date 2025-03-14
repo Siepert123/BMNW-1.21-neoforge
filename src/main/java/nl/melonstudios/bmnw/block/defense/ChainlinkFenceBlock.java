@@ -17,6 +17,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 public class ChainlinkFenceBlock extends Block {
+    public static boolean heightenedCollisionBox = false;
     public ChainlinkFenceBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(
@@ -65,12 +66,14 @@ public class ChainlinkFenceBlock extends Block {
 
     @Override
     protected VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        VoxelShape ret = POLE_COLLISION;
-        if (state.getValue(PX)) ret = Shapes.or(ret, EAST_COLLISION);
-        if (state.getValue(NX)) ret = Shapes.or(ret, WEST_COLLISION);
-        if (state.getValue(PZ)) ret = Shapes.or(ret, SOUTH_COLLISION);
-        if (state.getValue(NZ)) ret = Shapes.or(ret, NORTH_COLLISION);
-        return ret;
+        if (heightenedCollisionBox) {
+            VoxelShape ret = POLE_COLLISION;
+            if (state.getValue(PX)) ret = Shapes.or(ret, EAST_COLLISION);
+            if (state.getValue(NX)) ret = Shapes.or(ret, WEST_COLLISION);
+            if (state.getValue(PZ)) ret = Shapes.or(ret, SOUTH_COLLISION);
+            if (state.getValue(NZ)) ret = Shapes.or(ret, NORTH_COLLISION);
+            return ret;
+        } else return this.getShape(state, level, pos, context);
     }
 
     @Override
