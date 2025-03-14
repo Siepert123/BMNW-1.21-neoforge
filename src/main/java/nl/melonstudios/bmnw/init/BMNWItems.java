@@ -319,6 +319,10 @@ public class BMNWItems {
             () -> new GeigerCounterItem(new Item.Properties().stacksTo(1)));
     public static final DeferredItem<Item> PRESSING_PART = ITEMS.register("pressing_part",
             () -> new Item(new Item.Properties()));
+    public static final DeferredItem<BlockItem> IRON_WORKBENCH = ITEMS.register("iron_workbench",
+            () -> new BlockItem(BMNWBlocks.IRON_WORKBENCH.get(), new Item.Properties()));
+    public static final DeferredItem<BlockItem> STEEL_WORKBENCH = ITEMS.register("steel_workbench",
+            () -> new BlockItem(BMNWBlocks.STEEL_WORKBENCH.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> PRESS = ITEMS.register("press",
             () -> new BlockItem(BMNWBlocks.PRESS.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> ALLOY_BLAST_FURNACE = ITEMS.register("alloy_blast_furnace",

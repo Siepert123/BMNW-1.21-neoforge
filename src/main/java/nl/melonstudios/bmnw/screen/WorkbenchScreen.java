@@ -26,10 +26,7 @@ import nl.melonstudios.bmnw.hardcoded.recipe.WorkbenchRecipes;
 import nl.melonstudios.bmnw.init.BMNWSounds;
 import nl.melonstudios.bmnw.wifi.PacketWorkbenchCraft;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
     public static final RandomSource random = RandomSource.create();
@@ -66,7 +63,7 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
         this.ingredientListX = 113;
         this.ingredientListY = 14;
 
-        this.availableRecipes = WorkbenchRecipes.instance.tierMap.get(this.getMenu().tier);
+        this.availableRecipes = WorkbenchRecipes.instance.tierMap.getOrDefault(this.getMenu().tier, Collections.emptyList());
         this.maxSelectionScroll = Math.max(this.availableRecipes.size() / 2 - 5, 0);
         this.maxRecipeIdx = this.availableRecipes.size();
     }

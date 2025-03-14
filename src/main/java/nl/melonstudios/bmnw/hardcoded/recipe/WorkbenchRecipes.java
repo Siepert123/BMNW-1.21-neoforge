@@ -21,6 +21,11 @@ public class WorkbenchRecipes {
     }
     public static final WorkbenchRecipes instance = new WorkbenchRecipes();
 
+    private static int maxTier = 1;
+    public static int maxTier() {
+        return maxTier;
+    }
+
     private WorkbenchRecipes() {
         this.addRecipe("bmnw:workbench/alloy_blast_furnace", 0,
                 new ItemStack(BMNWItems.ALLOY_BLAST_FURNACE.get()),
@@ -41,7 +46,7 @@ public class WorkbenchRecipes {
     public void initializeTierMap() {
         this.tierMap.clear();
         for (WorkbenchRecipe recipe : this.recipes) {
-            for (int i = 0; i <= recipe.minTier(); i++) {
+            for (int i = recipe.minTier(); i <= maxTier; i++) {
                 this.tierMap.putIfAbsent(i, new ArrayList<>());
                 this.tierMap.get(i).add(recipe);
             }
@@ -52,6 +57,7 @@ public class WorkbenchRecipes {
         this.addRecipe(id, Arrays.asList(ingredients), result, minTier);
     }
     public void addRecipe(String id, List<Ingredient> ingredients, ItemStack result, int minTier) {
+        maxTier = Math.max(minTier, maxTier());
         ResourceLocation rsl = ResourceLocation.parse(id);
         WorkbenchRecipe recipe = new WorkbenchRecipe(rsl, ingredients, result, minTier);
         this.recipes.add(recipe);

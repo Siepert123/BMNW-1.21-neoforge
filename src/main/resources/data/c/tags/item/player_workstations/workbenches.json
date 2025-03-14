@@ -1,6 +1,7 @@
 {
   "values": [
-    "bmnw:steel_reinforced_glass"
+    "bmnw:iron_workbench",
+    "bmnw:steel_workbench"
   ],
   "replace": false
 }
