@@ -51,6 +51,6 @@ public class WorkbenchBlock extends Block {
 
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-        tooltipComponents.add(Component.translatable("tooltip.bmnw.workbench", this.tier));
+        tooltipComponents.add(Component.translatable("tooltip.bmnw.workbench", this.tier).withColor(0xFFFF00));
     }
 }
