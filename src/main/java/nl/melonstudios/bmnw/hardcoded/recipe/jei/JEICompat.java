@@ -61,7 +61,7 @@ public class JEICompat implements IModPlugin {
         registration.addRecipeClickArea(
                 AlloyFurnaceScreen.class,
                 83, 22, 28, 38,
-                BMNWRecipeTypes.PRESSING
+                BMNWRecipeTypes.ALLOYING
         );
     }
 
