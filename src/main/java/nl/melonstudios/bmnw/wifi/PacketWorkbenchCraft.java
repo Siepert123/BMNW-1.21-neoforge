@@ -17,12 +17,14 @@ import org.slf4j.Logger;
 
 import java.util.List;
 
-public record PacketWorkbenchCraft(String id) implements CustomPacketPayload {
+public record PacketWorkbenchCraft(String id, boolean stack) implements CustomPacketPayload {
     private static final Logger LOGGER = LogUtils.getLogger();
     public static final Type<PacketWorkbenchCraft> TYPE = new Type<>(BMNW.namespace("workbench_craft"));
     public static final StreamCodec<ByteBuf, PacketWorkbenchCraft> STREAM_CODEC = StreamCodec.composite(
             ByteBufCodecs.STRING_UTF8,
             PacketWorkbenchCraft::id,
+            ByteBufCodecs.BOOL,
+            PacketWorkbenchCraft::stack,
             PacketWorkbenchCraft::new
     );
 
@@ -36,14 +38,30 @@ public record PacketWorkbenchCraft(String id) implements CustomPacketPayload {
         ResourceLocation rsl = ResourceLocation.parse(this.id);
         WorkbenchRecipe recipe = WorkbenchRecipes.instance.idMap.get(rsl);
         if (recipe != null) {
-            if (WorkbenchRecipes.instance.matches(recipe, player.getInventory())) {
-                if (WorkbenchRecipes.instance.perform(recipe, player.getInventory())) {
-                    ItemStack stack = recipe.result().copy();
-                    if (!player.getInventory().add(stack)) {
-                        ItemEntity entity = new ItemEntity(player.level(), player.getX(), player.getY(), player.getZ(), stack);
-                        entity.setDeltaMovement(0, 0, 0);
-                        player.level().addFreshEntity(entity);
+            if (!this.stack) {
+                if (WorkbenchRecipes.instance.matches(recipe, player.getInventory())) {
+                    if (WorkbenchRecipes.instance.perform(recipe, player.getInventory())) {
+                        ItemStack stack = recipe.result().copy();
+                        if (!player.getInventory().add(stack)) {
+                            ItemEntity entity = new ItemEntity(player.level(), player.getX(), player.getY(), player.getZ(), stack);
+                            entity.setDeltaMovement(0, 0, 0);
+                            player.level().addFreshEntity(entity);
+                        }
                     }
+                }
+            } else {
+                int size = recipe.result().getMaxStackSize();
+                for (int i = 0; i < size; i++) {
+                    if (WorkbenchRecipes.instance.matches(recipe, player.getInventory())) {
+                        if (WorkbenchRecipes.instance.perform(recipe, player.getInventory())) {
+                            ItemStack stack = recipe.result().copy();
+                            if (!player.getInventory().add(stack)) {
+                                ItemEntity entity = new ItemEntity(player.level(), player.getX(), player.getY(), player.getZ(), stack);
+                                entity.setDeltaMovement(0, 0, 0);
+                                player.level().addFreshEntity(entity);
+                            }
+                        }
+                    } else break;
                 }
             }
         } else {

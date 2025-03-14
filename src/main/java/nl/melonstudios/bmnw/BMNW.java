@@ -21,6 +21,7 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.event.server.ServerStoppingEvent;
+import nl.melonstudios.bmnw.hardcoded.recipe.WorkbenchRecipes;
 import nl.melonstudios.bmnw.hardcoded.structure.*;
 import nl.melonstudios.bmnw.hardcoded.structure.coded.*;
 import nl.melonstudios.bmnw.hazard.HazardRegistry;
@@ -161,6 +162,8 @@ public class BMNW {
 
         Commands commands = event.getServer().getCommands();
         BMNWCommands.register(commands);
+
+        WorkbenchRecipes.instance.initializeTierMap();
     }
 
     @SubscribeEvent

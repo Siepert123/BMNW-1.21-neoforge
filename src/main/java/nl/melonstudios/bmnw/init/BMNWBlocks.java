@@ -213,7 +213,7 @@ public class BMNWBlocks {
 
     //region Basic machines
     public static final DeferredBlock<WorkbenchBlock> TEST_WORKBENCH = BLOCKS.register("test_workbench",
-            () -> new WorkbenchBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CRAFTING_TABLE), 0));
+            () -> new WorkbenchBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CRAFTING_TABLE), 0, "workbench"));
     public static final DeferredBlock<PressBlock> PRESS = BLOCKS.register("press",
             () -> new PressBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).noOcclusion()));
     public static final DeferredBlock<AlloyBlastFurnaceBlock> ALLOY_BLAST_FURNACE = BLOCKS.register("alloy_blast_furnace",

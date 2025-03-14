@@ -36,6 +36,17 @@ public class WorkbenchRecipes {
 
     public final List<WorkbenchRecipe> recipes = new ArrayList<>();
     public final Map<ResourceLocation, WorkbenchRecipe> idMap = new HashMap<>();
+    public final Map<Integer, List<WorkbenchRecipe>> tierMap = new HashMap<>();
+
+    public void initializeTierMap() {
+        this.tierMap.clear();
+        for (WorkbenchRecipe recipe : this.recipes) {
+            for (int i = 0; i <= recipe.minTier(); i++) {
+                this.tierMap.putIfAbsent(i, new ArrayList<>());
+                this.tierMap.get(i).add(recipe);
+            }
+        }
+    }
 
     public void addRecipe(String id, int minTier, ItemStack result, Ingredient... ingredients) {
         this.addRecipe(id, Arrays.asList(ingredients), result, minTier);

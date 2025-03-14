@@ -5,6 +5,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.entity.ItemRenderer;
@@ -43,6 +44,7 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
     protected int selectionScroll = 0;
     protected final int maxSelectionScroll;
     protected final int maxRecipeIdx;
+    protected final List<WorkbenchRecipe> availableRecipes;
     protected static final WorkbenchRecipes recipes = WorkbenchRecipes.instance;
 
     public WorkbenchScreen(WorkbenchMenu menu, Inventory playerInventory, Component title) {
@@ -65,8 +67,9 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
         this.ingredientListX = 113;
         this.ingredientListY = 14;
 
-        this.maxSelectionScroll = Math.max(recipes.recipes.size() / 2 - 5, 0);
-        this.maxRecipeIdx = recipes.recipes.size();
+        this.availableRecipes = WorkbenchRecipes.instance.tierMap.get(this.getMenu().tier);
+        this.maxSelectionScroll = Math.max(this.availableRecipes.size() / 2 - 5, 0);
+        this.maxRecipeIdx = this.availableRecipes.size();
     }
 
     @Override
@@ -87,7 +90,7 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
 
         PoseStack poseStack = graphics.pose();
 
-        WorkbenchRecipe recipe = this.selectedRecipe < 0 ? null : recipes.getRecipeOfIdx(this.selectedRecipe);
+        WorkbenchRecipe recipe = this.selectedRecipe < 0 ? null : this.availableRecipes.get(this.selectedRecipe);
 
         if (recipe != null && !recipe.result().isEmpty()) {
             poseStack.pushPose();
@@ -119,7 +122,7 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
         int endIndex = this.maxRecipeIdx > 10+startIndex ? 10 : this.maxRecipeIdx - startIndex;
         for (int i = 0; i < endIndex; i++) {
             int idx = startIndex + i;
-            WorkbenchRecipe rcp = recipes.getRecipeOfIdx(idx);
+            WorkbenchRecipe rcp = this.availableRecipes.get(idx);
             ItemStack stack = Objects.requireNonNull(rcp, "Null recipe!").result();
             if (!stack.isEmpty()) {
                 poseStack.pushPose();
@@ -162,9 +165,9 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
             return true;
         }
         if (this.craft.isInArea(mouseX, mouseY)) {
-            WorkbenchRecipe recipe = this.selectedRecipe < 0 ? null : recipes.getRecipeOfIdx(this.selectedRecipe);
+            WorkbenchRecipe recipe = this.selectedRecipe < 0 ? null : this.availableRecipes.get(this.selectedRecipe);
             if (recipe != null) {
-                PacketDistributor.sendToServer(new PacketWorkbenchCraft(recipe.rsl().toString()));
+                PacketDistributor.sendToServer(new PacketWorkbenchCraft(recipe.rsl().toString(), Screen.hasShiftDown()));
             }
             BMNWSounds.playClickOld();
             return true;

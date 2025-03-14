@@ -17,9 +17,11 @@ import org.jetbrains.annotations.Nullable;
 
 public class WorkbenchBlock extends Block {
     private final int tier;
-    public WorkbenchBlock(Properties properties, int tier) {
+    private final String unlocalizedName;
+    public WorkbenchBlock(Properties properties, int tier, String name) {
         super(properties);
         this.tier = tier;
+        this.unlocalizedName = "block.bmnw." + name;
     }
 
     @Override
@@ -38,7 +40,7 @@ public class WorkbenchBlock extends Block {
         return new SimpleMenuProvider(
                 ((containerId, playerInventory, player) ->
                         new WorkbenchMenu(containerId, playerInventory, ContainerLevelAccess.create(level, pos), this.tier)),
-                Component.translatable("block.bmnw.workbench")
+                Component.translatable(this.unlocalizedName)
         );
     }
 }
