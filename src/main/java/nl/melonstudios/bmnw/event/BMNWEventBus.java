@@ -65,6 +65,7 @@ import nl.melonstudios.bmnw.misc.ExcavationVein;
 import nl.melonstudios.bmnw.particle.*;
 import nl.melonstudios.bmnw.wifi.PacketMushroomCloud;
 import nl.melonstudios.bmnw.wifi.PacketUpdatePressState;
+import nl.melonstudios.bmnw.wifi.PacketWorkbenchCraft;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -472,6 +473,11 @@ public class BMNWEventBus {
                     PacketUpdatePressState.TYPE,
                     PacketUpdatePressState.STREAM_CODEC,
                     PacketUpdatePressState::handle
+            );
+            registrar.playToServer(
+                    PacketWorkbenchCraft.TYPE,
+                    PacketWorkbenchCraft.STREAM_CODEC,
+                    PacketWorkbenchCraft::handle
             );
         }
 

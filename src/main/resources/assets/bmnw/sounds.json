@@ -1,4 +1,9 @@
 {
+  "ui_wood_click": {
+    "sounds": [
+      "bmnw:ui_wood_click"
+    ]
+  },
   "geiger_click": {
     "sounds": [
       "bmnw:geiger_click"

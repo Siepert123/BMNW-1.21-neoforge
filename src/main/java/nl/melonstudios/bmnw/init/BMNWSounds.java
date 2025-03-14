@@ -1,8 +1,13 @@
 package nl.melonstudios.bmnw.init;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -11,6 +16,11 @@ import nl.melonstudios.bmnw.BMNW;
 public class BMNWSounds {
     private static final DeferredRegister<SoundEvent> SOUND_EVENTS =
             DeferredRegister.create(BuiltInRegistries.SOUND_EVENT, "bmnw");
+
+    public static final DeferredHolder<SoundEvent, SoundEvent> UI_WOOD_CLICK = SOUND_EVENTS.register(
+            "ui_wood_click",
+            () -> SoundEvent.createFixedRangeEvent(BMNW.namespace("ui_wood_click"), 8)
+    );
 
     public static final DeferredHolder<SoundEvent, SoundEvent> GEIGER_CLICK = SOUND_EVENTS.register(
             "geiger_click",
@@ -59,5 +69,18 @@ public class BMNWSounds {
 
     public static void register(IEventBus eventBus) {
         SOUND_EVENTS.register(eventBus);
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public static void playClick() {
+        Minecraft.getInstance().getSoundManager().play(
+                SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK.value(), 1, 1)
+        );
+    }
+    @OnlyIn(Dist.CLIENT)
+    public static void playClickOld() {
+        Minecraft.getInstance().getSoundManager().play(
+                SimpleSoundInstance.forUI(UI_WOOD_CLICK.get(), 1, 1)
+        );
     }
 }

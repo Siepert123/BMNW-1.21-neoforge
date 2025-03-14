@@ -402,5 +402,7 @@
   "tooltip.bmnw.radioactive": "[Radioactive]",
   "tooltip.bmnw.radius": "Radius: ~%s",
   "tooltip.bmnw.wp": "[White Phosphorus]",
-  "block.bmnw.alloy_blast_furnace": "Alloy Blast Furnace"
+  "block.bmnw.alloy_blast_furnace": "Alloy Blast Furnace",
+  "block.bmnw.workbench": "Workbench",
+  "text.bmnw.ingredients": "Ingredients:"
 }

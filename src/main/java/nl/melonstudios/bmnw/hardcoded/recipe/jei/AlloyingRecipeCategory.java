@@ -13,6 +13,7 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import nl.melonstudios.bmnw.screen.AlloyFurnaceScreen;
+import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
 
 import java.util.Arrays;
@@ -31,6 +32,11 @@ public class AlloyingRecipeCategory extends AbstractRecipeCategory<AlloyingRecip
                 .addItemStacks(Arrays.asList(recipe.input2().getItems()));
         builder.addOutputSlot(118-64, 33-14)
                 .addItemStack(recipe.result());
+    }
+
+    @Override
+    public @Nullable ResourceLocation getRegistryName(AlloyingRecipe recipe) {
+        return recipe.rsl();
     }
 
     @Override
