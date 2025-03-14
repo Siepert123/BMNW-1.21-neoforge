@@ -45,7 +45,6 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
     protected final int maxSelectionScroll;
     protected final int maxRecipeIdx;
     protected final List<WorkbenchRecipe> availableRecipes;
-    protected static final WorkbenchRecipes recipes = WorkbenchRecipes.instance;
 
     public WorkbenchScreen(WorkbenchMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
@@ -89,6 +88,16 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
         graphics.blit(GUI_TEXTURE, x, y, 0, 0, imageWidth, imageHeight);
 
         PoseStack poseStack = graphics.pose();
+
+        if (!this.canScrollLeft()) {
+            graphics.blit(GUI_TEXTURE, x+7, y+24, 176, 0, 6, 36);
+        }
+        if (!this.canScrollRight()) {
+            graphics.blit(GUI_TEXTURE, x+105, y+24, 182, 0, 6, 36);
+        }
+        if (!this.canTryCraft()) {
+            graphics.blit(GUI_TEXTURE, x+50, y+61, 188, 0, 18, 18);
+        }
 
         WorkbenchRecipe recipe = this.selectedRecipe < 0 ? null : this.availableRecipes.get(this.selectedRecipe);
 
@@ -154,17 +163,17 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
     }
 
     protected boolean mouseClicked(int mouseX, int mouseY) {
-        if (this.scrollLeft.isInArea(mouseX, mouseY)) {
+        if (this.canScrollLeft() && this.scrollLeft.isInArea(mouseX, mouseY)) {
             if (this.selectionScroll > 0) this.selectionScroll--;
             BMNWSounds.playClick();
             return true;
         }
-        if (this.scrollRight.isInArea(mouseX, mouseY)) {
-            if (this.selectionScroll < this.maxSelectionScroll) this.selectionScroll++;
+        if (this.canScrollRight() && this.scrollRight.isInArea(mouseX, mouseY)) {
+            this.selectionScroll++;
             BMNWSounds.playClick();
             return true;
         }
-        if (this.craft.isInArea(mouseX, mouseY)) {
+        if (this.canTryCraft() && this.craft.isInArea(mouseX, mouseY)) {
             WorkbenchRecipe recipe = this.selectedRecipe < 0 ? null : this.availableRecipes.get(this.selectedRecipe);
             if (recipe != null) {
                 PacketDistributor.sendToServer(new PacketWorkbenchCraft(recipe.rsl().toString(), Screen.hasShiftDown()));
@@ -183,5 +192,15 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
             }
         }
         return false;
+    }
+
+    protected boolean canScrollLeft() {
+        return this.selectionScroll > 0;
+    }
+    protected boolean canScrollRight() {
+        return this.selectionScroll < this.maxSelectionScroll;
+    }
+    protected boolean canTryCraft() {
+        return this.selectedRecipe >= 0;
     }
 }
