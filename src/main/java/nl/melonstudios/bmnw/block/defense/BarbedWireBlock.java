@@ -1,5 +1,6 @@
 package nl.melonstudios.bmnw.block.defense;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -106,6 +107,8 @@ public class BarbedWireBlock extends Block implements SimpleWaterloggedBlock {
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
         super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
-        if (this == BMNWBlocks.POISONOUS_BARBED_WIRE.get()) tooltipComponents.add(Component.literal("Err actually it's venomous"));
+        if (this == BMNWBlocks.POISONOUS_BARBED_WIRE.get())
+            tooltipComponents.add(Component.literal("Err actually it's venomous")
+                    .withStyle(ChatFormatting.ITALIC).withColor(0x888888));
     }
 }

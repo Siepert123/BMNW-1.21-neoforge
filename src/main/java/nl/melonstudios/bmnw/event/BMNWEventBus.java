@@ -252,11 +252,7 @@ public class BMNWEventBus {
                         if (HazardRegistry.getBurningRegistry(item)) {
                             player.setRemainingFireTicks(20);
                         }
-                        if (stack.is(BMNWTags.Items.BIG_WP)) {
-                            WPEffect.inflictWP(player, 2);
-                        } else if (stack.is(BMNWTags.Items.WP)) {
-                            WPEffect.inflictWP(player, 1);
-                        } else if (stack.is(BMNWTags.Items.SLIGHT_WP)) {
+                        if (stack.is(BMNWTags.Items.WP)) {
                             WPEffect.inflictWP(player, 0);
                         }
                     }

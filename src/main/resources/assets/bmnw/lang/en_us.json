@@ -14,6 +14,7 @@
   "block.bmnw.brick_charge": "Brick Bomb",
   "block.bmnw.broken_concrete_bricks": "Broken Concrete Bricks",
   "block.bmnw.caseoh": "Fat Man",
+  "block.bmnw.chainlink_fence": "Chainlink Fence",
   "block.bmnw.charred_log": "Charred Log",
   "block.bmnw.charred_planks": "Charred Planks",
   "block.bmnw.chiseled_concrete_bricks": "Chiseled Concrete Bricks",
@@ -305,7 +306,7 @@
   "itemGroup.bmnw.materials": "BMNW: Materials & Parts",
   "itemGroup.bmnw.tools": "BMNW: Tools & Consumables",
   "recipe.bmnw.alloy_blast_furnace": "Alloying",
-  "recipe.bmnw.pressing": "Mold Pressing",
+  "recipe.bmnw.pressing": "Stamp Pressing",
   "subtitles.bmnw.door_close": "Door closes",
   "subtitles.bmnw.door_open": "Door opens",
   "subtitles.bmnw.geiger_click": "Geiger click",
@@ -400,5 +401,6 @@
   "tooltip.bmnw.radiation_shielding": "[Radiation Shielding]",
   "tooltip.bmnw.radioactive": "[Radioactive]",
   "tooltip.bmnw.radius": "Radius: ~%s",
-  "tooltip.bmnw.wp": "[White Phosphorus]"
+  "tooltip.bmnw.wp": "[White Phosphorus]",
+  "block.bmnw.alloy_blast_furnace": "Alloy Blast Furnace"
 }

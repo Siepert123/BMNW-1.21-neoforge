@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "tag": "c:ingots/iron"
+    },
+    "N": {
+      "item": "minecraft:piston"
+    }
+  },
+  "pattern": [
+    "N",
+    "#"
+  ],
+  "result": {
+    "id": "bmnw:pressing_part"
+  }
+}

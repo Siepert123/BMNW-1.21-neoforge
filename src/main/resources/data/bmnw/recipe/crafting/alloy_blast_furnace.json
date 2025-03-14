@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "tag": "c:bricks/nether"
+    },
+    "N": {
+      "tag": "c:plates/iron"
+    },
+    "F": {
+      "item": "minecraft:furnace"
+    }
+  },
+  "pattern": [
+    "NNN",
+    "#F#",
+    "###"
+  ],
+  "result": {
+    "id": "bmnw:alloy_blast_furnace"
+  }
+}

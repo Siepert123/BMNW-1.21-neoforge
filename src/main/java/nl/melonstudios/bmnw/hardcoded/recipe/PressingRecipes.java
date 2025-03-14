@@ -13,10 +13,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @SuppressWarnings("unused")
 public class PressingRecipes {
@@ -31,8 +28,10 @@ public class PressingRecipes {
         WIRE(tag("bmnw:molds/wire"));
 
         private final TagKey<Item> itemTag;
+        private final Ingredient asIngredient;
         MoldType(TagKey<Item> itemTag) {
             this.itemTag = itemTag;
+            this.asIngredient = Ingredient.of(this.itemTag);
         }
 
         public boolean isItemThis(ItemStack stack) {
@@ -47,6 +46,17 @@ public class PressingRecipes {
                 if (type.isItemThis(item)) return type;
             }
             return null;
+        }
+
+        public ItemStack getDefaultItem() {
+            return switch (this) {
+                case BLANK -> BMNWItems.BLANK_IRON_STAMP.toStack();
+                case PLATE -> BMNWItems.IRON_PLATE_STAMP.toStack();
+                case WIRE -> BMNWItems.IRON_WIRE_STAMP.toStack();
+            };
+        }
+        public List<ItemStack> asStackList() {
+            return Arrays.asList(this.asIngredient.getItems());
         }
     }
     public static final PressingRecipes instance = new PressingRecipes();

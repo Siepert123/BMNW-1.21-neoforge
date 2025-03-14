@@ -34,12 +34,6 @@ public class WPEffect extends MobEffect {
     }
 
     public static void inflictWP(LivingEntity entity, int level) {
-        if (level == 0) {
-            entity.addEffect(new MobEffectInstance(BMNWEffects.WHITE_PHOSPHORUS, 200, 0, true, true));
-        } else if (level == 1) {
-            entity.addEffect(new MobEffectInstance(BMNWEffects.WHITE_PHOSPHORUS, 600, 1, true, true));
-        } else if (level == 2) {
-            entity.addEffect(new MobEffectInstance(BMNWEffects.WHITE_PHOSPHORUS, 1200, 2, true, true));
-        } else inflictWP(entity, 1);
+        entity.addEffect(new MobEffectInstance(BMNWEffects.WHITE_PHOSPHORUS, 200, 0, true, true));
     }
 }

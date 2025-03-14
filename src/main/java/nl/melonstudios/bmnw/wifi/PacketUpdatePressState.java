@@ -28,6 +28,7 @@ public record PacketUpdatePressState(int x, int y, int z) implements CustomPacke
         BlockPos pos = new BlockPos(packet.x, packet.y, packet.z);
         BlockEntity be = level.getBlockEntity(pos);
         if (be instanceof PressBlockEntity press) press.progress = 38;
+
     }
 
     @Override

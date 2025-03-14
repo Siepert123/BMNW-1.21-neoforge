@@ -84,6 +84,15 @@ public class BMNWBlockEntities {
             )
     );
 
+    public static final Supplier<BlockEntityType<AlloyBlastFurnaceBlockEntity>> ALLOY_BLAST_FURNACE = BLOCK_ENTITIES.register(
+            "alloy_blast_furnace",
+            () -> new BlockEntityType<>(
+                    AlloyBlastFurnaceBlockEntity::new,
+                    Set.of(BMNWBlocks.ALLOY_BLAST_FURNACE.get()),
+                    null
+            )
+    );
+
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);
     }

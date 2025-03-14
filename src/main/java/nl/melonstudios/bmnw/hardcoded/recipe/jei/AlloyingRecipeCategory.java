@@ -8,45 +8,42 @@ import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.AbstractRecipeCategory;
-import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import nl.melonstudios.bmnw.init.BMNWTags;
-import nl.melonstudios.bmnw.screen.PressScreen;
-import org.jetbrains.annotations.Nullable;
+import nl.melonstudios.bmnw.screen.AlloyFurnaceScreen;
 import org.joml.Matrix4f;
 
 import java.util.Arrays;
 
-public class PressingRecipeCategory extends AbstractRecipeCategory<PressingRecipe> {
-    public static final ResourceLocation GUI_TEXTURE = PressScreen.GUI_TEXTURE;
-    public PressingRecipeCategory() {
-        super(BMNWRecipeTypes.PRESSING, Component.translatable("recipe.bmnw.pressing"), null, 84, 56);
+public class AlloyingRecipeCategory extends AbstractRecipeCategory<AlloyingRecipe> {
+    public static final ResourceLocation GUI_TEXTURE = AlloyFurnaceScreen.GUI_TEXTURE;
+    public AlloyingRecipeCategory() {
+        super(BMNWRecipeTypes.ALLOYING, Component.translatable("recipe.bmnw.alloy_blast_furnace"), null, 76, 54);
     }
 
     @Override
-    public void setRecipe(IRecipeLayoutBuilder builder, PressingRecipe recipe, IFocusGroup focuses) {
-        builder.addInputSlot(56-54, 17-15)
-                .addItemStacks(recipe.moldType().asStackList());
-        builder.addInputSlot(56-54, 53-15)
-                .addItemStacks(Arrays.asList(recipe.input().getItems()));
-        builder.addOutputSlot(116-54, 35-15)
+    public void setRecipe(IRecipeLayoutBuilder builder, AlloyingRecipe recipe, IFocusGroup focuses) {
+        builder.addInputSlot(66-64, 16-14)
+                .addItemStacks(Arrays.asList(recipe.input1().getItems()));
+        builder.addInputSlot(66-64, 50-14)
+                .addItemStacks(Arrays.asList(recipe.input2().getItems()));
+        builder.addOutputSlot(118-64, 33-14)
                 .addItemStack(recipe.result());
     }
 
     @Override
-    public void draw(PressingRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics graphics, double mouseX, double mouseY) {
+    public void draw(AlloyingRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics graphics, double mouseX, double mouseY) {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderTexture(0, GUI_TEXTURE);
 
         int x = 0;
         int y = 0;
-        int u = 54;
-        int v = 15;
-        int width = 84;
-        int height = 56;
+        int u = 64;
+        int v = 14;
+        int width = 76;
+        int height = 54;
         float f = 1.0F / 256;
         float f1 = 1.0F / 256;
         Tesselator tesselator = Tesselator.getInstance();
@@ -58,8 +55,8 @@ public class PressingRecipeCategory extends AbstractRecipeCategory<PressingRecip
         bufferBuilder.addVertex(matrix, x, y, 0).setUv(u * f, v * f1);
         BufferUploader.drawWithShader(bufferBuilder.buildOrThrow());
 
-        this.drawBlit(GUI_TEXTURE, 55-54,35-15, 176, 14,
-                18, this.scaledProgress(((int)(System.currentTimeMillis() / 50) % 40), 17), graphics);
+        this.drawBlit(GUI_TEXTURE, 20, 8, 176, 14,
+                this.scaledProgress((int)(System.currentTimeMillis() / 50) % 100, 27), 37, graphics);
     }
 
     private void drawBlit(ResourceLocation texture, int x, int y, int u, int v, int w, int h, GuiGraphics graphics) {
@@ -78,7 +75,7 @@ public class PressingRecipeCategory extends AbstractRecipeCategory<PressingRecip
         BufferUploader.drawWithShader(bufferBuilder.buildOrThrow());
     }
 
-    private int scaledProgress(int p, int h) {
-        return p * h / 40;
+    private int scaledProgress(int p, int w) {
+        return p * w / 100;
     }
 }

@@ -321,6 +321,8 @@ public class BMNWItems {
             () -> new Item(new Item.Properties()));
     public static final DeferredItem<BlockItem> PRESS = ITEMS.register("press",
             () -> new BlockItem(BMNWBlocks.PRESS.get(), new Item.Properties()));
+    public static final DeferredItem<BlockItem> ALLOY_BLAST_FURNACE = ITEMS.register("alloy_blast_furnace",
+            () -> new BlockItem(BMNWBlocks.ALLOY_BLAST_FURNACE.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> DECONTAMINATOR = ITEMS.register("decontaminator",
             () -> new BlockItem(BMNWBlocks.DECONTAMINATOR.get(), new Item.Properties()));
     public static final DeferredItem<ExcavationVeinDetectorItem> EXCAVATION_VEIN_DETECTOR = ITEMS.register("excavation_vein_detector",

@@ -73,7 +73,8 @@
     "bmnw:meteorite_fire_marble_ore",
     "bmnw:meteorite_iron_ore",
     "bmnw:press",
-    "bmnw:chainlink_fence"
+    "bmnw:chainlink_fence",
+    "bmnw:alloy_blast_furnace"
   ],
   "replace": false
 }

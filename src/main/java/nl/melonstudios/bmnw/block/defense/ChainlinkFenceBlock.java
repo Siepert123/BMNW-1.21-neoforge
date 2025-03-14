@@ -28,10 +28,16 @@ public class ChainlinkFenceBlock extends Block {
         );
     }
     public static final VoxelShape POLE_SHAPE = Block.box(6, 0, 6, 10, 16, 10);
-    public static final VoxelShape EAST_SHAPE = Block.box(8, 0, 7, 16, 16, 9);
-    public static final VoxelShape WEST_SHAPE = Block.box(0, 0, 7, 8, 16, 9);
-    public static final VoxelShape SOUTH_SHAPE = Block.box(7, 0, 8, 9, 16, 16);
-    public static final VoxelShape NORTH_SHAPE = Block.box(7, 0, 0, 9, 16, 8);
+    public static final VoxelShape EAST_SHAPE = Block.box(8, 0, 7.99, 16, 16, 8.01);
+    public static final VoxelShape WEST_SHAPE = Block.box(0, 0, 7.99, 8, 16, 8.01);
+    public static final VoxelShape SOUTH_SHAPE = Block.box(7.99, 0, 8, 8.01, 16, 16);
+    public static final VoxelShape NORTH_SHAPE = Block.box(7.99, 0, 0, 8.01, 16, 8);
+
+    public static final VoxelShape POLE_COLLISION = Block.box(6, 0, 6, 10, 24, 10);
+    public static final VoxelShape EAST_COLLISION = Block.box(8, 0, 7.99, 16, 24, 8.01);
+    public static final VoxelShape WEST_COLLISION = Block.box(0, 0, 7.99, 8, 24, 8.01);
+    public static final VoxelShape SOUTH_COLLISION = Block.box(7.99, 0, 8, 8.01, 24, 16);
+    public static final VoxelShape NORTH_COLLISION = Block.box(7.99, 0, 0, 8.01, 24, 8);
 
     public static final BooleanProperty PX = BlockStateProperties.EAST;
     public static final BooleanProperty NX = BlockStateProperties.WEST;
@@ -54,6 +60,16 @@ public class ChainlinkFenceBlock extends Block {
         if (state.getValue(NX)) ret = Shapes.or(ret, WEST_SHAPE);
         if (state.getValue(PZ)) ret = Shapes.or(ret, SOUTH_SHAPE);
         if (state.getValue(NZ)) ret = Shapes.or(ret, NORTH_SHAPE);
+        return ret;
+    }
+
+    @Override
+    protected VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        VoxelShape ret = POLE_COLLISION;
+        if (state.getValue(PX)) ret = Shapes.or(ret, EAST_COLLISION);
+        if (state.getValue(NX)) ret = Shapes.or(ret, WEST_COLLISION);
+        if (state.getValue(PZ)) ret = Shapes.or(ret, SOUTH_COLLISION);
+        if (state.getValue(NZ)) ret = Shapes.or(ret, NORTH_COLLISION);
         return ret;
     }
 

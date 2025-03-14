@@ -92,9 +92,9 @@ public class PressBlock extends BaseEntityBlock {
         if (level.getBlockEntity(pos) instanceof PressBlockEntity press) {
             if (player.isShiftKeyDown()) return InteractionResult.PASS;
             if (!level.isClientSide()) {
-                ((ServerPlayer) player).openMenu(new SimpleMenuProvider(press, Component.literal("Press")), pos);
-                return InteractionResult.SUCCESS;
+                player.openMenu(new SimpleMenuProvider(press, Component.translatable("block.bmnw.press")), pos);
             }
+            return InteractionResult.SUCCESS;
         }
         return InteractionResult.PASS;
     }

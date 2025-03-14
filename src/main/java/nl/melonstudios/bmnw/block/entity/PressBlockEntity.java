@@ -30,6 +30,7 @@ import net.neoforged.neoforge.network.PacketDistributor;
 import nl.melonstudios.bmnw.hardcoded.recipe.PressingRecipes;
 import nl.melonstudios.bmnw.init.BMNWBlockEntities;
 import nl.melonstudios.bmnw.init.BMNWSounds;
+import nl.melonstudios.bmnw.init.BMNWTags;
 import nl.melonstudios.bmnw.screen.PressMenu;
 import nl.melonstudios.bmnw.wifi.PacketUpdatePressState;
 import org.jetbrains.annotations.Nullable;
@@ -38,6 +39,7 @@ public class PressBlockEntity extends BlockEntity implements MenuProvider {
     private final RandomSource soundRand = RandomSource.create();
 
     public final ItemStackHandler inventory = new ItemStackHandler(4) {
+
         @Override
         protected void onContentsChanged(int slot) {
             setChanged();
@@ -131,7 +133,7 @@ public class PressBlockEntity extends BlockEntity implements MenuProvider {
             int burnTime = fuel.getBurnTime(null);
             if (burnTime > 0) {
                 this.fuel += burnTime / 100f;
-                fuel.shrink(1);
+                if (!fuel.is(BMNWTags.Items.INFINITE_FUEL_SOURCES)) fuel.shrink(1);
             }
         }
 
@@ -146,7 +148,7 @@ public class PressBlockEntity extends BlockEntity implements MenuProvider {
                     && (output.isEmpty() || ItemStack.isSameItem(output, result))
                     && result.getCount() + output.getCount() <= result.getMaxStackSize()) {
                 shouldReset = false;
-                this.progress++;
+                if (this.progress != 0 || !this.level.isClientSide()) this.progress++;
                 if (this.progress > maxProgress) {
                     this.reset();
                     this.fuel--;

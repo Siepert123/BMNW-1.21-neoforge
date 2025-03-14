@@ -61,11 +61,10 @@ public class BMNWTags {
         public static final TagKey<Item> EXTREMELY_HOT = itemTag("bmnw:extremely_hot");
         public static final TagKey<Item> BLINDING = itemTag("bmnw:blinding");
 
-        public static final TagKey<Item> SLIGHT_WP = itemTag("bmnw:slight_white_phosphorus");
         public static final TagKey<Item> WP = itemTag("bmnw:white_phosphorus");
-        public static final TagKey<Item> BIG_WP = itemTag("bmnw:big_white_phosphorus");
 
         public static final TagKey<Item> REACHERS = itemTag("bmnw:reachers");
+        public static final TagKey<Item> INFINITE_FUEL_SOURCES = itemTag("bmnw:infinite_fuel_sources");
     }
     public static class Biomes {
         public static final TagKey<Biome> HAS_RADIO_ANTENNA = biomeTag("bmnw:has_structure/radio_antenna");

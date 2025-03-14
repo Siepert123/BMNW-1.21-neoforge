@@ -1,42 +1,42 @@
 {
   "variants": {
-    "facing=north,active=false": {
+    "facing=north,lit=false": {
       "model": "bmnw:block/alloy_blast_furnace",
       "uvlock": true,
       "y": 0
     },
-    "facing=east,active=false": {
+    "facing=east,lit=false": {
       "model": "bmnw:block/alloy_blast_furnace",
       "uvlock": true,
       "y": 90
     },
-    "facing=south,active=false": {
+    "facing=south,lit=false": {
       "model": "bmnw:block/alloy_blast_furnace",
       "uvlock": true,
       "y": 180
     },
-    "facing=west,active=false": {
+    "facing=west,lit=false": {
       "model": "bmnw:block/alloy_blast_furnace",
       "uvlock": true,
       "y": 270
     },
-    "facing=north,active=true": {
-      "model": "bmnw:block/alloy_blast_furnace_active",
+    "facing=north,lit=true": {
+      "model": "bmnw:block/alloy_blast_furnace_lit",
       "uvlock": true,
       "y": 0
     },
-    "facing=east,active=true": {
-      "model": "bmnw:block/alloy_blast_furnace_active",
+    "facing=east,lit=true": {
+      "model": "bmnw:block/alloy_blast_furnace_lit",
       "uvlock": true,
       "y": 90
     },
-    "facing=south,active=true": {
-      "model": "bmnw:block/alloy_blast_furnace_active",
+    "facing=south,lit=true": {
+      "model": "bmnw:block/alloy_blast_furnace_lit",
       "uvlock": true,
       "y": 180
     },
-    "facing=west,active=true": {
-      "model": "bmnw:block/alloy_blast_furnace_active",
+    "facing=west,lit=true": {
+      "model": "bmnw:block/alloy_blast_furnace_lit",
       "uvlock": true,
       "y": 270
     }

@@ -214,6 +214,8 @@ public class BMNWBlocks {
     //region Basic machines
     public static final DeferredBlock<PressBlock> PRESS = BLOCKS.register("press",
             () -> new PressBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).noOcclusion()));
+    public static final DeferredBlock<AlloyBlastFurnaceBlock> ALLOY_BLAST_FURNACE = BLOCKS.register("alloy_blast_furnace",
+            () -> new AlloyBlastFurnaceBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.NETHER_BRICKS)));
 
     public static final DeferredBlock<DecontaminatorBlock> DECONTAMINATOR = BLOCKS.register("decontaminator",
             () -> new DecontaminatorBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)));
@@ -307,7 +309,7 @@ public class BMNWBlocks {
     //region Basic defense
 
     public static final DeferredBlock<ChainlinkFenceBlock> CHAINLINK_FENCE = BLOCKS.register("chainlink_fence",
-            () -> new ChainlinkFenceBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)
+            () -> new ChainlinkFenceBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).sound(SoundType.CHAIN)
                     .strength(10, 12)));
 
     public static final DeferredBlock<BarbedWireBlock> BARBED_WIRE = BLOCKS.register("barbed_wire",

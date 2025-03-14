@@ -31,6 +31,7 @@ import nl.melonstudios.bmnw.misc.Books;
 import nl.melonstudios.bmnw.misc.DistrictHolder;
 import nl.melonstudios.bmnw.misc.ExcavationVein;
 import nl.melonstudios.bmnw.misc.FireMarbleManager;
+import nl.melonstudios.bmnw.screen.AlloyFurnaceScreen;
 import nl.melonstudios.bmnw.screen.PressScreen;
 import org.slf4j.Logger;
 
@@ -130,6 +131,7 @@ public class BMNW {
 
     private void registerMenuScreens(RegisterMenuScreensEvent event) {
         event.register(BMNWMenuTypes.PRESS.get(), PressScreen::new);
+        event.register(BMNWMenuTypes.ALLOY_BLAST_FURNACE.get(), AlloyFurnaceScreen::new);
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call

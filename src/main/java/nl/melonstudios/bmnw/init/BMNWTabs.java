@@ -442,6 +442,7 @@ public class BMNWTabs {
                     )
                     .displayItems((parameters, items) -> {
                         items.accept(PRESS);
+                        items.accept(ALLOY_BLAST_FURNACE);
                         items.accept(DECONTAMINATOR);
                         items.accept(TEST_EXCAVATOR);
                     })

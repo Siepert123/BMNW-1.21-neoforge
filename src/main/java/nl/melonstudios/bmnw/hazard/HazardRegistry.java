@@ -118,7 +118,7 @@ public class HazardRegistry {
     }
 
     public static boolean isWP(ItemStack stack) {
-        return stack.is(BMNWTags.Items.SLIGHT_WP) || stack.is(BMNWTags.Items.WP) || stack.is(BMNWTags.Items.BIG_WP);
+        return stack.is(BMNWTags.Items.WP);
     }
 
     public static boolean shouldSkinContact(Player player) {
