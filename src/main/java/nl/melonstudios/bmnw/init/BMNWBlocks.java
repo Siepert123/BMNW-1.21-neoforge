@@ -215,9 +215,9 @@ public class BMNWBlocks {
     public static final DeferredBlock<WorkbenchBlock> TEST_WORKBENCH = BLOCKS.register("test_workbench",
             () -> new WorkbenchBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CRAFTING_TABLE), 0, "workbench"));
     public static final DeferredBlock<WorkbenchBlock> IRON_WORKBENCH = BLOCKS.register("iron_workbench",
-            () -> new WorkbenchBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK), 0, "iron_workbench"));
+            () -> new WorkbenchBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CRAFTING_TABLE), 0, "iron_workbench"));
     public static final DeferredBlock<WorkbenchBlock> STEEL_WORKBENCH = BLOCKS.register("steel_workbench",
-            () -> new WorkbenchBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get()), 1, "steel_workbench"));
+            () -> new WorkbenchBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CRAFTING_TABLE), 1, "steel_workbench"));
     public static final DeferredBlock<PressBlock> PRESS = BLOCKS.register("press",
             () -> new PressBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).noOcclusion()));
     public static final DeferredBlock<AlloyBlastFurnaceBlock> ALLOY_BLAST_FURNACE = BLOCKS.register("alloy_blast_furnace",

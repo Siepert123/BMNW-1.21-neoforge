@@ -404,6 +404,9 @@
   "tooltip.bmnw.wp": "[White Phosphorus]",
   "block.bmnw.alloy_blast_furnace": "Alloy Blast Furnace",
   "block.bmnw.workbench": "Workbench",
+  "block.bmnw.test_workbench": "Testing Workbench",
+  "block.bmnw.iron_workbench": "Iron Workbench",
+  "block.bmnw.steel_workbench": "Steel Workbench",
   "text.bmnw.ingredients": "Ingredients:",
   "tooltip.bmnw.workbench": "Tier %s workbench"
 }

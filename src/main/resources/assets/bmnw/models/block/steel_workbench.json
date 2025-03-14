@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "minecraft:block/oak_planks",
+    "east": "bmnw::block/steel_workbench_side",
+    "north": "bmnw::block/steel_workbench_side",
+    "particle": "bmnw:block/steel_workbench_side",
+    "south": "bmnw::block/steel_workbench_side",
+    "up": "bmnw:block/steel_block",
+    "west": "bmnw:block/steel_workbench_side"
+  }
+}

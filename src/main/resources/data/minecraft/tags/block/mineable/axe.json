@@ -2,7 +2,10 @@
   "values": [
     "bmnw:charred_log",
     "bmnw:charred_planks",
-    "bmnw:irradiated_plant"
+    "bmnw:irradiated_plant",
+    "bmnw:test_workbench",
+    "bmnw:iron_workbench",
+    "bmnw:steel_workbench"
   ],
   "replace": false
 }
