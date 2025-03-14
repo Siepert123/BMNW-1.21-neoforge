@@ -29,7 +29,7 @@ public class AlloyFurnaceScreen extends AbstractContainerScreen<AlloyFurnaceMenu
 
         graphics.blit(GUI_TEXTURE, x, y, 0, 0, imageWidth, imageHeight);
         AlloyBlastFurnaceBlockEntity be = this.menu.be;
-        graphics.blit(GUI_TEXTURE, x+19,y+34, 176, 0, 13, this.menu.scaledDepletion(13));
+        graphics.blit(GUI_TEXTURE, x+19,y+33, 176, 0, 14, this.menu.scaledDepletion(14));
         if (be.progress > 0) {
             graphics.blit(GUI_TEXTURE, x + 84, y + 22, 176, 14, this.menu.scaledProgress(27), 37);
         }
