@@ -50,11 +50,18 @@ public class JEICompat implements IModPlugin {
     public void registerGuiHandlers(IGuiHandlerRegistration registration) {
         registration.addRecipeClickArea(
                 PressScreen.class,
-                55, 34, 18, 18
+                55, 34, 18, 18,
+                BMNWRecipeTypes.PRESSING
+        );
+        registration.addRecipeClickArea(
+                PressScreen.class,
+                79, 34, 24, 17,
+                BMNWRecipeTypes.PRESSING
         );
         registration.addRecipeClickArea(
                 AlloyFurnaceScreen.class,
-                83, 22, 28, 38
+                83, 22, 28, 38,
+                BMNWRecipeTypes.PRESSING
         );
     }
 
