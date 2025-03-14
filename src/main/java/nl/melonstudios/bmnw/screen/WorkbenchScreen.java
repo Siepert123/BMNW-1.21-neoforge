@@ -51,8 +51,8 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
         this.craft =  new MouseArea(50, 61, 18, 18);
 
         for (int x = 0; x < 5; x++) {
-            this.craftingEntries[x*2] = new MouseArea(15+x*19, 25, 16, 16);
-            this.craftingEntries[x*2+1] = new MouseArea(15+x*19, 43, 16, 16);
+            this.craftingEntries[x*2] = new MouseArea(15+x*18, 25, 16, 16);
+            this.craftingEntries[x*2+1] = new MouseArea(15+x*18, 43, 16, 16);
         }
 
         this.titleLabelY = 4;
