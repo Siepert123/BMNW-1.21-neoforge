@@ -132,8 +132,8 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
             ItemStack stack = Objects.requireNonNull(rcp, "Null recipe!").result();
             if (!stack.isEmpty()) {
                 poseStack.pushPose();
-                int xd = 18*(idx / 2)+x+15;
-                int yd = 18*(idx % 2)+y+25;
+                int xd = 18*(i / 2)+x+15;
+                int yd = 18*(i % 2)+y+25;
                 graphics.renderItem(stack, xd, yd);
                 graphics.renderItemDecorations(this.font, stack, xd, yd);
                 poseStack.popPose();

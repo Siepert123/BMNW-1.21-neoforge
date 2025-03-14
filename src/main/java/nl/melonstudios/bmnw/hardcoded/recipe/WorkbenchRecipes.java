@@ -27,6 +27,74 @@ public class WorkbenchRecipes {
     }
 
     private WorkbenchRecipes() {
+        this.addRecipe("bmnw:workbench/iron_workbench", 0,
+                new ItemStack(BMNWItems.IRON_WORKBENCH.get()),
+                Ingredient.of(tag("c:player_workstations/crafting_tables")),
+                Ingredient.of(tag("c:ingots/iron")),
+                Ingredient.of(tag("c:ingots/iron")),
+                Ingredient.of(tag("c:ingots/iron")),
+                Ingredient.of(tag("c:ingots/iron")),
+                Ingredient.of(tag("c:ingots/iron")),
+                Ingredient.of(tag("c:ingots/iron")),
+                Ingredient.of(tag("c:ingots/iron")),
+                Ingredient.of(tag("c:ingots/iron")),
+                Ingredient.of(tag("c:ingots/iron")),
+                Ingredient.of(tag("c:ingots/iron"))
+        );
+        this.addRecipe("bmnw:workbench/steel_workbench", 0,
+                new ItemStack(BMNWItems.STEEL_WORKBENCH.get()),
+                Ingredient.of(BMNWItems.IRON_WORKBENCH.get()),
+                Ingredient.of(tag("c:ingots/steel")),
+                Ingredient.of(tag("c:ingots/steel")),
+                Ingredient.of(tag("c:ingots/steel")),
+                Ingredient.of(tag("c:ingots/steel")),
+                Ingredient.of(tag("c:ingots/steel")),
+                Ingredient.of(tag("c:ingots/steel")),
+                Ingredient.of(tag("c:ingots/steel")),
+                Ingredient.of(tag("c:ingots/steel")),
+                Ingredient.of(tag("c:ingots/steel")),
+                Ingredient.of(tag("c:ingots/steel"))
+        );
+
+        this.addRecipe("bmnw:workbench/blank_iron_stamp", 0,
+                new ItemStack(BMNWItems.BLANK_IRON_STAMP.get()),
+                Ingredient.of(tag("c:ingots/iron")),
+                Ingredient.of(tag("c:ingots/iron")),
+                Ingredient.of(tag("c:ingots/iron"))
+        );
+        this.addRecipe("bmnw:workbench/iron_plate_stamp", 0,
+                new ItemStack(BMNWItems.IRON_PLATE_STAMP.get()),
+                Ingredient.of(new ItemStack(BMNWItems.BLANK_IRON_STAMP.get())));
+        this.addRecipe("bmnw:workbench/iron_wire_stamp", 0,
+                new ItemStack(BMNWItems.IRON_WIRE_STAMP.get()),
+                Ingredient.of(new ItemStack(BMNWItems.BLANK_IRON_STAMP.get())));
+
+        this.addRecipe("bmnw:workbench/blank_steel_stamp", 0,
+                new ItemStack(BMNWItems.BLANK_STEEL_STAMP.get()),
+                Ingredient.of(tag("c:ingots/steel")),
+                Ingredient.of(tag("c:ingots/steel")),
+                Ingredient.of(tag("c:ingots/steel"))
+        );
+        this.addRecipe("bmnw:workbench/steel_plate_stamp", 0,
+                new ItemStack(BMNWItems.STEEL_PLATE_STAMP.get()),
+                Ingredient.of(new ItemStack(BMNWItems.BLANK_STEEL_STAMP.get())));
+        this.addRecipe("bmnw:workbench/steel_wire_stamp", 0,
+                new ItemStack(BMNWItems.STEEL_WIRE_STAMP.get()),
+                Ingredient.of(new ItemStack(BMNWItems.BLANK_STEEL_STAMP.get())));
+
+        this.addRecipe("bmnw:workbench/blank_titanium_stamp", 0,
+                new ItemStack(BMNWItems.BLANK_TITANIUM_STAMP.get()),
+                Ingredient.of(tag("c:ingots/titanium")),
+                Ingredient.of(tag("c:ingots/titanium")),
+                Ingredient.of(tag("c:ingots/titanium"))
+        );
+        this.addRecipe("bmnw:workbench/titanium_plate_stamp", 0,
+                new ItemStack(BMNWItems.TITANIUM_PLATE_STAMP.get()),
+                Ingredient.of(new ItemStack(BMNWItems.BLANK_TITANIUM_STAMP.get())));
+        this.addRecipe("bmnw:workbench/titanium_wire_stamp", 0,
+                new ItemStack(BMNWItems.TITANIUM_WIRE_STAMP.get()),
+                Ingredient.of(new ItemStack(BMNWItems.BLANK_TITANIUM_STAMP.get())));
+
         this.addRecipe("bmnw:workbench/alloy_blast_furnace", 0,
                 new ItemStack(BMNWItems.ALLOY_BLAST_FURNACE.get()),
                 Ingredient.of(tag("c:plates/iron")),

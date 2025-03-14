@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "tag": "c:ingots/iron"
+    },
+    "N": {
+      "tag": "c:storage_blocks/iron"
+    },
+    "F": {
+      "tag": "c:player_workstations/crafting_tables"
+    }
+  },
+  "pattern": [
+    "#N#",
+    "#F#",
+    "###"
+  ],
+  "result": {
+    "id": "bmnw:iron_workbench"
+  }
+}

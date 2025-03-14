@@ -7,11 +7,13 @@ import net.minecraft.resources.ResourceLocation;
 import nl.melonstudios.bmnw.BMNW;
 import nl.melonstudios.bmnw.hardcoded.recipe.AlloyingRecipes;
 import nl.melonstudios.bmnw.hardcoded.recipe.PressingRecipes;
+import nl.melonstudios.bmnw.hardcoded.recipe.WorkbenchRecipes;
 import nl.melonstudios.bmnw.init.BMNWBlocks;
 import nl.melonstudios.bmnw.init.BMNWItems;
 import nl.melonstudios.bmnw.item.subtype.FireMarbleSubtypeInterpreter;
 import nl.melonstudios.bmnw.screen.AlloyFurnaceScreen;
 import nl.melonstudios.bmnw.screen.PressScreen;
+import nl.melonstudios.bmnw.screen.WorkbenchScreen;
 
 import javax.annotation.Nonnull;
 
@@ -30,24 +32,35 @@ public class JEICompat implements IModPlugin {
 
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
+        registration.addRecipes(BMNWRecipeTypes.WORKBENCH, WorkbenchRecipes.instance.recipes);
         registration.addRecipes(BMNWRecipeTypes.PRESSING, PressingRecipes.instance.getJEIRecipeList());
         registration.addRecipes(BMNWRecipeTypes.ALLOYING, AlloyingRecipes.instance.getJEIRecipeList());
     }
 
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
+        registration.addRecipeCatalysts(BMNWRecipeTypes.WORKBENCH,
+                BMNWItems.IRON_WORKBENCH,
+                BMNWItems.STEEL_WORKBENCH
+        );
         registration.addRecipeCatalyst(BMNWItems.PRESS, BMNWRecipeTypes.PRESSING);
         registration.addRecipeCatalyst(BMNWItems.ALLOY_BLAST_FURNACE, BMNWRecipeTypes.ALLOYING);
     }
 
     @Override
     public void registerCategories(IRecipeCategoryRegistration registration) {
+        registration.addRecipeCategories(new WorkbenchRecipeCategory());
         registration.addRecipeCategories(new PressingRecipeCategory());
         registration.addRecipeCategories(new AlloyingRecipeCategory());
     }
 
     @Override
     public void registerGuiHandlers(IGuiHandlerRegistration registration) {
+        registration.addRecipeClickArea(
+                WorkbenchScreen.class,
+                113, 14, 55, 64,
+                BMNWRecipeTypes.WORKBENCH
+        );
         registration.addRecipeClickArea(
                 PressScreen.class,
                 55, 34, 18, 18,
