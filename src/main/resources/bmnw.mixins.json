@@ -3,5 +3,10 @@
   "package": "nl.melonstudios.bmnw.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "AbstractMinecartMixin",
+    "PlayerMixin"
+  ],
+  "client": [
+    "PlayerRendererMixin"
   ]
 }

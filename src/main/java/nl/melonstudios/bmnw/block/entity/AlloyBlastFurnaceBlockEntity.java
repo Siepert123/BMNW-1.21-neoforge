@@ -30,7 +30,7 @@ import nl.melonstudios.bmnw.screen.AlloyFurnaceMenu;
 import org.jetbrains.annotations.Nullable;
 
 public class AlloyBlastFurnaceBlockEntity extends BlockEntity implements MenuProvider {
-    private static final RandomSource soundRand = RandomSource.create();
+    private final RandomSource soundRand = RandomSource.create();
     public AlloyBlastFurnaceBlockEntity(BlockPos pos, BlockState blockState) {
         super(BMNWBlockEntities.ALLOY_BLAST_FURNACE.get(), pos, blockState);
     }
@@ -125,11 +125,11 @@ public class AlloyBlastFurnaceBlockEntity extends BlockEntity implements MenuPro
             }
         }
         if (shouldReset) this.progress = 0;
-        else if (soundRand.nextFloat() < 0.05) {
+        else if (this.soundRand.nextFloat() < 0.05) {
             this.level.playSound(
                     null, this.worldPosition,
                     SoundEvents.BLASTFURNACE_FIRE_CRACKLE, SoundSource.BLOCKS,
-                    1, 0.9f + soundRand.nextFloat() * 0.2f
+                    1, 0.9f + this.soundRand.nextFloat() * 0.2f
             );
         }
         if (shouldBeLit != lit) {

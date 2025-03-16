@@ -105,6 +105,19 @@ public class WorkbenchRecipes {
                 Ingredient.of(tag("c:bricks/nether")),
                 Ingredient.of(tag("c:bricks/nether"))
         );
+
+        this.addRecipe("bmnw:workbench/steel_deco_block", 0,
+                new ItemStack(BMNWItems.STEEL_DECO_BLOCK.get()),
+                Ingredient.of(tag("c:ingots/steel"))
+        );
+        this.addRecipe("bmnw:workbench/lead_deco_block", 0,
+                new ItemStack(BMNWItems.LEAD_DECO_BLOCK.get()),
+                Ingredient.of(tag("c:ingots/lead"))
+        );
+        this.addRecipe("bmnw:workbench/tungsten_deco_block", 0,
+                new ItemStack(BMNWItems.TUNGSTEN_DECO_BLOCK.get()),
+                Ingredient.of(tag("c:ingots/tungsten"))
+        );
     }
 
     public final List<WorkbenchRecipe> recipes = new ArrayList<>();

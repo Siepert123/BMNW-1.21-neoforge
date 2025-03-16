@@ -15,11 +15,13 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.status.ChunkStatus;
 import net.minecraft.world.phys.Vec3;
 import nl.melonstudios.bmnw.init.BMNWBlocks;
 import nl.melonstudios.bmnw.init.BMNWEntityTypes;
 import nl.melonstudios.bmnw.init.BMNWParticleTypes;
 import org.joml.Quaternionf;
+import oshi.jna.platform.windows.PowrProf;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,6 +91,9 @@ public class MeteoriteEntity extends Entity {
         } else {
             entityData.set(COURSE_X_DATA, Double.doubleToLongBits(this.courseX));
             entityData.set(COURSE_Z_DATA, Double.doubleToLongBits(this.courseZ));
+
+            //Force load chunk
+            this.level().getChunk(this.getBlockX() << 4, this.getBlockZ() << 4, ChunkStatus.FULL, true);
         }
         if (this.horizontalCollision || this.verticalCollision) {
             if (!this.level().isClientSide()) {
@@ -192,9 +197,13 @@ public class MeteoriteEntity extends Entity {
         invalidateDimension(ResourceLocation.withDefaultNamespace("the_end"));
     }
 
+    private static final double chanceOfMeteorite = 1.0 / 48000;
+
     public static void spawnIfReady(Player player) {
-        if (player.level().isClientSide() || dimensionInvalid(player.level().dimension().location())) return;
-        if (random.nextDouble() < 0.00001) {
+        if (player.level().isClientSide() || dimensionInvalid(player.level().dimension().location())) {
+            return;
+        }
+        if (random.nextDouble() < chanceOfMeteorite) {
             spawn(player);
         }
     }

@@ -8,6 +8,7 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -31,10 +32,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
-import net.neoforged.neoforge.client.event.AddAttributeTooltipsEvent;
-import net.neoforged.neoforge.client.event.EntityRenderersEvent;
-import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
-import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
+import net.neoforged.neoforge.client.event.*;
 import net.neoforged.neoforge.common.data.AdvancementProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
@@ -58,6 +56,7 @@ import nl.melonstudios.bmnw.hazard.radiation.ChunkRadiationManager;
 import nl.melonstudios.bmnw.hazard.radiation.RadiationTools;
 import nl.melonstudios.bmnw.init.*;
 import nl.melonstudios.bmnw.interfaces.IOnBlockAdded;
+import nl.melonstudios.bmnw.interfaces.IScopeableItem;
 import nl.melonstudios.bmnw.item.colorize.FireMarbleColorizer;
 import nl.melonstudios.bmnw.item.misc.CoreSampleItem;
 import nl.melonstudios.bmnw.misc.DistrictHolder;
@@ -231,6 +230,22 @@ public class BMNWEventBus {
             }
         }
 
+        @SubscribeEvent
+        public static void getFOVModifier(ComputeFovModifierEvent event) {
+            Player player = event.getPlayer();
+            if (player.isScoping()) {
+                ItemStack mainStack = player.getItemInHand(InteractionHand.MAIN_HAND);
+                if (mainStack.getItem() instanceof IScopeableItem scope) {
+                    event.setNewFovModifier(scope.getFOVModifier(player, mainStack, InteractionHand.MAIN_HAND));
+                    return;
+                }
+                ItemStack offhandStack = player.getItemInHand(InteractionHand.OFF_HAND);
+                if (offhandStack.getItem() instanceof IScopeableItem scope) {
+                    event.setNewFovModifier(scope.getFOVModifier(player, offhandStack, InteractionHand.OFF_HAND));
+                }
+            }
+        }
+
         private static final Map<LevelAccessor, List<ChunkPos>> DELEGATE_STRUCTURES = new HashMap<>();
 
         /**
@@ -238,6 +253,8 @@ public class BMNWEventBus {
          */
         @SubscribeEvent
         public static void playerTickEventPre(PlayerTickEvent.Pre event) {
+            MeteoriteEntity.spawnIfReady(event.getEntity());
+
             if (BMNWConfig.radiationSetting.item()) {
                 Player player = event.getEntity();
                 if (player.isCreative() || player.isSpectator() || player.level().isClientSide()) return;
@@ -259,8 +276,6 @@ public class BMNWEventBus {
                     }
                 }
             }
-
-            MeteoriteEntity.spawnIfReady(event.getEntity());
         }
         //endregion
 
@@ -393,9 +408,9 @@ public class BMNWEventBus {
             registerEntityRenderingHandler(event, BMNWEntityTypes.HE_MISSILE, HighExplosiveMissileRenderer::new);
             registerEntityRenderingHandler(event, BMNWEntityTypes.NUCLEAR_MISSILE, NuclearMissileRenderer::new);
 
-            registerEntityRenderingHandler(event, BMNWEntityTypes.LEAD_BULLET, LeadBulletRenderer::new);
-
             registerEntityRenderingHandler(event, BMNWEntityTypes.METEORITE, MeteoriteRenderer::new);
+
+            registerEntityRenderingHandler(event, BMNWEntityTypes.SIMPLE_BULLET, SimpleBulletRenderer::new);
         }
 
         /**

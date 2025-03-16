@@ -7,14 +7,12 @@ import net.minecraft.world.item.*;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import nl.melonstudios.bmnw.entity.LeadBulletEntity;
 import nl.melonstudios.bmnw.item.battery.BatteryItem;
 import nl.melonstudios.bmnw.item.battery.InfiniteBatteryItem;
 import nl.melonstudios.bmnw.item.misc.*;
 import nl.melonstudios.bmnw.item.weapons.*;
 import nl.melonstudios.bmnw.misc.Categories;
 import nl.melonstudios.bmnw.misc.ExcavationVein;
-import nl.melonstudios.bmnw.misc.GunOptions;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
@@ -197,14 +195,6 @@ public class BMNWItems {
     //endregion
 
     //region Weapons
-
-    public static final DeferredItem<GunItem> REVOLVER = ITEMS.register("revolver",
-            () -> new GunItem(new Item.Properties().stacksTo(1), GunOptions.of().withRange(64).withInaccuracy(0.005f).withMaxAmmo(6)));
-    public static final DeferredItem<RapidFireGunItem> RAPID_FIRE_GUN_TEST = ITEMS.register("rapid_fire_gun_test",
-            () -> new RapidFireGunItem(new Item.Properties().stacksTo(1), GunOptions.of().withRange(64).withInaccuracy(0.1f).withMaxAmmo(64)));
-
-    public static final DeferredItem<BulletItem> LEAD_BULLET = ITEMS.register("lead_bullet",
-            () -> new BulletItem(new Item.Properties(), LeadBulletEntity.class));
 
     //endregion
 
@@ -571,6 +561,13 @@ public class BMNWItems {
 
     //endregion
 
+    //region Guns!
+
+    public static final DeferredItem<SniperItem> SNIPER_RIFLE = ITEMS.register("sniper",
+            () -> new SniperItem(new Item.Properties().stacksTo(1)));
+
+    //endregion
+
     public static final DeferredItem<SimpleRadioactiveBlockItem> NUCLEAR_WASTE_BARREL = ITEMS.register("nuclear_waste_barrel",
             () -> new SimpleRadioactiveBlockItem(BMNWBlocks.NUCLEAR_WASTE_BARREL.get(), new Item.Properties()));
 
@@ -580,6 +577,11 @@ public class BMNWItems {
                     () -> new MobEffectInstance(BMNWEffects.CONTAMINATION, 100, 1), 0.5f
             )))), 6.9f)
     );
+
+    public static final DeferredItem<TestScopeItem> TEST_SCOPE = ITEMS.register("test_scope",
+            () -> new TestScopeItem(new Item.Properties().stacksTo(1)));
+    public static final DeferredItem<TestGunItem> TEST_GUN = ITEMS.register("test_gun",
+            () -> new TestGunItem(new Item.Properties().stacksTo(1)));
 
     public static final DeferredItem<Item> TUNGSTEN_REACHERS = ITEMS.register("tungsten_reachers",
             () -> new Item(new Item.Properties().stacksTo(1)));

@@ -14,6 +14,7 @@ import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemDisplayContext;
@@ -64,7 +65,7 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
         this.ingredientListY = 14;
 
         this.availableRecipes = WorkbenchRecipes.instance.tierMap.getOrDefault(this.getMenu().tier, Collections.emptyList());
-        this.maxSelectionScroll = Math.max(this.availableRecipes.size() / 2 - 5, 0);
+        this.maxSelectionScroll = Math.max(Mth.ceil(this.availableRecipes.size() / 2f) - 5, 0);
         this.maxRecipeIdx = this.availableRecipes.size();
     }
 

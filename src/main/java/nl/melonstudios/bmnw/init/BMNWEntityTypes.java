@@ -81,20 +81,19 @@ public class BMNWEntityTypes {
                     .build("bmnw:nuclear_missile")
     );
 
-    public static final DeferredHolder<EntityType<?>, EntityType<LeadBulletEntity>> LEAD_BULLET = ENTITY_TYPES.register(
-            "lead_bullet",
-            () -> EntityType.Builder.of(LeadBulletEntity::new, MobCategory.MISC)
-                    .sized(0.1f, 0.1f)
-                    .clientTrackingRange(5)
-                    .build("bmnw:lead_bullet")
-    );
-
     public static final DeferredHolder<EntityType<?>, EntityType<MeteoriteEntity>> METEORITE = ENTITY_TYPES.register(
             "meteorite",
             () -> EntityType.Builder.<MeteoriteEntity>of(((entityType, level) -> new MeteoriteEntity(entityType, level)), MobCategory.MISC)
                     .sized(1, 1)
                     .clientTrackingRange(512)
                     .build("bmnw:meteorite")
+    );
+
+    public static final DeferredHolder<EntityType<?>, EntityType<SimpleBulletEntity>> SIMPLE_BULLET = ENTITY_TYPES.register(
+            "simple_bullet",
+            () -> EntityType.Builder.<SimpleBulletEntity>of(((type, level) -> new SimpleBulletEntity(type, level)), MobCategory.MISC)
+                    .sized(0.125f, 0.125f)
+                    .build("bmnw:simple_bullet")
     );
 
     public static void register(IEventBus eventBus) {

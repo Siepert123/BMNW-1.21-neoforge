@@ -124,6 +124,8 @@ public class BMNW {
                 new StructureData(new StructureDud(), new StructureSpawningLogic(0.0005f)
                         .setBiomeConstraint(biome -> !biome.is(BiomeTags.IS_OCEAN) && !biome.is(BiomeTags.IS_RIVER) && biome.is(BiomeTags.IS_OVERWORLD))
                         .setSalt("bmnw:dud".hashCode())));
+
+        WorkbenchRecipes.instance.initializeTierMap();
     }
 
     // Add the example block item to the building blocks tab
@@ -179,7 +181,7 @@ public class BMNW {
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
-
+            WorkbenchRecipes.instance.initializeTierMap();
         }
     }
 
