@@ -47,6 +47,7 @@ import nl.melonstudios.bmnw.block.entity.IronBarrelBlockEntity;
 import nl.melonstudios.bmnw.block.entity.MissileLaunchPadBlockEntity;
 import nl.melonstudios.bmnw.block.entity.renderer.HatchRenderer;
 import nl.melonstudios.bmnw.block.entity.renderer.PressRenderer;
+import nl.melonstudios.bmnw.discard.DiscardList;
 import nl.melonstudios.bmnw.effect.WPEffect;
 import nl.melonstudios.bmnw.entity.MeteoriteEntity;
 import nl.melonstudios.bmnw.entity.renderer.*;
@@ -296,6 +297,9 @@ public class BMNWEventBus {
         @SubscribeEvent
         public static void addAttributeTooltipsEvent(AddAttributeTooltipsEvent event) {
             ItemStack stack = event.getStack();
+            if (DiscardList.toDiscard.contains(stack.getItem())) {
+                event.addTooltipLines(Component.literal("WARNING: SOON TO BE REMOVED/REPLACED!!").withColor(0xFF0000));
+            }
             if (stack.is(BMNWItems.BASE_MISSILE.get())) {
                 event.addTooltipLines(Component.translatable("tooltip.bmnw.crafting_part").withColor(0x888888));
                 return;
