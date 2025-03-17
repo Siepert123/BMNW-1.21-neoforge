@@ -1,0 +1,33 @@
+{
+  "parent": "bmnw:main/workbench",
+  "criteria": {
+    "press": {
+      "conditions": {
+        "items": [
+          {
+            "items": "bmnw:press"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.bmnw.press.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "bmnw:press"
+    },
+    "title": {
+      "translate": "advancement.bmnw.press"
+    }
+  },
+  "requirements": [
+    [
+      "press"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -297,6 +297,8 @@ public class BMNWTabs {
                         //endregion
 
                         //region Parts
+                        items.accept(INSULATOR);
+
                         items.accept(BASIC_CIRCUIT);
                         items.accept(ENHANCED_CIRCUIT);
                         items.accept(ADVANCED_CIRCUIT);

@@ -1,0 +1,33 @@
+{
+  "parent": "bmnw:main/furnace",
+  "criteria": {
+    "steel": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:ingots/steel"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.bmnw.steel.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "bmnw:steel_ingot"
+    },
+    "title": {
+      "translate": "advancement.bmnw.steel"
+    }
+  },
+  "requirements": [
+    [
+      "steel"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

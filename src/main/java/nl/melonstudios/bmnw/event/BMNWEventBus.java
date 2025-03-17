@@ -333,7 +333,7 @@ public class BMNWEventBus {
             }
             if (stack.getItem() instanceof BlockItem) {
                 Block block = ((BlockItem) stack.getItem()).getBlock();
-                if (HazardRegistry.enableResistanceDisplay(block)) {
+                if (HazardRegistry.enableResistanceDisplay(block) && event.getContext().flag().isAdvanced()) {
                     if (true) {
                         event.addTooltipLines(
                                 Component.translatable("tooltip.bmnw.blast_resistance")

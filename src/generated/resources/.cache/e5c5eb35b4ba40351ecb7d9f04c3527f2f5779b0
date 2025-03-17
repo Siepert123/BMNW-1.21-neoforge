@@ -1,3 +1,8 @@
-// 1.21.1	2024-11-18T08:04:36.3341765	Advancements
-fd00dd3a4c103e6b2aa05affb6adad4e01650101 data/bmnw/advancement/main/nuke.json
+// 1.21.1	2025-03-17T21:31:02.8082805	Advancements
+fde668574cffe0ae9ae6a133c8a183e4001ac7fc data/bmnw/advancement/main/circuit.json
+f01086ab53d4f4984090a4ef19076efe62e86ec5 data/bmnw/advancement/main/fire_marble.json
+8d2c0cfa34241b0745beefb78ed8d9ae70103be1 data/bmnw/advancement/main/furnace.json
+1e41752e5154a3b2946d17e3c907b97f41417f67 data/bmnw/advancement/main/press.json
 b6bba909d2844a74544867ebc793a633b50d0e91 data/bmnw/advancement/main/root.json
+345f1cd7129c5149c646ba11d84e7c014fe67b80 data/bmnw/advancement/main/steel.json
+eb09d05121376568bf18b732fd33dfd7e4157ef1 data/bmnw/advancement/main/workbench.json

@@ -1,11 +1,11 @@
 {
   "parent": "bmnw:main/root",
   "criteria": {
-    "nuke": {
+    "workbench": {
       "conditions": {
         "items": [
           {
-            "items": "bmnw:nuclear_charge"
+            "items": "bmnw:iron_workbench"
           }
         ]
       },
@@ -14,20 +14,19 @@
   },
   "display": {
     "description": {
-      "translate": "advancement.bmnw.nuke.desc"
+      "translate": "advancement.bmnw.workbench.desc"
     },
-    "frame": "challenge",
     "icon": {
       "count": 1,
-      "id": "bmnw:nuclear_charge"
+      "id": "bmnw:iron_workbench"
     },
     "title": {
-      "translate": "advancement.bmnw.nuke"
+      "translate": "advancement.bmnw.workbench"
     }
   },
   "requirements": [
     [
-      "nuke"
+      "workbench"
     ]
   ],
   "sends_telemetry_event": true

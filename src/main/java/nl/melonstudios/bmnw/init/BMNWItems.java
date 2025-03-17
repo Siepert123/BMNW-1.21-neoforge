@@ -174,6 +174,8 @@ public class BMNWItems {
 
     //region Crafting components
 
+    public static final DeferredItem<Item> INSULATOR = item("insulator");
+
     public static final DeferredItem<Item> BASIC_CIRCUIT = item("basic_circuit");
     public static final DeferredItem<Item> ENHANCED_CIRCUIT = item("enhanced_circuit");
     public static final DeferredItem<Item> ADVANCED_CIRCUIT = item("advanced_circuit");

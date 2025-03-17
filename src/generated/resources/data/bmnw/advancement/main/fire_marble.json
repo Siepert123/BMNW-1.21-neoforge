@@ -1,0 +1,35 @@
+{
+  "parent": "bmnw:main/root",
+  "criteria": {
+    "fire_marble": {
+      "conditions": {
+        "items": [
+          {
+            "items": "bmnw:fire_marble"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.bmnw.fire_marble.desc"
+    },
+    "frame": "goal",
+    "hidden": true,
+    "icon": {
+      "count": 1,
+      "id": "bmnw:fire_marble"
+    },
+    "title": {
+      "translate": "advancement.bmnw.fire_marble"
+    }
+  },
+  "requirements": [
+    [
+      "fire_marble"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

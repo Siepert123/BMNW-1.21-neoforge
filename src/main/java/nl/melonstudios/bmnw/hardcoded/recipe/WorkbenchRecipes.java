@@ -118,6 +118,13 @@ public class WorkbenchRecipes {
                 new ItemStack(BMNWItems.TUNGSTEN_DECO_BLOCK.get()),
                 Ingredient.of(tag("c:ingots/tungsten"))
         );
+
+        this.addRecipe("bmnw:workbench/basic_circuit", 1,
+                new ItemStack(BMNWItems.BASIC_CIRCUIT.get()),
+                Ingredient.of(BMNWItems.INSULATOR.get()),
+                Ingredient.of(tag("c:wires/copper")),
+                Ingredient.of(tag("c:wires/copper"))
+        );
     }
 
     public final List<WorkbenchRecipe> recipes = new ArrayList<>();
