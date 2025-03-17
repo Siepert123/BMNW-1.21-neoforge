@@ -160,7 +160,6 @@ public class BMNWTabs {
                                 METEORITE_COBBLESTONE,
                                 HOT_METEORITE_COBBLESTONE,
                                 METEORITE_IRON_ORE,
-                                METEORITE_TREASURE,
                                 METEORITE_FIRE_MARBLE_ORE
                         );
                     })

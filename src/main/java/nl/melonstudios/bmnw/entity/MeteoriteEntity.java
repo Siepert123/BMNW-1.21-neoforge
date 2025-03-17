@@ -119,18 +119,8 @@ public class MeteoriteEntity extends Entity {
 
     private void whenLand(BlockPos pos) {
         this.level().playSound(null, getX(), getY(), getZ(), SoundEvents.GENERIC_EXPLODE, SoundSource.NEUTRAL, 10, 0.8f);
-        int type = random.nextInt(3);
         int radius = randomRadius();
-        switch (type) {
-            case 0 -> this.placeDefault(pos, radius);
-            case 1 -> this.placeMarble(pos, radius);
-            case 2 -> this.placeMiddleTreasure(pos, radius);
-        }
-    }
-
-    private void placeDefault(BlockPos pos, int radius) {
-        this.placeEmpty(pos, radius);
-        this.partialSphere(pos, radius, BMNWBlocks.METEORITE_TREASURE.get().defaultBlockState(), 0.05f);
+        this.placeMarble(pos, radius);
     }
 
     private void placeMarble(BlockPos pos, int radius) {
@@ -142,11 +132,6 @@ public class MeteoriteEntity extends Entity {
         this.sphere(pos, radius+1, Blocks.AIR.defaultBlockState());
         this.sphere(pos, radius, BMNWBlocks.HOT_METEORITE_COBBLESTONE.get().defaultBlockState());
         this.partialSphere(pos, radius, BMNWBlocks.METEORITE_IRON_ORE.get().defaultBlockState(), 0.1f);
-    }
-
-    private void placeMiddleTreasure(BlockPos pos, int radius) {
-        this.placeEmpty(pos, radius);
-        this.level().setBlock(pos, BMNWBlocks.METEORITE_TREASURE.get().defaultBlockState(), 3);
     }
 
     private void sphere(BlockPos pPos, int pRadius, BlockState pState) {

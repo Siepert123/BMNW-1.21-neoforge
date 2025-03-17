@@ -240,8 +240,6 @@ public class BMNWBlocks {
             () -> new HotMeteoriteBlock(BlockBehaviour.Properties.ofFullCopy(METEORITE_COBBLESTONE.get()).noLootTable()));
     public static final DeferredBlock<Block> METEORITE_IRON_ORE = BLOCKS.register("meteorite_iron_ore",
             () -> new Block(BlockBehaviour.Properties.ofFullCopy(METEORITE_COBBLESTONE.get())));
-    public static final DeferredBlock<MeteoriteTreasureBlock> METEORITE_TREASURE = BLOCKS.register("meteorite_treasure",
-            () -> new MeteoriteTreasureBlock(BlockBehaviour.Properties.ofFullCopy(METEORITE_COBBLESTONE.get()).noLootTable()));
     public static final DeferredBlock<Block> METEORITE_FIRE_MARBLE_ORE = BLOCKS.register("meteorite_fire_marble_ore",
             () -> new Block(BlockBehaviour.Properties.ofFullCopy(METEORITE_COBBLESTONE.get())) {
                 @Override

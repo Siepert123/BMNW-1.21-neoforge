@@ -332,8 +332,6 @@ public class BMNWItems {
             () -> new BlockItem(BMNWBlocks.HOT_METEORITE_COBBLESTONE.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> METEORITE_IRON_ORE = ITEMS.register("meteorite_iron_ore",
             () -> new BlockItem(BMNWBlocks.METEORITE_IRON_ORE.get(), new Item.Properties()));
-    public static final DeferredItem<BlockItem> METEORITE_TREASURE = ITEMS.register("meteorite_treasure",
-            () -> new BlockItem(BMNWBlocks.METEORITE_TREASURE.get(), new Item.Properties().rarity(Rarity.UNCOMMON)));
     public static final DeferredItem<BlockItem> METEORITE_FIRE_MARBLE_ORE = ITEMS.register("meteorite_fire_marble_ore",
             () -> new BlockItem(BMNWBlocks.METEORITE_FIRE_MARBLE_ORE.get(), new Item.Properties().rarity(Rarity.UNCOMMON)));
 
