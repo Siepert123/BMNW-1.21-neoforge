@@ -578,11 +578,6 @@ public class BMNWItems {
             )))), 6.9f)
     );
 
-    public static final DeferredItem<TestScopeItem> TEST_SCOPE = ITEMS.register("test_scope",
-            () -> new TestScopeItem(new Item.Properties().stacksTo(1)));
-    public static final DeferredItem<TestGunItem> TEST_GUN = ITEMS.register("test_gun",
-            () -> new TestGunItem(new Item.Properties().stacksTo(1)));
-
     public static final DeferredItem<Item> TUNGSTEN_REACHERS = ITEMS.register("tungsten_reachers",
             () -> new Item(new Item.Properties().stacksTo(1)));
 
