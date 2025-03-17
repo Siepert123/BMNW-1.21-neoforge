@@ -101,10 +101,13 @@ public class AlloyBlastFurnaceBlock extends HorizontalDirectionalBlock implement
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
         if (state.getValue(LIT)) {
             level.addParticle(ParticleTypes.LAVA,
-                    pos.getX() + random.nextDouble() * 0.6 + 0.2,
+                    pos.getX() + (random.nextBoolean() ? x1 : x2),
                     pos.getY() + 1,
-                    pos.getZ() + random.nextDouble() * 0.6 + 0.2,
+                    pos.getZ() + (random.nextBoolean() ? x1 : x2),
                     0, 0, 0);
         }
     }
+
+    private static final double x1 = 0.28125;
+    private static final double x2 = 0.71875;
 }

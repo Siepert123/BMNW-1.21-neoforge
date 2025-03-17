@@ -167,6 +167,9 @@ public class BMNWItems {
             () -> new SimpleRadioactiveBlockItem(BMNWBlocks.THORIUM_BLOCK.get(), new Item.Properties()));
     public static final DeferredItem<SimpleRadioactiveBlockItem> PLUTONIUM_BLOCK = ITEMS.register("plutonium_block",
             () -> new SimpleRadioactiveBlockItem(BMNWBlocks.PLUTONIUM_BLOCK.get(), new Item.Properties()));
+
+    public static final DeferredItem<BlockItem> NETHER_RED_PHOSPHORUS_ORE = ITEMS.register("nether_red_phosphorus_ore",
+            () -> new BlockItem(BMNWBlocks.NETHER_RED_PHOSPHORUS_ORE.get(), new Item.Properties()));
     //endregion
 
     //region Crafting components
@@ -182,15 +185,15 @@ public class BMNWItems {
     public static final DeferredItem<BatteryItem> LEAD_ACID_BATTERY = ITEMS.register("lead_acid_battery",
             () -> new BatteryItem(new Item.Properties(), 10000, 25));
     public static final DeferredItem<BatteryItem> LEAD_ACID_CAR_BATTERY = ITEMS.register("lead_acid_car_battery",
-            () -> new BatteryItem(new Item.Properties(), 50000, 25));
+            () -> new BatteryItem(new Item.Properties(), 50000, 25).setLarge());
     public static final DeferredItem<BatteryItem> DURAPIXEL_BATTERY = ITEMS.register("durapixel_battery",
             () -> new BatteryItem(new Item.Properties(), 1000000, 1000));
     public static final DeferredItem<BatteryItem> DURAPIXEL_CAR_BATTERY = ITEMS.register("durapixel_car_battery",
-            () -> new BatteryItem(new Item.Properties(), 5000000, 1000));
+            () -> new BatteryItem(new Item.Properties(), 5000000, 1000).setLarge());
     public static final DeferredItem<InfiniteBatteryItem> CREATIVE_BATTERY = ITEMS.register("creative_battery",
             () -> new InfiniteBatteryItem(new Item.Properties()));
     public static final DeferredItem<InfiniteBatteryItem> CREATIVE_CAR_BATTERY = ITEMS.register("creative_car_battery",
-            () -> new InfiniteBatteryItem(new Item.Properties()));
+            () -> new InfiniteBatteryItem(new Item.Properties()).setLarge());
 
     //endregion
 

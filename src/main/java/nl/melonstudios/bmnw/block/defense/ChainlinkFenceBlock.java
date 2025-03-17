@@ -7,16 +7,19 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-public class ChainlinkFenceBlock extends Block {
+public class ChainlinkFenceBlock extends Block implements SimpleWaterloggedBlock {
     public static boolean heightenedCollisionBox = false;
     public ChainlinkFenceBlock(Properties properties) {
         super(properties);
@@ -26,6 +29,7 @@ public class ChainlinkFenceBlock extends Block {
                         .setValue(NX, false)
                         .setValue(PZ, false)
                         .setValue(NZ, false)
+                        .setValue(WATERLOGGED, false)
         );
     }
     public static final VoxelShape POLE_SHAPE = Block.box(6, 0, 6, 10, 16, 10);
@@ -40,6 +44,8 @@ public class ChainlinkFenceBlock extends Block {
     public static final VoxelShape SOUTH_COLLISION = Block.box(7.99, 0, 8, 8.01, 24, 16);
     public static final VoxelShape NORTH_COLLISION = Block.box(7.99, 0, 0, 8.01, 24, 8);
 
+    public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
+
     public static final BooleanProperty PX = BlockStateProperties.EAST;
     public static final BooleanProperty NX = BlockStateProperties.WEST;
     public static final BooleanProperty PZ = BlockStateProperties.SOUTH;
@@ -52,6 +58,7 @@ public class ChainlinkFenceBlock extends Block {
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(PX, NX, NZ, PZ);
+        builder.add(WATERLOGGED);
     }
 
     @Override
@@ -80,6 +87,9 @@ public class ChainlinkFenceBlock extends Block {
     protected BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
         if (direction.getAxis() == Direction.Axis.Y) return state;
         BooleanProperty property = SIDE_LOOKUP[direction.get2DDataValue()];
+        if (state.getValue(WATERLOGGED)) {
+            level.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
+        }
         return state.setValue(property, neighborState.is(this) || neighborState.isFaceSturdy(level, pos.relative(direction), direction.getOpposite()));
     }
 
@@ -99,6 +109,11 @@ public class ChainlinkFenceBlock extends Block {
                 state = state.setValue(SIDE_LOOKUP[i], true);
             }
         }
-        return state;
+        return state.setValue(WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER);
+    }
+
+    @Override
+    protected FluidState getFluidState(BlockState state) {
+        return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
     }
 }

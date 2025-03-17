@@ -148,4 +148,15 @@ public class BatteryItem extends Item implements IBatteryItem {
             stack.set(BMNWDataComponents.STORED_BATTERY_RF.get(), 0);
         }
     }
+
+    private boolean large = false;
+    public BatteryItem setLarge() {
+        this.large = true;
+        return this;
+    }
+
+    @Override
+    public boolean isLarge() {
+        return this.large;
+    }
 }

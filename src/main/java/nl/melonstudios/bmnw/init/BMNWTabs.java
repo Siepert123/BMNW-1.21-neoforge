@@ -89,7 +89,8 @@ public class BMNWTabs {
                                 DEEPSLATE_TUNGSTEN_ORE,
                                 DEEPSLATE_TITANIUM_ORE,
                                 DEEPSLATE_URANIUM_ORE,
-                                DEEPSLATE_THORIUM_ORE
+                                DEEPSLATE_THORIUM_ORE,
+                                NETHER_RED_PHOSPHORUS_ORE
                         );
 
                         addItems(items,

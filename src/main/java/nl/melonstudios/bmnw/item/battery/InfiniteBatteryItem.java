@@ -62,4 +62,15 @@ public class InfiniteBatteryItem extends Item implements IBatteryItem {
     public void requireNonNullComponent(ItemStack stack) {
 
     }
+
+    private boolean large = false;
+    public InfiniteBatteryItem setLarge() {
+        this.large = true;
+        return this;
+    }
+
+    @Override
+    public boolean isLarge() {
+        return this.large;
+    }
 }

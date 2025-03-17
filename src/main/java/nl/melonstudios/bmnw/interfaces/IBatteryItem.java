@@ -85,4 +85,8 @@ public interface IBatteryItem {
      * @param stack Stack to denullify the battery data component of.
      */
     void requireNonNullComponent(ItemStack stack);
+
+    default boolean isLarge() {
+        return false;
+    }
 }

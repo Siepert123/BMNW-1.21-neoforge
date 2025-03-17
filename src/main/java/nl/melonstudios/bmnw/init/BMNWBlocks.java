@@ -1,6 +1,7 @@
 package nl.melonstudios.bmnw.init;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -99,6 +100,12 @@ public class BMNWBlocks {
             () -> new SimpleRadioactiveBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK), 1.0f));
     public static final DeferredBlock<SimpleRadioactiveBlock> PLUTONIUM_BLOCK = BLOCKS.register("plutonium_block",
             () -> new SimpleRadioactiveBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK), 75.0f));
+
+    public static final DeferredBlock<Block> NETHER_RED_PHOSPHORUS_ORE = BLOCKS.register("nether_red_phosphorus_ore",
+            () -> new DropExperienceBlock(
+                    UniformInt.of(2, 5),
+                    BlockBehaviour.Properties.ofFullCopy(Blocks.NETHER_QUARTZ_ORE)
+            ));
 
     public static final DeferredBlock<Block> STEEL_DECO_BLOCK = BLOCKS.register("steel_deco_block",
             () -> new Block(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get())));

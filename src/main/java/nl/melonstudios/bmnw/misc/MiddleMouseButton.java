@@ -63,7 +63,7 @@ public class MiddleMouseButton {
         float f = 1.0F;
         AABB aabb = entity.getBoundingBox().expandTowards(vec31.scale(d0)).inflate(1.0, 1.0, 1.0);
         EntityHitResult entityhitresult = ProjectileUtil.getEntityHitResult(
-                entity, vec3, vec32, aabb, p_234237_ -> !p_234237_.isSpectator() && p_234237_.isPickable(), d1
+                entity, vec3, vec32, aabb, p_234237_ -> !p_234237_.isSpectator(), d1
         );
         return entityhitresult != null && entityhitresult.getLocation().distanceToSqr(vec3) < d2
                 ? filterHitResult(entityhitresult, vec3, entityInteractionRange)

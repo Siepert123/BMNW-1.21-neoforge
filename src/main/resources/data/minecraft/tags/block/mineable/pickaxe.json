@@ -69,12 +69,12 @@
     "bmnw:machine_scrap",
     "bmnw:meteorite_cobblestone",
     "bmnw:hot_meteorite_cobblestone",
-    "bmnw:meteorite_treasure",
     "bmnw:meteorite_fire_marble_ore",
     "bmnw:meteorite_iron_ore",
     "bmnw:press",
     "bmnw:chainlink_fence",
-    "bmnw:alloy_blast_furnace"
+    "bmnw:alloy_blast_furnace",
+    "bmnw:nether_red_phosphorus_ore"
   ],
   "replace": false
 }
