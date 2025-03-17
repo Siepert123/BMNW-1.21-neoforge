@@ -413,6 +413,8 @@ public class BMNWTabs {
                                 STEEL_HOE,
                                 STEEL_SWORD
                         );
+
+                        items.accept(SNIPER_RIFLE);
                     })
                     .build()
     );

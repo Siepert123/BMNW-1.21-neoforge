@@ -54,6 +54,16 @@ public class BMNWSounds {
             () -> SoundEvent.createFixedRangeEvent(BMNW.namespace("door_lol_close"), 16)
     );
 
+    public static final DeferredHolder<SoundEvent, SoundEvent> DOOR_LOL_3 = SOUND_EVENTS.register(
+            "door_lol_3",
+            () -> SoundEvent.createFixedRangeEvent(BMNW.namespace("door_lol_3"), 16)
+    );
+
+    public static final DeferredHolder<SoundEvent, SoundEvent> GENERIC_GUNSHOT = SOUND_EVENTS.register(
+            "generic_gunshot",
+            () -> SoundEvent.createFixedRangeEvent(BMNW.namespace("generic_gunshot"), 64)
+    );
+
     public static final DeferredHolder<SoundEvent, SoundEvent> HATCH_OPEN = SOUND_EVENTS.register(
             "hatch_open",
             () -> SoundEvent.createFixedRangeEvent(BMNW.namespace("hatch_open"), 16)

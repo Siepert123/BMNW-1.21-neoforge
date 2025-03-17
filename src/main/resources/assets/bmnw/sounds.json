@@ -46,6 +46,16 @@
     ],
     "subtitle": "subtitles.bmnw.door_close"
   },
+  "door_lol_3": {
+    "sounds": [
+      "bmnw:door_lol_3"
+    ]
+  },
+  "generic_gunshot": {
+    "sounds": [
+      "bmnw:generic_gunshot"
+    ]
+  },
   "hatch_open": {
     "sounds": [
       "bmnw:hatch_open"

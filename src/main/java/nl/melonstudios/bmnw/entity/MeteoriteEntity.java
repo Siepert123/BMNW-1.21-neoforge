@@ -91,9 +91,6 @@ public class MeteoriteEntity extends Entity {
         } else {
             entityData.set(COURSE_X_DATA, Double.doubleToLongBits(this.courseX));
             entityData.set(COURSE_Z_DATA, Double.doubleToLongBits(this.courseZ));
-
-            //Force load chunk
-            this.level().getChunk(this.getBlockX() << 4, this.getBlockZ() << 4, ChunkStatus.FULL, true);
         }
         if (this.horizontalCollision || this.verticalCollision) {
             if (!this.level().isClientSide()) {
