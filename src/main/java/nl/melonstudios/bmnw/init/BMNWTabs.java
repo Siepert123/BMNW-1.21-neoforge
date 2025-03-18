@@ -324,7 +324,7 @@ public class BMNWTabs {
         items.accept(createFM(4, true));
         items.accept(createFM(5, true));
     }
-    private static ItemStack createFM(int type, boolean charged) {
+    public static ItemStack createFM(int type, boolean charged) {
         return set(set(new ItemStack(FIRE_MARBLE.get(), 1), BMNWDataComponents.FIRE_MARBLE_TYPE.get(), type),
                 BMNWDataComponents.FIRE_MARBLE_CHARGE.get(), charged ? 1.0f : 0.0f);
     }

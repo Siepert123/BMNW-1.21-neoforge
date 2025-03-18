@@ -1,5 +1,6 @@
 package nl.melonstudios.bmnw.item.weapons;
 
+import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
@@ -28,6 +29,13 @@ public class SniperItem extends Item implements IScopeableItem, IHeldLikeCrossbo
     private static boolean wasSneaking = false;
     public SniperItem(Properties properties) {
         super(properties);
+    }
+
+    @Override
+    public boolean shouldHoldLikeCrossbow(AbstractClientPlayer player, InteractionHand hand) {
+        if (player.isShiftKeyDown()) return true;
+        ItemStack stack = player.getItemInHand(hand);
+        return canFire(stack);
     }
 
     @Override

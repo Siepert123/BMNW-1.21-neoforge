@@ -3,7 +3,6 @@
   "package": "nl.melonstudios.bmnw.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "AbstractMinecartMixin",
     "PlayerMixin"
   ],
   "client": [

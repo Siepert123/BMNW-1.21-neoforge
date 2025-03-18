@@ -29,6 +29,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
@@ -36,17 +37,23 @@ import net.neoforged.neoforge.client.event.*;
 import net.neoforged.neoforge.common.data.AdvancementProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
+import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.level.ChunkEvent;
+import net.neoforged.neoforge.event.level.LevelEvent;
+import net.neoforged.neoforge.event.server.ServerStartedEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
+import nl.melonstudios.bmnw.BMNW;
 import nl.melonstudios.bmnw.block.entity.IronBarrelBlockEntity;
 import nl.melonstudios.bmnw.block.entity.MissileLaunchPadBlockEntity;
 import nl.melonstudios.bmnw.block.entity.renderer.HatchRenderer;
 import nl.melonstudios.bmnw.block.entity.renderer.PressRenderer;
+import nl.melonstudios.bmnw.datagen.BMNWAdvancementGenerator;
 import nl.melonstudios.bmnw.discard.DiscardList;
 import nl.melonstudios.bmnw.effect.WPEffect;
 import nl.melonstudios.bmnw.entity.MeteoriteEntity;
@@ -298,7 +305,7 @@ public class BMNWEventBus {
         public static void addAttributeTooltipsEvent(AddAttributeTooltipsEvent event) {
             ItemStack stack = event.getStack();
             if (DiscardList.toDiscard.contains(stack.getItem())) {
-                event.addTooltipLines(Component.literal("WARNING: SOON TO BE REMOVED/REPLACED!!").withColor(0xFF0000));
+                event.addTooltipLines(Component.literal("[DEPRECATED]").withColor(0xFF0000));
             }
             if (stack.is(BMNWItems.BASE_MISSILE.get())) {
                 event.addTooltipLines(Component.translatable("tooltip.bmnw.crafting_part").withColor(0x888888));
@@ -371,6 +378,18 @@ public class BMNWEventBus {
                                 .append(": " + vein.percent(entry.getValue()) + "%").withColor(0x888888));
                     }
                 }
+            }
+        }
+
+        @SubscribeEvent
+        public static void playerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
+            if (DistrictHolder.getDistrict().isClient()) {
+                event.getEntity().sendSystemMessage(Component.literal("Loaded BMNW version " + BMNW.getVersionStr()));
+                if (!ModList.get().isLoaded("ctm")) {
+                    event.getEntity().sendSystemMessage(Component.translatable("Note: CTM is not installed, some textures may look disappealing"));
+                }
+            } else {
+                event.getEntity().sendSystemMessage(Component.literal("Joined server with BMNW version " + BMNW.getVersionStr()));
             }
         }
     }

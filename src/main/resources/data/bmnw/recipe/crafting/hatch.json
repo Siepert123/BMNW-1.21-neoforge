@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "#": {
-      "item": "bmnw:hatch_lid"
+      "tag": "c:plates/steel"
     },
     "N": {
       "item": "bmnw:concrete_encapsulated_ladder"

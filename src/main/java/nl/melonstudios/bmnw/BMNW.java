@@ -6,12 +6,14 @@ import net.minecraft.commands.Commands;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BiomeTags;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
@@ -19,6 +21,7 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.event.server.ServerStoppingEvent;
 import nl.melonstudios.bmnw.hardcoded.recipe.WorkbenchRecipes;
@@ -38,6 +41,7 @@ import nl.melonstudios.bmnw.screen.WorkbenchScreen;
 import org.slf4j.Logger;
 
 import javax.annotation.Nonnull;
+import java.util.Optional;
 import java.util.Random;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
@@ -55,6 +59,11 @@ public class BMNW {
             "Uranium Sandwich!",
             "Block of Uranium-235!"
     };
+
+    public static String getVersionStr() {
+        Optional<? extends ModContainer> container = ModList.get().getModContainerById(MODID);
+        return container.isPresent() ? container.get().getModInfo().getVersion().toString() : "null";
+    }
 
     public BMNW(IEventBus modEventBus, @Nonnull ModContainer ignoredModContainer, Dist dist) {
         DistrictHolder.setDistrict(dist);
@@ -182,6 +191,7 @@ public class BMNW {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
             WorkbenchRecipes.instance.initializeTierMap();
+
         }
     }
 

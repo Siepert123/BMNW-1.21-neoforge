@@ -2,6 +2,7 @@ package nl.melonstudios.bmnw.item.colorize;
 
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.client.color.item.ItemColor;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -14,13 +15,14 @@ import java.awt.*;
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class FireMarbleColorizer implements ItemColor {
+    private final RandomSource rnd = RandomSource.create();
     @Override
     @OnlyIn(Dist.CLIENT)
     public int getColor(ItemStack stack, int tintIndex) {
         if (tintIndex == 0) {
             Float chargeLevel = stack.get(BMNWDataComponents.FIRE_MARBLE_CHARGE);
             if (chargeLevel == null) return 0x00ffffff;
-            int alpha = (int)(0xff * chargeLevel);
+            int alpha = (int)(0xff * chargeLevel * (0.9f + rnd.nextFloat() * 0.1f));
             return 0x00ffffff | (alpha << 24);
         }
         if (tintIndex == 1) {

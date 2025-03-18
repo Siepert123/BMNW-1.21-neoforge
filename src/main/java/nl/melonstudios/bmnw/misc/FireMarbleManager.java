@@ -3,6 +3,7 @@ package nl.melonstudios.bmnw.misc;
 import net.minecraft.world.item.ItemStack;
 import nl.melonstudios.bmnw.init.BMNWDataComponents;
 import nl.melonstudios.bmnw.item.misc.FireMarbleItem;
+import org.jetbrains.annotations.Range;
 
 import java.util.Random;
 
@@ -23,6 +24,9 @@ public class FireMarbleManager {
             return 10 - dif / 10.0f;
         }
         return 0.0f;
+    }
+    public static byte getOptimalFrequency(@Range(from = 0, to = 5) int type) {
+        return instance.energyOffset[type];
     }
 
     public final long seed;

@@ -1,4 +1,4 @@
-package nl.melonstudios.bmnw.init;
+package nl.melonstudios.bmnw.datagen;
 
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
@@ -14,6 +14,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Items;
 import net.neoforged.neoforge.common.data.AdvancementProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import nl.melonstudios.bmnw.init.BMNWItems;
 
 import java.util.List;
 import java.util.function.Consumer;
