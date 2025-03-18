@@ -6,6 +6,7 @@ import net.minecraft.commands.Commands;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BiomeTags;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -59,6 +60,10 @@ public class BMNW {
             "Uranium Sandwich!",
             "Block of Uranium-235!"
     };
+
+    private static final boolean enforceMemz = true;
+    public static final boolean memz = enforceMemz || RandomSource.create().nextInt(100) == 69;
+    public static final int memzArguments = RandomSource.create().nextInt();
 
     public static String getVersionStr() {
         Optional<? extends ModContainer> container = ModList.get().getModContainerById(MODID);

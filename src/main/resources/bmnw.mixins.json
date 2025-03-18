@@ -6,6 +6,9 @@
     "PlayerMixin"
   ],
   "client": [
-    "PlayerRendererMixin"
+    "LevelRendererMixin",
+    "PlayerRendererMixin",
+    "SplashRendererMixin",
+    "TitleScreenMixin"
   ]
 }
