@@ -61,7 +61,7 @@ public class BMNW {
             "Block of Uranium-235!"
     };
 
-    private static final boolean enforceMemz = true;
+    private static final boolean enforceMemz = false;
     public static final boolean memz = enforceMemz || RandomSource.create().nextInt(100) == 69;
     public static final int memzArguments = RandomSource.create().nextInt();
 
