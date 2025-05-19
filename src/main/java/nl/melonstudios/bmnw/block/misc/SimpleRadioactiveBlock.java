@@ -18,7 +18,7 @@ import nl.melonstudios.bmnw.item.misc.SimpleRadioactiveItem;
  * @see SimpleRadioactiveBlockItem
  * @see SimpleRadioactiveItem
  */
-public class SimpleRadioactiveBlock extends Block implements IOnBlockAdded {
+public class SimpleRadioactiveBlock extends Block {
     private float rads;
     public SimpleRadioactiveBlock(Properties properties, float rads) {
         super(properties);
@@ -40,15 +40,6 @@ public class SimpleRadioactiveBlock extends Block implements IOnBlockAdded {
     protected void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         if (this.rads > 0) {
             ChunkRadiationManager.handler.increaseRadiation(level, pos, this.rads);
-            level.scheduleTick(pos, this, 1);
-        }
-    }
-
-    @Override
-    public void onBlockAdded(LevelAccessor level, BlockPos pos) {
-        this.rads = HazardRegistry.getRadRegistry(this) / 20;
-
-        if (HazardRegistry.getRadRegistry(this) > 0) {
             level.scheduleTick(pos, this, 1);
         }
     }

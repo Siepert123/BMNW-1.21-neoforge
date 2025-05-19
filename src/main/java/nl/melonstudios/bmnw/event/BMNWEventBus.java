@@ -216,20 +216,6 @@ public class BMNWEventBus {
          */
         @SubscribeEvent
         public static void chunkEventLoad(ChunkEvent.Load event) {
-            int sectionCount = event.getChunk().getSectionsCount();
-            int minSectionIndex = event.getChunk().getMinSection();
-            for (int i = 0; i < sectionCount; i++) {
-                for (int x = 0; x < 16; x++) {
-                    for (int y = 0; y < 16; y++) {
-                        for (int z = 0; z < 16; z++) {
-                            BlockState state = event.getChunk().getSection(i).getBlockState(x, y, z);
-                            if (state.getBlock() instanceof IOnBlockAdded added) {
-                                added.onBlockAdded(event.getLevel(), new BlockPos(x, (i+minSectionIndex)<<4 + y, z));
-                            }
-                        }
-                    }
-                }
-            }
             if (!DELEGATE_STRUCTURES.containsKey(event.getLevel())) {
                 DELEGATE_STRUCTURES.put(event.getLevel(), new ArrayList<>());
             }

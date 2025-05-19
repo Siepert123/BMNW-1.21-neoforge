@@ -61,7 +61,7 @@ public class BMNW {
             "Block of Uranium-235!"
     };
 
-    private static final boolean enforceMemz = false;
+    private static final boolean enforceMemz = true;
     public static final boolean memz = enforceMemz || RandomSource.create().nextInt(100) == 69;
     public static final int memzArguments = RandomSource.create().nextInt();
 
@@ -138,8 +138,6 @@ public class BMNW {
                 new StructureData(new StructureDud(), new StructureSpawningLogic(0.0005f)
                         .setBiomeConstraint(biome -> !biome.is(BiomeTags.IS_OCEAN) && !biome.is(BiomeTags.IS_RIVER) && biome.is(BiomeTags.IS_OVERWORLD))
                         .setSalt("bmnw:dud".hashCode())));
-
-        WorkbenchRecipes.instance.initializeTierMap();
     }
 
     // Add the example block item to the building blocks tab
@@ -178,8 +176,6 @@ public class BMNW {
 
         Commands commands = event.getServer().getCommands();
         BMNWCommands.register(commands);
-
-        WorkbenchRecipes.instance.initializeTierMap();
     }
 
     @SubscribeEvent
@@ -196,7 +192,6 @@ public class BMNW {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
             WorkbenchRecipes.instance.initializeTierMap();
-
         }
     }
 
