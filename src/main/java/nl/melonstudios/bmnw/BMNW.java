@@ -88,6 +88,8 @@ public class BMNW {
         BMNWAdvancementTriggers.register(modEventBus);
         BMNWMenuTypes.register(modEventBus);
 
+        BMNWPartialModels.init();
+
         MidnightConfig.init("bmnw", BMNWConfig.class);
 
         NeoForge.EVENT_BUS.register(this);
