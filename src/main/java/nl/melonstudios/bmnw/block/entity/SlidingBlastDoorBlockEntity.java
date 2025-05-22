@@ -8,6 +8,7 @@ import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
+import net.minecraft.world.level.block.DoorBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
@@ -58,7 +59,9 @@ public class SlidingBlastDoorBlockEntity extends BlockEntity implements ITickabl
     }
 
     public boolean canSwitchState() {
-        return this.animationTicks <= 0;
+        if (this.level == null) return false;
+        return this.animationTicks <= 0 &&
+                !(this.level.hasNeighborSignal(this.worldPosition) || this.level.hasNeighborSignal(this.worldPosition.above()));
     }
 
     public boolean mayPass() {

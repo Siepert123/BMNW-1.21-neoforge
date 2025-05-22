@@ -118,7 +118,7 @@ public class SlidingBlastDoorBlock extends HorizontalDirectionalBlock implements
 
     @Override
     protected RenderShape getRenderShape(BlockState state) {
-        return RenderShape.ENTITYBLOCK_ANIMATED;
+        return RenderShape.MODEL;
     }
 
     @Override
@@ -150,22 +150,29 @@ public class SlidingBlastDoorBlock extends HorizontalDirectionalBlock implements
         if (upper) {
             if (!level.getBlockState(pos.below()).is(this)) {
                 level.destroyBlock(pos, false);
+                return;
             }
         } else {
             if (!level.getBlockState(pos.above()).is(this)) {
                 level.destroyBlock(pos, false);
+                return;
             }
         }
     }
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
+        if (this.setOpen(level, pos, state, !state.getValue(OPEN), false)) return InteractionResult.sidedSuccess(level.isClientSide);
+        return InteractionResult.PASS;
+    }
+
+    public boolean setOpen(Level level, BlockPos pos, BlockState state, boolean open, boolean enforce) {
+        if (state.getValue(OPEN) == open) return false;
         boolean upper = state.getValue(UPPER_HALF);
         BlockPos lowerPos = upper ? pos.below() : pos;
         BlockEntity be = level.getBlockEntity(lowerPos);
-        if (be instanceof SlidingBlastDoorBlockEntity door && !door.canSwitchState()) return InteractionResult.PASS;
-        state = state.cycle(OPEN);
-        boolean open = state.getValue(OPEN);
+        if (!enforce && be instanceof SlidingBlastDoorBlockEntity door && !door.canSwitchState()) return false;
+        state = state.setValue(OPEN, open);
         level.setBlock(pos, state, 10);
         if (open) {
             level.playSound(null, pos, BMNWSounds.SLIDING_BLAST_DOOR_OPEN.get(), SoundSource.BLOCKS);
@@ -186,6 +193,6 @@ public class SlidingBlastDoorBlock extends HorizontalDirectionalBlock implements
             door.animationTicks = open ? 200 : 70;
         }
 
-        return InteractionResult.sidedSuccess(level.isClientSide);
+        return true;
     }
 }
