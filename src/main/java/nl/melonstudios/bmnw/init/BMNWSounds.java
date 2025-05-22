@@ -70,6 +70,11 @@ public class BMNWSounds {
     );
     public static final DeferredHolder<SoundEvent, SoundEvent> HATCH_CLOSE = createDefaultSound("hatch_close");
 
+    public static final DeferredHolder<SoundEvent, SoundEvent> SLIDING_BLAST_DOOR_OPEN =
+            createDefaultSound("sliding_blast_door_open");
+    public static final DeferredHolder<SoundEvent, SoundEvent> SLIDING_BLAST_DOOR_CLOSE =
+            createDefaultSound("sliding_blast_door_close");
+
     private static DeferredHolder<SoundEvent, SoundEvent> createDefaultSound(String name) {
         return SOUND_EVENTS.register(
                 name,

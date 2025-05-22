@@ -2,6 +2,8 @@ package nl.melonstudios.bmnw;
 
 import com.mojang.logging.LogUtils;
 import eu.midnightdust.lib.config.MidnightConfig;
+import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.commands.Commands;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -19,6 +21,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
@@ -32,16 +35,14 @@ import nl.melonstudios.bmnw.hazard.HazardRegistry;
 import nl.melonstudios.bmnw.hazard.radiation.ChunkRadiationHandler;
 import nl.melonstudios.bmnw.hazard.radiation.ChunkRadiationManager;
 import nl.melonstudios.bmnw.init.*;
-import nl.melonstudios.bmnw.misc.Books;
-import nl.melonstudios.bmnw.misc.DistrictHolder;
-import nl.melonstudios.bmnw.misc.ExcavationVein;
-import nl.melonstudios.bmnw.misc.FireMarbleManager;
+import nl.melonstudios.bmnw.misc.*;
 import nl.melonstudios.bmnw.screen.AlloyFurnaceScreen;
 import nl.melonstudios.bmnw.screen.PressScreen;
 import nl.melonstudios.bmnw.screen.WorkbenchScreen;
 import org.slf4j.Logger;
 
 import javax.annotation.Nonnull;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 
@@ -104,6 +105,9 @@ public class BMNW {
         NeoForge.EVENT_BUS.addListener(ChunkRadiationManager::onChunkSave);
         NeoForge.EVENT_BUS.addListener(ChunkRadiationManager::onChunkUnload);
         NeoForge.EVENT_BUS.addListener(ChunkRadiationManager::updateSystem);
+
+        modEventBus.addListener(BMNW::onBakingComplete);
+        modEventBus.addListener(BMNW::registerAdditionalModels);
 
         if (dist.isClient()) {
             modEventBus.addListener(this::registerMenuScreens);
@@ -210,5 +214,18 @@ public class BMNW {
         }
         public static int evil_fog_rads = 100;
         public static int evil_fog_chance = 20;
+    }
+
+    public static void onBakingComplete(ModelEvent.BakingCompleted event) {
+        PartialModel.populateOnInit = true;
+        Map<ModelResourceLocation, BakedModel> models = event.getModels();
+
+        for (PartialModel partial : PartialModel.ALL.values()) {
+            partial.bakedModel = models.get(partial.modelLocation());
+        }
+    }
+
+    public static void registerAdditionalModels(ModelEvent.RegisterAdditional event) {
+        PartialModel.ALL.keySet().forEach(event::register);
     }
 }

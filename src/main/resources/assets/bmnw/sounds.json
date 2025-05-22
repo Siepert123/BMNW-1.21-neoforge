@@ -67,5 +67,17 @@
       "bmnw:hatch_close"
     ],
     "subtitle": "subtitles.bmnw.hatch_close"
+  },
+  "sliding_blast_door_open": {
+    "sounds": [
+      "bmnw:sliding_blast_door_open"
+    ],
+    "subtitle": "subtitles.bmnw.door_open"
+  },
+  "sliding_blast_door_close": {
+    "sounds": [
+      "bmnw:sliding_blast_door_close"
+    ],
+    "subtitle": "subtitles.bmnw.door_close"
   }
 }

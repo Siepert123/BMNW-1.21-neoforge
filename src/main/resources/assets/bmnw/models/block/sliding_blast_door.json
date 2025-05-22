@@ -1,0 +1,35 @@
+{
+	"credit": "Made with Blockbench",
+	"texture_size": [32, 64],
+	"textures": {
+		"particle": "bmnw:block/sliding_blast_door",
+		"front": "bmnw:block/sliding_blast_door",
+		"back": "bmnw:block/sliding_blast_door_back"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 1],
+			"to": [16, 32, 3],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0, 1]},
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#front"},
+				"east": {"uv": [14, 0, 16, 15.75], "texture": "#back"},
+				"west": {"uv": [0, 0, 2, 16], "texture": "#back"},
+				"up": {"uv": [0, 15, 16, 16], "texture": "#back"},
+				"down": {"uv": [0, 0, 16, 1], "texture": "#back"}
+			}
+		},
+		{
+			"from": [0, 0, 3],
+			"to": [16, 32, 5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0, 1]},
+			"faces": {
+				"east": {"uv": [0, 0, 2, 16], "texture": "#back"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#back"},
+				"west": {"uv": [14, 0, 16, 16], "texture": "#back"},
+				"up": {"uv": [0, 0, 16, 1], "texture": "#back"},
+				"down": {"uv": [0, 15, 16, 16], "texture": "#back"}
+			}
+		}
+	]
+}

@@ -148,6 +148,7 @@ public class BMNWTabs {
                         items.accept(OFFICE_DOOR);
 
                         items.accept(HATCH);
+                        items.accept(SLIDING_BLAST_DOOR);
 
                         addItems(items,
                                 CHAINLINK_FENCE,

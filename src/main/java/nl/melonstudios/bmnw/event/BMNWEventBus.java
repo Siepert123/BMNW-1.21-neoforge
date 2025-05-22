@@ -53,6 +53,7 @@ import nl.melonstudios.bmnw.block.entity.IronBarrelBlockEntity;
 import nl.melonstudios.bmnw.block.entity.MissileLaunchPadBlockEntity;
 import nl.melonstudios.bmnw.block.entity.renderer.HatchRenderer;
 import nl.melonstudios.bmnw.block.entity.renderer.PressRenderer;
+import nl.melonstudios.bmnw.block.entity.renderer.SlidingBlastDoorRenderer;
 import nl.melonstudios.bmnw.datagen.BMNWAdvancementGenerator;
 import nl.melonstudios.bmnw.discard.DiscardList;
 import nl.melonstudios.bmnw.effect.WPEffect;
@@ -399,6 +400,7 @@ public class BMNWEventBus {
         @OnlyIn(Dist.CLIENT)
         private static void registerBlockEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
             registerBlockEntityRenderingHandler(event, BMNWBlockEntities.HATCH, HatchRenderer::new);
+            registerBlockEntityRenderingHandler(event, BMNWBlockEntities.SLIDING_BLAST_DOOR, SlidingBlastDoorRenderer::new);
             registerBlockEntityRenderingHandler(event, BMNWBlockEntities.PRESS, PressRenderer::new);
         }
 

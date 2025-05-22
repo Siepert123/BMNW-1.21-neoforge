@@ -4,29 +4,28 @@ import com.google.common.collect.MapMaker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
-import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.UnknownNullability;
 
 import javax.annotation.Nonnull;
 import java.util.concurrent.ConcurrentMap;
 
 public final class PartialModel {
-    static final ConcurrentMap<ResourceLocation, PartialModel> ALL = new MapMaker().weakValues().makeMap();
-    static boolean populateOnInit = false;
+    public static final ConcurrentMap<ModelResourceLocation, PartialModel> ALL = new MapMaker().weakValues().makeMap();
+    public static boolean populateOnInit = false;
 
-    private final ResourceLocation modelLocation;
+    public final ModelResourceLocation modelLocation;
     @UnknownNullability
-    BakedModel bakedModel;
+    public BakedModel bakedModel;
 
-    private PartialModel(ResourceLocation modelLocation) {
+    private PartialModel(ModelResourceLocation modelLocation) {
         this.modelLocation = modelLocation;
 
         if (populateOnInit) {
-            this.bakedModel = Minecraft.getInstance().getModelManager().getModel(ModelResourceLocation.standalone(modelLocation));
+            this.bakedModel = Minecraft.getInstance().getModelManager().getModel(modelLocation);
         }
     }
 
-    public static PartialModel of(ResourceLocation resource) {
+    public static PartialModel of(ModelResourceLocation resource) {
         return ALL.computeIfAbsent(resource, PartialModel::new);
     }
 
@@ -42,10 +41,10 @@ public final class PartialModel {
     }
 
     public void reload() {
-        this.bakedModel = Minecraft.getInstance().getModelManager().getModel(ModelResourceLocation.standalone(modelLocation));
+        this.bakedModel = Minecraft.getInstance().getModelManager().getModel(this.modelLocation);
     }
 
-    public ResourceLocation modelLocation() {
+    public ModelResourceLocation modelLocation() {
         return this.modelLocation;
     }
 }
