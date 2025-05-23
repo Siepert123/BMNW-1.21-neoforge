@@ -35,7 +35,6 @@ public class LootPools {
             0.4f,
             new StackPoolEntry(BMNWItems.BASIC_CIRCUIT.get(), 1, 2, 15),
             new StackPoolEntry(BMNWItems.ENHANCED_CIRCUIT.get(), 1, 2, 5),
-            new StackPoolEntry(BMNWItems.BASE_MISSILE.get(), 1, 1, 1),
             new StackPoolEntry(BMNWItems.STEEL_INGOT.get(), 2, 5, 15)
     );
     public static final LootPool<BlockState> STATE_ANCIENT_MUSEUM = new LootPoolStateSupplier(

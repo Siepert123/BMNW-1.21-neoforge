@@ -16,7 +16,7 @@ public class StructureDud extends Structure {
         int x = pos.getBlockX(random.nextInt(16));
         int z = pos.getBlockZ(random.nextInt(16));
         int y = getHeightNoPlants(level, x, z);
-        level.setBlock(new BlockPos(x, y, z), BMNWBlocks.DUD.get().defaultBlockState(), 3);
+        //level.setBlock(new BlockPos(x, y, z), BMNWBlocks.DUD.get().defaultBlockState(), 3);
         return true;
     }
 }

@@ -125,7 +125,6 @@ public class StructureMissileSilo extends Structure {
         fillBlocks(level, origin.offset(-2, -1, -2), origin.offset(2, -1, 2), BMNWBlocks.FOUNDATION_CONCRETE);
 
         placeBlock(level, origin, BMNWBlocks.MISSILE_LAUNCH_PAD.get().defaultBlockState());
-        placeBlock(level, origin.above(), BMNWBlocks.HE_MISSILE);
 
         {
             BlockEntity be = level.getBlockEntity(origin);

@@ -3,19 +3,15 @@ package nl.melonstudios.bmnw.block.entity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.energy.EnergyStorage;
 import net.neoforged.neoforge.energy.IEnergyStorage;
-import nl.melonstudios.bmnw.block.weapons.MissileBlock;
-import nl.melonstudios.bmnw.entity.MissileEntity;
 import nl.melonstudios.bmnw.init.BMNWBlockEntities;
 import nl.melonstudios.bmnw.init.BMNWBlocks;
 import nl.melonstudios.bmnw.init.BMNWStateProperties;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.joml.Vector2i;
 
 import javax.annotation.Nullable;
 
@@ -78,31 +74,11 @@ public class MissileLaunchPadBlockEntity extends BlockEntity {
 
     public boolean canLaunch() {
         return (level != null && !level.isClientSide() && energy.getEnergyStored() >= requiredLaunchEnergy &&
-                (level.getBlockState(worldPosition.above()).getBlock() instanceof MissileBlock) &&
+                (false) &&
                 !BlockPos.ZERO.equals(target)) || getBlockState().getValue(BMNWStateProperties.MULTIBLOCK_SLAVE);
     }
 
     public boolean launch() {
-        if (canLaunch()) {
-            if (isCore()) {
-                try {
-                    MissileBlock block = (MissileBlock) level.getBlockState(worldPosition.above()).getBlock();
-                    level.setBlock(worldPosition.above(), Blocks.AIR.defaultBlockState(), 3);
-                    MissileEntity missile = block.getNewMissileEntity(level);
-                    missile.setPos(worldPosition.getX() + 0.5, worldPosition.getY() + 2, worldPosition.getZ() + 0.5);
-                    missile.setTarget(new Vector2i(target.getX(), target.getZ()));
-                    level.addFreshEntity(missile);
-                } catch (ClassCastException e) {
-                    LOGGER.fatal("Attempted to launch missile at {} but failed (corepos: {})", worldPosition, corePos);
-                }
-                return true;
-            } else {
-                BlockEntity entity = level.getBlockEntity(getCorePos());
-                if (entity instanceof MissileLaunchPadBlockEntity pad) {
-                    return pad.launch();
-                } else return false;
-            }
-        }
         return false;
     }
 

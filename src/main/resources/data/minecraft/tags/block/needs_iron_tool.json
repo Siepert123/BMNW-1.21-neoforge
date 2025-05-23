@@ -1,23 +1,13 @@
 {
   "values": [
     "bmnw:decontaminator",
-    "bmnw:nuclear_charge",
     "bmnw:steel_block",
     "bmnw:tungsten_block",
     "bmnw:raw_tungsten_block",
     "#bmnw:concrete",
     "bmnw:steel_reinforced_glass",
-    "bmnw:little_boy",
-    "bmnw:caseoh",
-    "bmnw:example_missile",
-    "bmnw:he_missile",
-    "bmnw:nuclear_missile",
     "bmnw:tungsten_ore",
     "bmnw:deepslate_tungsten_ore",
-    "bmnw:fracturizer",
-    "bmnw:volcanic_fracturizer",
-    "bmnw:strong_fracturizer",
-    "bmnw:strong_volcanic_fracturizer",
     "bmnw:steel_deco_block",
     "bmnw:tungsten_deco_block",
     "bmnw:steel_pole",
@@ -33,6 +23,7 @@
     "bmnw:steel_ladder",
     "bmnw:concrete_encapsulated_ladder",
     "bmnw:hatch",
+    "bmnw:sliding_blast_door",
     "bmnw:chainlink_fence"
   ],
   "replace": false

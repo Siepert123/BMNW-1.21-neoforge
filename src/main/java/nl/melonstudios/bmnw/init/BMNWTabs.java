@@ -460,7 +460,7 @@ public class BMNWTabs {
     public static final Supplier<CreativeModeTab> BOMBS = CREATIVE_TABS.register("bombs",
             () -> CreativeModeTab.builder()
                     .title(Component.translatable("itemGroup.bmnw.bombs"))
-                    .icon(() -> new ItemStack(NUCLEAR_CHARGE.get()))
+                    .icon(() -> new ItemStack(DETONATOR.get()))
                     .withTabsBefore(
                             CreativeModeTabs.BUILDING_BLOCKS.location(),
                             CreativeModeTabs.COLORED_BLOCKS.location(),
@@ -480,24 +480,9 @@ public class BMNWTabs {
                     .displayItems((parameters, items) -> {
                         items.accept(DETONATOR);
 
-                        items.accept(DUD);
-                        items.accept(BRICK_CHARGE);
-                        items.accept(FRACTURIZER);
-                        items.accept(VOLCANIC_FRACTURIZER);
-                        items.accept(STRONG_FRACTURIZER);
-                        items.accept(STRONG_VOLCANIC_FRACTURIZER);
-                        items.accept(NUCLEAR_CHARGE);
-                        items.accept(LITTLE_BOY);
-                        items.accept(CASEOH);
-
                         items.accept(MISSILE_LAUNCH_PAD);
                         items.accept(TARGET_DESIGNATOR);
                         items.accept(LASER_TARGET_DESIGNATOR);
-                        items.accept(BASE_MISSILE);
-                        items.accept(EXAMPLE_MISSILE);
-                        items.accept(HE_MISSILE);
-                        items.accept(NUCLEAR_MISSILE);
-                        items.accept(ANTI_MISSILE_MISSILE);
                     })
                     .build()
     );

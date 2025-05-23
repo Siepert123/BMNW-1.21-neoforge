@@ -27,13 +27,7 @@ import nl.melonstudios.bmnw.block.machines.*;
 import nl.melonstudios.bmnw.block.misc.*;
 import nl.melonstudios.bmnw.block.settype.BMNWBlockSetType;
 import nl.melonstudios.bmnw.block.weapons.*;
-import nl.melonstudios.bmnw.category.MissileCategory;
 import nl.melonstudios.bmnw.effect.WPEffect;
-import nl.melonstudios.bmnw.entity.AntiMissileMissileEntity;
-import nl.melonstudios.bmnw.entity.ExampleMissileEntity;
-import nl.melonstudios.bmnw.entity.HighExplosiveMissileEntity;
-import nl.melonstudios.bmnw.entity.NuclearMissileEntity;
-import nl.melonstudios.bmnw.misc.Categories;
 import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -179,44 +173,8 @@ public class BMNWBlocks {
     //endregion
 
     //region Bombs & Missiles
-    public static final DeferredBlock<FracturizerBlock> FRACTURIZER = BLOCKS.register("fracturizer",
-            () -> new FracturizerBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.COPPER_BLOCK), 5, false, 0));
-    public static final DeferredBlock<FracturizerBlock> VOLCANIC_FRACTURIZER = BLOCKS.register("volcanic_fracturizer",
-            () -> new FracturizerBlock(BlockBehaviour.Properties.ofFullCopy(FRACTURIZER.get()), 5, true, 0));
-    public static final DeferredBlock<FracturizerBlock> STRONG_FRACTURIZER = BLOCKS.register("strong_fracturizer",
-            () -> new FracturizerBlock(BlockBehaviour.Properties.ofFullCopy(FRACTURIZER.get()), 10, false, 0));
-    public static final DeferredBlock<FracturizerBlock> STRONG_VOLCANIC_FRACTURIZER = BLOCKS.register("strong_volcanic_fracturizer",
-            () -> new FracturizerBlock(BlockBehaviour.Properties.ofFullCopy(FRACTURIZER.get()), 10, true, 0));
-
-    public static final DeferredBlock<NuclearChargeBlock> NUCLEAR_CHARGE = BLOCKS.register("nuclear_charge",
-            () -> new NuclearChargeBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)));
-    public static final DeferredBlock<LittleBoyBlock> LITTLE_BOY = BLOCKS.register("little_boy",
-            () -> new LittleBoyBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).noOcclusion()));
-    public static final DeferredBlock<CaseohBlock> CASEOH = BLOCKS.register("caseoh",
-            () -> new CaseohBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).noOcclusion()));
-    @SuppressWarnings("deprecation")
-    public static final DeferredBlock<DudBlock> DUD = BLOCKS.register("dud",
-            () -> new DudBlock(BlockBehaviour.Properties.of()
-                    .strength(-1, Blocks.IRON_BLOCK.getExplosionResistance())
-                    .sound(SoundType.METAL).noLootTable().noOcclusion()));
-    public static final DeferredBlock<BrickChargeBlock> BRICK_CHARGE = BLOCKS.register("brick_charge",
-            () -> new BrickChargeBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BRICKS)));
-
     public static final DeferredBlock<MissileLaunchPadBlock> MISSILE_LAUNCH_PAD = BLOCKS.register("missile_launch_pad",
             () -> new MissileLaunchPadBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)));
-    public static final DeferredBlock<MissileBlock> EXAMPLE_MISSILE = BLOCKS.register("example_missile",
-            () -> new MissileBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get()), ExampleMissileEntity.class,
-                    Categories.BRICK_MISSILE));
-    public static final DeferredBlock<MissileBlock> HE_MISSILE = BLOCKS.register("he_missile",
-            () -> new MissileBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get()), HighExplosiveMissileEntity.class,
-                    Categories.HE_MISSILE));
-    public static final DeferredBlock<MissileBlock> NUCLEAR_MISSILE = BLOCKS.register("nuclear_missile",
-            () -> new MissileBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get()), NuclearMissileEntity.class,
-                    Categories.NUCLEAR_MISSILE));
-
-    public static final DeferredBlock<MissileBlock> ANTI_MISSILE_MISSILE = BLOCKS.register("anti_missile_missile",
-            () -> new MissileBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get()), AntiMissileMissileEntity.class,
-                    MissileCategory.of("anti_missile")));
     //endregion
 
     //region Basic machines

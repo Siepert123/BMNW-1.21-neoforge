@@ -16,7 +16,7 @@ import java.awt.*;
 
 @Mixin(TitleScreen.class)
 public class TitleScreenMixin {
-    @Unique private final SplashRenderer memz_splash = new SplashRenderer("The PlayStation can produce mind-boggling effects!");
+    @Unique private final SplashRenderer memz_splash = new SplashRenderer(BMNW.randomSplash);
     @Shadow @Nullable private SplashRenderer splash;
 
     @Inject(method = "render", at = @At("HEAD"))

@@ -295,10 +295,6 @@ public class BMNWEventBus {
             if (DiscardList.toDiscard.contains(stack.getItem())) {
                 event.addTooltipLines(Component.literal("[DEPRECATED]").withColor(0xFF0000));
             }
-            if (stack.is(BMNWItems.BASE_MISSILE.get())) {
-                event.addTooltipLines(Component.translatable("tooltip.bmnw.crafting_part").withColor(0x888888));
-                return;
-            }
             if (BMNWConfig.itemHazardInfo.id() > 0) {
                 Item item = stack.getItem();
                 float itemRads = HazardRegistry.getRadRegistry(item);
@@ -408,17 +404,6 @@ public class BMNWEventBus {
         @OnlyIn(Dist.CLIENT)
         private static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
             registerEntityRenderingHandler(event, BMNWEntityTypes.BLOCK_DEBRIS, BlockDebrisRenderer::new);
-
-            registerEntityRenderingHandler(event, BMNWEntityTypes.NUCLEAR_CHARGE, NuclearChargeRenderer::new);
-            registerEntityRenderingHandler(event, BMNWEntityTypes.DUD, DudRenderer::new);
-            registerEntityRenderingHandler(event, BMNWEntityTypes.LITTLE_BOY, LittleBoyRenderer::new);
-            registerEntityRenderingHandler(event, BMNWEntityTypes.CASEOH, CaseohRenderer::new);
-
-            registerEntityRenderingHandler(event, BMNWEntityTypes.ANTI_MISSILE_MISSILE, AntiMissileMissileRenderer::new);
-
-            registerEntityRenderingHandler(event, BMNWEntityTypes.EXAMPLE_MISSILE, ExampleMissileRenderer::new);
-            registerEntityRenderingHandler(event, BMNWEntityTypes.HE_MISSILE, HighExplosiveMissileRenderer::new);
-            registerEntityRenderingHandler(event, BMNWEntityTypes.NUCLEAR_MISSILE, NuclearMissileRenderer::new);
 
             registerEntityRenderingHandler(event, BMNWEntityTypes.METEORITE, MeteoriteRenderer::new);
 

@@ -1,14 +1,5 @@
 {
   "values": [
-    "minecraft:tnt",
-    "bmnw:brick_charge",
-    "bmnw:dud",
-    "bmnw:nuclear_charge",
-    "bmnw:little_boy",
-    "bmnw:caseoh",
-    "bmnw:fracturizer",
-    "bmnw:volcanic_fracturizer",
-    "bmnw:strong_fracturizer",
-    "bmnw:strong_volcanic_fracturizer"
+    "minecraft:tnt"
   ]
 }

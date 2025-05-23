@@ -3,6 +3,7 @@ package nl.melonstudios.bmnw.block.doors;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
@@ -176,9 +177,9 @@ public class SlidingBlastDoorBlock extends HorizontalDirectionalBlock implements
         state = state.setValue(OPEN, open);
         level.setBlock(pos, state, 10);
         if (open) {
-            level.playSound(null, pos, BMNWSounds.SLIDING_BLAST_DOOR_OPEN.get(), SoundSource.BLOCKS);
+            playDoorSound(level, pos, state, BMNWSounds.SLIDING_BLAST_DOOR_OPEN.get());
         } else {
-            level.playSound(null, pos, BMNWSounds.SLIDING_BLAST_DOOR_CLOSE.get(), SoundSource.BLOCKS);
+            playDoorSound(level, pos, state, BMNWSounds.SLIDING_BLAST_DOOR_CLOSE.get());
         }
 
         BlockPos otherPos = upper ? pos.below() : pos.above();
@@ -192,5 +193,13 @@ public class SlidingBlastDoorBlock extends HorizontalDirectionalBlock implements
         }
 
         return true;
+    }
+
+    public static void playDoorSound(Level level, BlockPos pos, BlockState state, SoundEvent sound) {
+        boolean upper = state.getValue(UPPER_HALF);
+        double x = pos.getX() + 0.5;
+        double y = upper ? pos.getY() : pos.getY() + 1.0;
+        double z = pos.getZ() + 0.5;
+        level.playSound(null, x, y, z, sound, SoundSource.BLOCKS);
     }
 }

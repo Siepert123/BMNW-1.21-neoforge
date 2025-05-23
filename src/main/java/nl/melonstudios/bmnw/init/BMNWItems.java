@@ -341,34 +341,6 @@ public class BMNWItems {
             () -> new BlockItem(BMNWBlocks.METEORITE_FIRE_MARBLE_ORE.get(), new Item.Properties().rarity(Rarity.UNCOMMON)));
 
     //region Bombs & Missiles
-    public static final DeferredItem<BombBlockItem> FRACTURIZER = ITEMS.register("fracturizer",
-            () -> new BombBlockItem(BMNWBlocks.FRACTURIZER.get(), new Item.Properties(),
-                    Categories.FRACTURIZER_BOMB));
-    public static final DeferredItem<BombBlockItem> VOLCANIC_FRACTURIZER = ITEMS.register("volcanic_fracturizer",
-            () -> new BombBlockItem(BMNWBlocks.VOLCANIC_FRACTURIZER.get(), new Item.Properties(),
-                    Categories.FRACTURIZER_BOMB));
-    public static final DeferredItem<BombBlockItem> STRONG_FRACTURIZER = ITEMS.register("strong_fracturizer",
-            () -> new BombBlockItem(BMNWBlocks.STRONG_FRACTURIZER.get(), new Item.Properties(),
-                    Categories.FRACTURIZER_BOMB));
-    public static final DeferredItem<BombBlockItem> STRONG_VOLCANIC_FRACTURIZER = ITEMS.register("strong_volcanic_fracturizer",
-            () -> new BombBlockItem(BMNWBlocks.STRONG_VOLCANIC_FRACTURIZER.get(), new Item.Properties(),
-                    Categories.FRACTURIZER_BOMB));
-
-    public static final DeferredItem<BombBlockItem> NUCLEAR_CHARGE = ITEMS.register("nuclear_charge",
-            () -> new BombBlockItem(BMNWBlocks.NUCLEAR_CHARGE.get(), new Item.Properties(),
-                    Categories.NUCLEAR_BOMB));
-    public static final DeferredItem<BombBlockItem> LITTLE_BOY = ITEMS.register("little_boy",
-            () -> new BombBlockItem(BMNWBlocks.LITTLE_BOY.get(), new Item.Properties().stacksTo(1),
-                    Categories.NUCLEAR_BOMB));
-    public static final DeferredItem<BombBlockItem> CASEOH = ITEMS.register("caseoh",
-            () -> new BombBlockItem(BMNWBlocks.CASEOH.get(), new Item.Properties().stacksTo(1),
-                    Categories.NUCLEAR_BOMB));
-    public static final DeferredItem<BombBlockItem> DUD = ITEMS.register("dud",
-            () -> new BombBlockItem(BMNWBlocks.DUD.get(), new Item.Properties().stacksTo(1),
-                    Categories.SOULFIRE_BOMB));
-    public static final DeferredItem<BombBlockItem> BRICK_CHARGE = ITEMS.register("brick_charge",
-            () -> new BombBlockItem(BMNWBlocks.BRICK_CHARGE.get(), new Item.Properties(),
-                    Categories.BRICK_BOMB));
     public static final DeferredItem<DetonatorItem> DETONATOR = ITEMS.register("detonator",
             () -> new DetonatorItem(new Item.Properties()));
 
@@ -378,16 +350,6 @@ public class BMNWItems {
             () -> new TargetDesignatorItem(new Item.Properties()));
     public static final DeferredItem<LaserTargetDesignatorItem> LASER_TARGET_DESIGNATOR = ITEMS.register("laser_target_designator",
             () -> new LaserTargetDesignatorItem(new Item.Properties()));
-    public static final DeferredItem<Item> BASE_MISSILE = ITEMS.register("base_missile",
-            () -> new Item(new Item.Properties().stacksTo(1)));
-    public static final DeferredItem<BlockItem> EXAMPLE_MISSILE = ITEMS.register("example_missile",
-            () -> new BlockItem(BMNWBlocks.EXAMPLE_MISSILE.get(), new Item.Properties().stacksTo(1)));
-    public static final DeferredItem<BlockItem> HE_MISSILE = ITEMS.register("he_missile",
-            () -> new BlockItem(BMNWBlocks.HE_MISSILE.get(), new Item.Properties().stacksTo(1)));
-    public static final DeferredItem<BlockItem> NUCLEAR_MISSILE = ITEMS.register("nuclear_missile",
-            () -> new BlockItem(BMNWBlocks.NUCLEAR_MISSILE.get(), new Item.Properties().stacksTo(1)));
-    public static final DeferredItem<BlockItem> ANTI_MISSILE_MISSILE = ITEMS.register("anti_missile_missile",
-            () -> new BlockItem(BMNWBlocks.ANTI_MISSILE_MISSILE.get(), new Item.Properties().stacksTo(1)));
     //endregion
 
     //region Concrete & similar

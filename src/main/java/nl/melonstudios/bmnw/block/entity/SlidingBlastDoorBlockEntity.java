@@ -17,6 +17,7 @@ import net.neoforged.neoforge.network.PacketDistributor;
 import nl.melonstudios.bmnw.block.doors.SlidingBlastDoorBlock;
 import nl.melonstudios.bmnw.init.BMNWBlockEntities;
 import nl.melonstudios.bmnw.interfaces.ITickable;
+import nl.melonstudios.bmnw.misc.SI;
 import nl.melonstudios.bmnw.wifi.PacketSlidingBlastDoor;
 import org.jetbrains.annotations.Nullable;
 
@@ -86,9 +87,14 @@ public class SlidingBlastDoorBlockEntity extends BlockEntity implements ITickabl
     }
     // 0.0F to 1.0F
     public float getScrewRot(float pt) {
-        if (this.unscrewTicks < 0) return 0.0F;
+        if (this.unscrewTicks < 0 || !this.open) return 0.0F;
         float unscrew = this.unscrewTicks + pt;
-        return unscrew / DOOR_UNSCREW_TICKS;
+        return Mth.clamp(unscrew / DOOR_UNSCREW_TICKS, 0.0F, 1.0F);
+    }
+
+    public float getScrewExpansion(float pt) {
+        if (this.showScrews == this.lastShowScrews) return this.showScrews ? 0.0F : 0.125F;
+        return this.showScrews ? Mth.clampedLerp(0.125F, 0.0F, pt) : Mth.clampedLerp(0.0F, 0.125F, pt);
     }
 
     @Override
@@ -110,7 +116,10 @@ public class SlidingBlastDoorBlockEntity extends BlockEntity implements ITickabl
 
     private AABB createCachedBB() {
         BlockPos pos = this.worldPosition;
-        return new AABB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY() + 2, pos.getZ() + 1);
+        return new AABB(
+                pos.getX() - 0.5F, pos.getY() - 0.5F, pos.getZ() - 0.5F,
+                pos.getX() + 1.5F, pos.getY() + 2.5F    , pos.getZ() + 1.5F
+        );
     }
 
     public void setOpen(boolean open) {

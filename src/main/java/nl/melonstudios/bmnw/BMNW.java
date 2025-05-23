@@ -59,12 +59,14 @@ public class BMNW {
             "Now with extra visuals!",
             "[Brick Bomb]!",
             "Uranium Sandwich!",
-            "Block of Uranium-235!"
+            "Block of Uranium-235!",
+            "The PlayStation can produce mind-boggling effects!",
     };
 
-    private static final boolean enforceMemz = false;
+    private static final boolean enforceMemz = true;
     public static final boolean memz = enforceMemz || RandomSource.create().nextInt(100) == 69;
-    public static final int memzArguments = RandomSource.create().nextInt();
+    public static final int memzArguments = Math.abs(RandomSource.create().nextInt());
+    public static final String randomSplash = splashes[memzArguments % splashes.length];
 
     public static String getVersionStr() {
         Optional<? extends ModContainer> container = ModList.get().getModContainerById(MODID);
@@ -113,7 +115,7 @@ public class BMNW {
             modEventBus.addListener(this::registerMenuScreens);
         }
 
-        LOGGER.info(splashes[new Random().nextInt(splashes.length)]);
+        LOGGER.info(randomSplash);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
