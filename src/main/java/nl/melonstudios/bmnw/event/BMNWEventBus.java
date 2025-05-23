@@ -72,6 +72,7 @@ import nl.melonstudios.bmnw.misc.DistrictHolder;
 import nl.melonstudios.bmnw.misc.ExcavationVein;
 import nl.melonstudios.bmnw.particle.*;
 import nl.melonstudios.bmnw.wifi.PacketMushroomCloud;
+import nl.melonstudios.bmnw.wifi.PacketSlidingBlastDoor;
 import nl.melonstudios.bmnw.wifi.PacketUpdatePressState;
 import nl.melonstudios.bmnw.wifi.PacketWorkbenchCraft;
 import org.apache.logging.log4j.LogManager;
@@ -494,6 +495,11 @@ public class BMNWEventBus {
                     PacketMushroomCloud.TYPE,
                     PacketMushroomCloud.STREAM_CODEC,
                     PacketMushroomCloud::handle
+            );
+            registrar.playToClient(
+                    PacketSlidingBlastDoor.TYPE,
+                    PacketSlidingBlastDoor.STREAM_CODEC,
+                    PacketSlidingBlastDoor::handle
             );
             registrar.playToClient(
                     PacketUpdatePressState.TYPE,

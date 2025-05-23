@@ -172,6 +172,7 @@ public class SlidingBlastDoorBlock extends HorizontalDirectionalBlock implements
         BlockPos lowerPos = upper ? pos.below() : pos;
         BlockEntity be = level.getBlockEntity(lowerPos);
         if (!enforce && be instanceof SlidingBlastDoorBlockEntity door && !door.canSwitchState()) return false;
+        if (level.isClientSide) return true;
         state = state.setValue(OPEN, open);
         level.setBlock(pos, state, 10);
         if (open) {
@@ -187,10 +188,7 @@ public class SlidingBlastDoorBlock extends HorizontalDirectionalBlock implements
         }
 
         if (be instanceof SlidingBlastDoorBlockEntity door) {
-            door.unscrewTicks = 0;
-            door.transitionTicks = 0;
-            door.open = open;
-            door.animationTicks = open ? 200 : 70;
+            door.setOpen(open);
         }
 
         return true;

@@ -8,13 +8,16 @@ import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.block.DoorBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+import net.neoforged.neoforge.network.PacketDistributor;
 import nl.melonstudios.bmnw.block.doors.SlidingBlastDoorBlock;
 import nl.melonstudios.bmnw.init.BMNWBlockEntities;
 import nl.melonstudios.bmnw.interfaces.ITickable;
+import nl.melonstudios.bmnw.wifi.PacketSlidingBlastDoor;
 import org.jetbrains.annotations.Nullable;
 
 public class SlidingBlastDoorBlockEntity extends BlockEntity implements ITickable {
@@ -108,5 +111,16 @@ public class SlidingBlastDoorBlockEntity extends BlockEntity implements ITickabl
     private AABB createCachedBB() {
         BlockPos pos = this.worldPosition;
         return new AABB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY() + 2, pos.getZ() + 1);
+    }
+
+    public void setOpen(boolean open) {
+        if (this.level instanceof ServerLevel level) {
+            BlockPos pos = this.worldPosition;
+            PacketDistributor.sendToPlayersTrackingChunk(level, new ChunkPos(pos), new PacketSlidingBlastDoor(pos.getX(), pos.getY(), pos.getZ(), open));
+        }
+        this.unscrewTicks = 0;
+        this.transitionTicks = 0;
+        this.open = open;
+        this.animationTicks = open ? 200 : 70;
     }
 }
