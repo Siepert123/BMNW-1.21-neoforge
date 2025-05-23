@@ -1,6 +1,5 @@
 package nl.melonstudios.bmnw.hardcoded.recipe;
 
-import net.minecraft.core.NonNullList;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -9,7 +8,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import nl.melonstudios.bmnw.init.BMNWItems;
-import nl.melonstudios.bmnw.init.BMNWTags;
 import org.jetbrains.annotations.Contract;
 
 import javax.annotation.Nullable;

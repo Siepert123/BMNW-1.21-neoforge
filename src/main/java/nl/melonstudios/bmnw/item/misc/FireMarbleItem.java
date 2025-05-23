@@ -1,7 +1,6 @@
 package nl.melonstudios.bmnw.item.misc;
 
 import net.minecraft.MethodsReturnNonnullByDefault;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.item.ItemEntity;

@@ -1,7 +1,5 @@
 package nl.melonstudios.bmnw.screen.slot;
 
-import net.minecraft.world.Container;
-import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;

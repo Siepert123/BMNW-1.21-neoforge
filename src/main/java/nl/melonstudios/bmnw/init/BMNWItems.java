@@ -10,8 +10,10 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import nl.melonstudios.bmnw.item.battery.BatteryItem;
 import nl.melonstudios.bmnw.item.battery.InfiniteBatteryItem;
 import nl.melonstudios.bmnw.item.misc.*;
-import nl.melonstudios.bmnw.item.weapons.*;
-import nl.melonstudios.bmnw.misc.Categories;
+import nl.melonstudios.bmnw.item.weapons.DetonatorItem;
+import nl.melonstudios.bmnw.item.weapons.LaserTargetDesignatorItem;
+import nl.melonstudios.bmnw.item.weapons.SniperItem;
+import nl.melonstudios.bmnw.item.weapons.TargetDesignatorItem;
 import nl.melonstudios.bmnw.misc.ExcavationVein;
 
 import javax.annotation.ParametersAreNonnullByDefault;

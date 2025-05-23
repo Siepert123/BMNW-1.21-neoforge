@@ -6,7 +6,9 @@ import net.minecraft.world.entity.MobCategory;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import nl.melonstudios.bmnw.entity.*;
+import nl.melonstudios.bmnw.entity.BlockDebrisEntity;
+import nl.melonstudios.bmnw.entity.MeteoriteEntity;
+import nl.melonstudios.bmnw.entity.SimpleBulletEntity;
 
 public class BMNWEntityTypes {
     private static final DeferredRegister<EntityType<?>> ENTITY_TYPES =

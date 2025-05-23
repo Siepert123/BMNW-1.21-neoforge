@@ -1,15 +1,12 @@
 package nl.melonstudios.bmnw.block.entity;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.ChunkPos;
-import net.minecraft.world.level.block.DoorBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
@@ -17,7 +14,6 @@ import net.neoforged.neoforge.network.PacketDistributor;
 import nl.melonstudios.bmnw.block.doors.SlidingBlastDoorBlock;
 import nl.melonstudios.bmnw.init.BMNWBlockEntities;
 import nl.melonstudios.bmnw.interfaces.ITickable;
-import nl.melonstudios.bmnw.misc.SI;
 import nl.melonstudios.bmnw.wifi.PacketSlidingBlastDoor;
 import org.jetbrains.annotations.Nullable;
 

@@ -17,8 +17,6 @@ import nl.melonstudios.bmnw.hardcoded.recipe.WorkbenchRecipe;
 import nl.melonstudios.bmnw.hardcoded.recipe.WorkbenchRecipes;
 import org.slf4j.Logger;
 
-import java.util.List;
-
 public record PacketWorkbenchCraft(String id, boolean stack) implements CustomPacketPayload {
     private static final Logger LOGGER = LogUtils.getLogger();
     public static final Type<PacketWorkbenchCraft> TYPE = new Type<>(BMNW.namespace("workbench_craft"));

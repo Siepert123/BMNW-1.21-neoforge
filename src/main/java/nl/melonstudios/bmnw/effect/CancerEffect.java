@@ -1,10 +1,8 @@
 package nl.melonstudios.bmnw.effect;
 
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import nl.melonstudios.bmnw.init.BMNWEffects;
 

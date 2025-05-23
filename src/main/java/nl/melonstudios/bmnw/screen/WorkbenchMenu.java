@@ -3,7 +3,6 @@ package nl.melonstudios.bmnw.screen;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.item.ItemStack;
 import nl.melonstudios.bmnw.init.BMNWMenuTypes;

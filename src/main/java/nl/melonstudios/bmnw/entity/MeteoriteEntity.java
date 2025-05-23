@@ -15,13 +15,11 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.chunk.status.ChunkStatus;
 import net.minecraft.world.phys.Vec3;
 import nl.melonstudios.bmnw.init.BMNWBlocks;
 import nl.melonstudios.bmnw.init.BMNWEntityTypes;
 import nl.melonstudios.bmnw.init.BMNWParticleTypes;
 import org.joml.Quaternionf;
-import oshi.jna.platform.windows.PowrProf;
 
 import java.util.ArrayList;
 import java.util.List;

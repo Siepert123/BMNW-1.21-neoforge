@@ -1,6 +1,5 @@
 package nl.melonstudios.bmnw.hardcoded.structure;
 
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.LevelAccessor;
 

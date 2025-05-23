@@ -16,7 +16,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import nl.melonstudios.bmnw.BMNW;
 import nl.melonstudios.bmnw.hardcoded.recipe.WorkbenchRecipe;
-import nl.melonstudios.bmnw.screen.AlloyFurnaceScreen;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
 

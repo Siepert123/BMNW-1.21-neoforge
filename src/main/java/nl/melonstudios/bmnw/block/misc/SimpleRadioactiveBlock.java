@@ -4,12 +4,10 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import nl.melonstudios.bmnw.hazard.HazardRegistry;
 import nl.melonstudios.bmnw.hazard.radiation.ChunkRadiationManager;
-import nl.melonstudios.bmnw.interfaces.IOnBlockAdded;
 import nl.melonstudios.bmnw.item.misc.SimpleRadioactiveBlockItem;
 import nl.melonstudios.bmnw.item.misc.SimpleRadioactiveItem;
 

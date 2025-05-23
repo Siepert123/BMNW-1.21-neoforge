@@ -14,7 +14,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import nl.melonstudios.bmnw.screen.PressMenu;
 import nl.melonstudios.bmnw.screen.WorkbenchMenu;
 import org.jetbrains.annotations.Nullable;
 

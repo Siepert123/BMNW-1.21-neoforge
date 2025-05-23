@@ -9,7 +9,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.api.distmarker.Dist;
@@ -25,7 +24,6 @@ import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
-import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.event.server.ServerStoppingEvent;
 import nl.melonstudios.bmnw.hardcoded.recipe.WorkbenchRecipes;
@@ -44,7 +42,6 @@ import org.slf4j.Logger;
 import javax.annotation.Nonnull;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Random;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(BMNW.MODID)

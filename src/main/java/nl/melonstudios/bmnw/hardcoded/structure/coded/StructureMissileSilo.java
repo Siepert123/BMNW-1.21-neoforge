@@ -12,7 +12,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.SlabType;
-import net.minecraft.world.level.levelgen.Heightmap;
 import nl.melonstudios.bmnw.block.entity.MissileLaunchPadBlockEntity;
 import nl.melonstudios.bmnw.hardcoded.lootpool.LootPools;
 import nl.melonstudios.bmnw.hardcoded.structure.Structure;

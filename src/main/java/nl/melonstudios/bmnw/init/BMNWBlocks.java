@@ -26,7 +26,7 @@ import nl.melonstudios.bmnw.block.doors.SlidingBlastDoorBlock;
 import nl.melonstudios.bmnw.block.machines.*;
 import nl.melonstudios.bmnw.block.misc.*;
 import nl.melonstudios.bmnw.block.settype.BMNWBlockSetType;
-import nl.melonstudios.bmnw.block.weapons.*;
+import nl.melonstudios.bmnw.block.weapons.MissileLaunchPadBlock;
 import nl.melonstudios.bmnw.effect.WPEffect;
 import org.jetbrains.annotations.Nullable;
 

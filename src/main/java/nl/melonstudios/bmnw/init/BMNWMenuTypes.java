@@ -1,7 +1,6 @@
 package nl.melonstudios.bmnw.init;
 
 import net.minecraft.core.registries.Registries;
-import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.inventory.MenuType;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;

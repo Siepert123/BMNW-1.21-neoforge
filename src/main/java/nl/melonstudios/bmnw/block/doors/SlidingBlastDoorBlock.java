@@ -29,7 +29,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.neoforge.common.enums.BubbleColumnDirection;
 import nl.melonstudios.bmnw.block.entity.SlidingBlastDoorBlockEntity;
 import nl.melonstudios.bmnw.init.BMNWBlockEntities;
 import nl.melonstudios.bmnw.init.BMNWSounds;

@@ -27,8 +27,6 @@ import org.joml.Vector2f;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 
-import static nl.melonstudios.bmnw.misc.SI.PX;
-
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 @OnlyIn(Dist.CLIENT)
