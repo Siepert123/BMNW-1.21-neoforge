@@ -1,6 +1,7 @@
 package nl.melonstudios.bmnw.block.doors;
 
 import com.mojang.serialization.MapCodec;
+import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvent;
@@ -24,7 +25,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -35,9 +35,12 @@ import nl.melonstudios.bmnw.init.BMNWSounds;
 import nl.melonstudios.bmnw.interfaces.ITickable;
 import org.jetbrains.annotations.Nullable;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+
+@ParametersAreNonnullByDefault
+@MethodsReturnNonnullByDefault
 public class SlidingBlastDoorBlock extends HorizontalDirectionalBlock implements EntityBlock {
     public static final BooleanProperty OPEN = BlockStateProperties.OPEN;
-    public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty UPPER_HALF = BooleanProperty.create("upper_half");
 
     protected static final float AABB_DOOR_THICKNESS = 6.0F;
@@ -114,11 +117,6 @@ public class SlidingBlastDoorBlock extends HorizontalDirectionalBlock implements
     @Override
     protected float getShadeBrightness(BlockState state, BlockGetter level, BlockPos pos) {
         return 1.0F;
-    }
-
-    @Override
-    protected RenderShape getRenderShape(BlockState state) {
-        return RenderShape.MODEL;
     }
 
     @Override

@@ -73,6 +73,14 @@ public class BMNWBlockEntities {
                     null
             )
     );
+    public static final Supplier<BlockEntityType<SealedHatchBlockEntity>> SEALED_HATCH = BLOCK_ENTITIES.register(
+            "sealed_hatch",
+            () -> new BlockEntityType<>(
+                    SealedHatchBlockEntity::new,
+                    Set.of(BMNWBlocks.SEALED_HATCH.get()),
+                    null
+            )
+    );
 
     public static final Supplier<BlockEntityType<MachineScrapBlockEntity>> MACHINE_SCRAP = BLOCK_ENTITIES.register(
             "machine_scrap",

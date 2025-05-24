@@ -1,4 +1,4 @@
-package nl.melonstudios.bmnw.misc;
+package nl.melonstudios.bmnw.misc.math;
 
 import net.minecraft.core.Direction;
 

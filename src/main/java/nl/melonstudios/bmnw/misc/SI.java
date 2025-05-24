@@ -17,5 +17,12 @@ public class SI {
             null
     };
 
+    public static final float[] BRIGHTNESS_BY_AXIS = {
+            0.85F, /* X */ 1.0F, /* Y */ 0.92F, /* Z */
+    };
+    public static float brightnessByDirection(Direction d) {
+        return BRIGHTNESS_BY_AXIS[d.getAxis().ordinal()];
+    }
+
     public static final float PX = 0.0625f;
 }

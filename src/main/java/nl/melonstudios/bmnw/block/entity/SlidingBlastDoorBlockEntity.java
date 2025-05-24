@@ -121,7 +121,8 @@ public class SlidingBlastDoorBlockEntity extends BlockEntity implements ITickabl
     public void setOpen(boolean open) {
         if (this.level instanceof ServerLevel level) {
             BlockPos pos = this.worldPosition;
-            PacketDistributor.sendToPlayersTrackingChunk(level, new ChunkPos(pos), new PacketSlidingBlastDoor(pos.getX(), pos.getY(), pos.getZ(), open));
+            PacketDistributor.sendToPlayersTrackingChunk(level, new ChunkPos(pos),
+                        new PacketSlidingBlastDoor(pos.getX(), pos.getY(), pos.getZ(), open));
         }
         this.unscrewTicks = 0;
         this.transitionTicks = 0;

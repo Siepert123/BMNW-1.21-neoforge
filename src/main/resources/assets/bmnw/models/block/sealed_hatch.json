@@ -1,0 +1,95 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"particle": "bmnw:block/sealed_hatch",
+		"hatch": "bmnw:block/sealed_hatch"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 0],
+			"to": [2, 2, 16],
+			"faces": {
+				"north": {"uv": [14, 1, 16, 3], "texture": "#hatch"},
+				"east": {"uv": [0, 1, 16, 3], "texture": "#hatch"},
+				"south": {"uv": [0, 1, 2, 3], "texture": "#hatch"},
+				"west": {"uv": [0, 1, 16, 3], "texture": "#hatch"},
+				"up": {"uv": [0, 0, 2, 16], "texture": "#hatch"},
+				"down": {"uv": [0, 0, 2, 16], "texture": "#hatch"}
+			}
+		},
+		{
+			"from": [14, 0, 0],
+			"to": [16, 2, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [14, 0, 0]},
+			"faces": {
+				"north": {"uv": [0, 1, 2, 3], "texture": "#hatch"},
+				"east": {"uv": [0, 1, 16, 3], "texture": "#hatch"},
+				"south": {"uv": [14, 1, 16, 3], "texture": "#hatch"},
+				"west": {"uv": [0, 1, 16, 3], "texture": "#hatch"},
+				"up": {"uv": [14, 0, 16, 16], "texture": "#hatch"},
+				"down": {"uv": [14, 0, 16, 16], "texture": "#hatch"}
+			}
+		},
+		{
+			"from": [2, 0, 0],
+			"to": [14, 2, 2],
+			"rotation": {"angle": 0, "axis": "y", "origin": [2, 0, 0]},
+			"faces": {
+				"north": {"uv": [2, 1, 14, 3], "texture": "#hatch"},
+				"south": {"uv": [2, 1, 14, 3], "texture": "#hatch"},
+				"up": {"uv": [2, 0, 14, 2], "texture": "#hatch"},
+				"down": {"uv": [2, 0, 14, 2], "texture": "#hatch"}
+			}
+		},
+		{
+			"from": [2, 0, 14],
+			"to": [14, 2, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [2, 0, 14]},
+			"faces": {
+				"north": {"uv": [2, 1, 14, 3], "texture": "#hatch"},
+				"south": {"uv": [2, 1, 14, 3], "texture": "#hatch"},
+				"up": {"uv": [2, 14, 14, 16], "texture": "#hatch"},
+				"down": {"uv": [2, 14, 14, 16], "texture": "#hatch"}
+			}
+		},
+		{
+			"from": [2, 1, 2],
+			"to": [14, 3, 14],
+			"rotation": {"angle": 0, "axis": "y", "origin": [2, 1, 2]},
+			"faces": {
+				"north": {"uv": [2, 0, 14, 2], "texture": "#hatch"},
+				"east": {"uv": [2, 0, 14, 2], "texture": "#hatch"},
+				"south": {"uv": [2, 0, 14, 2], "texture": "#hatch"},
+				"west": {"uv": [2, 0, 14, 2], "texture": "#hatch"},
+				"up": {"uv": [2, 2, 14, 14], "texture": "#hatch"},
+				"down": {"uv": [2, 2, 14, 14], "texture": "#hatch"}
+			}
+		},
+		{
+			"from": [1, -0.5, -0.5],
+			"to": [3, 0.5, 0.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [1, -0.5, -0.5]},
+			"faces": {
+				"north": {"uv": [13, 2, 15, 3], "texture": "#hatch"},
+				"east": {"uv": [1, 1, 2, 2], "texture": "#hatch"},
+				"south": {"uv": [13, 2, 15, 3], "texture": "#hatch"},
+				"west": {"uv": [1, 1, 2, 2], "texture": "#hatch"},
+				"up": {"uv": [1, 0, 3, 1], "texture": "#hatch"},
+				"down": {"uv": [1, 0, 3, 1], "texture": "#hatch"}
+			}
+		},
+		{
+			"from": [13, -0.5, -0.5],
+			"to": [15, 0.5, 0.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [13, -0.5, -0.5]},
+			"faces": {
+				"north": {"uv": [1, 2, 3, 3], "texture": "#hatch"},
+				"east": {"uv": [14, 1, 15, 2], "texture": "#hatch"},
+				"south": {"uv": [1, 2, 3, 3], "texture": "#hatch"},
+				"west": {"uv": [14, 1, 15, 2], "texture": "#hatch"},
+				"up": {"uv": [13, 0, 15, 1], "texture": "#hatch"},
+				"down": {"uv": [13, 0, 15, 1], "texture": "#hatch"}
+			}
+		}
+	]
+}

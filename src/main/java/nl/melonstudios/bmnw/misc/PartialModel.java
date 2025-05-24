@@ -8,8 +8,9 @@ import org.jetbrains.annotations.UnknownNullability;
 
 import javax.annotation.Nonnull;
 import java.util.concurrent.ConcurrentMap;
+import java.util.function.Supplier;
 
-public final class PartialModel {
+public final class PartialModel implements Supplier<BakedModel> {
     public static final ConcurrentMap<ModelResourceLocation, PartialModel> ALL = new MapMaker().weakValues().makeMap();
     public static boolean populateOnInit = false;
 
@@ -30,6 +31,7 @@ public final class PartialModel {
     }
 
     @UnknownNullability
+    @Override
     public BakedModel get() {
         return this.bakedModel;
     }

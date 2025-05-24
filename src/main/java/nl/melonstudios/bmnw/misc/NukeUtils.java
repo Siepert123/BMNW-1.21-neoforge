@@ -6,6 +6,7 @@ import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.Heightmap;
 import nl.melonstudios.bmnw.init.BMNWParticleTypes;
+import nl.melonstudios.bmnw.misc.math.MathUtils;
 
 public class NukeUtils {
     public static void spawnParticleRing(Level level, double x, double y, double z, float density, float radius, ParticleOptions particle, boolean onSurface) {

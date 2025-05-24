@@ -68,6 +68,18 @@
     ],
     "subtitle": "subtitles.bmnw.hatch_close"
   },
+  "hatch_open_full": {
+    "sounds": [
+      "bmnw:hatch_open_full"
+    ],
+    "subtitle": "subtitles.bmnw.hatch_open"
+  },
+  "hatch_close_full": {
+    "sounds": [
+      "bmnw:hatch_close_full"
+    ],
+    "subtitle": "subtitles.bmnw.hatch_close"
+  },
   "sliding_blast_door_open": {
     "sounds": [
       "bmnw:sliding_blast_door_open"

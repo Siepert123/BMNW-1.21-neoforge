@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "bmnw:block/sealed_hatch_block"
+    }
+  }
+}

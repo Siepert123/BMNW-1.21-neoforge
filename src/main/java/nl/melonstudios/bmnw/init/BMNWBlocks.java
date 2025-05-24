@@ -22,6 +22,7 @@ import nl.melonstudios.bmnw.block.defense.BarbedWireBlock;
 import nl.melonstudios.bmnw.block.defense.ChainlinkFenceBlock;
 import nl.melonstudios.bmnw.block.defense.ReinforcedGlassBlock;
 import nl.melonstudios.bmnw.block.doors.HatchBlock;
+import nl.melonstudios.bmnw.block.doors.SealedHatchBlock;
 import nl.melonstudios.bmnw.block.doors.SlidingBlastDoorBlock;
 import nl.melonstudios.bmnw.block.machines.*;
 import nl.melonstudios.bmnw.block.misc.*;
@@ -329,6 +330,8 @@ public class BMNWBlocks {
 
     public static final DeferredBlock<SlidingBlastDoorBlock> SLIDING_BLAST_DOOR = BLOCKS.register("sliding_blast_door",
             () -> new SlidingBlastDoorBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get()).noOcclusion()));
+    public static final DeferredBlock<SealedHatchBlock> SEALED_HATCH = BLOCKS.register("sealed_hatch",
+            () -> new SealedHatchBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get()).noOcclusion()));
 
     //endregion
 

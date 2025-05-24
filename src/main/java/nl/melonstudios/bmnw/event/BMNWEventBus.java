@@ -49,6 +49,7 @@ import nl.melonstudios.bmnw.block.entity.IronBarrelBlockEntity;
 import nl.melonstudios.bmnw.block.entity.MissileLaunchPadBlockEntity;
 import nl.melonstudios.bmnw.block.entity.renderer.HatchRenderer;
 import nl.melonstudios.bmnw.block.entity.renderer.PressRenderer;
+import nl.melonstudios.bmnw.block.entity.renderer.SealedHatchRenderer;
 import nl.melonstudios.bmnw.block.entity.renderer.SlidingBlastDoorRenderer;
 import nl.melonstudios.bmnw.datagen.BMNWAdvancementGenerator;
 import nl.melonstudios.bmnw.discard.DiscardList;
@@ -68,10 +69,7 @@ import nl.melonstudios.bmnw.item.misc.CoreSampleItem;
 import nl.melonstudios.bmnw.misc.DistrictHolder;
 import nl.melonstudios.bmnw.misc.ExcavationVein;
 import nl.melonstudios.bmnw.particle.*;
-import nl.melonstudios.bmnw.wifi.PacketMushroomCloud;
-import nl.melonstudios.bmnw.wifi.PacketSlidingBlastDoor;
-import nl.melonstudios.bmnw.wifi.PacketUpdatePressState;
-import nl.melonstudios.bmnw.wifi.PacketWorkbenchCraft;
+import nl.melonstudios.bmnw.wifi.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -395,6 +393,7 @@ public class BMNWEventBus {
         private static void registerBlockEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
             registerBlockEntityRenderingHandler(event, BMNWBlockEntities.HATCH, HatchRenderer::new);
             registerBlockEntityRenderingHandler(event, BMNWBlockEntities.SLIDING_BLAST_DOOR, SlidingBlastDoorRenderer::new);
+            registerBlockEntityRenderingHandler(event, BMNWBlockEntities.SEALED_HATCH, SealedHatchRenderer::new);
             registerBlockEntityRenderingHandler(event, BMNWBlockEntities.PRESS, PressRenderer::new);
         }
 
@@ -477,6 +476,11 @@ public class BMNWEventBus {
                     PacketMushroomCloud.TYPE,
                     PacketMushroomCloud.STREAM_CODEC,
                     PacketMushroomCloud::handle
+            );
+            registrar.playToClient(
+                    PacketSealedHatch.TYPE,
+                    PacketSealedHatch.STREAM_CODEC,
+                    PacketSealedHatch::handle
             );
             registrar.playToClient(
                     PacketSlidingBlastDoor.TYPE,
