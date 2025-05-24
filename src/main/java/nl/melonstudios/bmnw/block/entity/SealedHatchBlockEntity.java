@@ -8,6 +8,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.neoforged.neoforge.network.PacketDistributor;
 import nl.melonstudios.bmnw.block.doors.SealedHatchBlock;
 import nl.melonstudios.bmnw.init.BMNWBlockEntities;
@@ -17,7 +18,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class SealedHatchBlockEntity extends BlockEntity implements ITickable {
     public static final int HATCH_VALVE_OPEN_TICKS = 50;
-    public static final int HATCH_TURN_OPEN_TICKS = 23;
+    public static final int HATCH_TURN_OPEN_TICKS = 27;
     public static final int HATCH_TURN_CLOSE_TICKS = 23;
     public static final int HATCH_VALVE_CLOSE_TICKS = 62;
     public SealedHatchBlockEntity(BlockPos pos, BlockState blockState) {
@@ -93,6 +94,25 @@ public class SealedHatchBlockEntity extends BlockEntity implements ITickable {
         this.valveTicks = 0;
         this.turnTicks = 0;
         this.open = open;
-        this.animationTicks = open ? 110 : 100;
+        this.animationTicks = open ? 90 : 95;
+    }
+
+    private AABB cachedBB = null;
+
+    public AABB getCachedBB() {
+        if (this.cachedBB == null) this.cachedBB = this.createBB();
+        return this.cachedBB;
+    }
+
+    private AABB createBB() {
+        BlockPos pos = this.worldPosition;
+        return new AABB(
+                pos.getX() - 1, pos.getY() - 0.125, pos.getZ() - 1,
+                pos.getX() + 2, pos.getY() + 1, pos.getZ() + 2
+        );
+    }
+
+    public void invalidateBB() {
+        this.cachedBB = null;
     }
 }

@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "bmnw:block/metal_lockable_door"
+    }
+  }
+}

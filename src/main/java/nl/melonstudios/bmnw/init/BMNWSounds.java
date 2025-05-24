@@ -73,6 +73,10 @@ public class BMNWSounds {
     public static final DeferredHolder<SoundEvent, SoundEvent> HATCH_OPEN_FULL = createDefaultSound("hatch_open_full");
     public static final DeferredHolder<SoundEvent, SoundEvent> HATCH_CLOSE_FULL = createDefaultSound("hatch_close_full");
 
+    public static final DeferredHolder<SoundEvent, SoundEvent> METAL_LOCKABLE_DOOR_OPEN = createDefaultSound("metal_lock_door_open");
+    public static final DeferredHolder<SoundEvent, SoundEvent> METAL_LOCKABLE_DOOR_CLOSE = createDefaultSound("metal_lock_door_close");
+    public static final DeferredHolder<SoundEvent, SoundEvent> LOCK = createDefaultSound("lock");
+
     public static final DeferredHolder<SoundEvent, SoundEvent> SLIDING_BLAST_DOOR_OPEN =
             createDefaultSound("sliding_blast_door_open");
     public static final DeferredHolder<SoundEvent, SoundEvent> SLIDING_BLAST_DOOR_CLOSE =

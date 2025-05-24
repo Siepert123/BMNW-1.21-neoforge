@@ -47,10 +47,7 @@ import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import nl.melonstudios.bmnw.BMNW;
 import nl.melonstudios.bmnw.block.entity.IronBarrelBlockEntity;
 import nl.melonstudios.bmnw.block.entity.MissileLaunchPadBlockEntity;
-import nl.melonstudios.bmnw.block.entity.renderer.HatchRenderer;
-import nl.melonstudios.bmnw.block.entity.renderer.PressRenderer;
-import nl.melonstudios.bmnw.block.entity.renderer.SealedHatchRenderer;
-import nl.melonstudios.bmnw.block.entity.renderer.SlidingBlastDoorRenderer;
+import nl.melonstudios.bmnw.block.entity.renderer.*;
 import nl.melonstudios.bmnw.cfg.BMNWClientConfig;
 import nl.melonstudios.bmnw.cfg.BMNWServerConfig;
 import nl.melonstudios.bmnw.datagen.BMNWAdvancementGenerator;
@@ -396,6 +393,7 @@ public class BMNWEventBus {
             registerBlockEntityRenderingHandler(event, BMNWBlockEntities.HATCH, HatchRenderer::new);
             registerBlockEntityRenderingHandler(event, BMNWBlockEntities.SLIDING_BLAST_DOOR, SlidingBlastDoorRenderer::new);
             registerBlockEntityRenderingHandler(event, BMNWBlockEntities.SEALED_HATCH, SealedHatchRenderer::new);
+            registerBlockEntityRenderingHandler(event, BMNWBlockEntities.METAL_LOCKABLE_DOOR, MetalLockableDoorRenderer::new);
             registerBlockEntityRenderingHandler(event, BMNWBlockEntities.PRESS, PressRenderer::new);
         }
 
@@ -474,6 +472,11 @@ public class BMNWEventBus {
         @SubscribeEvent
         public static void registerNetwork(RegisterPayloadHandlersEvent event) {
             final PayloadRegistrar registrar = event.registrar("1");
+            registrar.playToClient(
+                    PacketMetalLockableDoor.TYPE,
+                    PacketMetalLockableDoor.STREAM_CODEC,
+                    PacketMetalLockableDoor::handle
+            );
             registrar.playToClient(
                     PacketMushroomCloud.TYPE,
                     PacketMushroomCloud.STREAM_CODEC,

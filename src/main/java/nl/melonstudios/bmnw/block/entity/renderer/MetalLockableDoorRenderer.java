@@ -17,11 +17,10 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.client.model.data.ModelData;
-import nl.melonstudios.bmnw.block.doors.SealedHatchBlock;
-import nl.melonstudios.bmnw.block.entity.SealedHatchBlockEntity;
+import nl.melonstudios.bmnw.block.doors.MetalLockableDoorBlock;
+import nl.melonstudios.bmnw.block.entity.MetalLockableDoorBlockEntity;
 import nl.melonstudios.bmnw.init.BMNWPartialModels;
 import nl.melonstudios.bmnw.misc.SI;
-import nl.melonstudios.bmnw.misc.math.Easing;
 import org.joml.Quaternionf;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -30,38 +29,34 @@ import java.util.List;
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 @OnlyIn(Dist.CLIENT)
-public class SealedHatchRenderer implements BlockEntityRenderer<SealedHatchBlockEntity> {
-    public SealedHatchRenderer(BlockEntityRendererProvider.Context context) {
+public class MetalLockableDoorRenderer implements BlockEntityRenderer<MetalLockableDoorBlockEntity> {
+    public MetalLockableDoorRenderer(BlockEntityRendererProvider.Context context) {
 
     }
 
-    public static final float DESTINATION_ANGLE = 140.0F;
-
     @Override
-    public void render(SealedHatchBlockEntity blockEntity, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource,
+    public void render(MetalLockableDoorBlockEntity blockEntity, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource,
                        int packedLight, int packedOverlay) {
         BlockState state = blockEntity.getBlockState();
+        if (state.getValue(MetalLockableDoorBlock.UPPER_HALF)) return;
         RandomSource rnd = RandomSource.create();
-
         poseStack.pushPose();
-        poseStack.rotateAround(new Quaternionf().rotateY((float) Math.toRadians(-state.getValue(SealedHatchBlock.FACING).toYRot())),
+
+        poseStack.rotateAround(new Quaternionf().rotateY((float)Math.toRadians(-state.getValue(MetalLockableDoorBlock.FACING).toYRot())),
                 0.5F, 0, 0.5F);
 
         VertexConsumer consumer = bufferSource.getBuffer(RenderType.SOLID);
 
-        BakedModel sealed_hatch = BMNWPartialModels.SEALED_HATCH.loadAndGet();
-        BakedModel valve_handle_double = BMNWPartialModels.VALVE_HANDLE_DOUBLE.loadAndGet();
+        BakedModel door = BMNWPartialModels.METAL_LOCKABLE_DOOR.loadAndGet();
+        BakedModel handle = BMNWPartialModels.METAL_DOOR_HANDLE.loadAndGet();
 
-        poseStack.rotateAround(new Quaternionf().rotateX((float)
-                -Math.toRadians(Easing.OUT_CUBIC.ease(blockEntity.getOpen(partialTick)) * DESTINATION_ANGLE)
-        ), 0, 0, 0);
-
-        this.renderBakedModel(poseStack, consumer, poseStack.last(), sealed_hatch, rnd, RenderType.SOLID, packedLight, packedOverlay);
-
-        poseStack.rotateAround(new Quaternionf().rotateY(
-                (float) Math.toRadians(720.0f * Easing.IN_OUT_QUAD.ease(blockEntity.getValve(partialTick)))
-        ), 0.5F, 0, 0.5F);
-        this.renderBakedModel(poseStack, consumer, poseStack.last(), valve_handle_double, rnd, RenderType.SOLID, packedLight, packedOverlay);
+        poseStack.rotateAround(new Quaternionf().rotateY((float)Math.toRadians(-90*blockEntity.getDoor(partialTick))),
+                0.0625F, 0.0F, 0.0625F);
+        this.renderBakedModel(poseStack, consumer, poseStack.last(), door, rnd, RenderType.SOLID, packedLight, packedOverlay);
+        poseStack.translate(0.0F, 0.5F, 0.0F);
+        poseStack.rotateAround(new Quaternionf().rotateZ((float)Math.toRadians(90*blockEntity.getHandle(partialTick))),
+                0.5F, 0.5F, 0.5F);
+        this.renderBakedModel(poseStack, consumer, poseStack.last(), handle, rnd, RenderType.SOLID, packedLight, packedOverlay);
 
         poseStack.popPose();
     }
@@ -78,12 +73,12 @@ public class SealedHatchRenderer implements BlockEntityRenderer<SealedHatchBlock
     }
 
     @Override
-    public AABB getRenderBoundingBox(SealedHatchBlockEntity blockEntity) {
+    public AABB getRenderBoundingBox(MetalLockableDoorBlockEntity blockEntity) {
         return blockEntity.getCachedBB();
     }
 
     @Override
-    public boolean shouldRender(SealedHatchBlockEntity blockEntity, Vec3 cameraPos) {
+    public boolean shouldRender(MetalLockableDoorBlockEntity blockEntity, Vec3 cameraPos) {
         return true;
     }
 }

@@ -91,5 +91,24 @@
       "bmnw:sliding_blast_door_close"
     ],
     "subtitle": "subtitles.bmnw.door_close"
+  },
+  "metal_lock_door_open": {
+    "sounds": [
+      "bmnw:metal_lock_door_open_1",
+      "bmnw:metal_lock_door_open_2"
+    ],
+    "subtitle": "subtitles.bmnw.door_open"
+  },
+  "metal_lock_door_close": {
+    "sounds": [
+      "bmnw:metal_lock_door_close"
+    ],
+    "subtitle": "subtitles.bmnw.door_close"
+  },
+  "lock": {
+    "sounds": [
+      "bmnw:lock"
+    ],
+    "subtitle": "subtitles.bmnw.locked"
   }
 }

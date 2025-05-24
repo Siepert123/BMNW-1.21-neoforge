@@ -12,6 +12,9 @@ public class BMNWPartialModels {
     public static final PartialModel SEALED_HATCH = block("sealed_hatch");
     public static final PartialModel VALVE_HANDLE_DOUBLE = block("valve_handle_double");
 
+    public static final PartialModel METAL_LOCKABLE_DOOR = block("metal_lockable_door");
+    public static final PartialModel METAL_DOOR_HANDLE = block("metal_door_handle");
+
     private static PartialModel block(String path) {
         return PartialModel.of(ModelResourceLocation.standalone(BMNW.namespace("block/" + path)));
     }
