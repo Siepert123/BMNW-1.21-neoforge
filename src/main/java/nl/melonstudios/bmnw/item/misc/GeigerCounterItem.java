@@ -10,7 +10,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import nl.melonstudios.bmnw.cfg.BMNWCommonConfig;
+import nl.melonstudios.bmnw.cfg.BMNWServerConfig;
 import nl.melonstudios.bmnw.hazard.HazardRegistry;
 import nl.melonstudios.bmnw.hazard.radiation.ChunkRadiationManager;
 
@@ -31,16 +31,16 @@ public class GeigerCounterItem extends Item {
             float playerRads = player.getPersistentData().getFloat("bmnw_RAD");
 
             player.sendSystemMessage(Component.literal(String.format("World radiation: %sRAD\nInventory radiation: %sRAD/s\nPlayer radiation: %sRAD",
-                    BMNWCommonConfig.radiationSetting.chunk() ? chunkRads : 0,
-                    BMNWCommonConfig.radiationSetting.item() ? invRads(player) : 0,
-                    BMNWCommonConfig.radiationSetting.item() ? playerRads : 0
+                    BMNWServerConfig.radiationSetting.chunk() ? chunkRads : 0,
+                    BMNWServerConfig.radiationSetting.item() ? invRads(player) : 0,
+                    BMNWServerConfig.radiationSetting.item() ? playerRads : 0
             )));
         }
         return InteractionResultHolder.success(player.getItemInHand(usedHand));
     }
 
     private float invRads(Player player) {
-        if (!BMNWCommonConfig.radiationSetting.item()) return 0.0f;
+        if (!BMNWServerConfig.radiationSetting.item()) return 0.0f;
 
         float inventoryRads = 0;
 

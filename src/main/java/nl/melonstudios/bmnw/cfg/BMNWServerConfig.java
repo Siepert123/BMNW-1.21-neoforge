@@ -1,12 +1,10 @@
 package nl.melonstudios.bmnw.cfg;
 
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.config.ModConfigEvent;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
-@EventBusSubscriber(modid = "bmnw", bus = EventBusSubscriber.Bus.MOD)
-public class BMNWCommonConfig {
+public class BMNWServerConfig {
     private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
 
     private static final ModConfigSpec.EnumValue<RadiationSetting> RADIATION_SETTING = BUILDER
@@ -33,11 +31,13 @@ public class BMNWCommonConfig {
             .comment("Whether excavation veins should deplete over time")
             .define("enableExcavationVeinDepletion", true);
 
+    public static final ModConfigSpec SPEC = BUILDER.build();
+
     public static RadiationSetting radiationSetting;
     public static boolean enableExcavationVeinDepletion;
 
-    @SubscribeEvent
-    static void onLoad(final ModConfigEvent event) {
+    public static void onLoad(final ModConfigEvent event) {
+        if (event.getConfig().getType() == ModConfig.Type.CLIENT) return;
         radiationSetting = RADIATION_SETTING.get();
         enableExcavationVeinDepletion = ENABLE_EXCAVATION_VEIN_DEPLETION.get();
     }

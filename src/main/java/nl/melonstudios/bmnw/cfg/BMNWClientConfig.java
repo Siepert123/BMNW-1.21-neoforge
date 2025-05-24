@@ -1,12 +1,8 @@
 package nl.melonstudios.bmnw.cfg;
 
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.config.ModConfigEvent;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
-@EventBusSubscriber(modid = "bmnw", bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class BMNWClientConfig {
     private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
 
@@ -27,10 +23,11 @@ public class BMNWClientConfig {
         }
     }
 
+    public static final ModConfigSpec SPEC = BUILDER.build();
+
     public static HazardInfoLevel hazardInfoLevel;
 
-    @SubscribeEvent
-    static void onLoad(final ModConfigEvent event) {
+    public static void onLoad(final ModConfigEvent event) {
         hazardInfoLevel = HAZARD_INFO_LEVEL.get();
     }
 }

@@ -52,7 +52,7 @@ import nl.melonstudios.bmnw.block.entity.renderer.PressRenderer;
 import nl.melonstudios.bmnw.block.entity.renderer.SealedHatchRenderer;
 import nl.melonstudios.bmnw.block.entity.renderer.SlidingBlastDoorRenderer;
 import nl.melonstudios.bmnw.cfg.BMNWClientConfig;
-import nl.melonstudios.bmnw.cfg.BMNWCommonConfig;
+import nl.melonstudios.bmnw.cfg.BMNWServerConfig;
 import nl.melonstudios.bmnw.datagen.BMNWAdvancementGenerator;
 import nl.melonstudios.bmnw.discard.DiscardList;
 import nl.melonstudios.bmnw.effect.WPEffect;
@@ -131,7 +131,7 @@ public class BMNWEventBus {
          */
         @SubscribeEvent
         public static void entityTickEventPre(EntityTickEvent.Pre event) {
-            if (BMNWCommonConfig.radiationSetting.chunk() && !event.getEntity().level().isClientSide()) {
+            if (BMNWServerConfig.radiationSetting.chunk() && !event.getEntity().level().isClientSide()) {
                 if (event.getEntity() instanceof LivingEntity entity) {
                     if (entity instanceof Player player && (player.isCreative() || player.isSpectator())) return;
                     CompoundTag nbt = entity.getPersistentData();
@@ -248,7 +248,7 @@ public class BMNWEventBus {
         public static void playerTickEventPre(PlayerTickEvent.Pre event) {
             MeteoriteEntity.spawnIfReady(event.getEntity());
 
-            if (BMNWCommonConfig.radiationSetting.item()) {
+            if (BMNWServerConfig.radiationSetting.item()) {
                 Player player = event.getEntity();
                 if (player.isCreative() || player.isSpectator() || player.level().isClientSide()) return;
                 for (ItemStack stack : player.getInventory().items) {

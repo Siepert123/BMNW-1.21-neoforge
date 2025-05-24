@@ -13,7 +13,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class BMNWServerConfig {
+public class BMNWServerCfg {
     public static void load(MinecraftServer server) {
         File file = server.getFile("config/bmnw.cfg").toFile();
         if (!file.exists()) {

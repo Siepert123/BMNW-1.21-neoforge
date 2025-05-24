@@ -17,6 +17,7 @@ import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.client.event.ModelEvent;
@@ -25,6 +26,8 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.event.server.ServerStoppingEvent;
+import nl.melonstudios.bmnw.cfg.BMNWClientConfig;
+import nl.melonstudios.bmnw.cfg.BMNWServerConfig;
 import nl.melonstudios.bmnw.hardcoded.recipe.WorkbenchRecipes;
 import nl.melonstudios.bmnw.hardcoded.structure.*;
 import nl.melonstudios.bmnw.hardcoded.structure.coded.*;
@@ -69,11 +72,20 @@ public class BMNW {
         return container.isPresent() ? container.get().getModInfo().getVersion().toString() : "null";
     }
 
-    public BMNW(IEventBus modEventBus, @Nonnull ModContainer ignoredModContainer, Dist dist) {
+    public BMNW(IEventBus modEventBus, @Nonnull ModContainer modContainer, Dist dist) {
         DistrictHolder.setDistrict(dist);
         modEventBus.addListener(this::commonSetup);
 
+        NeoForge.EVENT_BUS.register(this);
+
         LOGGER.debug("BMNW loader");
+
+        modContainer.registerConfig(ModConfig.Type.SERVER, BMNWServerConfig.SPEC);
+        modContainer.registerConfig(ModConfig.Type.CLIENT, BMNWClientConfig.SPEC);
+
+        modEventBus.addListener(BMNWServerConfig::onLoad);
+        modEventBus.addListener(BMNWClientConfig::onLoad);
+
         BMNWBlocks.register(modEventBus);
         BMNWBlockEntities.register(modEventBus);
         BMNWItems.register(modEventBus);
@@ -88,8 +100,6 @@ public class BMNW {
         BMNWMenuTypes.register(modEventBus);
 
         BMNWPartialModels.init();
-
-        NeoForge.EVENT_BUS.register(this);
 
         modEventBus.addListener(this::addCreative);
 
@@ -156,7 +166,7 @@ public class BMNW {
     // You can use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {
-        BMNWServerConfig.load(event.getServer());
+        BMNWServerCfg.load(event.getServer());
 
         ChunkRadiationHandler.server = event.getServer();
 
