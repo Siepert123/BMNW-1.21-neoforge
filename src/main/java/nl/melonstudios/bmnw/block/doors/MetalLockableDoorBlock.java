@@ -73,8 +73,9 @@ public class MetalLockableDoorBlock extends HorizontalDirectionalBlock implement
         BlockEntity be = level.getBlockEntity(bePos);
         if (be instanceof MetalLockableDoorBlockEntity door) {
             if (door.surpassedHalfDoorAnim()) return open ? getShape(facing.getCounterClockWise()) : getShape(facing);
+            else return open ? getShape(facing) : getShape(facing.getCounterClockWise());
         }
-        return open ? getShape(facing) : getShape(facing.getCounterClockWise());
+        return open ? getShape(facing.getCounterClockWise()) : getShape(facing);
     }
 
     private static VoxelShape getShape(Direction facing) {

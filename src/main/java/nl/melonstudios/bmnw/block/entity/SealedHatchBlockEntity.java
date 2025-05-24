@@ -16,6 +16,8 @@ import nl.melonstudios.bmnw.interfaces.ITickable;
 import nl.melonstudios.bmnw.wifi.PacketSealedHatch;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Random;
+
 public class SealedHatchBlockEntity extends BlockEntity implements ITickable {
     public static final int HATCH_VALVE_OPEN_TICKS = 50;
     public static final int HATCH_TURN_OPEN_TICKS = 27;
@@ -23,12 +25,15 @@ public class SealedHatchBlockEntity extends BlockEntity implements ITickable {
     public static final int HATCH_VALVE_CLOSE_TICKS = 62;
     public SealedHatchBlockEntity(BlockPos pos, BlockState blockState) {
         super(BMNWBlockEntities.SEALED_HATCH.get(), pos, blockState);
+
+        this.valveOffset = new Random(pos.asLong()).nextFloat() * 360;
     }
 
     public int valveTicks = -1;
     public int turnTicks = -1;
     public int animationTicks = 0;
     public boolean open = this.getBlockState().getValue(SealedHatchBlock.OPEN);
+    public final float valveOffset;
 
     @Nullable
     @Override
