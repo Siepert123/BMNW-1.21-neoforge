@@ -68,6 +68,7 @@
   "block.bmnw.little_boy": "Little Boy",
   "block.bmnw.machine_scrap": "Machine Scraps",
   "block.bmnw.metal_lock_door": "Metal Lockable Door",
+  "block.bmnw.metal_lock_door.desc": "Sneak R-Click from inside to lock",
   "block.bmnw.meteorite_cobblestone": "Meteorite Cobblestone",
   "block.bmnw.meteorite_fire_marble_ore": "Meteorite Fire Marble Ore",
   "block.bmnw.meteorite_iron_ore": "Meteorite Iron Ore",
