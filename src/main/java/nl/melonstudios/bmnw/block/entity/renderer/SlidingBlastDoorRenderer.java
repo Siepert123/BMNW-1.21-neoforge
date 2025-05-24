@@ -23,6 +23,7 @@ import nl.melonstudios.bmnw.block.entity.SealedHatchBlockEntity;
 import nl.melonstudios.bmnw.block.entity.SlidingBlastDoorBlockEntity;
 import nl.melonstudios.bmnw.init.BMNWPartialModels;
 import nl.melonstudios.bmnw.misc.SI;
+import nl.melonstudios.bmnw.misc.math.Easing;
 import org.joml.Quaternionf;
 import org.joml.Vector2f;
 
@@ -76,7 +77,7 @@ public class SlidingBlastDoorRenderer implements BlockEntityRenderer<SlidingBlas
         BakedModel sliding_door = BMNWPartialModels.SLIDING_BLAST_DOOR.loadAndGet();
         BakedModel screw = BMNWPartialModels.SCREW.loadAndGet();
         poseStack.pushPose();
-        poseStack.translate(blockEntity.getSlide(partialTick) * 0.99F, 0, 0);
+        poseStack.translate(Easing.OUT_QUAD.ease(blockEntity.getSlide(partialTick)) * 0.99F, 0, 0);
         PoseStack.Pose pose = poseStack.last();
         for (Direction d : SI.DIRECTIONS_WITH_NULL) {
             List<BakedQuad> quads = sliding_door.getQuads(null, d, rnd, ModelData.EMPTY, RenderType.SOLID);

@@ -76,6 +76,7 @@ public class MetalLockableDoorBlockEntity extends BlockEntity implements ITickab
     public float getHandle(float pt) {
         if (this.handleTicks < 0) return this.open ? 1.0F : 0.0F;
         if (!this.open && this.handleTicks == 0 && this.doorTicks < DOOR_TURN_TICKS) return 1.0F;
+        if (this.open && this.handleTicks >= HANDLE_TURN_TICKS) return 1.0F;
         float transition = this.handleTicks + pt;
         return Easing.IN_OUT_SINE.clampedEase(this.open ? transition / HANDLE_TURN_TICKS : 1.0F-(transition / HANDLE_TURN_TICKS));
     }
