@@ -12,6 +12,7 @@ import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.client.model.data.ModelData;
@@ -51,13 +52,13 @@ public class SealedHatchRenderer implements BlockEntityRenderer<SealedHatchBlock
         BakedModel valve_handle_double = BMNWPartialModels.VALVE_HANDLE_DOUBLE.loadAndGet();
 
         poseStack.rotateAround(new Quaternionf().rotateX((float)
-                -Math.toRadians(Easing.OUT_QUAD.ease(blockEntity.getOpen(partialTick)) * DESTINATION_ANGLE)
+                -Math.toRadians(Easing.OUT_CUBIC.ease(blockEntity.getOpen(partialTick)) * DESTINATION_ANGLE)
         ), 0, 0, 0);
 
         this.renderBakedModel(poseStack, consumer, poseStack.last(), sealed_hatch, rnd, RenderType.SOLID, packedLight, packedOverlay);
 
         poseStack.rotateAround(new Quaternionf().rotateY(
-                (float) Math.toRadians(720.0f * Easing.IN_OUT_SINE.ease(blockEntity.getValve(partialTick)))
+                (float) Math.toRadians(720.0f * Easing.IN_OUT_QUAD.ease(blockEntity.getValve(partialTick)))
         ), 0.5F, 0, 0.5F);
         this.renderBakedModel(poseStack, consumer, poseStack.last(), valve_handle_double, rnd, RenderType.SOLID, packedLight, packedOverlay);
 
@@ -73,5 +74,10 @@ public class SealedHatchRenderer implements BlockEntityRenderer<SealedHatchBlock
                 consumer.putBulkData(last, quad, b, b, b, 1.0F, packedLight, packedOverlay);
             }
         }
+    }
+
+    @Override
+    public boolean shouldRender(SealedHatchBlockEntity blockEntity, Vec3 cameraPos) {
+        return true;
     }
 }

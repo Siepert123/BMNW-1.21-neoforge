@@ -14,10 +14,12 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.client.model.data.ModelData;
 import nl.melonstudios.bmnw.block.doors.SlidingBlastDoorBlock;
+import nl.melonstudios.bmnw.block.entity.SealedHatchBlockEntity;
 import nl.melonstudios.bmnw.block.entity.SlidingBlastDoorBlockEntity;
 import nl.melonstudios.bmnw.init.BMNWPartialModels;
 import nl.melonstudios.bmnw.misc.SI;
@@ -108,5 +110,10 @@ public class SlidingBlastDoorRenderer implements BlockEntityRenderer<SlidingBlas
     @Override
     public AABB getRenderBoundingBox(SlidingBlastDoorBlockEntity blockEntity) {
         return blockEntity.getCachedBB();
+    }
+
+    @Override
+    public boolean shouldRender(SlidingBlastDoorBlockEntity blockEntity, Vec3 cameraPos) {
+        return true;
     }
 }

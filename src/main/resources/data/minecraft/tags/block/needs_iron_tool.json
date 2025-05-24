@@ -22,8 +22,8 @@
     "bmnw:wp_barbed_wire",
     "bmnw:steel_ladder",
     "bmnw:concrete_encapsulated_ladder",
-    "bmnw:hatch",
     "bmnw:sliding_blast_door",
+    "bmnw:sealed_hatch",
     "bmnw:chainlink_fence"
   ],
   "replace": false

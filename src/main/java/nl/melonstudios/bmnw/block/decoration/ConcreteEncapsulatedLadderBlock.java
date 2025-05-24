@@ -72,7 +72,6 @@ public class ConcreteEncapsulatedLadderBlock extends Block {
     protected boolean skipRendering(BlockState state, BlockState adjacentState, Direction direction) {
         if (direction.getAxis() == Direction.Axis.Y) {
             if (adjacentState.is(BMNWBlocks.CONCRETE_ENCAPSULATED_LADDER.get())) return true;
-            if (adjacentState.is(BMNWBlocks.HATCH.get())) return true;
         }
         return super.skipRendering(state, adjacentState, direction);
     }

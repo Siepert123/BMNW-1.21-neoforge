@@ -9,8 +9,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.chunk.ChunkAccess;
+import nl.melonstudios.bmnw.cfg.BMNWCommonConfig;
 import nl.melonstudios.bmnw.init.BMNWAttachments;
-import nl.melonstudios.bmnw.init.BMNWConfig;
 import nl.melonstudios.bmnw.misc.ExcavationVein;
 
 public class ExcavationVeinDetectorItem extends Item {
@@ -23,7 +23,7 @@ public class ExcavationVeinDetectorItem extends Item {
         ChunkAccess chunk = level.getChunk(player.getOnPos());
         ExcavationVein vein = ExcavationVein.getNextVein(chunk);
         if (!level.isClientSide()) {
-            if (BMNWConfig.enableExcavationVeinDepletion) {
+            if (BMNWCommonConfig.enableExcavationVeinDepletion) {
                 if (vein.isEmpty())
                     player.sendSystemMessage(Component.translatable("text.bmnw.excavation_vein_detector_fail"));
                 else {

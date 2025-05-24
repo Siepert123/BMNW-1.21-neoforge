@@ -93,9 +93,9 @@ public class StructureMissileSilo extends Structure {
         Direction dir = Direction.WEST;
         fillBlocks(level, observatory.offset(3, -1, 1), observatory.offset(3, 1, 1),
                 BMNWBlocks.STEEL_LADDER.get().defaultBlockState().setValue(BlockStateProperties.HORIZONTAL_FACING, dir));
-        fillBlocks(level, observatory.offset(3, 2, 1), hatchPos.below(),
+        fillBlocks(level, observatory.offset(3, 2, 1), hatchPos,
                 BMNWBlocks.CONCRETE_ENCAPSULATED_LADDER.get().defaultBlockState().setValue(BlockStateProperties.HORIZONTAL_FACING, dir));
-        placeBlock(level, hatchPos.below(), BMNWBlocks.HATCH.get().defaultBlockState().setValue(BlockStateProperties.HORIZONTAL_FACING, dir));
+        placeBlock(level, hatchPos, BMNWBlocks.SEALED_HATCH.get().defaultBlockState().setValue(BlockStateProperties.HORIZONTAL_FACING, dir));
 
         barbedWire(level, origin.offset(4, 0, -1), Direction.Axis.Z);
         barbedWire(level, origin.offset(4, 0, 0), Direction.Axis.Z);

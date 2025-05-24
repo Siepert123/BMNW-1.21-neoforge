@@ -325,9 +325,6 @@ public class BMNWBlocks {
 
     //region Doors & hatches
 
-    public static final DeferredBlock<HatchBlock> HATCH = BLOCKS.register("hatch",
-            () -> new HatchBlock(BlockBehaviour.Properties.ofFullCopy(CONCRETE_ENCAPSULATED_LADDER.get()).noOcclusion()));
-
     public static final DeferredBlock<SlidingBlastDoorBlock> SLIDING_BLAST_DOOR = BLOCKS.register("sliding_blast_door",
             () -> new SlidingBlastDoorBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get()).noOcclusion()));
     public static final DeferredBlock<SealedHatchBlock> SEALED_HATCH = BLOCKS.register("sealed_hatch",

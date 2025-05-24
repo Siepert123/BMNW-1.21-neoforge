@@ -5,7 +5,7 @@ import net.neoforged.neoforge.event.level.ChunkDataEvent;
 import net.neoforged.neoforge.event.level.ChunkEvent;
 import net.neoforged.neoforge.event.level.LevelEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
-import nl.melonstudios.bmnw.init.BMNWConfig;
+import nl.melonstudios.bmnw.cfg.BMNWCommonConfig;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,32 +16,32 @@ public class ChunkRadiationManager {
     public static final ChunkRadiationHandler handler = new ChunkRadiationHandlerPRISM();
 
     public static void onWorldLoad(LevelEvent.Load event) {
-        if (BMNWConfig.radiationSetting.chunk()) handler.onWorldLoad(event);
+        if (BMNWCommonConfig.radiationSetting.chunk()) handler.onWorldLoad(event);
     }
 
     public static void onWorldUnload(LevelEvent.Unload event) {
-        if (BMNWConfig.radiationSetting.chunk()) handler.onWorldUnload(event);
+        if (BMNWCommonConfig.radiationSetting.chunk()) handler.onWorldUnload(event);
     }
 
     public static void onChunkLoad(ChunkEvent.Load event) {
-        if (BMNWConfig.radiationSetting.chunk() && event.getLevel() != null) handler.onChunkLoad(event);
+        if (BMNWCommonConfig.radiationSetting.chunk() && event.getLevel() != null) handler.onChunkLoad(event);
     }
     public static void onChunkDataLoad(ChunkDataEvent.Load event) {
-        if (BMNWConfig.radiationSetting.chunk() && event.getLevel() != null) handler.onChunkDataLoad(event);
+        if (BMNWCommonConfig.radiationSetting.chunk() && event.getLevel() != null) handler.onChunkDataLoad(event);
     }
 
     public static void onChunkSave(ChunkDataEvent.Save event) {
-        if (BMNWConfig.radiationSetting.chunk() && event.getLevel() != null) handler.onChunkSave(event);
+        if (BMNWCommonConfig.radiationSetting.chunk() && event.getLevel() != null) handler.onChunkSave(event);
     }
 
     public static void onChunkUnload(ChunkEvent.Unload event) {
-        if (BMNWConfig.radiationSetting.chunk() && event.getLevel() != null) handler.onChunkUnload(event);
+        if (BMNWCommonConfig.radiationSetting.chunk() && event.getLevel() != null) handler.onChunkUnload(event);
     }
 
     static int eggTimer = 0;
 
     public static void updateSystem(ServerTickEvent.Post event) {
-        if (BMNWConfig.radiationSetting.chunk()) {
+        if (BMNWCommonConfig.radiationSetting.chunk()) {
             eggTimer++;
 
             if (eggTimer >= 20) {

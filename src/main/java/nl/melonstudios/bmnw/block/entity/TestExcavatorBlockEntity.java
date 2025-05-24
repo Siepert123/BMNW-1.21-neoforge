@@ -11,9 +11,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
+import nl.melonstudios.bmnw.cfg.BMNWCommonConfig;
 import nl.melonstudios.bmnw.init.BMNWAttachments;
 import nl.melonstudios.bmnw.init.BMNWBlockEntities;
-import nl.melonstudios.bmnw.init.BMNWConfig;
 import nl.melonstudios.bmnw.misc.ExcavationVein;
 import nl.melonstudios.bmnw.misc.StackMover;
 
@@ -35,7 +35,7 @@ public class TestExcavatorBlockEntity extends BlockEntity {
                     Container container = StackMover.getBlockContainer(level, worldPosition.below(), level.getBlockState(worldPosition.below()));
                     if (container != null) {
                         StackMover.addItem(null, container, new ItemStack(item), Direction.UP);
-                        if (BMNWConfig.enableExcavationVeinDepletion) {
+                        if (BMNWCommonConfig.enableExcavationVeinDepletion) {
                             chunk.setData(BMNWAttachments.EXCAVATION_VEIN_DEPLETION,
                                     chunk.getData(BMNWAttachments.EXCAVATION_VEIN_DEPLETION) + 1);
                         }
@@ -44,7 +44,7 @@ public class TestExcavatorBlockEntity extends BlockEntity {
                                 worldPosition.getY() - 0.5, worldPosition.getZ() + 0.5, new ItemStack(item));
                         entity.setDeltaMovement(0, 0, 0);
                         level.addFreshEntity(entity);
-                        if (BMNWConfig.enableExcavationVeinDepletion) {
+                        if (BMNWCommonConfig.enableExcavationVeinDepletion) {
                             chunk.setData(BMNWAttachments.EXCAVATION_VEIN_DEPLETION,
                                     chunk.getData(BMNWAttachments.EXCAVATION_VEIN_DEPLETION) + 1);
                         }

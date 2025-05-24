@@ -61,7 +61,7 @@ public class BMNWBlockEntities {
             "hatch",
             () -> new BlockEntityType<>(
                     HatchBlockEntity::new,
-                    Set.of(BMNWBlocks.HATCH.get()),
+                    Set.of(),
                     null
             )
     );

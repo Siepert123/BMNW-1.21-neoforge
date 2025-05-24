@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "bmnw:hatch"
+          "name": "bmnw:sealed_hatch"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "bmnw:blocks/hatch"
+  "random_sequence": "bmnw:blocks/sealed_hatch"
 }

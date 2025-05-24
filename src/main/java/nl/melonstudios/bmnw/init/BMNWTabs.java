@@ -147,7 +147,6 @@ public class BMNWTabs {
 
                         items.accept(OFFICE_DOOR);
 
-                        items.accept(HATCH);
                         items.accept(SLIDING_BLAST_DOOR);
                         items.accept(SEALED_HATCH);
 

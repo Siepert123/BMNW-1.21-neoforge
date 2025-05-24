@@ -7,8 +7,8 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.biome.BiomeManager;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.neoforged.fml.util.ObfuscationReflectionHelper;
+import nl.melonstudios.bmnw.cfg.BMNWCommonConfig;
 import nl.melonstudios.bmnw.init.BMNWAttachments;
-import nl.melonstudios.bmnw.init.BMNWConfig;
 import nl.melonstudios.bmnw.init.BMNWItems;
 import nl.melonstudios.bmnw.item.misc.CoreSampleItem;
 import org.apache.logging.log4j.LogManager;
@@ -144,7 +144,7 @@ public final class ExcavationVein {
 
     public boolean mayExcavate(ChunkAccess chunk) {
         if (this.isEmpty()) return false;
-        if (BMNWConfig.enableExcavationVeinDepletion) {
+        if (BMNWCommonConfig.enableExcavationVeinDepletion) {
             int depletion = chunk.getData(BMNWAttachments.EXCAVATION_VEIN_DEPLETION);
             return getMaximumExtraction() > depletion;
         }

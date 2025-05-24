@@ -39,7 +39,30 @@ public enum Easing {
             return 1 - (1 - t) * (1 - t);
         }
     },
-    //TODO: more easing functions
+    IN_OUT_QUAD {
+        @Override
+        public float ease(float t) {
+            return t < 0.5F ? 2 * t * t : 1 - (float)Math.pow(-2 * t + 2, 2) / 2;
+        }
+    },
+    IN_CUBIC {
+        @Override
+        public float ease(float t) {
+            return t * t * t;
+        }
+    },
+    OUT_CUBIC {
+        @Override
+        public float ease(float t) {
+            return (float) (1 - Math.pow(1 - t, 3));
+        }
+    },
+    IN_OUT_CUBIC {
+        @Override
+        public float ease(float t) {
+            return t < 0.5F ? 4 * t * t * t : 1 - (float)Math.pow(-2 * t + 2, 3) / 2;
+        }
+    }
     ;
 
     public abstract float ease(float t);

@@ -199,4 +199,15 @@ public class SlidingBlastDoorBlock extends HorizontalDirectionalBlock implements
         double z = pos.getZ() + 0.5;
         level.playSound(null, x, y, z, sound, SoundSource.BLOCKS);
     }
+
+
+    public static final VoxelShape SOUTH_AABB_VISUAL_LOWER = Block.box(0, 0, 0, 16, 32, AABB_DOOR_THICKNESS);
+    public static final VoxelShape NORTH_AABB_VISUAL_LOWER = Block.box(0, 0, 16 - AABB_DOOR_THICKNESS, 16, 32, 16);
+    public static final VoxelShape WEST_AABB_VISUAL_LOWER = Block.box(16 - AABB_DOOR_THICKNESS, 0, 0, 16, 32, 16);
+    public static final VoxelShape EAST_AABB_VISUAL_LOWER = Block.box(0, 0, 0, AABB_DOOR_THICKNESS, 32, 16);
+
+    public static final VoxelShape SOUTH_AABB_VISUAL_UPPER = Block.box(0, -16, 0, 16, 32, AABB_DOOR_THICKNESS);
+    public static final VoxelShape NORTH_AABB_VISUAL_UPPER = Block.box(0, -16, 16 - AABB_DOOR_THICKNESS, 16, 16, 16);
+    public static final VoxelShape WEST_AABB_VISUAL_UPPER = Block.box(16 - AABB_DOOR_THICKNESS, -16, 0, 16, 16, 16);
+    public static final VoxelShape EAST_AABB_VISUAL_UPPER = Block.box(0, -16, 0, AABB_DOOR_THICKNESS, 16, 16);
 }

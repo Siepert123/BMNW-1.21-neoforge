@@ -1,7 +1,6 @@
 package nl.melonstudios.bmnw;
 
 import com.mojang.logging.LogUtils;
-import eu.midnightdust.lib.config.MidnightConfig;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.commands.Commands;
@@ -89,8 +88,6 @@ public class BMNW {
         BMNWMenuTypes.register(modEventBus);
 
         BMNWPartialModels.init();
-
-        MidnightConfig.init("bmnw", BMNWConfig.class);
 
         NeoForge.EVENT_BUS.register(this);
 
