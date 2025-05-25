@@ -1,7 +1,7 @@
 {
   "advancement.bmnw.circuit": "Electronics!",
   "advancement.bmnw.circuit.desc": "Craft a Circuit, useful for electric components",
-  "advancement.bmnw.fire_marble": "Gehn would be happy",
+  "advancement.bmnw.fire_marble": "A Potent Source",
   "advancement.bmnw.fire_marble.desc": "Find a Fire Marble inside a Meteor",
   "advancement.bmnw.furnace": "Combinatory Smelting",
   "advancement.bmnw.furnace.desc": "Acquire an Alloy Blast Furnace for alloying",
@@ -69,6 +69,7 @@
   "block.bmnw.machine_scrap": "Machine Scraps",
   "block.bmnw.metal_lock_door": "Metal Lockable Door",
   "block.bmnw.metal_lock_door.desc": "Sneak R-Click from inside to lock",
+  "block.bmnw.metal_sliding_door": "Metal Sliding Door",
   "block.bmnw.meteorite_cobblestone": "Meteorite Cobblestone",
   "block.bmnw.meteorite_fire_marble_ore": "Meteorite Fire Marble Ore",
   "block.bmnw.meteorite_iron_ore": "Meteorite Iron Ore",

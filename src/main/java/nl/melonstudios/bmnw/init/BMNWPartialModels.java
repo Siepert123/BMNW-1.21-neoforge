@@ -5,6 +5,8 @@ import nl.melonstudios.bmnw.BMNW;
 import nl.melonstudios.bmnw.misc.PartialModel;
 
 public class BMNWPartialModels {
+    public static final PartialModel METEORITE = block("hot_meteorite_cobblestone");
+
     public static final PartialModel SLIDING_BLAST_DOOR = block("sliding_blast_door");
     public static final PartialModel SLIDING_BLAST_DOOR_FRAME = block("sliding_blast_door_frame");
     public static final PartialModel SCREW = block("screw");
@@ -15,8 +17,13 @@ public class BMNWPartialModels {
     public static final PartialModel METAL_LOCKABLE_DOOR = block("metal_lockable_door");
     public static final PartialModel METAL_DOOR_HANDLE = block("metal_door_handle");
 
+    public static final PartialModel METAL_SLIDING_DOOR = block("metal_sliding_door");
+
     private static PartialModel block(String path) {
         return PartialModel.of(ModelResourceLocation.standalone(BMNW.namespace("block/" + path)));
+    }
+    private static PartialModel item(String path) {
+        return PartialModel.of(ModelResourceLocation.standalone(BMNW.namespace("item/" + path)));
     }
     private static PartialModel entity(String path) {
         return PartialModel.of(ModelResourceLocation.standalone(BMNW.namespace("entity/" + path)));

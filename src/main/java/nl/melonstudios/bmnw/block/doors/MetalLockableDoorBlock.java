@@ -113,7 +113,7 @@ public class MetalLockableDoorBlock extends HorizontalDirectionalBlock implement
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new MetalLockableDoorBlockEntity(pos, state);
+        return state.getValue(UPPER_HALF) ? null : new MetalLockableDoorBlockEntity(pos, state);
     }
 
     @Nullable

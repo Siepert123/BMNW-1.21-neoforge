@@ -110,5 +110,53 @@
       "bmnw:lock"
     ],
     "subtitle": "subtitles.bmnw.locked"
+  },
+  "large_door_open": {
+    "sounds": [
+      "bmnw:large_door_open"
+    ],
+    "subtitle": "subtitles.bmnw.door_open"
+  },
+  "large_door_close": {
+    "sounds": [
+      "bmnw:large_door_close"
+    ],
+    "subtitle": "subtitles.bmnw.door_close"
+  },
+  "metal_sliding_door": {
+    "sounds": [
+      "bmnw:metal_rods_lower"
+    ]
+  },
+  "metal_rods_lower": {
+    "sounds": [
+      "bmnw:metal_rods_lower"
+    ]
+  },
+  "metal_rods_elevate": {
+    "sounds": [
+      "bmnw:metal_rods_elevate"
+    ]
+  },
+  "small_machine_rotate": {
+    "sounds": [
+      "bmnw:small_machine_rotate"
+    ]
+  },
+  "ambient.large_generator_in_off": {
+    "sounds": [
+      {
+        "name": "bmnw:ambient/large_generator_in_off",
+        "stream": true
+      }
+    ]
+  },
+  "ambient.large_generator_in_on": {
+    "sounds": [
+      {
+        "name": "bmnw:ambient/large_generator_in_on",
+        "stream": true
+      }
+    ]
   }
 }

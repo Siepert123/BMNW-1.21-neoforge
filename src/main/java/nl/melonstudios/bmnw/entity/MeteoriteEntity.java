@@ -1,5 +1,6 @@
 package nl.melonstudios.bmnw.entity;
 
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -19,6 +20,7 @@ import net.minecraft.world.phys.Vec3;
 import nl.melonstudios.bmnw.init.BMNWBlocks;
 import nl.melonstudios.bmnw.init.BMNWEntityTypes;
 import nl.melonstudios.bmnw.init.BMNWParticleTypes;
+import nl.melonstudios.bmnw.particle.FireTrailParticle;
 import org.joml.Quaternionf;
 
 import java.util.ArrayList;
@@ -101,10 +103,13 @@ public class MeteoriteEntity extends Entity {
             }
             this.kill();
         } else {
-            this.level().addParticle(
-                    BMNWParticleTypes.FIRE_TRAIL.get(),
-                    getX(), getY(), getZ(), 0, 0, 0
-            );
+            if (this.level() instanceof ClientLevel level) {
+                for (int i = 0; i < 4; i++) {
+                    level.addParticle(BMNWParticleTypes.FIRE_TRAIL.get(),
+                            this.xo, this.yo+i, this.zo,
+                            random.nextDouble() * 0.2 - 0.1, random.nextDouble() * 0.05, random.nextDouble() * 0.2 - 0.1);
+                }
+            }
             this.move(MoverType.SELF, new Vec3(courseX, -4, courseZ));
         }
     }

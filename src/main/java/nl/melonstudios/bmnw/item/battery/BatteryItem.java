@@ -17,6 +17,19 @@ public class BatteryItem extends Item implements IBatteryItem {
         this.maxTransfer = maxTransfer;
     }
 
+    private static String formatNicely(int rf) {
+        if (rf > 1000000000) {
+            return Mth.quantize((rf / 1000000000.0F) * 100.0F, 1) / 100.0F + "GRF";
+        }
+        if (rf > 1000000) {
+            return Mth.quantize((rf / 1000000.0F) * 100.0F, 1) / 100.0F + "MRF";
+        }
+        if (rf > 1000) {
+            return Mth.quantize((rf / 1000.0F) * 100.0F, 1) / 100.0F + "kRF";
+        }
+        return String.valueOf(rf);
+    }
+
     private static final boolean b = true;
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
@@ -27,15 +40,7 @@ public class BatteryItem extends Item implements IBatteryItem {
         final int nrg = getStoredEnergy(stack);
         final int maxNRG = getMaxStoredEnergy();
         if (b) {
-            if (maxNRG >= giga) {
-                tooltipComponents.add(Component.literal(String.format("%s/%sGRF", formatNicely(nrg, maxNRG), formatNicely(maxNRG, maxNRG))).withColor(0xaaaaaa));
-            } else if (maxNRG >= mega) {
-                tooltipComponents.add(Component.literal(String.format("%s/%sMRF", formatNicely(nrg, maxNRG), formatNicely(maxNRG, maxNRG))).withColor(0xaaaaaa));
-            } else if (maxNRG >= kilo * 5) {
-                tooltipComponents.add(Component.literal(String.format("%s/%skRF", formatNicely(nrg, maxNRG), formatNicely(maxNRG, maxNRG))).withColor(0xaaaaaa));
-            } else {
-                tooltipComponents.add(Component.literal(String.format("%s/%sRF", nrg, maxNRG)).withColor(0xaaaaaa));
-            }
+            tooltipComponents.add(Component.literal(String.format("%s/%sRF", formatNicely(nrg), formatNicely(maxNRG))).withColor(0xaaaaaa));
         } else {
             tooltipComponents.add(Component.literal(String.format("%s/%sRF", nrg, maxNRG)).withColor(0xaaaaaa));
         }

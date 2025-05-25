@@ -45,29 +45,17 @@ public class BMNWSounds {
             () -> SoundEvent.createFixedRangeEvent(ResourceLocation.fromNamespaceAndPath("bmnw", "bomb_3"), 64)
     );
 
-    public static final DeferredHolder<SoundEvent, SoundEvent> DOOR_LOL_OPEN = SOUND_EVENTS.register(
-            "door_lol_open",
-            () -> SoundEvent.createFixedRangeEvent(BMNW.namespace("door_lol_open"), 16)
-    );
-    public static final DeferredHolder<SoundEvent, SoundEvent> DOOR_LOL_CLOSE = SOUND_EVENTS.register(
-            "door_lol_close",
-            () -> SoundEvent.createFixedRangeEvent(BMNW.namespace("door_lol_close"), 16)
-    );
+    public static final DeferredHolder<SoundEvent, SoundEvent> DOOR_LOL_OPEN = createDefaultSound("door_lol_open");
+    public static final DeferredHolder<SoundEvent, SoundEvent> DOOR_LOL_CLOSE = createDefaultSound("door_lol_close");
 
-    public static final DeferredHolder<SoundEvent, SoundEvent> DOOR_LOL_3 = SOUND_EVENTS.register(
-            "door_lol_3",
-            () -> SoundEvent.createFixedRangeEvent(BMNW.namespace("door_lol_3"), 16)
-    );
+    public static final DeferredHolder<SoundEvent, SoundEvent> DOOR_LOL_3 = createDefaultSound("door_lol_3");
 
     public static final DeferredHolder<SoundEvent, SoundEvent> GENERIC_GUNSHOT = SOUND_EVENTS.register(
             "generic_gunshot",
             () -> SoundEvent.createFixedRangeEvent(BMNW.namespace("generic_gunshot"), 64)
     );
 
-    public static final DeferredHolder<SoundEvent, SoundEvent> HATCH_OPEN = SOUND_EVENTS.register(
-            "hatch_open",
-            () -> SoundEvent.createFixedRangeEvent(BMNW.namespace("hatch_open"), 16)
-    );
+    public static final DeferredHolder<SoundEvent, SoundEvent> HATCH_OPEN = createDefaultSound("hatch_open");
     public static final DeferredHolder<SoundEvent, SoundEvent> HATCH_CLOSE = createDefaultSound("hatch_close");
 
     public static final DeferredHolder<SoundEvent, SoundEvent> HATCH_OPEN_FULL = createDefaultSound("hatch_open_full");
@@ -77,15 +65,34 @@ public class BMNWSounds {
     public static final DeferredHolder<SoundEvent, SoundEvent> METAL_LOCKABLE_DOOR_CLOSE = createDefaultSound("metal_lock_door_close");
     public static final DeferredHolder<SoundEvent, SoundEvent> LOCK = createDefaultSound("lock");
 
+    public static final DeferredHolder<SoundEvent, SoundEvent> METAL_SLIDING_DOOR = createDefaultSound("metal_sliding_door");
+
     public static final DeferredHolder<SoundEvent, SoundEvent> SLIDING_BLAST_DOOR_OPEN =
             createDefaultSound("sliding_blast_door_open");
     public static final DeferredHolder<SoundEvent, SoundEvent> SLIDING_BLAST_DOOR_CLOSE =
             createDefaultSound("sliding_blast_door_close");
 
+    public static final DeferredHolder<SoundEvent, SoundEvent> LARGE_DOOR_OPEN =
+            createDefaultSound("large_door_open");
+    public static final DeferredHolder<SoundEvent, SoundEvent> LARGE_DOOR_CLOSE =
+            createDefaultSound("large_door_close");
+
+    public static final DeferredHolder<SoundEvent, SoundEvent> METAL_RODS_LOWER =
+            createDefaultSound("metal_rods_lower");
+    public static final DeferredHolder<SoundEvent, SoundEvent> METAL_RODS_ELEVATE =
+            createDefaultSound("metal_rods_elevate");
+    public static final DeferredHolder<SoundEvent, SoundEvent> SMALL_MACHINE_ROTATE =
+            createDefaultSound("small_machine_rotate");
+
+    public static final DeferredHolder<SoundEvent, SoundEvent> AMBIENT_LARGE_GENERATOR_IN_OFF =
+            createDefaultSound("ambient.large_generator_in_off");
+    public static final DeferredHolder<SoundEvent, SoundEvent> AMBIENT_LARGE_GENERATOR_IN_ON =
+            createDefaultSound("ambient.large_generator_in_on");
+
     private static DeferredHolder<SoundEvent, SoundEvent> createDefaultSound(String name) {
         return SOUND_EVENTS.register(
                 name,
-                () -> SoundEvent.createFixedRangeEvent(BMNW.namespace(name), 16)
+                () -> SoundEvent.createVariableRangeEvent(BMNW.namespace(name))
         );
     }
 

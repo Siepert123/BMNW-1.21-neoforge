@@ -436,6 +436,8 @@ public class BMNWItems {
             () -> new BlockItem(BMNWBlocks.SEALED_HATCH.get(), new Item.Properties()));
     public static final DeferredItem<DoubleHighBlockItem> METAL_LOCKABLE_DOOR = ITEMS.register("metal_lock_door",
             () -> new DoubleHighBlockItem(BMNWBlocks.METAL_LOCKABLE_DOOR.get(), new Item.Properties()));
+    public static final DeferredItem<DoubleHighBlockItem> METAL_SLIDING_DOOR = ITEMS.register("metal_sliding_door",
+            () -> new DoubleHighBlockItem(BMNWBlocks.METAL_SLIDING_DOOR.get(), new Item.Properties()));
 
     //endregion
 

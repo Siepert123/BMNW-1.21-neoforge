@@ -33,6 +33,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.client.event.*;
+import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.common.data.AdvancementProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
@@ -394,6 +395,7 @@ public class BMNWEventBus {
             registerBlockEntityRenderingHandler(event, BMNWBlockEntities.SLIDING_BLAST_DOOR, SlidingBlastDoorRenderer::new);
             registerBlockEntityRenderingHandler(event, BMNWBlockEntities.SEALED_HATCH, SealedHatchRenderer::new);
             registerBlockEntityRenderingHandler(event, BMNWBlockEntities.METAL_LOCKABLE_DOOR, MetalLockableDoorRenderer::new);
+            registerBlockEntityRenderingHandler(event, BMNWBlockEntities.METAL_SLIDING_DOOR, MetalSlidingDoorRenderer::new);
             registerBlockEntityRenderingHandler(event, BMNWBlockEntities.PRESS, PressRenderer::new);
         }
 
@@ -488,6 +490,11 @@ public class BMNWEventBus {
                     PacketSealedHatch::handle
             );
             registrar.playToClient(
+                    PacketSetOpenDoor.TYPE,
+                    PacketSetOpenDoor.STREAM_CODEC,
+                    PacketSetOpenDoor::handle
+            );
+            registrar.playToClient(
                     PacketSlidingBlastDoor.TYPE,
                     PacketSlidingBlastDoor.STREAM_CODEC,
                     PacketSlidingBlastDoor::handle
@@ -508,6 +515,12 @@ public class BMNWEventBus {
         @OnlyIn(Dist.CLIENT)
         public static void registerColorHandlersItem(RegisterColorHandlersEvent.Item event) {
             event.register(new FireMarbleColorizer(), BMNWItems.FIRE_MARBLE);
+        }
+
+        @SubscribeEvent
+        @OnlyIn(Dist.CLIENT)
+        public static void registerClientExtensions(RegisterClientExtensionsEvent event) {
+
         }
     }
 }

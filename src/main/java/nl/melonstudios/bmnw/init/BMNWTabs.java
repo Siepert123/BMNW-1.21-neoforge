@@ -150,6 +150,7 @@ public class BMNWTabs {
                         items.accept(SLIDING_BLAST_DOOR);
                         items.accept(SEALED_HATCH);
                         items.accept(METAL_LOCKABLE_DOOR);
+                        items.accept(METAL_SLIDING_DOOR);
 
                         addItems(items,
                                 CHAINLINK_FENCE,

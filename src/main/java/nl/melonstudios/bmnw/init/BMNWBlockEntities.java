@@ -89,6 +89,14 @@ public class BMNWBlockEntities {
                     null
             )
     );
+    public static final Supplier<BlockEntityType<MetalSlidingDoorBlockEntity>> METAL_SLIDING_DOOR = BLOCK_ENTITIES.register(
+            "metal_sliding_door",
+            () -> new BlockEntityType<>(
+                    MetalSlidingDoorBlockEntity::new,
+                    Set.of(BMNWBlocks.METAL_SLIDING_DOOR.get()),
+                    null
+            )
+    );
 
     public static final Supplier<BlockEntityType<MachineScrapBlockEntity>> MACHINE_SCRAP = BLOCK_ENTITIES.register(
             "machine_scrap",

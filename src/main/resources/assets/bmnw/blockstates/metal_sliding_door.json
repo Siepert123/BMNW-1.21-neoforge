@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "upper_half=false,facing=south": {
+      "model": "bmnw:block/metal_sliding_door_lower"
+    },
+    "upper_half=false,facing=north": {
+      "model": "bmnw:block/metal_sliding_door_lower",
+      "y": 180
+    },
+    "upper_half=false,facing=east": {
+      "model": "bmnw:block/metal_sliding_door_lower",
+      "y": 270
+    },
+    "upper_half=false,facing=west": {
+      "model": "bmnw:block/metal_sliding_door_lower",
+      "y": 90
+    },
+    "upper_half=true,facing=south": {
+      "model": "bmnw:block/metal_sliding_door_upper"
+    },
+    "upper_half=true,facing=north": {
+      "model": "bmnw:block/metal_sliding_door_upper",
+      "y": 180
+    },
+    "upper_half=true,facing=east": {
+      "model": "bmnw:block/metal_sliding_door_upper",
+      "y": 270
+    },
+    "upper_half=true,facing=west": {
+      "model": "bmnw:block/metal_sliding_door_upper",
+      "y": 90
+    }
+  }
+}

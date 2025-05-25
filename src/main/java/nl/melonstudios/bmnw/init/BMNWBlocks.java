@@ -21,10 +21,7 @@ import nl.melonstudios.bmnw.block.decoration.*;
 import nl.melonstudios.bmnw.block.defense.BarbedWireBlock;
 import nl.melonstudios.bmnw.block.defense.ChainlinkFenceBlock;
 import nl.melonstudios.bmnw.block.defense.ReinforcedGlassBlock;
-import nl.melonstudios.bmnw.block.doors.HatchBlock;
-import nl.melonstudios.bmnw.block.doors.MetalLockableDoorBlock;
-import nl.melonstudios.bmnw.block.doors.SealedHatchBlock;
-import nl.melonstudios.bmnw.block.doors.SlidingBlastDoorBlock;
+import nl.melonstudios.bmnw.block.doors.*;
 import nl.melonstudios.bmnw.block.machines.*;
 import nl.melonstudios.bmnw.block.misc.*;
 import nl.melonstudios.bmnw.block.settype.BMNWBlockSetType;
@@ -332,6 +329,8 @@ public class BMNWBlocks {
             () -> new SealedHatchBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get()).noOcclusion()));
     public static final DeferredBlock<MetalLockableDoorBlock> METAL_LOCKABLE_DOOR = BLOCKS.register("metal_lock_door",
             () -> new MetalLockableDoorBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get()).noOcclusion()));
+    public static final DeferredBlock<MetalSlidingDoorBlock> METAL_SLIDING_DOOR = BLOCKS.register("metal_sliding_door",
+            () -> new MetalSlidingDoorBlock(BlockBehaviour.Properties.ofFullCopy(METAL_LOCKABLE_DOOR.get()).noOcclusion()));
 
     //endregion
 

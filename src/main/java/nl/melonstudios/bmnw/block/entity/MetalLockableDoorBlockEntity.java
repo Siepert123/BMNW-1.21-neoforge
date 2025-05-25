@@ -12,12 +12,13 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.AABB;
 import net.neoforged.neoforge.network.PacketDistributor;
 import nl.melonstudios.bmnw.init.BMNWBlockEntities;
+import nl.melonstudios.bmnw.interfaces.IOpenDoor;
 import nl.melonstudios.bmnw.interfaces.ITickable;
 import nl.melonstudios.bmnw.misc.math.Easing;
 import nl.melonstudios.bmnw.wifi.PacketMetalLockableDoor;
 import org.jetbrains.annotations.Nullable;
 
-public class MetalLockableDoorBlockEntity extends BlockEntity implements ITickable {
+public class MetalLockableDoorBlockEntity extends BlockEntity implements ITickable, IOpenDoor {
     public static final int HANDLE_TURN_TICKS = 20;
     public static final int DOOR_TURN_TICKS = 60;
     public MetalLockableDoorBlockEntity(BlockPos pos, BlockState blockState) {

@@ -17,10 +17,9 @@ import nl.melonstudios.bmnw.block.doors.SealedHatchBlock;
 import nl.melonstudios.bmnw.cfg.BMNWClientConfig;
 import nl.melonstudios.bmnw.init.BMNWBlockEntities;
 import nl.melonstudios.bmnw.interfaces.ITickable;
+import nl.melonstudios.bmnw.misc.RandomHelper;
 import nl.melonstudios.bmnw.wifi.PacketSealedHatch;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.Random;
 
 public class SealedHatchBlockEntity extends BlockEntity implements ITickable {
     public static final int HATCH_VALVE_OPEN_TICKS = 50;
@@ -30,13 +29,19 @@ public class SealedHatchBlockEntity extends BlockEntity implements ITickable {
     public SealedHatchBlockEntity(BlockPos pos, BlockState blockState) {
         super(BMNWBlockEntities.SEALED_HATCH.get(), pos, blockState);
 
-        this.valveOffset = new Random(pos.asLong()).nextFloat() * 360;
+        this.valveOffset = RandomHelper.nextFloat(pos.asLong(), 2) * 360;
     }
 
     @Override
     public void setLevel(Level level) {
         super.setLevel(level);
-        this.valveOffset = new Random(this.worldPosition.asLong()).nextFloat() * 360;
+        this.valveOffset = RandomHelper.nextFloat(this.worldPosition.asLong(), 2) * 360;
+    }
+
+    @Override
+    public void setRemoved() {
+        super.setRemoved();
+        this.invalidateBB();
     }
 
     public int valveTicks = -1;
