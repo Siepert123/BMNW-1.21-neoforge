@@ -36,7 +36,7 @@ public class MetalSlidingDoorRenderer implements BlockEntityRenderer<MetalSlidin
                 0.5F, 0.0F, 0.5F);
 
         float door = blockEntity.getDoor(partialTick) * (state.getValue(BMNWStateProperties.MIRRORED) ? -1 : 1);
-        poseStack.translate(door, 0, 0);
+        poseStack.translate(-door, 0, 0);
 
         BakedModel model = BMNWPartialModels.METAL_SLIDING_DOOR.loadAndGet();
         this.renderBakedModel(bufferSource.getBuffer(RenderType.SOLID), poseStack.last(), model,

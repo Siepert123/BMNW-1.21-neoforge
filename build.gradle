@@ -63,7 +63,10 @@ neoForge {
     runs {
         client {
             client()
-
+            programArgument "--username"
+            programArgument "Siepert"
+            programArgument "--uuid"
+            programArgument "8bec9039-e15c-46d8-bcaf-a1815ca362df"
             // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
             systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
         }
