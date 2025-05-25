@@ -59,7 +59,7 @@ public class SealedHatchRenderer implements BlockEntityRenderer<SealedHatchBlock
         this.renderBakedModel(poseStack, consumer, poseStack.last(), sealed_hatch, rnd, RenderType.SOLID, packedLight, packedOverlay);
 
         poseStack.rotateAround(new Quaternionf().rotateY(
-                (float) Math.toRadians(blockEntity.valveOffset + 720.0f * Easing.IN_OUT_QUAD.ease(blockEntity.getValve(partialTick)))
+                (float) Math.toRadians(blockEntity.getValveOffset() + 720.0f * Easing.IN_OUT_QUAD.ease(blockEntity.getValve(partialTick)))
         ), 0.5F, 0, 0.5F);
         this.renderBakedModel(poseStack, consumer, poseStack.last(), valve_handle_double, rnd, RenderType.SOLID, packedLight, packedOverlay);
 

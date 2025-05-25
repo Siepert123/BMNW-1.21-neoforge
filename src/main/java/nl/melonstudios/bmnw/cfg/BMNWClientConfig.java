@@ -23,11 +23,18 @@ public class BMNWClientConfig {
         }
     }
 
+    private static final ModConfigSpec.BooleanValue ENABLE_RANDOM_ROTATION_OFFSETS = BUILDER
+            .comment("Whether to rotate some parts of animation blocks a random angle")
+            .comment("Example: Sealed Hatch valve handle")
+            .define("enableRandomRotationOffsets", true);
+
     public static final ModConfigSpec SPEC = BUILDER.build();
 
     public static HazardInfoLevel hazardInfoLevel;
+    public static boolean enableRandomRotationOffsets;
 
     public static void onLoad(final ModConfigEvent event) {
         hazardInfoLevel = HAZARD_INFO_LEVEL.get();
+        enableRandomRotationOffsets = ENABLE_RANDOM_ROTATION_OFFSETS.get();
     }
 }

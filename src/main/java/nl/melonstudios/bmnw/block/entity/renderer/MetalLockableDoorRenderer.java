@@ -41,23 +41,31 @@ public class MetalLockableDoorRenderer implements BlockEntityRenderer<MetalLocka
         if (state.getValue(MetalLockableDoorBlock.UPPER_HALF)) return;
         RandomSource rnd = RandomSource.create();
         poseStack.pushPose();
-
-        poseStack.rotateAround(new Quaternionf().rotateY((float)Math.toRadians(-state.getValue(MetalLockableDoorBlock.FACING).toYRot())),
+        poseStack.rotateAround(new Quaternionf().rotateY((float) Math.toRadians(-state.getValue(MetalLockableDoorBlock.FACING).toYRot())),
                 0.5F, 0, 0.5F);
-
-        VertexConsumer consumer = bufferSource.getBuffer(RenderType.SOLID);
 
         BakedModel door = BMNWPartialModels.METAL_LOCKABLE_DOOR.loadAndGet();
         BakedModel handle = BMNWPartialModels.METAL_DOOR_HANDLE.loadAndGet();
 
-        poseStack.rotateAround(new Quaternionf().rotateY((float)Math.toRadians(-90*blockEntity.getDoor(partialTick))),
-                0.0625F, 0.0F, 0.0625F);
-        this.renderBakedModel(poseStack, consumer, poseStack.last(), door, rnd, RenderType.SOLID, packedLight, packedOverlay);
-        poseStack.translate(0.0F, 0.5F, 0.0F);
-        poseStack.rotateAround(new Quaternionf().rotateZ((float)Math.toRadians(90*blockEntity.getHandle(partialTick))),
-                0.5F, 0.5F, 0.5F);
-        this.renderBakedModel(poseStack, consumer, poseStack.last(), handle, rnd, RenderType.SOLID, packedLight, packedOverlay);
+        VertexConsumer consumer = bufferSource.getBuffer(RenderType.SOLID);
 
+        if (state.getValue(MetalLockableDoorBlock.MIRRORED)) {
+            poseStack.rotateAround(new Quaternionf().rotateY((float) Math.toRadians(90 * blockEntity.getDoor(partialTick))),
+                    1-0.0625F, 0.0F, 0.0625F);
+            this.renderBakedModel(poseStack, consumer, poseStack.last(), door, rnd, RenderType.SOLID, packedLight, packedOverlay);
+            poseStack.translate(0.0F, 0.5F, 0.0F);
+            poseStack.rotateAround(new Quaternionf().rotateZ((float) Math.toRadians(90 * (1.0F-blockEntity.getHandle(partialTick)))),
+                    0.5F, 0.5F, 0.5F);
+            this.renderBakedModel(poseStack, consumer, poseStack.last(), handle, rnd, RenderType.SOLID, packedLight, packedOverlay);
+        } else {
+            poseStack.rotateAround(new Quaternionf().rotateY((float) Math.toRadians(-90 * blockEntity.getDoor(partialTick))),
+                    0.0625F, 0.0F, 0.0625F);
+            this.renderBakedModel(poseStack, consumer, poseStack.last(), door, rnd, RenderType.SOLID, packedLight, packedOverlay);
+            poseStack.translate(0.0F, 0.5F, 0.0F);
+            poseStack.rotateAround(new Quaternionf().rotateZ((float) Math.toRadians(90 * blockEntity.getHandle(partialTick))),
+                    0.5F, 0.5F, 0.5F);
+            this.renderBakedModel(poseStack, consumer, poseStack.last(), handle, rnd, RenderType.SOLID, packedLight, packedOverlay);
+        }
         poseStack.popPose();
     }
 

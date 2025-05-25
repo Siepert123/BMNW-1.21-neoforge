@@ -1,9 +1,10 @@
 {
+	"credit": "Made with Blockbench",
 	"render_type": "cutout",
 	"textures": {
+		"particle": "bmnw:block/steel_block",
 		"steel": "bmnw:block/steel_block",
-		"emitter": "block/redstone_torch",
-		"particle": "bmnw:block/steel_block"
+		"emitter": "block/redstone_torch"
 	},
 	"elements": [
 		{
@@ -119,6 +120,7 @@
 			"name": "torch",
 			"from": [0, 6, -3],
 			"to": [2, 10, 2],
+			"light_emission": 7,
 			"rotation": {"angle": 45, "axis": "y", "origin": [1, 8, 1]},
 			"faces": {
 				"east": {"uv": [6, 5, 10, 10], "rotation": 90, "texture": "#emitter"},
@@ -129,6 +131,7 @@
 			"name": "torch",
 			"from": [-1, 7, -3],
 			"to": [3, 9, 2],
+			"light_emission": 7,
 			"rotation": {"angle": 45, "axis": "y", "origin": [1, 8, 1]},
 			"faces": {
 				"up": {"uv": [6, 5, 10, 10], "texture": "#emitter"},
@@ -139,6 +142,7 @@
 			"name": "torch",
 			"from": [0, 7, -2],
 			"to": [2, 9, 0],
+			"light_emission": 7,
 			"rotation": {"angle": 45, "axis": "y", "origin": [1, 8, 1]},
 			"faces": {
 				"north": {"uv": [7, 6, 9, 8], "texture": "#emitter"}

@@ -28,6 +28,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -43,6 +44,7 @@ public class MetalLockableDoorBlock extends HorizontalDirectionalBlock implement
     public static final BooleanProperty OPEN = BlockStateProperties.OPEN;
     public static final BooleanProperty UPPER_HALF = SlidingBlastDoorBlock.UPPER_HALF;
     public static final BooleanProperty LOCKED = BooleanProperty.create("locked");
+    public static final BooleanProperty MIRRORED = BooleanProperty.create("mirrored");
 
     protected static final float AABB_DOOR_THICKNESS = 2.0F;
     protected static final VoxelShape SOUTH_AABB = Block.box(0.0, 0.0, 0.0, 16.0, 16.0, AABB_DOOR_THICKNESS);
@@ -57,7 +59,8 @@ public class MetalLockableDoorBlock extends HorizontalDirectionalBlock implement
                 .setValue(FACING, Direction.NORTH)
                 .setValue(OPEN, false)
                 .setValue(UPPER_HALF, false)
-                .setValue(LOCKED, false));
+                .setValue(LOCKED, false)
+                .setValue(MIRRORED, false));
     }
 
     @Override
@@ -67,6 +70,7 @@ public class MetalLockableDoorBlock extends HorizontalDirectionalBlock implement
         builder.add(OPEN);
         builder.add(UPPER_HALF);
         builder.add(LOCKED);
+        builder.add(MIRRORED);
     }
 
     @Override
@@ -74,13 +78,15 @@ public class MetalLockableDoorBlock extends HorizontalDirectionalBlock implement
         Direction facing = state.getValue(FACING);
         boolean upper = state.getValue(UPPER_HALF);
         boolean open = state.getValue(OPEN);
+        boolean mirrored = state.getValue(MIRRORED);
         BlockPos bePos = upper ? pos.below() : pos;
         BlockEntity be = level.getBlockEntity(bePos);
         if (be instanceof MetalLockableDoorBlockEntity door) {
-            if (door.surpassedHalfDoorAnim()) return open ? getShape(facing.getCounterClockWise()) : getShape(facing);
-            else return open ? getShape(facing) : getShape(facing.getCounterClockWise());
+            if (door.surpassedHalfDoorAnim()) return open ?
+                    getShape(mirrored ? facing.getClockWise() : facing.getCounterClockWise()) : getShape(facing);
+            else return open ? getShape(facing) : getShape(mirrored ? facing.getClockWise() : facing.getCounterClockWise());
         }
-        return open ? getShape(facing.getCounterClockWise()) : getShape(facing);
+        return open ? getShape(mirrored ? facing.getClockWise() : facing.getCounterClockWise()) : getShape(facing);
     }
 
     private static VoxelShape getShape(Direction facing) {
@@ -140,10 +146,13 @@ public class MetalLockableDoorBlock extends HorizontalDirectionalBlock implement
         BlockPos pos = context.getClickedPos();
         Level level = context.getLevel();
         if (pos.getY() < level.getMaxBuildHeight() - 1 && level.getBlockState(pos.above()).canBeReplaced(context)) {
+            Vec3 location = context.getClickLocation().subtract(pos.getX(), pos.getY(), pos.getZ());
+            Direction dir = context.getHorizontalDirection();
             return this.defaultBlockState()
-                    .setValue(FACING, context.getHorizontalDirection())
+                    .setValue(FACING, dir)
                     .setValue(OPEN, false)
-                    .setValue(UPPER_HALF, false);
+                    .setValue(UPPER_HALF, false)
+                    .setValue(MIRRORED, dir.getAxis().choose(location.z, 1, location.x) < 0.5);
         }
         return null;
     }
@@ -233,6 +242,6 @@ public class MetalLockableDoorBlock extends HorizontalDirectionalBlock implement
 
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-        tooltipComponents.add(Component.translatable("block.bmnw.metal_lock_door.desc"));
+        tooltipComponents.add(Component.translatable("block.bmnw.metal_lock_door.desc").withColor(0x888888));
     }
 }

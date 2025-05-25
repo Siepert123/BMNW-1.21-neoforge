@@ -6,11 +6,15 @@ import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.network.PacketDistributor;
 import nl.melonstudios.bmnw.block.doors.SealedHatchBlock;
+import nl.melonstudios.bmnw.cfg.BMNWClientConfig;
 import nl.melonstudios.bmnw.init.BMNWBlockEntities;
 import nl.melonstudios.bmnw.interfaces.ITickable;
 import nl.melonstudios.bmnw.wifi.PacketSealedHatch;
@@ -29,11 +33,22 @@ public class SealedHatchBlockEntity extends BlockEntity implements ITickable {
         this.valveOffset = new Random(pos.asLong()).nextFloat() * 360;
     }
 
+    @Override
+    public void setLevel(Level level) {
+        super.setLevel(level);
+        this.valveOffset = new Random(this.worldPosition.asLong()).nextFloat() * 360;
+    }
+
     public int valveTicks = -1;
     public int turnTicks = -1;
     public int animationTicks = 0;
     public boolean open = this.getBlockState().getValue(SealedHatchBlock.OPEN);
-    public final float valveOffset;
+    private float valveOffset;
+
+    @OnlyIn(Dist.CLIENT)
+    public float getValveOffset() {
+        return BMNWClientConfig.enableRandomRotationOffsets ? this.valveOffset : 0.0F;
+    }
 
     @Nullable
     @Override
