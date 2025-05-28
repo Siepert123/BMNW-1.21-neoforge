@@ -9,8 +9,4 @@ import java.util.List;
 //Basically a deprecation list to notify in game users
 public class DiscardList {
     public static final List<Item> toDiscard = new ArrayList<>();
-
-    static {
-        toDiscard.add(BMNWItems.HATCH_LID.asItem());
-    }
 }

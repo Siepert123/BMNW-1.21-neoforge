@@ -37,6 +37,7 @@ public class BMNWServerConfig {
     public static boolean enableExcavationVeinDepletion;
 
     public static void onLoad(final ModConfigEvent event) {
+        if (event instanceof ModConfigEvent.Unloading) return;
         if (event.getConfig().getType() == ModConfig.Type.CLIENT) return;
         radiationSetting = RADIATION_SETTING.get();
         enableExcavationVeinDepletion = ENABLE_EXCAVATION_VEIN_DEPLETION.get();

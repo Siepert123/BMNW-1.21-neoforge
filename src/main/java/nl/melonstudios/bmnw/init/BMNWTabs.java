@@ -146,6 +146,7 @@ public class BMNWTabs {
                         items.accept(ANTENNA_TOP);
 
                         items.accept(OFFICE_DOOR);
+                        items.accept(BUNKER_DOOR);
 
                         items.accept(SLIDING_BLAST_DOOR);
                         items.accept(SEALED_HATCH);
@@ -307,7 +308,6 @@ public class BMNWTabs {
                         items.accept(ADVANCED_CIRCUIT);
 
                         items.accept(PRESSING_PART);
-                        items.accept(HATCH_LID);
                         //endregion
                     })
                     .build()

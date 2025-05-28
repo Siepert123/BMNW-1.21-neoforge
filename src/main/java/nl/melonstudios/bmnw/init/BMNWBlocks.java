@@ -270,9 +270,6 @@ public class BMNWBlocks {
             () -> new AntennaDishBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_DECO_BLOCK.get()).noOcclusion()));
     public static final DeferredBlock<AntennaTopBlock> ANTENNA_TOP = BLOCKS.register("antenna_top",
             () -> new AntennaTopBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_DECO_BLOCK.get()).noOcclusion()));
-
-    public static final DeferredBlock<DoorBlock> OFFICE_DOOR = BLOCKS.register("office_door",
-            () -> new DoorBlock(BMNWBlockSetType.DOOR_LOL, BlockBehaviour.Properties.ofFullCopy(STEEL_DECO_BLOCK.get()).noOcclusion()));
     //endregion
 
     //region Basic defense
@@ -322,6 +319,11 @@ public class BMNWBlocks {
     //endregion
 
     //region Doors & hatches
+
+    public static final DeferredBlock<DoorBlock> OFFICE_DOOR = BLOCKS.register("office_door",
+            () -> new DoorBlock(BMNWBlockSetType.DOOR_LOL, BlockBehaviour.Properties.ofFullCopy(STEEL_DECO_BLOCK.get()).noOcclusion()));
+    public static final DeferredBlock<DoorBlock> BUNKER_DOOR = BLOCKS.register("bunker_door",
+            () -> new DoorBlock(BMNWBlockSetType.DOOR_LOL, BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get()).noOcclusion()));
 
     public static final DeferredBlock<SlidingBlastDoorBlock> SLIDING_BLAST_DOOR = BLOCKS.register("sliding_blast_door",
             () -> new SlidingBlastDoorBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get()).noOcclusion()));

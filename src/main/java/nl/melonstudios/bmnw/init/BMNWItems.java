@@ -406,9 +406,6 @@ public class BMNWItems {
             () -> new BlockItem(BMNWBlocks.ANTENNA_DISH.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> ANTENNA_TOP = ITEMS.register("antenna_top",
             () -> new BlockItem(BMNWBlocks.ANTENNA_TOP.get(), new Item.Properties()));
-
-    public static final DeferredItem<DoubleHighBlockItem> OFFICE_DOOR = ITEMS.register("office_door",
-            () -> new DoubleHighBlockItem(BMNWBlocks.OFFICE_DOOR.get(), new Item.Properties()));
     //endregion
 
     //region Basic defense
@@ -427,9 +424,11 @@ public class BMNWItems {
     //endregion
 
     //region Doors & hatches
+    public static final DeferredItem<DoubleHighBlockItem> OFFICE_DOOR = ITEMS.register("office_door",
+            () -> new DoubleHighBlockItem(BMNWBlocks.OFFICE_DOOR.get(), new Item.Properties()));
+    public static final DeferredItem<DoubleHighBlockItem> BUNKER_DOOR = ITEMS.register("bunker_door",
+            () -> new DoubleHighBlockItem(BMNWBlocks.BUNKER_DOOR.get(), new Item.Properties()));
 
-    public static final DeferredItem<Item> HATCH_LID = ITEMS.register("hatch_lid",
-            () -> new Item(new Item.Properties()));
     public static final DeferredItem<DoubleHighBlockItem> SLIDING_BLAST_DOOR = ITEMS.register("sliding_blast_door",
             () -> new DoubleHighBlockItem(BMNWBlocks.SLIDING_BLAST_DOOR.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> SEALED_HATCH = ITEMS.register("sealed_hatch",

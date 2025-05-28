@@ -1,0 +1,8 @@
+{
+  "render_type": "cutout",
+  "parent": "minecraft:block/door_top_left_open",
+  "textures": {
+    "bottom": "bmnw:block/bunker_door_bottom",
+    "top": "bmnw:block/bunker_door_top"
+  }
+}

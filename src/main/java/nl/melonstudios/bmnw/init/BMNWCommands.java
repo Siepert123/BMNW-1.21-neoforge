@@ -1,6 +1,7 @@
 package nl.melonstudios.bmnw.init;
 
 import com.mojang.brigadier.Command;
+import com.mojang.brigadier.arguments.FloatArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import net.minecraft.ChatFormatting;
@@ -11,15 +12,14 @@ import net.minecraft.commands.arguments.ResourceLocationArgument;
 import net.minecraft.commands.arguments.coordinates.BlockPosArgument;
 import net.minecraft.commands.arguments.coordinates.WorldCoordinates;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.ClickEvent;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.ComponentUtils;
-import net.minecraft.network.chat.HoverEvent;
+import net.minecraft.network.chat.*;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.network.PacketDistributor;
 import nl.melonstudios.bmnw.entity.MeteoriteEntity;
 import nl.melonstudios.bmnw.hardcoded.recipe.PressingRecipes;
 import nl.melonstudios.bmnw.hardcoded.structure.Structures;
@@ -27,6 +27,7 @@ import nl.melonstudios.bmnw.hazard.radiation.ChunkRadiationManager;
 import nl.melonstudios.bmnw.interfaces.IBatteryItem;
 import nl.melonstudios.bmnw.misc.Books;
 import nl.melonstudios.bmnw.misc.FireMarbleManager;
+import nl.melonstudios.bmnw.wifi.PacketSendShockwave;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -254,6 +255,30 @@ public class BMNWCommands {
                                     );
                                     return Command.SINGLE_SUCCESS;
                                 })
+                        ).then(Commands.literal("shockwave")
+                                .then(Commands.argument("x", FloatArgumentType.floatArg())
+                                        .then(Commands.argument("z", FloatArgumentType.floatArg())
+                                                .then(Commands.argument("max", IntegerArgumentType.integer(1))
+                                                        .executes(context -> {
+                                                            float x = context.getArgument("x", Float.class);
+                                                            float z = context.getArgument("z", Float.class);
+                                                            int max = context.getArgument("max", Integer.class);
+                                                            ServerLevel level = context.getSource().getLevel();
+                                                            PacketDistributor.sendToPlayersInDimension(
+                                                                    level,
+                                                                    new PacketSendShockwave(level.getGameTime(), x, z, max)
+                                                            );
+                                                            context.getSource().sendSuccess(
+                                                                    () -> Component.literal(
+                                                                            String.format("Sent shockwave to X:%s Z:%s (max radius: %s)", x, z, max)
+                                                                    ).withStyle(Style.EMPTY.withColor(0x88FF88)),
+                                                                    true
+                                                            );
+                                                            return Command.SINGLE_SUCCESS;
+                                                        })
+                                                )
+                                        )
+                                )
                         )
                 )
         );

@@ -23,18 +23,79 @@ public class BMNWClientConfig {
         }
     }
 
+    static {
+        BUILDER.push("Graphics");
+    }
+
     private static final ModConfigSpec.BooleanValue ENABLE_RANDOM_ROTATION_OFFSETS = BUILDER
             .comment("Whether to rotate some parts of animation blocks a random angle")
             .comment("Example: Sealed Hatch valve handle")
             .define("enableRandomRotationOffsets", true);
 
+    private static final ModConfigSpec.EnumValue<MushroomCloudRenderType> MUSHROOM_CLOUD_RENDER_TYPE = BUILDER
+            .comment("The rendering method for mushroom clouds")
+            .comment("SPRITE_2D is the fastest but looks kinda weird")
+            .comment("MODEL_3D looks good and is not very impactful on performance")
+            .comment("PARTICLES looks the best but could impact performance on weaker devices")
+            .defineEnum("mushroomCloudRenderType", MushroomCloudRenderType.MODEL_3D);
+    public enum MushroomCloudRenderType {
+        SPRITE_2D,
+        MODEL_3D,
+        PARTICLES;
+
+        public <T> T choose(T sprite_2d, T model_3d, T particles) {
+            return switch (this) {
+                case SPRITE_2D -> sprite_2d;
+                case MODEL_3D -> model_3d;
+                case PARTICLES -> particles;
+            };
+        }
+    }
+
+    private static final ModConfigSpec.EnumValue<ExplosionFlashRenderType> EXPLOSION_FLASH_RENDER_TYPE = BUILDER
+            .comment("The rendering method for the bright explosion flash")
+            .comment("SPRITE_2D is quite fast but doesn't look as fancy")
+            .comment("ENDER_DRAGON looks quite good but interacts oddly with transparent blocks")
+            .defineEnum("explosionFlashRenderType", ExplosionFlashRenderType.SPRITE_2D);
+    public enum ExplosionFlashRenderType {
+        SPRITE_2D,
+        ENDER_DRAGON;
+
+        public <T> T choose(T sprite_2d, T ender_dragon) {
+            return switch (this) {
+                case SPRITE_2D -> sprite_2d;
+                case ENDER_DRAGON -> ender_dragon;
+            };
+        }
+
+        public boolean isFancy() {
+            return this == ENDER_DRAGON;
+        }
+    }
+
+    static {
+        BUILDER.pop();
+    }
+
     public static final ModConfigSpec SPEC = BUILDER.build();
 
     public static HazardInfoLevel hazardInfoLevel;
     public static boolean enableRandomRotationOffsets;
+    public static MushroomCloudRenderType mushroomCloudRenderType;
+    public static ExplosionFlashRenderType explosionFlashRenderType;
 
     public static void onLoad(final ModConfigEvent event) {
+        if (event instanceof ModConfigEvent.Unloading) return;
         hazardInfoLevel = HAZARD_INFO_LEVEL.get();
         enableRandomRotationOffsets = ENABLE_RANDOM_ROTATION_OFFSETS.get();
+        mushroomCloudRenderType = MUSHROOM_CLOUD_RENDER_TYPE.get();
+        explosionFlashRenderType = EXPLOSION_FLASH_RENDER_TYPE.get();
+        if (event instanceof ModConfigEvent.Reloading) {
+            reload();
+        }
+    }
+
+    private static void reload() {
+
     }
 }

@@ -51,6 +51,7 @@ import nl.melonstudios.bmnw.block.entity.MissileLaunchPadBlockEntity;
 import nl.melonstudios.bmnw.block.entity.renderer.*;
 import nl.melonstudios.bmnw.cfg.BMNWClientConfig;
 import nl.melonstudios.bmnw.cfg.BMNWServerConfig;
+import nl.melonstudios.bmnw.client.BMNWClient;
 import nl.melonstudios.bmnw.datagen.BMNWAdvancementGenerator;
 import nl.melonstudios.bmnw.discard.DiscardList;
 import nl.melonstudios.bmnw.effect.WPEffect;
@@ -97,6 +98,16 @@ public class BMNWEventBus {
         @SubscribeEvent
         public static void serverTickEventPre(ServerTickEvent.Pre event) {
 
+        }
+
+        @SubscribeEvent
+        @OnlyIn(Dist.CLIENT)
+        public static void clientTick(ClientTickEvent.Post event) {
+            try {
+                BMNWClient.tick();
+            } catch (Throwable throwable) {
+                throw new RuntimeException("Error in BMNW client tick", throwable);
+            }
         }
 
         /**
@@ -429,7 +440,6 @@ public class BMNWEventBus {
             event.registerSpriteSet(BMNWParticleTypes.EVIL_FOG.get(), EvilFogParticleProvider::new);
             event.registerSpriteSet(BMNWParticleTypes.FIRE_SMOKE.get(), FireSmokeParticleProvider::new);
             event.registerSpriteSet(BMNWParticleTypes.SMOKE_HD.get(), SmokeHDParticleProvider::new);
-            event.registerSpriteSet(BMNWParticleTypes.SHOCKWAVE.get(), ShockwaveParticleProvider::new);
             event.registerSpriteSet(BMNWParticleTypes.LARGE_MISSILE_SMOKE.get(), LargeMissileSmokeParticle.Provider::new);
             event.registerSpriteSet(BMNWParticleTypes.DUSTY_FIRE.get(), DustyFireParticle.Provider::new);
             event.registerSpriteSet(BMNWParticleTypes.FIRE_TRAIL.get(), FireTrailParticle.Provider::new);
@@ -488,6 +498,11 @@ public class BMNWEventBus {
                     PacketSealedHatch.TYPE,
                     PacketSealedHatch.STREAM_CODEC,
                     PacketSealedHatch::handle
+            );
+            registrar.playToClient(
+                    PacketSendShockwave.TYPE,
+                    PacketSendShockwave.STREAM_CODEC,
+                    PacketSendShockwave::handle
             );
             registrar.playToClient(
                     PacketSetOpenDoor.TYPE,
