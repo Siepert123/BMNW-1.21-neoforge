@@ -21,4 +21,8 @@ public class RandomHelper {
     public static float nextFloat(long seed, int depth) {
         return createRandom(seed, depth).nextFloat();
     }
+
+    public static int nextInt(long seed, int depth, int maxValue) {
+        return createRandom(seed, depth).nextInt(maxValue);
+    }
 }

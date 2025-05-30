@@ -1,0 +1,9 @@
+{
+	"parent": "minecraft:item/generated",
+	"textures": {
+		"layer0": "bmnw:item/fixture_layer0",
+		"layer1": "bmnw:item/fixture_layer1",
+		"layer2": "bmnw:item/fixture_layer2",
+		"layer3": "bmnw:item/fixture_layer3"
+	}
+}

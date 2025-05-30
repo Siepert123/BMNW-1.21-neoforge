@@ -20,6 +20,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
@@ -66,7 +67,9 @@ import nl.melonstudios.bmnw.hazard.radiation.RadiationTools;
 import nl.melonstudios.bmnw.init.*;
 import nl.melonstudios.bmnw.interfaces.IScopeableItem;
 import nl.melonstudios.bmnw.item.colorize.FireMarbleColorizer;
+import nl.melonstudios.bmnw.item.colorize.SmallLampColorizer;
 import nl.melonstudios.bmnw.item.misc.CoreSampleItem;
+import nl.melonstudios.bmnw.item.misc.SmallLampBlockItem;
 import nl.melonstudios.bmnw.misc.DistrictHolder;
 import nl.melonstudios.bmnw.misc.ExcavationVein;
 import nl.melonstudios.bmnw.particle.*;
@@ -86,10 +89,10 @@ import java.util.function.Supplier;
  */
 @SuppressWarnings("all")
 public class BMNWEventBus {
-    private static final Logger LOGGER = LogManager.getLogger();
 
     @EventBusSubscriber(modid = "bmnw", bus = EventBusSubscriber.Bus.GAME)
     public static class GameEventBus {
+        private static final Logger LOGGER = LogManager.getLogger();
         //region Server tick events
         /**
          * Irradiates chunks based on source radioactivity (calculated seperately).
@@ -370,22 +373,11 @@ public class BMNWEventBus {
                 }
             }
         }
-
-        @SubscribeEvent
-        public static void playerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
-            if (DistrictHolder.getDistrict().isClient()) {
-                event.getEntity().sendSystemMessage(Component.literal("Loaded BMNW version " + BMNW.getVersionStr()));
-                if (!ModList.get().isLoaded("ctm")) {
-                    event.getEntity().sendSystemMessage(Component.translatable("Note: CTM is not installed, some textures may look disappealing"));
-                }
-            } else {
-                event.getEntity().sendSystemMessage(Component.literal("Joined server with BMNW version " + BMNW.getVersionStr()));
-            }
-        }
     }
 
     @EventBusSubscriber(modid = "bmnw", bus = EventBusSubscriber.Bus.MOD)
     public static class ModEventBus {
+        private static final Logger LOGGER = LogManager.getLogger();
 
         @OnlyIn(Dist.CLIENT)
         private static <T extends Entity, V extends T> void registerEntityRenderingHandler(EntityRenderersEvent.RegisterRenderers event,
@@ -402,6 +394,7 @@ public class BMNWEventBus {
 
         @OnlyIn(Dist.CLIENT)
         private static void registerBlockEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
+            registerBlockEntityRenderingHandler(event, BMNWBlockEntities.SMALL_LAMP, SmallLampRenderer::new);
             registerBlockEntityRenderingHandler(event, BMNWBlockEntities.HATCH, HatchRenderer::new);
             registerBlockEntityRenderingHandler(event, BMNWBlockEntities.SLIDING_BLAST_DOOR, SlidingBlastDoorRenderer::new);
             registerBlockEntityRenderingHandler(event, BMNWBlockEntities.SEALED_HATCH, SealedHatchRenderer::new);
@@ -530,6 +523,8 @@ public class BMNWEventBus {
         @OnlyIn(Dist.CLIENT)
         public static void registerColorHandlersItem(RegisterColorHandlersEvent.Item event) {
             event.register(new FireMarbleColorizer(), BMNWItems.FIRE_MARBLE);
+            event.register(new SmallLampColorizer(), SmallLampBlockItem.ALL.toArray(ItemLike[]::new));
+            LOGGER.debug("Registered {} small lamp colorizers", SmallLampBlockItem.ALL.size());
         }
 
         @SubscribeEvent

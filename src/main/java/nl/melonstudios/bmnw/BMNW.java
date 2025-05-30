@@ -46,6 +46,7 @@ import org.slf4j.Logger;
 
 import javax.annotation.Nonnull;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
@@ -71,13 +72,16 @@ public class BMNW {
     public static final String randomSplash = splashes[memzArguments % splashes.length];
 
     public static String getVersionStr() {
-        Optional<? extends ModContainer> container = ModList.get().getModContainerById(MODID);
-        return container.isPresent() ? container.get().getModInfo().getVersion().toString() : "null";
+        return Objects.requireNonNull(versionStr);
     }
+
+    private static String versionStr;
 
     public BMNW(IEventBus modEventBus, @Nonnull ModContainer modContainer, Dist dist) {
         DistrictHolder.setDistrict(dist);
         modEventBus.addListener(this::commonSetup);
+
+        versionStr = modContainer.getModInfo().getVersion().toString();
 
         NeoForge.EVENT_BUS.register(this);
 

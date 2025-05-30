@@ -155,6 +155,14 @@ public class SlidingBlastDoorBlock extends HorizontalDirectionalBlock implements
                 level.destroyBlock(pos, false);
                 return;
             }
+            if (!level.getBlockState(pos.below()).isFaceSturdy(level, pos.below(), Direction.UP)) {
+                level.destroyBlock(pos, true);
+                return;
+            }
+        }
+
+        if (level.hasNeighborSignal(pos)) {
+            this.setOpen(level, pos, state, false, true);
         }
     }
 

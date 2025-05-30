@@ -7,6 +7,7 @@ import net.minecraft.world.item.*;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import nl.melonstudios.bmnw.block.decoration.FixtureBlock;
 import nl.melonstudios.bmnw.item.battery.BatteryItem;
 import nl.melonstudios.bmnw.item.battery.InfiniteBatteryItem;
 import nl.melonstudios.bmnw.item.misc.*;
@@ -437,6 +438,29 @@ public class BMNWItems {
             () -> new DoubleHighBlockItem(BMNWBlocks.METAL_LOCKABLE_DOOR.get(), new Item.Properties()));
     public static final DeferredItem<DoubleHighBlockItem> METAL_SLIDING_DOOR = ITEMS.register("metal_sliding_door",
             () -> new DoubleHighBlockItem(BMNWBlocks.METAL_SLIDING_DOOR.get(), new Item.Properties()));
+
+    //endregion
+
+    //region Lamps
+
+    public static final DeferredItem<SmallLampBlockItem>[] FIXTURES = new DeferredItem[16];
+    public static final DeferredItem<SmallLampBlockItem>[] FIXTURES_INVERTED = new DeferredItem[16];
+
+    //FIXTURE REGISTRY
+    static {
+        for (DyeColor color : DyeColor.values()) {
+            int id = color.getId();
+            String name = color.getName() + "_fixture";
+
+            FIXTURES[id] = ITEMS.register(name,
+                    () -> new SmallLampBlockItem(BMNWBlocks.FIXTURES[id].get(), new Item.Properties()));
+            FIXTURES_INVERTED[id] = ITEMS.register(name + "_inverted",
+                    () -> new SmallLampBlockItem(BMNWBlocks.FIXTURES_INVERTED[id].get(), new Item.Properties()));
+        }
+    }
+
+    public static final DeferredItem<BlockItem> REDSTONE_THERMOMETER = ITEMS.register("redstone_thermometer",
+            () -> new BlockItem(BMNWBlocks.REDSTONE_THERMOMETER.get(), new Item.Properties()));
 
     //endregion
 

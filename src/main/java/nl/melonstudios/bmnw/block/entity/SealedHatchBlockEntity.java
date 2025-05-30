@@ -29,13 +29,13 @@ public class SealedHatchBlockEntity extends BlockEntity implements ITickable {
     public SealedHatchBlockEntity(BlockPos pos, BlockState blockState) {
         super(BMNWBlockEntities.SEALED_HATCH.get(), pos, blockState);
 
-        this.valveOffset = RandomHelper.nextFloat(pos.asLong(), 2) * 360;
+        this.valveOffset = RandomHelper.nextInt(pos.asLong(), 2, 360);
     }
 
     @Override
     public void setLevel(Level level) {
         super.setLevel(level);
-        this.valveOffset = RandomHelper.nextFloat(this.worldPosition.asLong(), 2) * 360;
+        this.valveOffset = RandomHelper.nextInt(this.worldPosition.asLong(), 2, 360);
     }
 
     @Override

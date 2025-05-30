@@ -77,12 +77,17 @@ public class BMNWClientConfig {
         BUILDER.pop();
     }
 
+    private static final ModConfigSpec.BooleanValue DISABLE_JOIN_DEBUG = BUILDER
+            .comment("Disables the \"loaded BMNW version (version)\" upon joining world.")
+            .define("disableJoinDebug", false);
+
     public static final ModConfigSpec SPEC = BUILDER.build();
 
     public static HazardInfoLevel hazardInfoLevel;
     public static boolean enableRandomRotationOffsets;
     public static MushroomCloudRenderType mushroomCloudRenderType;
     public static ExplosionFlashRenderType explosionFlashRenderType;
+    public static boolean disableJoinDebug;
 
     public static void onLoad(final ModConfigEvent event) {
         if (event instanceof ModConfigEvent.Unloading) return;
@@ -90,6 +95,7 @@ public class BMNWClientConfig {
         enableRandomRotationOffsets = ENABLE_RANDOM_ROTATION_OFFSETS.get();
         mushroomCloudRenderType = MUSHROOM_CLOUD_RENDER_TYPE.get();
         explosionFlashRenderType = EXPLOSION_FLASH_RENDER_TYPE.get();
+        disableJoinDebug = DISABLE_JOIN_DEBUG.get();
         if (event instanceof ModConfigEvent.Reloading) {
             reload();
         }

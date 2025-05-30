@@ -166,6 +166,7 @@ public class MetalLockableDoorBlock extends HorizontalDirectionalBlock implement
             if (!level.getBlockState(pos.below()).is(this)) level.destroyBlock(pos, false);
         } else {
             if (!level.getBlockState(pos.above()).is(this)) level.destroyBlock(pos, false);
+            else if (!level.getBlockState(pos.below()).isFaceSturdy(level, pos.below(), Direction.UP)) level.destroyBlock(pos, true);
         }
     }
 

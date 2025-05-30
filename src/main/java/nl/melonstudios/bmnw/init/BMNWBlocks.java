@@ -7,6 +7,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.*;
@@ -51,7 +52,7 @@ public class BMNWBlocks {
         return BLOCKS.register(name, () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)));
     }
 
-    private static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks("bmnw");
+    static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks("bmnw");
 
     //region Material ores & storage blocks
     public static final DeferredBlock<Block> STEEL_BLOCK = BLOCKS.register("steel_block",
@@ -321,18 +322,48 @@ public class BMNWBlocks {
     //region Doors & hatches
 
     public static final DeferredBlock<DoorBlock> OFFICE_DOOR = BLOCKS.register("office_door",
-            () -> new DoorBlock(BMNWBlockSetType.DOOR_LOL, BlockBehaviour.Properties.ofFullCopy(STEEL_DECO_BLOCK.get()).noOcclusion()));
+            () -> new DoorBlock(BMNWBlockSetType.DOOR_LOL, BlockBehaviour.Properties.ofFullCopy(STEEL_DECO_BLOCK.get()).noOcclusion()
+                    .strength(10.0F, 10.0F)));
     public static final DeferredBlock<DoorBlock> BUNKER_DOOR = BLOCKS.register("bunker_door",
-            () -> new DoorBlock(BMNWBlockSetType.DOOR_LOL, BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get()).noOcclusion()));
+            () -> new DoorBlock(BMNWBlockSetType.DOOR_LOL, BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get()).noOcclusion()
+                    .strength(10.0F, 100.0F)));
 
     public static final DeferredBlock<SlidingBlastDoorBlock> SLIDING_BLAST_DOOR = BLOCKS.register("sliding_blast_door",
-            () -> new SlidingBlastDoorBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get()).noOcclusion()));
+            () -> new SlidingBlastDoorBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get()).noOcclusion()
+                    .strength(20.0F, 2000.0F)));
     public static final DeferredBlock<SealedHatchBlock> SEALED_HATCH = BLOCKS.register("sealed_hatch",
-            () -> new SealedHatchBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get()).noOcclusion()));
+            () -> new SealedHatchBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get()).noOcclusion()
+                    .strength(10.0F, 100.0F)));
     public static final DeferredBlock<MetalLockableDoorBlock> METAL_LOCKABLE_DOOR = BLOCKS.register("metal_lock_door",
-            () -> new MetalLockableDoorBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get()).noOcclusion()));
+            () -> new MetalLockableDoorBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get()).noOcclusion()
+                    .strength(10.0F, 500.0F)));
     public static final DeferredBlock<MetalSlidingDoorBlock> METAL_SLIDING_DOOR = BLOCKS.register("metal_sliding_door",
-            () -> new MetalSlidingDoorBlock(BlockBehaviour.Properties.ofFullCopy(METAL_LOCKABLE_DOOR.get()).noOcclusion()));
+            () -> new MetalSlidingDoorBlock(BlockBehaviour.Properties.ofFullCopy(METAL_LOCKABLE_DOOR.get()).noOcclusion()
+                    .strength(10.0F, 500.0F)));
+
+    //endregion
+
+    //region Lamps
+
+    public static final DeferredBlock<FixtureBlock>[] FIXTURES = new DeferredBlock[16];
+    public static final DeferredBlock<FixtureBlock>[] FIXTURES_INVERTED = new DeferredBlock[16];
+
+    //FIXTURE REGISTRY
+    static {
+        for (DyeColor color : DyeColor.values()) {
+            int id = color.getId();
+            String name = color.getName() + "_fixture";
+            FIXTURES[id] = BLOCKS.register(name,
+                    () -> new FixtureBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).noOcclusion(),
+                            false, color));
+            FIXTURES_INVERTED[id] = BLOCKS.register(name + "_inverted",
+                    () -> new FixtureBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).noOcclusion(),
+                            true, color));
+        }
+    }
+
+    public static final DeferredBlock<RedstoneThermometerBlock> REDSTONE_THERMOMETER = BLOCKS.register("redstone_thermometer",
+            () -> new RedstoneThermometerBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)));
 
     //endregion
 

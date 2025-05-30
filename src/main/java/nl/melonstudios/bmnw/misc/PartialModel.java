@@ -4,12 +4,15 @@ import com.google.common.collect.MapMaker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.UnknownNullability;
 
 import javax.annotation.Nonnull;
 import java.util.concurrent.ConcurrentMap;
 import java.util.function.Supplier;
 
+@OnlyIn(Dist.CLIENT)
 public final class PartialModel implements Supplier<BakedModel> {
     public static final ConcurrentMap<ModelResourceLocation, PartialModel> ALL = new MapMaker().weakValues().makeMap();
     public static boolean populateOnInit = false;

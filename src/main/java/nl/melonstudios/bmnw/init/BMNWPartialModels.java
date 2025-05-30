@@ -1,9 +1,13 @@
 package nl.melonstudios.bmnw.init;
 
 import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.world.item.DyeColor;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import nl.melonstudios.bmnw.BMNW;
 import nl.melonstudios.bmnw.misc.PartialModel;
 
+@OnlyIn(Dist.CLIENT)
 public class BMNWPartialModels {
     public static final PartialModel METEORITE = block("hot_meteorite_cobblestone");
 
@@ -18,6 +22,8 @@ public class BMNWPartialModels {
     public static final PartialModel METAL_DOOR_HANDLE = block("metal_door_handle");
 
     public static final PartialModel METAL_SLIDING_DOOR = block("metal_sliding_door");
+
+    public static final PartialModel FIXTURE_LAMP = block("fixture_lamp");
 
     private static PartialModel block(String path) {
         return PartialModel.of(ModelResourceLocation.standalone(BMNW.namespace("block/" + path)));

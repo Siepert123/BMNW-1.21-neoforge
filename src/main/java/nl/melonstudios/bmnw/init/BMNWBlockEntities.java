@@ -4,6 +4,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import nl.melonstudios.bmnw.block.decoration.BaseSmallLampBlock;
 import nl.melonstudios.bmnw.block.entity.*;
 
 import java.util.Set;
@@ -14,13 +15,22 @@ public class BMNWBlockEntities {
     private static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES
             = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, "bmnw");
 
+    public static final Supplier<BlockEntityType<SmallLampBlockEntity>> SMALL_LAMP = BLOCK_ENTITIES.register(
+            "small_lamp",
+            () -> new BlockEntityType<>(
+                    SmallLampBlockEntity::new,
+                    Set.of(BaseSmallLampBlock.LAMP_BLOCKS.toArray(BaseSmallLampBlock[]::new)),
+                    null
+            )
+    );
+
     public static final Supplier<BlockEntityType<MissileLaunchPadBlockEntity>> MISSILE_LAUNCH_PAD = BLOCK_ENTITIES.register(
-                    "missile_launch_pad",
-                    () -> new BlockEntityType<>(
-                            MissileLaunchPadBlockEntity::new,
-                            Set.of(BMNWBlocks.MISSILE_LAUNCH_PAD.get()),
-                            null
-                    )
+            "missile_launch_pad",
+            () -> new BlockEntityType<>(
+                    MissileLaunchPadBlockEntity::new,
+                    Set.of(BMNWBlocks.MISSILE_LAUNCH_PAD.get()),
+                    null
+            )
     );
 
     public static final Supplier<BlockEntityType<TestExcavatorBlockEntity>> TEST_EXCAVATOR = BLOCK_ENTITIES.register(

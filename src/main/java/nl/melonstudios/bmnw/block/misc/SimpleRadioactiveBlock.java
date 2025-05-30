@@ -21,15 +21,15 @@ public class SimpleRadioactiveBlock extends Block {
     public SimpleRadioactiveBlock(Properties properties, float rads) {
         super(properties);
         HazardRegistry.addRadRegistry(this, rads);
+
+        this.rads = HazardRegistry.getRadRegistry(this) / 20;
     }
 
     @Override
     protected void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
         super.onPlace(state, level, pos, oldState, movedByPiston);
 
-        this.rads = HazardRegistry.getRadRegistry(this) / 20;
-
-        if (HazardRegistry.getRadRegistry(this) > 0) {
+        if (this.rads > 0) {
             level.scheduleTick(pos, this, 1);
         }
     }

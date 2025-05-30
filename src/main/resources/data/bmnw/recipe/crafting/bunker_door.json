@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "tag": "c:plates/steel"
+    },
+    "L": {
+      "tag": "c:plates/lead"
+    }
+  },
+  "pattern": [
+    "##",
+    "LL",
+    "##"
+  ],
+  "result": {
+    "id": "bmnw:bunker_door",
+    "count": 3
+  }
+}

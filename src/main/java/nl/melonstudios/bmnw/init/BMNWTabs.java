@@ -153,6 +153,13 @@ public class BMNWTabs {
                         items.accept(METAL_LOCKABLE_DOOR);
                         items.accept(METAL_SLIDING_DOOR);
 
+                        for (int i = 0; i < 16; i++) {
+                            items.accept(FIXTURES[i]);
+                            items.accept(FIXTURES_INVERTED[i]);
+                        }
+
+                        items.accept(REDSTONE_THERMOMETER);
+
                         addItems(items,
                                 CHAINLINK_FENCE,
                                 BARBED_WIRE,
