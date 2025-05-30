@@ -49,6 +49,23 @@ public class SlidingBlastDoorBlock extends HorizontalDirectionalBlock implements
         protected static final VoxelShape WEST_AABB = Block.box(16.0 - AABB_DOOR_THICKNESS, 0.0, 0.0, 16.0, 16.0, 16.0);
         protected static final VoxelShape EAST_AABB = Block.box(0.0, 0.0, 0.0, AABB_DOOR_THICKNESS, 16.0, 16.0);
 
+    public static final VoxelShape SOUTH_AABB_OPEN = Shapes.or(
+            Block.box(0, 0, 0, 0.5, 16, AABB_DOOR_THICKNESS),
+            Block.box(15.5, 0, 0, 16, 16, AABB_DOOR_THICKNESS)
+    );
+    public static final VoxelShape NORTH_AABB_OPEN = Shapes.or(
+            Block.box(0, 0, 16 - AABB_DOOR_THICKNESS, 0.5, 16, 16),
+            Block.box(15.5, 0, 16 - AABB_DOOR_THICKNESS, 16, 16, 16)
+    );
+    public static final VoxelShape WEST_AABB_OPEN = Shapes.or(
+            Block.box(16 - AABB_DOOR_THICKNESS, 0, 0.5, 16, 16, 1),
+            Block.box(16 - AABB_DOOR_THICKNESS, 0, 15.5, 16, 16, 16)
+    );
+    public static final VoxelShape EAST_AABB_OPEN = Shapes.or(
+            Block.box(0, 0, 0.5, AABB_DOOR_THICKNESS, 16, 1),
+            Block.box(0, 0, 15.5, AABB_DOOR_THICKNESS, 16, 16)
+    );
+
     public SlidingBlastDoorBlock(Properties properties) {
         super(properties);
 
@@ -60,6 +77,15 @@ public class SlidingBlastDoorBlock extends HorizontalDirectionalBlock implements
 
     @Override
     protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        if (this.isOpen(state, level, pos)) {
+            return switch (state.getValue(FACING)) {
+                case NORTH -> NORTH_AABB_OPEN;
+                case SOUTH -> SOUTH_AABB_OPEN;
+                case EAST -> EAST_AABB_OPEN;
+                case WEST -> WEST_AABB_OPEN;
+                default -> Shapes.empty();
+            };
+        }
         return switch (state.getValue(FACING)) {
             case NORTH -> NORTH_AABB;
             case SOUTH -> SOUTH_AABB;
@@ -69,13 +95,12 @@ public class SlidingBlastDoorBlock extends HorizontalDirectionalBlock implements
         };
     }
 
-    @Override
-    protected VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+    protected boolean isOpen(BlockState state, BlockGetter level, BlockPos pos) {
         boolean upper = state.getValue(UPPER_HALF);
         BlockPos bePos = upper ? pos.below() : pos;
         BlockEntity be = level.getBlockEntity(bePos);
-        if (be instanceof SlidingBlastDoorBlockEntity door) return door.mayPass() ? Shapes.empty() : this.getShape(state, level, pos, context);
-        return state.getValue(OPEN) ? Shapes.empty() : this.getShape(state, level, pos, context);
+        if (be instanceof SlidingBlastDoorBlockEntity door) return door.mayPass();
+        return state.getValue(OPEN);
     }
 
     @Override
