@@ -25,6 +25,7 @@
     "bmnw:sliding_blast_door",
     "bmnw:sealed_hatch",
     "bmnw:metal_lock_door",
+    "bmnw:metal_sliding_door",
     "bmnw:chainlink_fence"
   ],
   "replace": false
