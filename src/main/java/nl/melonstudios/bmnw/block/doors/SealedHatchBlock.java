@@ -40,6 +40,13 @@ public class SealedHatchBlock extends HorizontalDirectionalBlock implements Enti
 
     public static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 3, 16);
 
+    public static final VoxelShape SHAPE_OPEN = Shapes.or(
+            box(0, 0, 0, 1, 1, 16),
+            box(15, 0, 0, 16, 1, 16),
+            box(0, 0, 0, 16, 1, 1),
+            box(0, 0, 15, 16, 1, 16)
+    );
+
     public SealedHatchBlock(Properties properties) {
         super(properties);
 
@@ -58,7 +65,11 @@ public class SealedHatchBlock extends HorizontalDirectionalBlock implements Enti
 
     @Override
     protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return SHAPE;
+        if (context.isDescending()) return SHAPE;
+        BlockEntity be = level.getBlockEntity(pos);
+        if (be instanceof SealedHatchBlockEntity hatch)
+            return hatch.mayPass() ? SHAPE_OPEN : SHAPE;
+        return state.getValue(OPEN) ? SHAPE_OPEN : SHAPE;
     }
 
     @Override
