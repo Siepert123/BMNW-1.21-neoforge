@@ -277,11 +277,11 @@ public class BMNWBlocks {
 
     public static final DeferredBlock<ChainlinkFenceBlock> CHAINLINK_FENCE = BLOCKS.register("chainlink_fence",
             () -> new ChainlinkFenceBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).sound(SoundType.CHAIN)
-                    .strength(10, 12)));
+                    .strength(10.0F, 100.0F)));
 
     public static final DeferredBlock<BarbedWireBlock> BARBED_WIRE = BLOCKS.register("barbed_wire",
             () -> new BarbedWireBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).noOcclusion()
-                    .strength(10, 12), (entity, entityMoving) -> {
+                    .strength(10, 100.0F), (entity, entityMoving) -> {
                 if (entityMoving && !(entity instanceof ItemEntity item && item.getAge() < 20)) {
                     entity.hurt(entity.damageSources().cactus(), 5);
                 }
