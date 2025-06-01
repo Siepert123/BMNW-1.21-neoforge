@@ -23,9 +23,7 @@ import nl.melonstudios.bmnw.init.BMNWParticleTypes;
 import nl.melonstudios.bmnw.particle.FireTrailParticle;
 import org.joml.Quaternionf;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class MeteoriteEntity extends Entity {
     private static final Random random = new Random();
@@ -100,6 +98,17 @@ public class MeteoriteEntity extends Entity {
                         (int) this.getZ()
                 );
                 this.whenLand(pos);
+                MultiblockDebrisEntity debris = new MultiblockDebrisEntity(
+                        level(),
+                        new HashMap<>(Map.of(
+                                BlockPos.ZERO, BMNWBlocks.BARBED_WIRE.get().defaultBlockState(),
+                                BlockPos.ZERO.above(), Blocks.DIRT.defaultBlockState(),
+                                BlockPos.ZERO.north(), Blocks.FIRE.defaultBlockState()
+                        ))
+                );
+                debris.setPos(this.getX(), this.getY() + 16, this.getZ());
+                debris.setDeltaMovement(2, 4, 2);
+                level().addFreshEntity(debris);
             }
             this.kill();
         } else {

@@ -10,7 +10,6 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
@@ -42,9 +41,8 @@ public class MeteoriteRenderer extends EntityRenderer<MeteoriteEntity> {
         BlockState state = BMNWBlocks.HOT_METEORITE_COBBLESTONE.get().defaultBlockState();
 
         poseStack.pushPose();
-        poseStack.translate(-1.5, -1.5, -1.5);
         poseStack.scale(3, 3, 3);
-        poseStack.rotateAround(p_entity.rotation, 0f, 0f, 0f);
+        poseStack.translate(-1.5F, -1.5F, -1.5F);
 
         RandomSource rnd = RandomSource.create();
         BakedModel model = BMNWPartialModels.METEORITE.loadAndGet();

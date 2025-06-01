@@ -59,6 +59,7 @@ import nl.melonstudios.bmnw.effect.WPEffect;
 import nl.melonstudios.bmnw.entity.MeteoriteEntity;
 import nl.melonstudios.bmnw.entity.renderer.BlockDebrisRenderer;
 import nl.melonstudios.bmnw.entity.renderer.MeteoriteRenderer;
+import nl.melonstudios.bmnw.entity.renderer.MultiblockDebrisRenderer;
 import nl.melonstudios.bmnw.entity.renderer.SimpleBulletRenderer;
 import nl.melonstudios.bmnw.hardcoded.structure.Structures;
 import nl.melonstudios.bmnw.hazard.HazardRegistry;
@@ -406,6 +407,7 @@ public class BMNWEventBus {
         @OnlyIn(Dist.CLIENT)
         private static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
             registerEntityRenderingHandler(event, BMNWEntityTypes.BLOCK_DEBRIS, BlockDebrisRenderer::new);
+            registerEntityRenderingHandler(event, BMNWEntityTypes.MULTIBLOCK_DEBRIS, MultiblockDebrisRenderer::new);
 
             registerEntityRenderingHandler(event, BMNWEntityTypes.METEORITE, MeteoriteRenderer::new);
 

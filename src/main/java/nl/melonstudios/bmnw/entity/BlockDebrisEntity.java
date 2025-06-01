@@ -20,6 +20,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import nl.melonstudios.bmnw.init.BMNWEntityTypes;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -33,9 +34,15 @@ public class BlockDebrisEntity extends Entity {
         lifetime = level.random.nextInt(990, 1010);
     }
 
+    public BlockDebrisEntity(Level level, BlockState state) {
+        this(BMNWEntityTypes.BLOCK_DEBRIS.get(), level);
+        this.debrisState = state;
+    }
+
     private boolean noDespawn = false;
     private boolean mayPickup = true;
     public boolean placeOnLand = false;
+    public boolean breakOnLand = true;
 
     public BlockDebrisEntity setNoDespawn() {
         noDespawn = true;
@@ -67,6 +74,7 @@ public class BlockDebrisEntity extends Entity {
         mayPickup = compound.getBoolean("mayPickup");
         noDespawn = compound.getBoolean("noDespawn");
         placeOnLand = compound.getBoolean("placeOnGround");
+        breakOnLand = compound.getBoolean("breakOnLand");
     }
 
     @Override
@@ -77,6 +85,7 @@ public class BlockDebrisEntity extends Entity {
         compound.putBoolean("mayPickup", mayPickup);
         compound.putBoolean("noDespawn", noDespawn);
         compound.putBoolean("placeOnGround", placeOnLand);
+        compound.putBoolean("breakOnLand", this.breakOnLand);
     }
 
     private int age = 0;
@@ -98,7 +107,7 @@ public class BlockDebrisEntity extends Entity {
             //I don't really care if it fails, it usually should not care about the location anyway
             try {
                 boolean flame = debrisState.isFlammable(level(), BlockPos.ZERO, Direction.UP);
-                if (flame && random.nextFloat() > 0.99) {
+                if (flame && this.random.nextFloat() > 0.99) {
                     this.kill();
                     return;
                 }
@@ -120,8 +129,8 @@ public class BlockDebrisEntity extends Entity {
             for (Entity entity : level().getEntities(this, this.getBoundingBox(), EntitySelector.NO_CREATIVE_OR_SPECTATOR)) {
                 if (!this.isRemoved()) {
                     if (fallDistance > 10) {
-                        entity.hurt(entity.damageSources().fallingBlock(this), fallDistance - 7);
-                        resetFallDistance();
+                            entity.hurt(entity.damageSources().fallingBlock(this), fallDistance - 7);
+                            resetFallDistance();
                     }
                 }
             }
@@ -136,8 +145,12 @@ public class BlockDebrisEntity extends Entity {
         if (previousPos.y > position().y) {
             fallDistance += (float) (previousPos.y - position().y);
         }
-        if (placeOnLand && this.horizontalCollision) {
+        if (placeOnLand && this.verticalCollisionBelow) {
             this.placeSelf();
+        }
+        if (breakOnLand && (this.horizontalCollision || this.verticalCollision)) {
+            this.kill();
+            level().addDestroyBlockEffect(new BlockPos(this.getBlockX(), this.getBlockY(), this.getBlockZ()), this.debrisState);
         }
     }
 
