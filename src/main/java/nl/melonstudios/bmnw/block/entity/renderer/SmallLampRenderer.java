@@ -21,7 +21,7 @@ import net.neoforged.neoforge.client.model.data.ModelData;
 import nl.melonstudios.bmnw.block.decoration.BaseSmallLampBlock;
 import nl.melonstudios.bmnw.block.entity.SmallLampBlockEntity;
 import nl.melonstudios.bmnw.misc.PartialModel;
-import nl.melonstudios.bmnw.misc.SI;
+import nl.melonstudios.bmnw.misc.Library;
 
 import javax.annotation.Nonnull;
 
@@ -78,7 +78,7 @@ public class SmallLampRenderer implements BlockEntityRenderer<SmallLampBlockEnti
     private void renderShaded(BakedModel model, VertexConsumer consumer, PoseStack.Pose last,
                               float r, float g, float b, int packedLight, int packedOverlay) {
         for (BakedQuad quad : model.getQuads(null, null, RandomSource.create(), ModelData.EMPTY, RenderType.solid())) {
-            float mul = SI.BRIGHTNESS_BY_AXIS[quad.getDirection().getAxis().ordinal()];
+            float mul = Library.BRIGHTNESS_BY_AXIS[quad.getDirection().getAxis().ordinal()];
             consumer.putBulkData(last, quad, mul * r, mul * g, mul * b, 1.0F, packedLight, packedOverlay);
         }
     }

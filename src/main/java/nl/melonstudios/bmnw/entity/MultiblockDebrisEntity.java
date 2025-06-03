@@ -1,12 +1,16 @@
 package nl.melonstudios.bmnw.entity;
 
+import net.minecraft.client.particle.SpriteSet;
+import net.minecraft.client.renderer.texture.SpriteLoader;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtAccounter;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -14,6 +18,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.entity.IEntityWithComplexSpawn;
 import nl.melonstudios.bmnw.init.BMNWEntityTypes;
+import nl.melonstudios.bmnw.init.BMNWParticleTypes;
+import nl.melonstudios.bmnw.particle.FireTrailParticle;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -64,26 +70,44 @@ public class MultiblockDebrisEntity extends Entity implements IEntityWithComplex
     }
 
     @Override
+    public void onAddedToLevel() {
+        super.onAddedToLevel();
+        this.allowModification = false;
+    }
+
+    private boolean allowModification = true;
+    private boolean dustTrail = false;
+
+    public void setDustTrail(boolean dustTrail) {
+        if (!this.allowModification) return;
+        this.dustTrail = dustTrail;
+    }
+
+    @Override
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
 
     }
 
     @Override
-    protected void readAdditionalSaveData(CompoundTag compound) {
-        this.deserializeStructure(compound.getCompound("Structure"));
-    }
-    @Override
     protected void addAdditionalSaveData(CompoundTag compound) {
         compound.put("Structure", this.serializeStructure(new CompoundTag()));
+        compound.putBoolean("dustTrail", this.dustTrail);
+    }
+    @Override
+    protected void readAdditionalSaveData(CompoundTag compound) {
+        this.deserializeStructure(compound.getCompound("Structure"));
+        this.dustTrail = compound.getBoolean("dustTrail");
     }
 
     @Override
     public void writeSpawnData(RegistryFriendlyByteBuf buffer) {
         buffer.writeNbt(this.serializeStructure(new CompoundTag()));
+        buffer.writeBoolean(this.dustTrail);
     }
     @Override
     public void readSpawnData(RegistryFriendlyByteBuf additionalData) {
         this.deserializeStructure(additionalData.readNbt());
+        this.dustTrail = additionalData.readBoolean();
     }
 
     @Override
@@ -106,18 +130,24 @@ public class MultiblockDebrisEntity extends Entity implements IEntityWithComplex
         }
 
         this.move(MoverType.SELF, this.getDeltaMovement());
-        this.setDeltaMovement(this.getDeltaMovement().multiply(0.9, 0.9, 0.9));
+        Vec3 delta = this.getDeltaMovement();
+        this.setDeltaMovement(delta.multiply(0.99, delta.y > 0 ? 0.95 : 1, 0.99));
         this.applyGravity();
+
+        if (level.isClientSide()) {
+            if (this.dustTrail && this.random.nextFloat() < 0.2F) {
+                level.addParticle(BMNWParticleTypes.DUST_TRAIL.get(), this.getX(), this.getY(), this.getZ(), 0, 0, 0);
+            }
+        }
 
         if (this.horizontalCollision || this.verticalCollision) {
             this.kill();
-            if (!level.isClientSide) return;
-            LOGGER.debug("Break fx...");
             BlockPos pos = new BlockPos(this.getBlockX(), this.getBlockY(), this.getBlockZ());
             BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
             for (Map.Entry<BlockPos, BlockState> entry : this.structure.entrySet()) {
                 mutable.setWithOffset(pos, entry.getKey());
                 level.addDestroyBlockEffect(mutable, entry.getValue());
+                level.playSound(null, mutable, entry.getValue().getSoundType().getBreakSound(), SoundSource.BLOCKS, 2.0F, 1.0F);
             }
         }
     }
@@ -130,5 +160,15 @@ public class MultiblockDebrisEntity extends Entity implements IEntityWithComplex
     @Override
     public boolean isNoGravity() {
         return false;
+    }
+
+    @Override
+    public boolean shouldRenderAtSqrDistance(double distance) {
+        return true;
+    }
+
+    @Override
+    public boolean shouldRender(double x, double y, double z) {
+        return true;
     }
 }

@@ -21,7 +21,7 @@ import net.neoforged.neoforge.client.model.data.ModelData;
 import nl.melonstudios.bmnw.entity.MeteoriteEntity;
 import nl.melonstudios.bmnw.init.BMNWBlocks;
 import nl.melonstudios.bmnw.init.BMNWPartialModels;
-import nl.melonstudios.bmnw.misc.SI;
+import nl.melonstudios.bmnw.misc.Library;
 
 @OnlyIn(Dist.CLIENT)
 public class MeteoriteRenderer extends EntityRenderer<MeteoriteEntity> {
@@ -42,13 +42,13 @@ public class MeteoriteRenderer extends EntityRenderer<MeteoriteEntity> {
 
         poseStack.pushPose();
         poseStack.scale(3, 3, 3);
-        poseStack.translate(-1.5F, -1.5F, -1.5F);
+        poseStack.translate(-0.5F, -1.0F, -0.5F);
 
         RandomSource rnd = RandomSource.create();
         BakedModel model = BMNWPartialModels.METEORITE.loadAndGet();
         PoseStack.Pose last = poseStack.last();
         VertexConsumer consumer = bufferSource.getBuffer(RenderType.SOLID);
-        for (Direction d : SI.DIRECTIONS_WITH_NULL) {
+        for (Direction d : Library.DIRECTIONS_WITH_NULL) {
             for (BakedQuad quad : model.getQuads(state, d, rnd, ModelData.EMPTY, RenderType.SOLID)) {
                 consumer.putBulkData(last, quad, 1.0F, 1.0F, 1.0F, 1.0F, 0xf000f0, OverlayTexture.NO_OVERLAY);
             }

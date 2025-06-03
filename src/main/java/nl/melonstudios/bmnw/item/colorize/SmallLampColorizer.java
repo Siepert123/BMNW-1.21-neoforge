@@ -8,7 +8,7 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import nl.melonstudios.bmnw.item.misc.SmallLampBlockItem;
-import nl.melonstudios.bmnw.misc.SI;
+import nl.melonstudios.bmnw.misc.Library;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
@@ -30,7 +30,7 @@ public class SmallLampColorizer implements ItemColor {
             red *= 0.75F;
             green *= 0.75F;
             blue *= 0.75F;
-            float colorMul = SI.BRIGHTNESS_BY_AXIS[tintIndex-1];
+            float colorMul = Library.BRIGHTNESS_BY_AXIS[tintIndex-1];
             red *= colorMul;
             green *= colorMul;
             blue *= colorMul;

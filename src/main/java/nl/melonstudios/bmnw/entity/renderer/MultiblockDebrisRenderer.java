@@ -42,8 +42,8 @@ public class MultiblockDebrisRenderer extends EntityRenderer<MultiblockDebrisEnt
         poseStack.translate(-0.5F, 0.25F, -0.5F);
         RandomSource rnd = RandomSource.create();
         Level level = entity.level();
-        float rot = (float) (entity.getId() + entity.getX() + entity.getZ() + (entity.getY() / 5));
-        poseStack.rotateAround(new Quaternionf().rotateXYZ(rot, rot, rot), 0F, 0F, 0F);
+        float rot = ((entity.tickCount + partialTick) % 360);
+        poseStack.rotateAround(new Quaternionf().rotateXYZ(rot, rot, rot), 0.5F, 0.5F, 0.5F);
         for (Map.Entry<BlockPos, BlockState> entry : entity.getStructure().entrySet()) {
             BlockPos pos = entry.getKey();
             BlockState state = entry.getValue();

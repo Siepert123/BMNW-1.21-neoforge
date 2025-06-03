@@ -5,8 +5,11 @@ import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.core.particles.SimpleParticleType;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.Nullable;
 
+@OnlyIn(Dist.CLIENT)
 public class VomitParticleProvider implements ParticleProvider<SimpleParticleType> {
     private final SpriteSet spriteSet;
     public VomitParticleProvider(SpriteSet spriteSet) {

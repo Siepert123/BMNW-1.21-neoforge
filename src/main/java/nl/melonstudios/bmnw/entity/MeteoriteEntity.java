@@ -14,6 +14,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
@@ -79,8 +80,6 @@ public class MeteoriteEntity extends Entity {
         compound.putDouble("courseZ", this.courseZ);
     }
 
-    private int age = 0;
-
     @Override
     public void tick() {
         if (level().isClientSide()) {
@@ -98,17 +97,6 @@ public class MeteoriteEntity extends Entity {
                         (int) this.getZ()
                 );
                 this.whenLand(pos);
-                MultiblockDebrisEntity debris = new MultiblockDebrisEntity(
-                        level(),
-                        new HashMap<>(Map.of(
-                                BlockPos.ZERO, BMNWBlocks.BARBED_WIRE.get().defaultBlockState(),
-                                BlockPos.ZERO.above(), Blocks.DIRT.defaultBlockState(),
-                                BlockPos.ZERO.north(), Blocks.FIRE.defaultBlockState()
-                        ))
-                );
-                debris.setPos(this.getX(), this.getY() + 16, this.getZ());
-                debris.setDeltaMovement(2, 4, 2);
-                level().addFreshEntity(debris);
             }
             this.kill();
         } else {
@@ -130,9 +118,25 @@ public class MeteoriteEntity extends Entity {
     }
 
     private void whenLand(BlockPos pos) {
-        this.level().playSound(null, getX(), getY(), getZ(), SoundEvents.GENERIC_EXPLODE, SoundSource.NEUTRAL, 10, 0.8f);
+        this.level().playSound(null, getX(), getY(), getZ(), SoundEvents.GENERIC_EXPLODE, SoundSource.NEUTRAL, 100.0F, 0.8f);
         int radius = randomRadius();
         this.placeMarble(pos, radius);
+    }
+
+    private HashMap<BlockPos, BlockState> capture(BlockPos pos, int radius) {
+        HashMap<BlockPos, BlockState> map = new HashMap<>();
+        for (int x = -radius; x <= radius; x++) {
+            for (int y = -radius; y <= radius; y++) {
+                for (int z = -radius; z <= radius; z++) {
+                    if (distanceTo0(x, y, z) <= radius) {
+                        BlockPos bp = new BlockPos(x, y, z);
+                        BlockState state = this.level().getBlockState(pos.offset(bp));
+                        if (!state.isAir()) map.put(bp, state);
+                    }
+                }
+            }
+        }
+        return map;
     }
 
     private void placeMarble(BlockPos pos, int radius) {
@@ -208,5 +212,15 @@ public class MeteoriteEntity extends Entity {
                 random.nextDouble() * 2 - 1,
                 random.nextDouble() * 2 - 1);
         player.level().addFreshEntity(entity);
+    }
+
+    @Override
+    public boolean shouldRenderAtSqrDistance(double distance) {
+        return true;
+    }
+
+    @Override
+    public boolean shouldRender(double x, double y, double z) {
+        return true;
     }
 }

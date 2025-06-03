@@ -18,7 +18,7 @@ import nl.melonstudios.bmnw.block.doors.MetalSlidingDoorBlock;
 import nl.melonstudios.bmnw.block.entity.MetalSlidingDoorBlockEntity;
 import nl.melonstudios.bmnw.init.BMNWPartialModels;
 import nl.melonstudios.bmnw.init.BMNWStateProperties;
-import nl.melonstudios.bmnw.misc.SI;
+import nl.melonstudios.bmnw.misc.Library;
 import org.joml.Quaternionf;
 
 import java.util.List;
@@ -47,10 +47,10 @@ public class MetalSlidingDoorRenderer implements BlockEntityRenderer<MetalSlidin
 
     private void renderBakedModel(VertexConsumer consumer, PoseStack.Pose last, BakedModel model,
                                   RandomSource rnd, int packedLight, int packedOverlay) {
-        for (Direction d : SI.DIRECTIONS_WITH_NULL) {
+        for (Direction d : Library.DIRECTIONS_WITH_NULL) {
             List<BakedQuad> quads = model.getQuads(null, d, rnd, ModelData.EMPTY, RenderType.SOLID);
             for (BakedQuad quad : quads) {
-                float b = SI.brightnessByDirection(quad.getDirection());
+                float b = Library.brightnessByDirection(quad.getDirection());
                 consumer.putBulkData(last, quad, b, b, b, 1.0F, packedLight, packedOverlay);
             }
         }

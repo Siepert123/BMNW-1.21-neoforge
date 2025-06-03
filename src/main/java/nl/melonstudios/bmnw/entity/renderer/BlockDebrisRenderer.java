@@ -34,7 +34,7 @@ public class BlockDebrisRenderer extends EntityRenderer<BlockDebrisEntity> {
             if (blockstate != level.getBlockState(entity.blockPosition()) && blockstate.getRenderShape() != RenderShape.INVISIBLE) {
                 poseStack.pushPose();
                 BlockPos blockpos = BlockPos.containing(entity.getX(), entity.getBoundingBox().maxY, entity.getZ());
-                float rot = (float) (entity.getId() + entity.getX() + entity.getZ() + (entity.getY() / 5));
+                float rot = ((entity.tickCount + partialTick) % 360) * 10;
                 poseStack.rotateAround(new Quaternionf().rotateXYZ(rot, rot, rot), 0, 0.5f, 0);
                 poseStack.translate(-0.5, 0.0, -0.5);
                 var model = this.dispatcher.getBlockModel(blockstate);

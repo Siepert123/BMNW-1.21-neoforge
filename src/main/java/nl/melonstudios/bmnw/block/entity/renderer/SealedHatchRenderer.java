@@ -20,7 +20,7 @@ import net.neoforged.neoforge.client.model.data.ModelData;
 import nl.melonstudios.bmnw.block.doors.SealedHatchBlock;
 import nl.melonstudios.bmnw.block.entity.SealedHatchBlockEntity;
 import nl.melonstudios.bmnw.init.BMNWPartialModels;
-import nl.melonstudios.bmnw.misc.SI;
+import nl.melonstudios.bmnw.misc.Library;
 import nl.melonstudios.bmnw.misc.math.Easing;
 import org.joml.Quaternionf;
 
@@ -68,10 +68,10 @@ public class SealedHatchRenderer implements BlockEntityRenderer<SealedHatchBlock
 
     private void renderBakedModel(PoseStack poseStack, VertexConsumer consumer, PoseStack.Pose last, BakedModel model,
                                   RandomSource rnd, RenderType renderType, int packedLight, int packedOverlay) {
-        for (Direction d : SI.DIRECTIONS_WITH_NULL) {
+        for (Direction d : Library.DIRECTIONS_WITH_NULL) {
             List<BakedQuad> quads = model.getQuads(null, d, rnd, ModelData.EMPTY, renderType);
             for (BakedQuad quad : quads) {
-                float b = SI.brightnessByDirection(quad.getDirection());
+                float b = Library.brightnessByDirection(quad.getDirection());
                 consumer.putBulkData(last, quad, b, b, b, 1.0F, packedLight, packedOverlay);
             }
         }

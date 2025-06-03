@@ -57,10 +57,7 @@ import nl.melonstudios.bmnw.datagen.BMNWAdvancementGenerator;
 import nl.melonstudios.bmnw.discard.DiscardList;
 import nl.melonstudios.bmnw.effect.WPEffect;
 import nl.melonstudios.bmnw.entity.MeteoriteEntity;
-import nl.melonstudios.bmnw.entity.renderer.BlockDebrisRenderer;
-import nl.melonstudios.bmnw.entity.renderer.MeteoriteRenderer;
-import nl.melonstudios.bmnw.entity.renderer.MultiblockDebrisRenderer;
-import nl.melonstudios.bmnw.entity.renderer.SimpleBulletRenderer;
+import nl.melonstudios.bmnw.entity.renderer.*;
 import nl.melonstudios.bmnw.hardcoded.structure.Structures;
 import nl.melonstudios.bmnw.hazard.HazardRegistry;
 import nl.melonstudios.bmnw.hazard.radiation.ChunkRadiationManager;
@@ -408,6 +405,7 @@ public class BMNWEventBus {
         private static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
             registerEntityRenderingHandler(event, BMNWEntityTypes.BLOCK_DEBRIS, BlockDebrisRenderer::new);
             registerEntityRenderingHandler(event, BMNWEntityTypes.MULTIBLOCK_DEBRIS, MultiblockDebrisRenderer::new);
+            registerEntityRenderingHandler(event, BMNWEntityTypes.RUBBLE, RubbleRenderer::new);
 
             registerEntityRenderingHandler(event, BMNWEntityTypes.METEORITE, MeteoriteRenderer::new);
 
@@ -429,6 +427,7 @@ public class BMNWEventBus {
         /**
          * Registers particle providers.
          */
+        @OnlyIn(Dist.CLIENT)
         @SubscribeEvent
         public static void registerParticleProvidersEvent(RegisterParticleProvidersEvent event) {
             event.registerSpriteSet(BMNWParticleTypes.VOMIT.get(), VomitParticleProvider::new);
@@ -438,6 +437,7 @@ public class BMNWEventBus {
             event.registerSpriteSet(BMNWParticleTypes.LARGE_MISSILE_SMOKE.get(), LargeMissileSmokeParticle.Provider::new);
             event.registerSpriteSet(BMNWParticleTypes.DUSTY_FIRE.get(), DustyFireParticle.Provider::new);
             event.registerSpriteSet(BMNWParticleTypes.FIRE_TRAIL.get(), FireTrailParticle.Provider::new);
+            event.registerSpriteSet(BMNWParticleTypes.DUST_TRAIL.get(), DustTrailParticle.Provider::new);
             event.registerSpriteSet(BMNWParticleTypes.MUSHROOM_CLOUD.get(), MushroomCloudParticle.Provider::new);
         }
 

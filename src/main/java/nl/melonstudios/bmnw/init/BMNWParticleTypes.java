@@ -50,6 +50,10 @@ public class BMNWParticleTypes {
             "mushroom_cloud",
             () -> new SimpleParticleType(true)
     );
+    public static final Supplier<SimpleParticleType> DUST_TRAIL = PARTICLE_TYPES.register(
+            "dust_trail",
+            () -> new SimpleParticleType(true)
+    );
 
 
     public static void register(IEventBus eventBus) {
