@@ -220,6 +220,14 @@ public class BMNWBlocks {
     //endregion
 
     //region Concrete & similar
+    public static final DeferredBlock<Block> LIGHT_BRICKS = BLOCKS.register("light_bricks",
+            () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.BRICKS)
+                    .strength(5.0F, 20.0F)));
+    public static final DeferredBlock<Block> VINYL_TILE = BLOCKS.register("vinyl_tile",
+            () -> new Block(BlockBehaviour.Properties.ofFullCopy(LIGHT_BRICKS.get())
+                    .strength(10.0F, 60.0F).sound(SoundType.GLASS)));
+    public static final DeferredBlock<Block> SMALL_VINYL_TILES = BLOCKS.register("small_vinyl_tiles",
+            () -> new Block(BlockBehaviour.Properties.ofFullCopy(VINYL_TILE.get())));
     public static final DeferredBlock<Block> CONCRETE = BLOCKS.register("concrete",
             () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.OBSIDIAN).strength(concrete_hardness, concrete_blast_res)));
     public static final DeferredBlock<Block> CONCRETE_SLAB = BLOCKS.register("concrete_slab",

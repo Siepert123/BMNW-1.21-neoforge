@@ -346,8 +346,9 @@ public class BMNWItems {
     public static final DeferredItem<DetonatorItem> DETONATOR = ITEMS.register("detonator",
             () -> new DetonatorItem(new Item.Properties()));
 
-    public static final DeferredItem<BlockItem> MISSILE_LAUNCH_PAD = ITEMS.register("missile_launch_pad",
-            () -> new BlockItem(BMNWBlocks.MISSILE_LAUNCH_PAD.get(), new Item.Properties()));
+    public static final DeferredItem<MultiBlockItem> MISSILE_LAUNCH_PAD = ITEMS.register("missile_launch_pad",
+            () -> new MultiBlockItem(BMNWBlocks.MISSILE_LAUNCH_PAD.get(), new Item.Properties(),
+                    -1, 0, -1, 1, 0, 1));
     public static final DeferredItem<TargetDesignatorItem> TARGET_DESIGNATOR = ITEMS.register("target_designator",
             () -> new TargetDesignatorItem(new Item.Properties()));
     public static final DeferredItem<LaserTargetDesignatorItem> LASER_TARGET_DESIGNATOR = ITEMS.register("laser_target_designator",
@@ -355,6 +356,12 @@ public class BMNWItems {
     //endregion
 
     //region Concrete & similar
+    public static final DeferredItem<BlockItem> LIGHT_BRICKS = ITEMS.register("light_bricks",
+            () -> new BlockItem(BMNWBlocks.LIGHT_BRICKS.get(), new Item.Properties()));
+    public static final DeferredItem<BlockItem> VINYL_TILE = ITEMS.register("vinyl_tile",
+            () -> new BlockItem(BMNWBlocks.VINYL_TILE.get(), new Item.Properties()));
+    public static final DeferredItem<BlockItem> SMALL_VINYL_TILES = ITEMS.register("small_vinyl_tiles",
+            () -> new BlockItem(BMNWBlocks.SMALL_VINYL_TILES.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> CONCRETE = ITEMS.register("concrete",
             () -> new BlockItem(BMNWBlocks.CONCRETE.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> CONCRETE_SLAB = ITEMS.register("concrete_slab",

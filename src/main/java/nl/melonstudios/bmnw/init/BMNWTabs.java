@@ -57,6 +57,9 @@ public class BMNWTabs {
                             ResourceLocation.parse("bmnw:bombs")
                     )
                     .displayItems((parameters, items) -> {
+                        items.accept(LIGHT_BRICKS);
+                        items.accept(VINYL_TILE);
+                        items.accept(SMALL_VINYL_TILES);
                         items.accept(CONCRETE);
                         items.accept(CONCRETE_STAIRS);
                         items.accept(CONCRETE_SLAB);

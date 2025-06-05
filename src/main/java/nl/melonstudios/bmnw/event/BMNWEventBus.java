@@ -82,7 +82,7 @@ import java.util.function.Supplier;
 /**
  * BMNWs event bus.
  */
-@SuppressWarnings("all")
+
 public class BMNWEventBus {
 
     @EventBusSubscriber(modid = "bmnw", bus = EventBusSubscriber.Bus.GAME)
@@ -324,7 +324,7 @@ public class BMNWEventBus {
                     event.addTooltipLines(Component.translatable("tooltip.bmnw.burning").withColor(0xFFFF00));
                 }
                 if (HazardRegistry.getBlindingRegistry(item)) {
-                    event.addTooltipLines(Component.translatable("tooltip.b mnw.blinding").withColor(0x7777FF));
+                    event.addTooltipLines(Component.translatable("tooltip.bmnw.blinding").withColor(0x7777FF));
                 }
                 if (HazardRegistry.isWP(stack)) {
                     event.addTooltipLines(Component.translatable("tooltip.bmnw.wp").withColor(0xFFF2B2));
@@ -332,24 +332,24 @@ public class BMNWEventBus {
             }
             if (stack.getItem() instanceof BlockItem) {
                 Block block = ((BlockItem) stack.getItem()).getBlock();
+                if (block.builtInRegistryHolder().is(BMNWTags.Blocks.CLEAN_FLOOR)) {
+                    event.addTooltipLines(
+                            Component.literal("[")
+                                    .append(Component.translatable("tooltip.bmnw.clean_floor"))
+                                    .append("]").withColor(0x8888FF)
+                    );
+                }
                 if (HazardRegistry.enableResistanceDisplay(block) && event.getContext().flag().isAdvanced()) {
-                    if (true) {
-                        event.addTooltipLines(
-                                Component.translatable("tooltip.bmnw.blast_resistance")
-                                        .append(": ")
-                                        .append(String.valueOf(block.getExplosionResistance()))
-                                        .withColor(0x888888),
-                                Component.translatable("tooltip.bmnw.hardness")
-                                        .append(": ")
-                                        .append(String.valueOf(block.defaultDestroyTime()))
-                                        .withColor(0x888888)
-                        );
-                    } else {
-                        event.addTooltipLines(
-                                Component.translatable("tooltip.bmnw.alt_for_resistance")
-                                        .withColor(0x888888)
-                        );
-                    }
+                    event.addTooltipLines(
+                            Component.translatable("tooltip.bmnw.blast_resistance")
+                                    .append(": ")
+                                    .append(String.valueOf(block.getExplosionResistance()))
+                                    .withColor(0x888888),
+                            Component.translatable("tooltip.bmnw.hardness")
+                                    .append(": ")
+                                    .append(String.valueOf(block.defaultDestroyTime()))
+                                    .withColor(0x888888)
+                    );
                 }
             }
             if (stack.getItem() instanceof CoreSampleItem) {

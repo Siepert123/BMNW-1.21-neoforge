@@ -99,7 +99,10 @@
     "bmnw:green_fixture_inverted",
     "bmnw:red_fixture_inverted",
     "bmnw:black_fixture_inverted",
-    "bmnw:redstone_thermometer"
+    "bmnw:redstone_thermometer",
+    "bmnw:light_bricks",
+    "bmnw:vinyl_tile",
+    "bmnw:small_vinyl_tiles"
   ],
   "replace": false
 }

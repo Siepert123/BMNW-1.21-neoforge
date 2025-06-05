@@ -53,6 +53,8 @@ public class BMNWTags {
         public static final TagKey<Block> GRANTS_NUKE_ACHIEVEMENT = tag("grants_nuke_achievement");
         public static final TagKey<Block> CUSHIONS_NUCLEAR_BLAST = tag("cushions_nuclear_blast");
 
+        public static final TagKey<Block> CLEAN_FLOOR = tag("clean_floor");
+
         private static TagKey<Block> tag(@Nonnull String name) {
             return TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath("bmnw", name));
         }
