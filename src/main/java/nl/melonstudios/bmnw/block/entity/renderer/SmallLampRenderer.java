@@ -20,8 +20,8 @@ import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.client.model.data.ModelData;
 import nl.melonstudios.bmnw.block.decoration.BaseSmallLampBlock;
 import nl.melonstudios.bmnw.block.entity.SmallLampBlockEntity;
-import nl.melonstudios.bmnw.misc.PartialModel;
 import nl.melonstudios.bmnw.misc.Library;
+import nl.melonstudios.bmnw.misc.PartialModel;
 
 import javax.annotation.Nonnull;
 

@@ -1,7 +1,6 @@
 package nl.melonstudios.bmnw.init;
 
 import net.minecraft.client.resources.model.ModelResourceLocation;
-import net.minecraft.world.item.DyeColor;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import nl.melonstudios.bmnw.BMNW;

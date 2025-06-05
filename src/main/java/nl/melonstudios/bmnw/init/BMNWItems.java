@@ -7,7 +7,6 @@ import net.minecraft.world.item.*;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import nl.melonstudios.bmnw.block.decoration.FixtureBlock;
 import nl.melonstudios.bmnw.item.battery.BatteryItem;
 import nl.melonstudios.bmnw.item.battery.InfiniteBatteryItem;
 import nl.melonstudios.bmnw.item.misc.*;

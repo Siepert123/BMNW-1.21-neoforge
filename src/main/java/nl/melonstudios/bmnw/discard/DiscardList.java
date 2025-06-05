@@ -1,7 +1,6 @@
 package nl.melonstudios.bmnw.discard;
 
 import net.minecraft.world.item.Item;
-import nl.melonstudios.bmnw.init.BMNWItems;
 
 import java.util.ArrayList;
 import java.util.List;

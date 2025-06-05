@@ -16,7 +16,6 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import nl.melonstudios.bmnw.init.BMNWParticleTypes;
 import nl.melonstudios.bmnw.misc.math.MutableVec3;
-import nl.melonstudios.bmnw.particle.ShockwaveParticle;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
