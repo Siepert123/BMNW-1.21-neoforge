@@ -18,17 +18,8 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import nl.melonstudios.bmnw.init.BMNWStateProperties;
 
 public class IrradiatedLeafPileBlock extends Block {
-    public static final IntegerProperty RAD_LEVEL = BMNWStateProperties.RAD_LEVEL;
-
     public IrradiatedLeafPileBlock(Properties properties) {
         super(properties);
-        registerDefaultState(this.getStateDefinition().any()
-                .setValue(RAD_LEVEL, 1));
-    }
-
-    @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(RAD_LEVEL);
     }
 
     @Override

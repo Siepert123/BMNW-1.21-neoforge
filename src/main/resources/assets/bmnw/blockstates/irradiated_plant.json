@@ -1,23 +1,6 @@
 {
   "variants": {
-    "irradiation=1": [
-      {
-        "model": "bmnw:block/irradiated_grass_light"
-      },
-      {
-        "model": "bmnw:block/irradiated_grass_light"
-      },
-      {
-        "model": "bmnw:block/irradiated_grass_light"
-      },
-      {
-        "model": "bmnw:block/irradiated_grass_light"
-      },
-      {
-        "model": "bmnw:block/irradiated_fern_light"
-      }
-    ],
-    "irradiation=2": [
+    "": [
       {
         "model": "bmnw:block/irradiated_grass"
       },
@@ -32,23 +15,6 @@
       },
       {
         "model": "bmnw:block/irradiated_fern"
-      }
-    ],
-    "irradiation=3": [
-      {
-        "model": "bmnw:block/irradiated_grass_dark"
-      },
-      {
-        "model": "bmnw:block/irradiated_grass_dark"
-      },
-      {
-        "model": "bmnw:block/irradiated_grass_dark"
-      },
-      {
-        "model": "bmnw:block/irradiated_grass_dark"
-      },
-      {
-        "model": "bmnw:block/irradiated_fern_dark"
       }
     ]
   }

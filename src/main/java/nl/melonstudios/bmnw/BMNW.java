@@ -4,6 +4,9 @@ import com.mojang.logging.LogUtils;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.commands.Commands;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtAccounter;
+import net.minecraft.nbt.NbtIo;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BiomeTags;
@@ -41,6 +44,9 @@ import nl.melonstudios.bmnw.screen.WorkbenchScreen;
 import org.slf4j.Logger;
 
 import javax.annotation.Nonnull;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
 import java.util.Map;
 import java.util.Objects;
 
@@ -71,11 +77,13 @@ public class BMNW {
     }
 
     private static String versionStr;
+    private static ModContainer modContainer;
 
     public BMNW(IEventBus modEventBus, @Nonnull ModContainer modContainer, Dist dist) {
         DistrictHolder.setDistrict(dist);
         modEventBus.addListener(this::commonSetup);
 
+        BMNW.modContainer = modContainer;
         versionStr = modContainer.getModInfo().getVersion().toString();
 
         NeoForge.EVENT_BUS.register(this);
@@ -151,7 +159,13 @@ public class BMNW {
         Structures.registerStructure("bmnw:dud",
                 new StructureData(new StructureDud(), new StructureSpawningLogic(0.0005f)
                         .setBiomeConstraint(biome -> !biome.is(BiomeTags.IS_OCEAN) && !biome.is(BiomeTags.IS_RIVER) && biome.is(BiomeTags.IS_OVERWORLD))
-                        .setSalt("bmnw:dud".hashCode())));
+                        .setSalt("bmnw:dud".hashCode())
+                        .setAllowMultipleStructures(false)));
+        Structures.registerStructure("bmnw:bunker",
+                new StructureData(new StructureBunker(), new StructureSpawningLogic(0.0001F)
+                        .setBiomeConstraint(biome -> !biome.is(BiomeTags.IS_OCEAN) && !biome.is(BiomeTags.IS_RIVER) && biome.is(BiomeTags.IS_OVERWORLD))
+                        .setSalt("bmnw:dud".hashCode()))
+                        .addBlockModifier(new ConcreteBricksDecayModifier(0.1F)));
     }
 
     // Add the example block item to the building blocks tab
@@ -235,5 +249,17 @@ public class BMNW {
 
     public static void registerAdditionalModels(ModelEvent.RegisterAdditional event) {
         PartialModel.ALL.keySet().forEach(event::register);
+    }
+
+    public static InputStream getJarInputStream(String path) throws IOException {
+        return Files.newInputStream(modContainer.getModInfo().getOwningFile().getFile().findResource(path));
+    }
+
+    public static CompoundTag getJarNbt(String path) {
+        try (InputStream stream = getJarInputStream(path)) {
+            return NbtIo.readCompressed(stream, NbtAccounter.unlimitedHeap());
+        } catch (IOException e) {
+            return new CompoundTag();
+        }
     }
 }

@@ -31,7 +31,7 @@ public class StructureSpawningLogic {
     }
 
     public boolean canSpawn(LevelAccessor level, ChunkPos pos, Random random) {
-        return random.nextFloat() < chance && biomeConstraint.match(level.getBiome(pos.getMiddleBlockPosition(64)));
+        return random.nextFloat() < this.getRarity() && this.getBiomeConstraint().match(level.getBiome(pos.getMiddleBlockPosition(64)));
     }
 
 

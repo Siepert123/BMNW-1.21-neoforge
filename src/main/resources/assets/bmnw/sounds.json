@@ -131,17 +131,62 @@
   "metal_rods_lower": {
     "sounds": [
       "bmnw:metal_rods_lower"
-    ]
+    ],
+    "subtitle": "subtitles.bmnw.machinery"
   },
   "metal_rods_elevate": {
     "sounds": [
       "bmnw:metal_rods_elevate"
-    ]
+    ],
+    "subtitle": "subtitles.bmnw.machinery"
   },
   "small_machine_rotate": {
     "sounds": [
       "bmnw:small_machine_rotate"
-    ]
+    ],
+    "subtitle": "subtitles.bmnw.machinery"
+  },
+  "large_gears_start": {
+    "sounds": [
+      "bmnw:large_gears_start"
+    ],
+    "subtitle": "subtitles.bmnw.machinery"
+  },
+  "large_gears_loop": {
+    "sounds": [
+      "bmnw:large_gears_loop"
+    ],
+    "subtitle": "subtitles.bmnw.machinery"
+  },
+  "large_gears_stop": {
+    "sounds": [
+      "bmnw:large_gears_stop"
+    ],
+    "subtitle": "subtitles.bmnw.machinery"
+  },
+  "large_shredder_fail": {
+    "sounds": [
+      "bmnw:large_shredder_fail"
+    ],
+    "subtitle": "subtitles.bmnw.machinery"
+  },
+  "large_shredder_start": {
+    "sounds": [
+      "bmnw:large_shredder_start"
+    ],
+    "subtitle": "subtitles.bmnw.machinery"
+  },
+  "large_shredder_loop": {
+    "sounds": [
+      "bmnw:large_shredder_loop"
+    ],
+    "subtitle": "subtitles.bmnw.machinery"
+  },
+  "large_shredder_stop": {
+    "sounds": [
+      "bmnw:large_shredder_stop"
+    ],
+    "subtitle": "subtitles.bmnw.machinery"
   },
   "ambient.large_generator_in_off": {
     "sounds": [
@@ -155,6 +200,14 @@
     "sounds": [
       {
         "name": "bmnw:ambient/large_generator_in_on",
+        "stream": true
+      }
+    ]
+  },
+  "music.steve_fight": {
+    "sounds": [
+      {
+        "name": "bmnw:music/steve_fight",
         "stream": true
       }
     ]

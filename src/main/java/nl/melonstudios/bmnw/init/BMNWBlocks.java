@@ -222,7 +222,8 @@ public class BMNWBlocks {
     //region Concrete & similar
     public static final DeferredBlock<Block> LIGHT_BRICKS = BLOCKS.register("light_bricks",
             () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.BRICKS)
-                    .strength(5.0F, 20.0F)));
+                    .strength(5.0F, 20.0F)
+                    .sound(SoundType.NETHER_BRICKS)));
     public static final DeferredBlock<Block> VINYL_TILE = BLOCKS.register("vinyl_tile",
             () -> new Block(BlockBehaviour.Properties.ofFullCopy(LIGHT_BRICKS.get())
                     .strength(10.0F, 60.0F).sound(SoundType.GLASS)));

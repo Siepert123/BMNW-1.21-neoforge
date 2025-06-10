@@ -19,16 +19,8 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import nl.melonstudios.bmnw.init.BMNWStateProperties;
 
 public class IrradiatedPlantBlock extends Block {
-    public static final IntegerProperty RAD_LEVEL = BMNWStateProperties.RAD_LEVEL;
     public IrradiatedPlantBlock(Properties properties) {
         super(properties);
-        registerDefaultState(this.getStateDefinition().any()
-                .setValue(RAD_LEVEL, 1));
-    }
-
-    @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(RAD_LEVEL);
     }
 
     @Override
@@ -57,7 +49,7 @@ public class IrradiatedPlantBlock extends Block {
     protected BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor level, BlockPos currentPos, BlockPos facingPos) {
         return !state.canSurvive(level, currentPos)
                 ? Blocks.AIR.defaultBlockState()
-                : super.updateShape(state, facing, facingState, level, currentPos, facingPos);
+                : state;
     }
 
     @Override

@@ -69,6 +69,8 @@ public class LootPoolItemStack extends LootPool<ItemStack> {
             entries.add(StackPoolEntry.deserialize(compoundTag, registries));
         }
 
-        return new LootPoolItemStack(entries.toArray(new StackPoolEntry[0]));
+        float chance = nbt.contains("chance", Tag.TAG_FLOAT) ? nbt.getFloat("chance") : 2.0F;
+
+        return new LootPoolItemStack(chance, entries.toArray(new StackPoolEntry[0]));
     }
 }

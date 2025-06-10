@@ -17,16 +17,8 @@ import nl.melonstudios.bmnw.init.BMNWEffects;
 import nl.melonstudios.bmnw.init.BMNWStateProperties;
 
 public class IrradiatedGrassBlock extends Block {
-    public static final IntegerProperty RAD_LEVEL = BMNWStateProperties.RAD_LEVEL;
     public IrradiatedGrassBlock(Properties properties) {
         super(properties);
-        registerDefaultState(this.getStateDefinition().any()
-                .setValue(RAD_LEVEL, 1));
-    }
-
-    @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(RAD_LEVEL);
     }
 
     @Override
@@ -45,7 +37,7 @@ public class IrradiatedGrassBlock extends Block {
 
     @Override
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
-        for (int i = 0; i <= state.getValue(RAD_LEVEL); i++) {
+        for (int i = 0; i < 3; i++) {
             level.addParticle(ParticleTypes.MYCELIUM,
                     pos.getX() + random.nextFloat(), pos.getY() + 1, pos.getZ() + random.nextFloat(),
                     0, 0, 0);

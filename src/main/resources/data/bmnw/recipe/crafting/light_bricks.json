@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:bricks"
+    },
+    "N": {
+      "tag": "c:fences/wooden"
+    }
+  },
+  "pattern": [
+    "N#N",
+    "#N#",
+    "N#N"
+  ],
+  "result": {
+    "count": 4,
+    "id": "bmnw:light_bricks"
+  }
+}

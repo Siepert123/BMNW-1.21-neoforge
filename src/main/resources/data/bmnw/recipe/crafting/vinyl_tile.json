@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "bmnw:insulator"
+    },
+    "N": {
+      "item": "bmnw:light_bricks"
+    }
+  },
+  "pattern": [
+    " # ",
+    "#N#",
+    " # "
+  ],
+  "result": {
+    "id": "bmnw:vinyl_tile"
+  }
+}

@@ -447,9 +447,6 @@ public class ChunkRadiationHandlerPRISM extends ChunkRadiationHandler {
                         if (randEnt.getValue() == null || randEnt.getValue()[y] == null || randEnt.getValue()[y].radiation < threshold)
                             continue;
 
-                        float rads = randEnt.getValue()[y].radiation;
-                        int radLevel = rads > min_rads_3 ? 3 : rads > min_rads_2 ? 2 : 1;
-
                         if (level.isLoaded(pos.getBlockAt(0, (y + minSection) << 4, 0))) {
                             int realY = (y + minSection) << 4;
                             for (int x = 0; x < 16; x++) {
@@ -462,12 +459,12 @@ public class ChunkRadiationHandlerPRISM extends ChunkRadiationHandler {
                                         BlockState state = level.getBlockState(bp);
 
                                         if (state.is(BMNWTags.Blocks.IRRADIATABLE_GRASS_BLOCKS)) {
-                                            level.setBlock(bp, BMNWBlocks.IRRADIATED_GRASS_BLOCK.get().defaultBlockState().setValue(BMNWStateProperties.RAD_LEVEL, radLevel), 2);
+                                            level.setBlock(bp, BMNWBlocks.IRRADIATED_GRASS_BLOCK.get().defaultBlockState(), 2);
                                         } else if (state.is(BMNWTags.Blocks.IRRADIATABLE_PLANTS)) {
                                             level.setBlock(bp, BMNWBlocks.IRRADIATED_PLANT.get().defaultBlockState(), 2);
                                         } else if (state.is(BlockTags.LEAVES) && !state.is(BMNWBlocks.IRRADIATED_LEAVES.get())) {
                                             if (level.random.nextInt(7) <= 5) {
-                                                level.setBlock(bp, BMNWBlocks.IRRADIATED_LEAVES.get().defaultBlockState().setValue(BMNWStateProperties.RAD_LEVEL, radLevel), 2);
+                                                level.setBlock(bp, BMNWBlocks.IRRADIATED_LEAVES.get().defaultBlockState(), 2);
                                             } else level.setBlock(bp, Blocks.AIR.defaultBlockState(), 2);
                                         }
                                     }

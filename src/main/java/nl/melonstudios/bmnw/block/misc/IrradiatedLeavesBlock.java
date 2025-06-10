@@ -19,11 +19,8 @@ import nl.melonstudios.bmnw.init.BMNWBlocks;
 import nl.melonstudios.bmnw.init.BMNWStateProperties;
 
 public class IrradiatedLeavesBlock extends Block implements IShearable {
-    public static final IntegerProperty RAD_LEVEL = BMNWStateProperties.RAD_LEVEL;
     public IrradiatedLeavesBlock(Properties properties) {
         super(properties);
-        registerDefaultState(this.getStateDefinition().any()
-                .setValue(RAD_LEVEL, 1));
     }
 
     @Override
@@ -38,8 +35,7 @@ public class IrradiatedLeavesBlock extends Block implements IShearable {
             for (int y = 1; y < 16; y++) {
                 if (level.getBlockState(pos.below(y)).isFaceSturdy(level,pos.below(y), Direction.UP, SupportType.FULL)) {
                     if (level.getBlockState(pos.below(y-1)).canBeReplaced()) {
-                        level.setBlock(pos.below(y - 1), BMNWBlocks.IRRADIATED_LEAF_PILE.get()
-                                .defaultBlockState().setValue(RAD_LEVEL, state.getValue(RAD_LEVEL)), 3);
+                        level.setBlock(pos.below(y - 1), BMNWBlocks.IRRADIATED_LEAF_PILE.get().defaultBlockState(), 3);
                     }
                     break;
                 }
@@ -50,11 +46,6 @@ public class IrradiatedLeavesBlock extends Block implements IShearable {
     @Override
     protected int getLightBlock(BlockState state, BlockGetter level, BlockPos pos) {
         return 1;
-    }
-
-    @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(RAD_LEVEL);
     }
 
     private static final VoxelShape collision = Block.box(0, 0, 0, 16, 8, 16);

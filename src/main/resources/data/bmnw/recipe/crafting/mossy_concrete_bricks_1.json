@@ -1,16 +1,15 @@
 {
   "type": "minecraft:crafting_shapeless",
-  "category": "equipment",
+  "category": "misc",
   "ingredients": [
     {
       "item": "bmnw:concrete_bricks"
     },
     {
-      "item": "minecraft:moss"
+      "item": "minecraft:moss_block"
     }
   ],
   "result": {
-    "count": 1,
     "id": "bmnw:mossy_concrete_bricks"
   }
 }

@@ -3,9 +3,12 @@ package nl.melonstudios.bmnw.init;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.item.JukeboxSong;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.IEventBus;
@@ -84,10 +87,34 @@ public class BMNWSounds {
     public static final DeferredHolder<SoundEvent, SoundEvent> SMALL_MACHINE_ROTATE =
             createDefaultSound("small_machine_rotate");
 
-    public static final DeferredHolder<SoundEvent, SoundEvent> AMBIENT_LARGE_GENERATOR_IN_OFF =
-            createDefaultSound("ambient.large_generator_in_off");
-    public static final DeferredHolder<SoundEvent, SoundEvent> AMBIENT_LARGE_GENERATOR_IN_ON =
-            createDefaultSound("ambient.large_generator_in_on");
+    public static final DeferredHolder<SoundEvent, SoundEvent> LARGE_GEARS_START =
+            createDefaultSound("large_gears_start");
+    public static final DeferredHolder<SoundEvent, SoundEvent> LARGE_GEARS_LOOP =
+            createDefaultSound("large_gears_loop");
+    public static final DeferredHolder<SoundEvent, SoundEvent> LARGE_GEARS_STOP =
+            createDefaultSound("large_gears_stop");
+
+    public static final DeferredHolder<SoundEvent, SoundEvent> LARGE_SHREDDER_FAIL =
+            createDefaultSound("large_shredder_fail");
+
+    public static final DeferredHolder<SoundEvent, SoundEvent> LARGE_SHREDDER_START =
+            createDefaultSound("large_shredder_start");
+    public static final DeferredHolder<SoundEvent, SoundEvent> LARGE_SHREDDER_LOOP =
+            createDefaultSound("large_shredder_loop");
+    public static final DeferredHolder<SoundEvent, SoundEvent> LARGE_SHREDDER_STOP =
+            createDefaultSound("large_shredder_stop");
+
+    public static class Ambient {
+        public static final DeferredHolder<SoundEvent, SoundEvent> LARGE_GENERATOR_IN_OFF =
+                createDefaultSound("ambient.large_generator_in_off");
+        public static final DeferredHolder<SoundEvent, SoundEvent> LARGE_GENERATOR_IN_ON =
+                createDefaultSound("ambient.large_generator_in_on");
+    }
+
+    public static class Music {
+        public static final DeferredHolder<SoundEvent, SoundEvent> STEVE_FIGHT =
+                createDefaultSound("music.steve_fight");
+    }
 
     private static DeferredHolder<SoundEvent, SoundEvent> createDefaultSound(String name) {
         return SOUND_EVENTS.register(
