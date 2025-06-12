@@ -48,7 +48,7 @@ public class LargeShredderRenderer implements BlockEntityRenderer<LargeShredderB
             this.render(consumer, poseStack.last(), BMNWPartialModels.LARGE_SHREDDER_HATCH.loadAndGet(), packedLight, packedOverlay);
         } else {
             float t = (blockEntity.oldRunning ? 1.0F - partialTick : partialTick) / HATCH_RADIANS;
-            poseStack.rotateAround(new Quaternionf().rotateX(t), 0.5F, 0.25F, 0.5F);
+            poseStack.rotateAround(new Quaternionf().rotateX(-t), 0.5F, 0.25F, 0.5F);
             this.render(consumer, poseStack.last(), BMNWPartialModels.LARGE_SHREDDER_HATCH.loadAndGet(), packedLight, packedOverlay);
         }
         poseStack.popPose();
