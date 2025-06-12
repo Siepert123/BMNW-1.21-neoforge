@@ -415,6 +415,10 @@ public class BMNWItems {
             () -> new BlockItem(BMNWBlocks.ANTENNA_DISH.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> ANTENNA_TOP = ITEMS.register("antenna_top",
             () -> new BlockItem(BMNWBlocks.ANTENNA_TOP.get(), new Item.Properties()));
+
+    public static final DeferredItem<BlockItem> STEEL_CATWALK = ITEMS.register("steel_catwalk",
+            () -> new BlockItem(BMNWBlocks.STEEL_CATWALK.get(), new Item.Properties()));
+
     //endregion
 
     //region Basic defense

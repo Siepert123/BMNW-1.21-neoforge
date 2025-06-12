@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "bmnw:large_shredder",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "multiblock_slave": "false"
+              }
+            }
+          ],
+          "name": "bmnw:large_shredder"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "bmnw:blocks/large_shredder"
+}

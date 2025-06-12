@@ -148,6 +148,8 @@ public class BMNWTabs {
                         items.accept(ANTENNA_DISH);
                         items.accept(ANTENNA_TOP);
 
+                        items.accept(STEEL_CATWALK);
+
                         items.accept(OFFICE_DOOR);
                         items.accept(BUNKER_DOOR);
 
@@ -464,6 +466,7 @@ public class BMNWTabs {
                         items.accept(ALLOY_BLAST_FURNACE);
                         items.accept(DECONTAMINATOR);
                         items.accept(TEST_EXCAVATOR);
+                        items.accept(LARGE_SHREDDER);
                     })
                     .build()
     );

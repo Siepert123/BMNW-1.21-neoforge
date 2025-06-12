@@ -1,0 +1,11 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "bmnw:block/steel_catwalk",
+      "y": 90
+    },
+    "axis=z": {
+      "model": "bmnw:block/steel_catwalk"
+    }
+  }
+}

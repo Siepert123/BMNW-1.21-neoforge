@@ -1,6 +1,7 @@
 package nl.melonstudios.bmnw.block.entity;
 
 import com.google.common.collect.AbstractIterator;
+import com.google.common.collect.ImmutableList;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -85,6 +86,7 @@ public class LargeShredderBlockEntity extends BlockEntity implements ITickable {
 
     public final boolean multiblockSlave;
     public boolean running = false;
+    public boolean oldRunning = false;
     public boolean powered = false;
 
     public final ItemStackHandler inventory;
@@ -175,6 +177,8 @@ public class LargeShredderBlockEntity extends BlockEntity implements ITickable {
     public void update() {
         if (this.multiblockSlave) return;
 
+        this.oldRunning = this.running;
+
         assert this.level != null;
         if (!this.level.isClientSide && this.running && !this.canRun()) {
             this.setRunning(false);
@@ -227,7 +231,7 @@ public class LargeShredderBlockEntity extends BlockEntity implements ITickable {
                     ItemStack result = ShreddingRecipes.instance.getResult(input);
                     if (this.inventory.getStackInSlot(1).isEmpty() || StackMover.canMergeItems(this.inventory.getStackInSlot(1), result)) {
                         this.setChanged();
-                        if (++this.shredProgress >= 10) {
+                        if (++this.shredProgress >= 4) {
                             this.shredProgress = 0;
                             input.shrink(1);
                             if (this.inventory.getStackInSlot(1).isEmpty()) this.inventory.setStackInSlot(1, result);
@@ -299,6 +303,10 @@ public class LargeShredderBlockEntity extends BlockEntity implements ITickable {
     }
     public void startLoop() {
         Minecraft.getInstance().getSoundManager().play(new LargeShredderLoopSoundInstance(this));
+    }
+
+    public List<ItemStack> drops() {
+        return ImmutableList.of(this.inventory.getStackInSlot(0), this.inventory.getStackInSlot(1));
     }
 
     public void forSlave(BrokenConsumer<BlockPos> action) {

@@ -5,6 +5,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.WorldlyContainerHolder;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -25,6 +27,8 @@ import nl.melonstudios.bmnw.init.BMNWStateProperties;
 import nl.melonstudios.bmnw.interfaces.ITickable;
 import nl.melonstudios.bmnw.misc.BrokenConsumer;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public class LargeShredderBlock extends HorizontalDirectionalBlock implements EntityBlock {
     public static final BooleanProperty MULTIBLOCK_SLAVE = BMNWStateProperties.MULTIBLOCK_SLAVE;
@@ -99,6 +103,15 @@ public class LargeShredderBlock extends HorizontalDirectionalBlock implements En
                 }
             }
         } else {
+            BlockEntity be = level.getBlockEntity(pos);
+            if (be instanceof LargeShredderBlockEntity shredder) {
+                List<ItemStack> stacks = shredder.drops();
+                for (ItemStack stack : stacks) {
+                    if (stack.isEmpty()) continue;
+                    ItemEntity entity = new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, stack.copy());
+                    level.addFreshEntity(entity);
+                }
+            }
             forSlave(pos, state, (pos1) -> {
                 level.destroyBlock(pos1, false);
                 return false;

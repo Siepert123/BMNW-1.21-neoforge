@@ -24,6 +24,9 @@ public class BMNWPartialModels {
 
     public static final PartialModel FIXTURE_LAMP = block("fixture_lamp");
 
+    public static final PartialModel LARGE_SHREDDER_HATCH = block("large_shredder_hatch");
+    public static final PartialModel LARGE_SHREDDER_BLADES = block("large_shredder_blades");
+
     private static PartialModel block(String path) {
         return PartialModel.of(ModelResourceLocation.standalone(BMNW.namespace("block/" + path)));
     }

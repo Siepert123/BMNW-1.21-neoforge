@@ -59,4 +59,24 @@ public class Library {
             case Z -> SURROUND_Z;
         };
     }
+
+    public static Direction.Axis toggleAxis(Direction.Axis toggle, Direction.Axis around) {
+        return switch (around) {
+            case X -> switch (toggle) {
+                case X -> Direction.Axis.X;
+                case Y -> Direction.Axis.Z;
+                case Z -> Direction.Axis.Y;
+            };
+            case Y -> switch (toggle) {
+                case X -> Direction.Axis.Z;
+                case Y -> Direction.Axis.Y;
+                case Z -> Direction.Axis.X;
+            };
+            case Z -> switch (toggle) {
+                case X -> Direction.Axis.Y;
+                case Y -> Direction.Axis.X;
+                case Z -> Direction.Axis.Z;
+            };
+        };
+    }
 }

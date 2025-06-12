@@ -287,6 +287,10 @@ public class BMNWBlocks {
             () -> new AntennaDishBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_DECO_BLOCK.get()).noOcclusion()));
     public static final DeferredBlock<AntennaTopBlock> ANTENNA_TOP = BLOCKS.register("antenna_top",
             () -> new AntennaTopBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_DECO_BLOCK.get()).noOcclusion()));
+
+    public static final DeferredBlock<CatwalkBlock> STEEL_CATWALK = BLOCKS.register("steel_catwalk",
+            () -> new CatwalkBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get())));
+
     //endregion
 
     //region Basic defense
