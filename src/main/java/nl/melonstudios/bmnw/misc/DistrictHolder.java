@@ -2,6 +2,8 @@ package nl.melonstudios.bmnw.misc;
 
 import net.neoforged.api.distmarker.Dist;
 
+import java.util.function.Supplier;
+
 public class DistrictHolder {
     private static Dist district = null;
 
@@ -14,5 +16,9 @@ public class DistrictHolder {
 
     public static boolean isClient() {
         return district != null && district.isClient();
+    }
+
+    public static void clientOnly(Supplier<Runnable> func) {
+        if (isClient()) func.get().run();
     }
 }

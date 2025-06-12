@@ -330,6 +330,8 @@ public class BMNWItems {
             () -> new ExcavationVeinDetectorItem(new Item.Properties().stacksTo(1)));
     public static final DeferredItem<BlockItem> TEST_EXCAVATOR = ITEMS.register("test_excavator",
             () -> new BlockItem(BMNWBlocks.TEST_EXCAVATOR.get(), new Item.Properties()));
+    public static final DeferredItem<LargeShredderBlockItem> LARGE_SHREDDER = ITEMS.register("large_shredder",
+            () -> new LargeShredderBlockItem(BMNWBlocks.LARGE_SHREDDER.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> MACHINE_SCRAP = ITEMS.register("machine_scrap",
             () -> new BlockItem(BMNWBlocks.MACHINE_SCRAP.get(), new Item.Properties()));
 

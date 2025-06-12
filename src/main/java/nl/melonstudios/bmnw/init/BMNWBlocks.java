@@ -182,7 +182,7 @@ public class BMNWBlocks {
 
     //region Basic machines
     public static final DeferredBlock<WorkbenchBlock> TEST_WORKBENCH = BLOCKS.register("test_workbench",
-            () -> new WorkbenchBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CRAFTING_TABLE), 0, "workbench"));
+            () -> new WorkbenchBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CRAFTING_TABLE), 69420, "workbench"));
     public static final DeferredBlock<WorkbenchBlock> IRON_WORKBENCH = BLOCKS.register("iron_workbench",
             () -> new WorkbenchBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CRAFTING_TABLE), 0, "iron_workbench"));
     public static final DeferredBlock<WorkbenchBlock> STEEL_WORKBENCH = BLOCKS.register("steel_workbench",
@@ -197,6 +197,9 @@ public class BMNWBlocks {
 
     public static final DeferredBlock<TestExcavatorBlock> TEST_EXCAVATOR = BLOCKS.register("test_excavator",
             () -> new TestExcavatorBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get())));
+
+    public static final DeferredBlock<LargeShredderBlock> LARGE_SHREDDER = BLOCKS.register("large_shredder",
+            () -> new LargeShredderBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get())));
 
     public static final DeferredBlock<MachineScrapBlock> MACHINE_SCRAP = BLOCKS.register("machine_scrap",
             () -> new MachineScrapBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_DECO_BLOCK.get()).noOcclusion().noLootTable()));

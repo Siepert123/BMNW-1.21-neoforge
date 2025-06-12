@@ -135,6 +135,15 @@ public class BMNWBlockEntities {
             )
     );
 
+    public static final Supplier<BlockEntityType<LargeShredderBlockEntity>> LARGE_SHREDDER = BLOCK_ENTITIES.register(
+            "large_shredder",
+            () -> new BlockEntityType<>(
+                    LargeShredderBlockEntity::new,
+                    Set.of(BMNWBlocks.LARGE_SHREDDER.get()),
+                    null
+            )
+    );
+
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);
     }

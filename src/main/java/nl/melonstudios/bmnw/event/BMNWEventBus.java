@@ -45,6 +45,7 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import nl.melonstudios.bmnw.block.entity.IronBarrelBlockEntity;
+import nl.melonstudios.bmnw.block.entity.LargeShredderBlockEntity;
 import nl.melonstudios.bmnw.block.entity.MissileLaunchPadBlockEntity;
 import nl.melonstudios.bmnw.block.entity.renderer.*;
 import nl.melonstudios.bmnw.cfg.BMNWClientConfig;
@@ -445,6 +446,11 @@ public class BMNWEventBus {
                     (level, pos, state, blockEntity, context) -> blockEntity != null ?
                             ((MissileLaunchPadBlockEntity) blockEntity).getIEnergy() : null,
                     BMNWBlocks.MISSILE_LAUNCH_PAD.get()
+            );
+            event.registerBlock(
+                    Capabilities.EnergyStorage.BLOCK,
+                    (level, pos, state, be, context) -> be != null ? ((LargeShredderBlockEntity)be).energy : null,
+                    BMNWBlocks.LARGE_SHREDDER.get()
             );
             event.registerBlock(
                     Capabilities.FluidHandler.BLOCK,
