@@ -26,7 +26,9 @@
     "bmnw:sealed_hatch",
     "bmnw:metal_lock_door",
     "bmnw:metal_sliding_door",
-    "bmnw:chainlink_fence"
+    "bmnw:chainlink_fence",
+    "bmnw:large_shredder",
+    "bmnw:missile_launch_pad"
   ],
   "replace": false
 }

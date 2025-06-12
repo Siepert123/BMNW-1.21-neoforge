@@ -10,6 +10,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 
 import java.util.ArrayList;
 
+//TODO: implement more recipes
 public class ShreddingRecipes {
     private static TagKey<Item> tag(String id) {
         return TagKey.create(Registries.ITEM, ResourceLocation.parse(id));

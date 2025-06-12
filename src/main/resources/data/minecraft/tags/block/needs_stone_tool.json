@@ -68,7 +68,8 @@
     "bmnw:redstone_thermometer",
     "bmnw:light_bricks",
     "bmnw:vinyl_tile",
-    "bmnw:small_vinyl_tiles"
+    "bmnw:small_vinyl_tiles",
+    "bmnw:steel_catwalk"
   ],
   "replace": false
 }

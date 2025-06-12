@@ -92,6 +92,12 @@ public class LargeShredderBlockEntity extends BlockEntity implements ITickable {
     public final ItemStackHandler inventory;
     public final IExtendedEnergyStorage energy;
 
+    @Nullable
+    public IExtendedEnergyStorage getEnergy(@Nullable Direction d) {
+        if (d == null) return this.energy;
+        return d == this.getFacing().getCounterClockWise() ? this.energy : null;
+    }
+
     public Direction getFacing() {
         return this.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING);
     }
@@ -245,7 +251,7 @@ public class LargeShredderBlockEntity extends BlockEntity implements ITickable {
         if (this.level instanceof ServerLevel level) {
             ItemStack out = this.inventory.getStackInSlot(1);
             if (!out.isEmpty()) {
-                BlockPos outPos = this.worldPosition.relative(this.getFacing().getClockWise());
+                BlockPos outPos = this.worldPosition.relative(this.getFacing().getClockWise()).below();
                 BlockState outState = level.getBlockState(outPos);
                 Container container = StackMover.getBlockContainer(level, outPos, outState);
                 if (container != null) {

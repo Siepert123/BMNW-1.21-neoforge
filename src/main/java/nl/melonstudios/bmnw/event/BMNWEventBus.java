@@ -450,7 +450,7 @@ public class BMNWEventBus {
             );
             event.registerBlock(
                     Capabilities.EnergyStorage.BLOCK,
-                    (level, pos, state, be, context) -> be != null ? ((LargeShredderBlockEntity)be).energy : null,
+                    (level, pos, state, be, context) -> be != null ? ((LargeShredderBlockEntity)be).getEnergy(context) : null,
                     BMNWBlocks.LARGE_SHREDDER.get()
             );
             event.registerBlock(

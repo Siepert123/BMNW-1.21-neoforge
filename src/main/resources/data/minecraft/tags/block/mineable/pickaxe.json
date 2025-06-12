@@ -64,6 +64,7 @@
     "bmnw:meteorite_fire_marble_ore",
     "bmnw:meteorite_iron_ore",
     "bmnw:press",
+    "bmnw:steel_catwalk",
     "bmnw:chainlink_fence",
     "bmnw:alloy_blast_furnace",
     "bmnw:nether_red_phosphorus_ore",
@@ -102,7 +103,9 @@
     "bmnw:redstone_thermometer",
     "bmnw:light_bricks",
     "bmnw:vinyl_tile",
-    "bmnw:small_vinyl_tiles"
+    "bmnw:small_vinyl_tiles",
+    "bmnw:large_shredder",
+    "bmnw:missile_launch_pad"
   ],
   "replace": false
 }
