@@ -103,7 +103,8 @@ public class BMNWBlocks {
             () -> new DropExperienceBlock(
                     UniformInt.of(2, 5),
                     BlockBehaviour.Properties.ofFullCopy(Blocks.NETHER_QUARTZ_ORE)
-            ));
+            )
+    );
 
     public static final DeferredBlock<Block> STEEL_DECO_BLOCK = BLOCKS.register("steel_deco_block",
             () -> new Block(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get())));
@@ -332,6 +333,13 @@ public class BMNWBlocks {
                 }
             })
     );
+    //endregion
+
+    //region energy & fluid storage
+
+    public static final DeferredBlock<CreativeBatteryBlock> CREATIVE_ENERGY_STORAGE = BLOCKS.register("creative_energy_storage",
+            () -> new CreativeBatteryBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)));
+
     //endregion
 
     //region Doors & hatches

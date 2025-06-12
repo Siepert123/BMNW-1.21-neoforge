@@ -33,9 +33,11 @@ import nl.melonstudios.bmnw.init.BMNWBlockEntities;
 import nl.melonstudios.bmnw.init.BMNWBlocks;
 import nl.melonstudios.bmnw.init.BMNWSounds;
 import nl.melonstudios.bmnw.init.BMNWStateProperties;
+import nl.melonstudios.bmnw.interfaces.IExtendedEnergyStorage;
 import nl.melonstudios.bmnw.interfaces.ITickable;
 import nl.melonstudios.bmnw.misc.BrokenConsumer;
 import nl.melonstudios.bmnw.misc.DistrictHolder;
+import nl.melonstudios.bmnw.misc.ExtendedEnergyStorage;
 import nl.melonstudios.bmnw.misc.StackMover;
 import org.jetbrains.annotations.Nullable;
 
@@ -56,9 +58,14 @@ public class LargeShredderBlockEntity extends BlockEntity implements ITickable {
                         return false;
                     }
         };
-        this.energy = this.multiblockSlave ? null : new EnergyStorage(100000);
-        this.itemSearchPos = this.multiblockSlave ? null : pos.above(2);
-        this.itemSearchArea = this.multiblockSlave ? null : new AABB(this.itemSearchPos);
+        this.energy = new ExtendedEnergyStorage(100000) {
+            @Override
+            public boolean canExtract() {
+                return false;
+            }
+        };
+        this.itemSearchPos = pos.above(2);
+        this.itemSearchArea = new AABB(this.itemSearchPos);
     }
 
     @Override
@@ -81,7 +88,7 @@ public class LargeShredderBlockEntity extends BlockEntity implements ITickable {
     public boolean powered = false;
 
     public final ItemStackHandler inventory;
-    public IEnergyStorage energy;
+    public final IExtendedEnergyStorage energy;
 
     public Direction getFacing() {
         return this.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING);
@@ -109,7 +116,7 @@ public class LargeShredderBlockEntity extends BlockEntity implements ITickable {
             this.running = tag.getBoolean("running");
 
             this.inventory.deserializeNBT(registries, tag.getCompound("Inventory"));
-            this.energy = new EnergyStorage(tag.getInt("energy"));
+            this.energy.setEnergyStored(tag.getInt("energy"));
             this.shredProgress = tag.getInt("shredProgress");
             this.powered = tag.getBoolean("powered");
 
@@ -169,7 +176,7 @@ public class LargeShredderBlockEntity extends BlockEntity implements ITickable {
         if (this.multiblockSlave) return;
 
         assert this.level != null;
-        if (!this.canRun()) {
+        if (!this.level.isClientSide && this.running && !this.canRun()) {
             this.setRunning(false);
             level.playSound(null, this.worldPosition, BMNWSounds.LARGE_SHREDDER_STOP.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
         }
@@ -186,6 +193,7 @@ public class LargeShredderBlockEntity extends BlockEntity implements ITickable {
 
         if (this.running) {
             if (this.level instanceof ServerLevel level) {
+                this.energy.extractEnergy(50, false);
                 if (this.inventory.getStackInSlot(0).isEmpty()) {
                     this.shredProgress = 0;
                     BlockState state = level.getBlockState(this.itemSearchPos);
@@ -273,8 +281,7 @@ public class LargeShredderBlockEntity extends BlockEntity implements ITickable {
                     if (this.running) {
                         this.setRunning(false);
                         level.playSound(null, this.worldPosition, BMNWSounds.LARGE_SHREDDER_STOP.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
-                    }
-                    else {
+                    } else {
                         if (this.canRun()) {
                             this.startDelay = 40;
                             level.playSound(null, this.worldPosition, BMNWSounds.LARGE_SHREDDER_START.get(), SoundSource.BLOCKS, 1.0F, 1.0F);

@@ -8,6 +8,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 
 public class CreativeBatteryBlock extends Block {
     public CreativeBatteryBlock(Properties properties) {
@@ -25,7 +27,9 @@ public class CreativeBatteryBlock extends Block {
         super.tick(state, level, pos, random);
         level.scheduleTick(pos, this, 2);
         for (Direction d : Direction.values()) {
-            BlockEntity be = level.getBlockEntity(pos.relative(d));
+            BlockPos bp = pos.relative(d);
+            IEnergyStorage storage = level.getCapability(Capabilities.EnergyStorage.BLOCK, bp, d.getOpposite());
+            if (storage != null && storage.canReceive()) storage.receiveEnergy(Integer.MAX_VALUE, false);
         }
     }
 }

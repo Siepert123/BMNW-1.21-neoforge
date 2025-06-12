@@ -1,0 +1,10 @@
+# Made in Blockbench 4.12.4
+newmtl m_d36d5190-acc7-9b38-afa9-5675df519431
+map_Kd bmnw:block/large_shredder_map
+newmtl m_345ce5da-f2ca-e0fc-85f9-b06721613824
+map_Kd minecraft:block/bricks
+newmtl m_7a9f0c96-d27f-ad55-299e-85263695cf92
+map_Kd minecraft:block/iron_block
+newmtl m_a88dcc5a-b790-dc98-4894-05a051f8e4da
+map_Kd bmnw:block/steel_catwalk
+newmtl none

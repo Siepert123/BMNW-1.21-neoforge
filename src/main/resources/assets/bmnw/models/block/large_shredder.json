@@ -1,0 +1,15 @@
+{
+  "render_type": "cutout",
+  "loader": "neoforge:obj",
+  "model": "bmnw:models/block/large_shredder.obj",
+  "automatic_culling": false,
+  "shade_quads": true,
+  "flip_v": true,
+  "textures": {
+    "texture0": "minecraft:block/bricks",
+    "texture1": "bmnw:block/large_shredder_map",
+    "texture2": "minecraft:block/iron_block",
+    "texture3": "bmnw:block/steel_catwalk",
+    "particle": "bmnw:block/steel_block"
+  }
+}

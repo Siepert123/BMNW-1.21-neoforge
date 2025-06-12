@@ -432,6 +432,11 @@ public class BMNWItems {
 
     //endregion
 
+    //region energy & fluid storage
+    public static final DeferredItem<BlockItem> CREATIVE_ENERGY_STORAGE = ITEMS.register("creative_energy_storage",
+            () -> new BlockItem(BMNWBlocks.CREATIVE_ENERGY_STORAGE.get(), new Item.Properties()));
+    //endregion
+
     //region Doors & hatches
     public static final DeferredItem<DoubleHighBlockItem> OFFICE_DOOR = ITEMS.register("office_door",
             () -> new DoubleHighBlockItem(BMNWBlocks.OFFICE_DOOR.get(), new Item.Properties()));
