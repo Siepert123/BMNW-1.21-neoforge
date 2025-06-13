@@ -7,8 +7,10 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
+import nl.melonstudios.bmnw.misc.Library;
 
 import java.util.ArrayList;
+import java.util.List;
 
 //TODO: implement more recipes
 public class ShreddingRecipes {
@@ -36,5 +38,9 @@ public class ShreddingRecipes {
     }
     public void addRecipe(Ingredient input, ItemStack result) {
         this.addRecipe(new ShreddingRecipe(input, result));
+    }
+
+    public List<ShreddingRecipe> getJEIRecipeList() {
+        return this.recipes;
     }
 }

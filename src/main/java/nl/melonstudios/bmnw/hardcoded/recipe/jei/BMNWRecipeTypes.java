@@ -1,6 +1,7 @@
 package nl.melonstudios.bmnw.hardcoded.recipe.jei;
 
 import mezz.jei.api.recipe.RecipeType;
+import nl.melonstudios.bmnw.hardcoded.recipe.ShreddingRecipe;
 import nl.melonstudios.bmnw.hardcoded.recipe.WorkbenchRecipe;
 
 public class BMNWRecipeTypes {
@@ -10,4 +11,6 @@ public class BMNWRecipeTypes {
             RecipeType.create("bmnw", "pressing", PressingRecipe.class);
     public static final RecipeType<AlloyingRecipe> ALLOYING =
             RecipeType.create("bmnw", "alloying", AlloyingRecipe.class);
+    public static final RecipeType<ShreddingRecipe> SHREDDING =
+            RecipeType.create("bmnw", "shredding", ShreddingRecipe.class);
 }

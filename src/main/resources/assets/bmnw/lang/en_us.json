@@ -449,5 +449,6 @@
   "tooltip.bmnw.radioactive": "[Radioactive]",
   "tooltip.bmnw.radius": "Radius: ~%s",
   "tooltip.bmnw.workbench": "Tier %s workbench",
-  "tooltip.bmnw.wp": "[White Phosphorus]"
+  "tooltip.bmnw.wp": "[White Phosphorus]",
+  "recipe.bmnw.shredding": "Shredding"
 }

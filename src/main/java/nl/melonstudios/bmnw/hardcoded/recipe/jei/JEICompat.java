@@ -12,6 +12,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import nl.melonstudios.bmnw.BMNW;
 import nl.melonstudios.bmnw.hardcoded.recipe.AlloyingRecipes;
 import nl.melonstudios.bmnw.hardcoded.recipe.PressingRecipes;
+import nl.melonstudios.bmnw.hardcoded.recipe.ShreddingRecipes;
 import nl.melonstudios.bmnw.hardcoded.recipe.WorkbenchRecipes;
 import nl.melonstudios.bmnw.init.BMNWItems;
 import nl.melonstudios.bmnw.init.BMNWTabs;
@@ -42,6 +43,7 @@ public class JEICompat implements IModPlugin {
         registration.addRecipes(BMNWRecipeTypes.WORKBENCH, WorkbenchRecipes.instance.recipes);
         registration.addRecipes(BMNWRecipeTypes.PRESSING, PressingRecipes.instance.getJEIRecipeList());
         registration.addRecipes(BMNWRecipeTypes.ALLOYING, AlloyingRecipes.instance.getJEIRecipeList());
+        registration.addRecipes(BMNWRecipeTypes.SHREDDING, ShreddingRecipes.instance.getJEIRecipeList());
 
         registration.addItemStackInfo(
                 Arrays.asList(Ingredient.of(TagKey.create(Registries.ITEM, ResourceLocation.parse("bmnw:stamps"))).getItems()),
@@ -94,6 +96,7 @@ public class JEICompat implements IModPlugin {
         );
         registration.addRecipeCatalyst(BMNWItems.PRESS, BMNWRecipeTypes.PRESSING);
         registration.addRecipeCatalyst(BMNWItems.ALLOY_BLAST_FURNACE, BMNWRecipeTypes.ALLOYING);
+        registration.addRecipeCatalyst(BMNWItems.LARGE_SHREDDER, BMNWRecipeTypes.SHREDDING);
     }
 
     @Override
@@ -101,6 +104,7 @@ public class JEICompat implements IModPlugin {
         registration.addRecipeCategories(new WorkbenchRecipeCategory());
         registration.addRecipeCategories(new PressingRecipeCategory());
         registration.addRecipeCategories(new AlloyingRecipeCategory());
+        registration.addRecipeCategories(new ShreddingRecipeCategory());
     }
 
     @Override
