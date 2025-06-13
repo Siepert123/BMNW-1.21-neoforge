@@ -1,8 +1,7 @@
 {
-	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "bmnw:block/aluminium_block",
-		"particle": "bmnw:block/aluminium_block"
+		"texture": "bmnw:block/large_shredder_hatch",
+		"particle": "bmnw:block/large_shredder_hatch"
 	},
 	"elements": [
 		{
@@ -10,10 +9,10 @@
 			"to": [14, 22, 16],
 			"rotation": {"angle": 0, "axis": "y", "origin": [2, 20, 0]},
 			"faces": {
-				"north": {"uv": [2, 0, 14, 2], "texture": "#0"},
-				"south": {"uv": [2, 0, 14, 2], "texture": "#0"},
-				"up": {"uv": [2, 0, 14, 16], "texture": "#0"},
-				"down": {"uv": [2, 0, 14, 16], "texture": "#0"}
+				"north": {"uv": [2, 0, 14, 2], "texture": "#texture"},
+				"south": {"uv": [2, 0, 14, 2], "texture": "#texture"},
+				"up": {"uv": [2, 0, 14, 16], "texture": "#texture"},
+				"down": {"uv": [2, 0, 14, 16], "texture": "#texture"}
 			}
 		}
 	]
