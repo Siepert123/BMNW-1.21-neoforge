@@ -111,6 +111,11 @@ public class BMNWSounds {
                 createDefaultSound("ambient.large_generator_in_on");
     }
 
+    public static class Block {
+        public static final DeferredHolder<SoundEvent, SoundEvent> PIPE =
+                createDefaultSound("block.pipe");
+    }
+
     public static class Music {
         public static final DeferredHolder<SoundEvent, SoundEvent> STEVE_FIGHT =
                 createDefaultSound("music.steve_fight");

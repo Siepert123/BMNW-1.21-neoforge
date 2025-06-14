@@ -400,6 +400,8 @@ public class BMNWEventBus {
             registerBlockEntityRenderingHandler(event, BMNWBlockEntities.METAL_SLIDING_DOOR, MetalSlidingDoorRenderer::new);
             registerBlockEntityRenderingHandler(event, BMNWBlockEntities.PRESS, PressRenderer::new);
             registerBlockEntityRenderingHandler(event, BMNWBlockEntities.LARGE_SHREDDER, LargeShredderRenderer::new);
+
+            registerBlockEntityRenderingHandler(event, BMNWBlockEntities.TEST_EXCAVATOR, WireAttachedRenderer::new);
         }
 
         @OnlyIn(Dist.CLIENT)

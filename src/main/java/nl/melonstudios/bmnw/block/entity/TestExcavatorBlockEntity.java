@@ -2,6 +2,8 @@ package nl.melonstudios.bmnw.block.entity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.Item;
@@ -11,13 +13,17 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
+import net.minecraft.world.phys.Vec3;
 import nl.melonstudios.bmnw.cfg.BMNWServerConfig;
 import nl.melonstudios.bmnw.init.BMNWAttachments;
 import nl.melonstudios.bmnw.init.BMNWBlockEntities;
 import nl.melonstudios.bmnw.misc.ExcavationVein;
 import nl.melonstudios.bmnw.misc.StackMover;
 
-public class TestExcavatorBlockEntity extends BlockEntity {
+import java.util.Collection;
+import java.util.List;
+
+public class TestExcavatorBlockEntity extends WireAttachedBlockEntity {
     public TestExcavatorBlockEntity(BlockPos pos, BlockState blockState) {
         super(BMNWBlockEntities.TEST_EXCAVATOR.get(), pos, blockState);
     }
@@ -56,5 +62,20 @@ public class TestExcavatorBlockEntity extends BlockEntity {
 
     public static <T extends BlockEntity> void tick(Level level, BlockPos pos, BlockState state, T blockEntity) {
         ((TestExcavatorBlockEntity) blockEntity).tick();
+    }
+
+    @Override
+    public Collection<Vec3> wireConnectionsForRendering() {
+        return List.of(Vec3.ZERO);
+    }
+
+    @Override
+    protected void load(CompoundTag nbt, HolderLookup.Provider registries, boolean packet) {
+
+    }
+
+    @Override
+    protected void save(CompoundTag nbt, HolderLookup.Provider registries, boolean packet) {
+
     }
 }

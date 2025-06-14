@@ -204,6 +204,11 @@
       }
     ]
   },
+  "block.pipe": {
+    "sounds": [
+      "bmnw:block/pipe"
+    ]
+  },
   "music.steve_fight": {
     "sounds": [
       {

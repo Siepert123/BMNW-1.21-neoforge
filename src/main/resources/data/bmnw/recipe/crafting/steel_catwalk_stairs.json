@@ -3,16 +3,13 @@
   "category": "misc",
   "key": {
     "#": {
-      "tag": "c:ingots/steel"
+      "item": "bmnw:steel_catwalk"
     }
   },
   "pattern": [
-    "#",
-    "#",
     "#"
   ],
   "result": {
-    "count": 8,
-    "id": "bmnw:steel_pole"
+    "id": "bmnw:steel_catwalk_stairs"
   }
 }
