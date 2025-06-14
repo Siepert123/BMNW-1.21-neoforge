@@ -59,12 +59,7 @@ public class LargeShredderBlockEntity extends BlockEntity implements ITickable {
                         return false;
                     }
         };
-        this.energy = new ExtendedEnergyStorage(100000) {
-            @Override
-            public boolean canExtract() {
-                return false;
-            }
-        };
+        this.energy = new ExtendedEnergyStorage(100000);
         this.itemSearchPos = pos.above(2);
         this.itemSearchArea = new AABB(this.itemSearchPos);
     }

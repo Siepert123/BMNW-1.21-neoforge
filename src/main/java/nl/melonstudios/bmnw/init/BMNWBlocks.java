@@ -290,6 +290,8 @@ public class BMNWBlocks {
 
     public static final DeferredBlock<CatwalkBlock> STEEL_CATWALK = BLOCKS.register("steel_catwalk",
             () -> new CatwalkBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get())));
+    public static final DeferredBlock<CatwalkStairsBlock> STEEL_CATWALK_STAIRS = BLOCKS.register("steel_catwalk_stairs",
+            () -> new CatwalkStairsBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_CATWALK.get())));
 
     //endregion
 

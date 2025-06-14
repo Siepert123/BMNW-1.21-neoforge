@@ -1,0 +1,6 @@
+# Made in Blockbench 4.12.4
+newmtl m_de17c83d-83c8-3df6-ac3f-1006cfcd8f13
+map_Kd bmnw:block/steel_catwalk
+newmtl m_f9a983d4-73c0-21cc-d470-13dd81cc9efd
+map_Kd bmnw:block/steel_block
+newmtl none

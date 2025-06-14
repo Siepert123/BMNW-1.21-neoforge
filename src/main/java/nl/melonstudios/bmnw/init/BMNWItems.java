@@ -10,6 +10,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import nl.melonstudios.bmnw.item.battery.BatteryItem;
 import nl.melonstudios.bmnw.item.battery.InfiniteBatteryItem;
 import nl.melonstudios.bmnw.item.misc.*;
+import nl.melonstudios.bmnw.item.tools.ScrewdriverItem;
 import nl.melonstudios.bmnw.item.weapons.DetonatorItem;
 import nl.melonstudios.bmnw.item.weapons.LaserTargetDesignatorItem;
 import nl.melonstudios.bmnw.item.weapons.SniperItem;
@@ -172,6 +173,16 @@ public class BMNWItems {
 
     public static final DeferredItem<BlockItem> NETHER_RED_PHOSPHORUS_ORE = ITEMS.register("nether_red_phosphorus_ore",
             () -> new BlockItem(BMNWBlocks.NETHER_RED_PHOSPHORUS_ORE.get(), new Item.Properties()));
+
+    public static final DeferredItem<Item> IRON_DUST = item("iron_dust");
+    public static final DeferredItem<Item> COPPER_DUST = item("copper_dust");
+    public static final DeferredItem<Item> GOLD_DUST = item("gold_dust");
+    public static final DeferredItem<Item> CONDUCTIVE_COPPER_DUST = item("conductive_copper_dust");
+    public static final DeferredItem<Item> LEAD_DUST = item("lead_dust");
+    public static final DeferredItem<Item> ALUMINIUM_DUST = item("aluminium_dust");
+    public static final DeferredItem<Item> TUNGSTEN_DUST = item("tungsten_dust");
+    public static final DeferredItem<Item> TITANIUM_DUST = item("titanium_dust");
+    public static final DeferredItem<Item> STEEL_DUST = item("steel_dust");
     //endregion
 
     //region Crafting components
@@ -418,6 +429,8 @@ public class BMNWItems {
 
     public static final DeferredItem<BlockItem> STEEL_CATWALK = ITEMS.register("steel_catwalk",
             () -> new BlockItem(BMNWBlocks.STEEL_CATWALK.get(), new Item.Properties()));
+    public static final DeferredItem<BlockItem> STEEL_CATWALK_STAIRS = ITEMS.register("steel_catwalk_stairs",
+            () -> new BlockItem(BMNWBlocks.STEEL_CATWALK_STAIRS.get(), new Item.Properties()));
 
     //endregion
 
@@ -593,11 +606,16 @@ public class BMNWItems {
 
     public static final DeferredItem<Item> TUNGSTEN_REACHERS = ITEMS.register("tungsten_reachers",
             () -> new Item(new Item.Properties().stacksTo(1)));
+    public static final DeferredItem<ScrewdriverItem> SCREWDRIVER = ITEMS.register("screwdriver",
+            () -> new ScrewdriverItem(new Item.Properties().stacksTo(1), false));
 
     public static final DeferredItem<FireMarbleItem> FIRE_MARBLE = ITEMS.register("fire_marble",
             () -> new FireMarbleItem(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
 
     public static final DeferredItem<Item> POISON_POWDER = ITEMS.register("poison_powder",
+            () -> new Item(new Item.Properties()));
+
+    public static final DeferredItem<Item> DUST = ITEMS.register("dust",
             () -> new Item(new Item.Properties()));
 
     public static void register(IEventBus eventBus) {

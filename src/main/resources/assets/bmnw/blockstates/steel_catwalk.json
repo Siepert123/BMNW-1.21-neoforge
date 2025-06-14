@@ -1,11 +1,18 @@
 {
   "variants": {
-    "axis=x": {
+    "axis=x,support=false": {
       "model": "bmnw:block/steel_catwalk",
       "y": 90
     },
-    "axis=z": {
+    "axis=z,support=false": {
       "model": "bmnw:block/steel_catwalk"
+    },
+    "axis=x,support=true": {
+      "model": "bmnw:block/steel_catwalk_support",
+      "y": 90
+    },
+    "axis=z,support=true": {
+      "model": "bmnw:block/steel_catwalk_support"
     }
   }
 }

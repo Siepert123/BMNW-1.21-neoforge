@@ -149,6 +149,7 @@ public class BMNWTabs {
                         items.accept(ANTENNA_TOP);
 
                         items.accept(STEEL_CATWALK);
+                        items.accept(STEEL_CATWALK_STAIRS);
 
                         items.accept(OFFICE_DOOR);
                         items.accept(BUNKER_DOOR);
@@ -310,6 +311,18 @@ public class BMNWTabs {
                         items.accept(RED_PHOSPHORUS);
                         items.accept(WHITE_PHOSPHORUS);
                         items.accept(POISON_POWDER);
+
+                        addItems(items,
+                                IRON_DUST,
+                                COPPER_DUST,
+                                GOLD_DUST,
+                                CONDUCTIVE_COPPER_DUST,
+                                LEAD_DUST,
+                                ALUMINIUM_DUST,
+                                TUNGSTEN_DUST,
+                                TITANIUM_DUST,
+                                STEEL_DUST
+                        );
                         //endregion
 
                         //region Parts
@@ -321,6 +334,8 @@ public class BMNWTabs {
 
                         items.accept(PRESSING_PART);
                         //endregion
+
+                        items.accept(DUST);
                     })
                     .build()
     );
@@ -398,6 +413,7 @@ public class BMNWTabs {
                         items.accept(URANIUM_SANDWICH);
 
                         items.accept(TUNGSTEN_REACHERS);
+                        items.accept(SCREWDRIVER);
 
                         addItems(items,
                                 BLANK_IRON_STAMP,

@@ -21,8 +21,9 @@ import org.joml.Quaternionf;
 
 @OnlyIn(Dist.CLIENT)
 public class LargeShredderRenderer implements BlockEntityRenderer<LargeShredderBlockEntity> {
-    private static final float HATCH_RADIANS = 1.0F;
-    private static final float BLADES_SPEED_MODIFIER = 10.0F;
+    private static final float HATCH_RADIANS = -0.75F;
+    private static final float BLADES_SPEED_MODIFIER = 5.0F;
+    private static final float DEG_180 = (float) Math.toRadians(180);
 
     public LargeShredderRenderer(BlockEntityRendererProvider.Context context) {
 
@@ -36,6 +37,7 @@ public class LargeShredderRenderer implements BlockEntityRenderer<LargeShredderB
         VertexConsumer consumer = bufferSource.getBuffer(RenderType.CUTOUT);
 
         poseStack.pushPose();
+        poseStack.rotateAround(new Quaternionf().rotateY(DEG_180), 0.5F, 0.5F, 0.5F);
         float thing = System.currentTimeMillis() % 60000 / 1000.0F;
         poseStack.rotateAround(new Quaternionf().rotateX((-thing)*BLADES_SPEED_MODIFIER),
                 0.5F, 0.25F, 0.5F);

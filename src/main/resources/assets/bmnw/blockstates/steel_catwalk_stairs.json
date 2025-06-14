@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "facing=north,support=false": {
+      "model": "bmnw:block/steel_catwalk_stairs"
+    },
+    "facing=east,support=false": {
+      "model": "bmnw:block/steel_catwalk_stairs",
+      "y": 90
+    },
+    "facing=south,support=false": {
+      "model": "bmnw:block/steel_catwalk_stairs",
+      "y": 180
+    },
+    "facing=west,support=false": {
+      "model": "bmnw:block/steel_catwalk_stairs",
+      "y": 270
+    },
+    "facing=north,support=true": {
+      "model": "bmnw:block/steel_catwalk_stairs_support"
+    },
+    "facing=east,support=true": {
+      "model": "bmnw:block/steel_catwalk_stairs_support",
+      "y": 90
+    },
+    "facing=south,support=true": {
+      "model": "bmnw:block/steel_catwalk_stairs_support",
+      "y": 180
+    },
+    "facing=west,support=true": {
+      "model": "bmnw:block/steel_catwalk_stairs_support",
+      "y": 270
+    }
+  }
+}

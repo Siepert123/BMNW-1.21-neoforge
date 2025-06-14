@@ -1,0 +1,14 @@
+{
+  "values": [
+    "bmnw:iron_dust",
+    "bmnw:copper_dust",
+    "bmnw:gold_dust",
+    "bmnw:conductive_copper_dust",
+    "bmnw:lead_dust",
+    "bmnw:aluminium_dust",
+    "bmnw:tungsten_dust",
+    "bmnw:titanium_dust",
+    "bmnw:steel_dust"
+  ],
+  "replace": false
+}

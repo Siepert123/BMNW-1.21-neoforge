@@ -17,7 +17,9 @@
     "bmnw:plutonium_241_ingot",
     "bmnw:reactor_grade_plutonium_ingot",
     "bmnw:plutonium_fuel_ingot",
-    "bmnw:aluminium_ingot"
+    "bmnw:aluminium_ingot",
+    "bmnw:tungsten_ingot",
+    "bmnw:titanium_ingot"
   ],
   "replace": false
 }

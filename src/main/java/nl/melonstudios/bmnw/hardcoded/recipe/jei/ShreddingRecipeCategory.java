@@ -18,14 +18,6 @@ import java.util.Arrays;
 
 public class ShreddingRecipeCategory extends AbstractRecipeCategory<ShreddingRecipe> {
     public static final ResourceLocation GUI_TEXTURE = BMNW.namespace("textures/gui/jei/shredder.png");
-    /**
-     * @param recipeType
-     * @param title
-     * @param icon
-     * @param width
-     * @param height
-     * @since 19.19.0
-     */
     public ShreddingRecipeCategory() {
         super(BMNWRecipeTypes.SHREDDING, Component.translatable("recipe.bmnw.shredding"), null, 54, 18);
     }

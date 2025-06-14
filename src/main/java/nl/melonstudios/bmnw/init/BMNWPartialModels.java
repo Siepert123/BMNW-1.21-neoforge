@@ -31,16 +31,6 @@ public class BMNWPartialModels {
         return PartialModel.of(ModelResourceLocation.standalone(BMNW.namespace("block/" + path)));
     }
 
-    public static final PartialModel[] PARTICLE_GENERIC = new PartialModel[8];
-    public static final PartialModel[] PARTICLE_EFFECT = new PartialModel[8];
-
-    static {
-        for (int i = 0; i < 8; i++) {
-            PARTICLE_GENERIC[i] = item("particle/generic_" + i);
-            PARTICLE_EFFECT[i] = item("particle/effect_" + i);
-        }
-    }
-
     private static PartialModel item(String path) {
         return PartialModel.of(ModelResourceLocation.standalone(BMNW.namespace("item/" + path)));
     }
