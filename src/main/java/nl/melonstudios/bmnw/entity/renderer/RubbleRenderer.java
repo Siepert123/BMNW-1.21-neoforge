@@ -12,12 +12,15 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.inventory.InventoryMenu;
+import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.client.RenderTypeHelper;
 import net.neoforged.neoforge.client.model.data.ModelData;
 import nl.melonstudios.bmnw.entity.RubbleEntity;
 import nl.melonstudios.bmnw.init.BMNWPartialModels;
@@ -36,23 +39,38 @@ public class RubbleRenderer extends EntityRenderer<RubbleEntity> {
     private static final Quaternionf ROTATE_SPIN_180 = new Quaternionf().rotateX(180);
 
     @Override
-    public void render(RubbleEntity p_entity, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
+    public void render(RubbleEntity p_entity, float entityYaw, float partialTick,
+                       PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
+        BlockState state = p_entity.getBlockState();
+        if (state.getRenderShape() != RenderShape.MODEL) return;
+
         poseStack.pushPose();
         poseStack.translate(-0.5F, 0, -0.5F);
 
-        BakedModel model = BMNWPartialModels.METAL_DOOR_HANDLE.loadAndGet();
+        BakedModel model = this.blockRenderDispatcher.getBlockModel(state);
 
         poseStack.rotateAround(ROTATE_SPIN_180, 0.5F, 0.5F, 0.5F);
-        float rot = ((p_entity.tickCount + partialTick) % 360) * 10;
+        float rot = (float)Math.toRadians((p_entity.tickCount + partialTick) % 360) * 10;
         poseStack.rotateAround(new Quaternionf().rotateXYZ(rot, rot, rot), 0.5F, 0.5F, 0.5F);
         try {
-            BlockState state = p_entity.getBlockState();
-            TextureAtlasSprite sprite = this.blockRenderDispatcher.getBlockModel(state).getParticleIcon(ModelData.EMPTY);
-            VertexConsumer consumer = bufferSource.getBuffer(RenderType.SOLID);
-            PoseStack.Pose last = poseStack.last();
-            for (BakedQuad quad : model.getQuads(null, null, RandomSource.create(), ModelData.EMPTY, RenderType.SOLID))  {
-                consumer.putBulkData(last, quad, 1.0F, 1.0F, 1.0F, 1.0F,
-                        packedLight, OverlayTexture.pack(sprite.getX(), sprite.getY()));
+            for (RenderType type : model.getRenderTypes(state, RandomSource.create(), ModelData.EMPTY)) {
+                poseStack.pushPose();
+                this.modelBlockRenderer
+                        .tesselateBlock(
+                                p_entity.level(),
+                                model,
+                                state,
+                                BlockPos.ZERO,
+                                poseStack,
+                                bufferSource.getBuffer(RenderTypeHelper.getMovingBlockRenderType(type)),
+                                false,
+                                RandomSource.create(),
+                                0L,
+                                OverlayTexture.NO_OVERLAY,
+                                ModelData.EMPTY,
+                                type
+                        );
+                poseStack.popPose();
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -297,6 +297,11 @@ public class BMNWBlocks {
     public static final DeferredBlock<CatwalkStairsRailingBlock> STEEL_CATWALK_STAIRS_RAILING = BLOCKS.register("steel_catwalk_stairs_railing",
             () -> new CatwalkStairsRailingBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_CATWALK.get())));
 
+    public static final DeferredBlock<ExtendableCatwalkBlock> EXTENDABLE_CATWALK = BLOCKS.register("extendable_catwalk",
+            () -> new ExtendableCatwalkBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_CATWALK.get())));
+    public static final DeferredBlock<ExtendableCatwalkControlBlock> EXTENDABLE_CATWALK_CONTROL = BLOCKS.register("extendable_catwalk_control",
+            () -> new ExtendableCatwalkControlBlock(BlockBehaviour.Properties.ofFullCopy(EXTENDABLE_CATWALK.get())));
+
     //endregion
 
     //region Basic defense

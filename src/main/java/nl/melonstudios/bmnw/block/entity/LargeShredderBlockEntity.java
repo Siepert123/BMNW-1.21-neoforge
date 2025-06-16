@@ -24,6 +24,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.AABB;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.energy.EnergyStorage;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.items.ItemStackHandler;
@@ -300,8 +302,13 @@ public class LargeShredderBlockEntity extends BlockEntity implements ITickable {
     public boolean canRun() {
         return this.energy.getEnergyStored() >= 50;
     }
-    public void startLoop() {
-        Minecraft.getInstance().getSoundManager().play(new LargeShredderLoopSoundInstance(this));
+    private void startLoop() {
+        startLoop0(this);
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    private static void startLoop0(LargeShredderBlockEntity be) {
+        Minecraft.getInstance().getSoundManager().play(new LargeShredderLoopSoundInstance(be));
     }
 
     public List<ItemStack> drops() {

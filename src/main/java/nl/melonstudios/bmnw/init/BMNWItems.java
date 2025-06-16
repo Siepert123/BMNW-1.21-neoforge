@@ -435,6 +435,8 @@ public class BMNWItems {
             () -> new BlockItem(BMNWBlocks.STEEL_CATWALK_RAILING.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> STEEL_CATWALK_STAIRS_RAILING = ITEMS.register("steel_catwalk_stairs_railing",
             () -> new BlockItem(BMNWBlocks.STEEL_CATWALK_STAIRS_RAILING.get(), new Item.Properties()));
+    public static final DeferredItem<BlockItem> EXTENDABLE_CATWALK = ITEMS.register("extendable_catwalk",
+            () -> new BlockItem(BMNWBlocks.EXTENDABLE_CATWALK.get(), new Item.Properties()));
 
     //endregion
 
@@ -621,6 +623,9 @@ public class BMNWItems {
 
     public static final DeferredItem<Item> DUST = ITEMS.register("dust",
             () -> new Item(new Item.Properties()));
+
+    public static final DeferredItem<Item> LARGE_WHEEL_CRANK = ITEMS.register("large_wheel_crank",
+            () -> new Item(new Item.Properties().stacksTo(16)));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);

@@ -2,6 +2,7 @@ package nl.melonstudios.bmnw.cfg;
 
 import net.neoforged.fml.event.config.ModConfigEvent;
 import net.neoforged.neoforge.common.ModConfigSpec;
+import nl.melonstudios.bmnw.misc.DistrictHolder;
 
 public class BMNWClientConfig {
     private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
@@ -90,7 +91,7 @@ public class BMNWClientConfig {
     public static boolean disableJoinDebug;
 
     public static void onLoad(final ModConfigEvent event) {
-        if (event instanceof ModConfigEvent.Unloading) return;
+        if (event instanceof ModConfigEvent.Unloading || !DistrictHolder.isClient()) return;
         hazardInfoLevel = HAZARD_INFO_LEVEL.get();
         enableRandomRotationOffsets = ENABLE_RANDOM_ROTATION_OFFSETS.get();
         mushroomCloudRenderType = MUSHROOM_CLOUD_RENDER_TYPE.get();

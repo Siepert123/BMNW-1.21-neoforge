@@ -1,0 +1,74 @@
+{
+	"credit": "Made with Blockbench",
+	"render_type": "cutout",
+	"textures": {
+		"0": "bmnw:block/steel_catwalk",
+		"particle": "bmnw:block/steel_catwalk"
+	},
+	"elements": [
+		{
+			"name": "rail",
+			"from": [0.5, 14.5, 0],
+			"to": [1.5, 15.5, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0.5, 14.5, 0]},
+			"faces": {
+				"north": {"uv": [0, 0, 1, 1], "texture": "#0"},
+				"east": {"uv": [0, 0, 1, 16], "rotation": 90, "texture": "#0"},
+				"south": {"uv": [0, 0, 1, 1], "texture": "#0"},
+				"west": {"uv": [0, 0, 1, 16], "rotation": 90, "texture": "#0"},
+				"up": {"uv": [0, 0, 1, 16], "texture": "#0"},
+				"down": {"uv": [0, 0, 1, 16], "texture": "#0"}
+			}
+		},
+		{
+			"name": "rail",
+			"from": [14.5, 14.5, 0],
+			"to": [15.5, 15.5, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [14.5, 14.5, 0]},
+			"faces": {
+				"north": {"uv": [0, 0, 1, 1], "texture": "#0"},
+				"east": {"uv": [0, 0, 1, 16], "rotation": 90, "texture": "#0"},
+				"south": {"uv": [0, 0, 1, 1], "texture": "#0"},
+				"west": {"uv": [0, 0, 1, 16], "rotation": 90, "texture": "#0"},
+				"up": {"uv": [0, 0, 1, 16], "texture": "#0"},
+				"down": {"uv": [0, 0, 1, 16], "texture": "#0"}
+			}
+		},
+		{
+			"name": "connector",
+			"from": [0.75, 14.75, 15.5],
+			"to": [1.25, 15.25, 18],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0.75, 14.75, 15.5]},
+			"faces": {
+				"north": {"uv": [0, 0, 0.5, 0.5], "texture": "#0"},
+				"east": {"uv": [0, 0, 0.5, 0.5], "texture": "#0"},
+				"west": {"uv": [0, 0, 0.5, 0.5], "texture": "#0"},
+				"up": {"uv": [0, 0, 0.5, 0.5], "texture": "#0"},
+				"down": {"uv": [0, 0, 0.5, 0.5], "texture": "#0"}
+			}
+		},
+		{
+			"name": "connector",
+			"from": [14.75, 14.75, 15.5],
+			"to": [15.25, 15.25, 18],
+			"rotation": {"angle": 0, "axis": "y", "origin": [14.75, 14.75, 15.5]},
+			"faces": {
+				"north": {"uv": [0, 0, 0.5, 0.5], "texture": "#0"},
+				"east": {"uv": [0, 0, 0.5, 0.5], "texture": "#0"},
+				"west": {"uv": [0, 0, 0.5, 0.5], "texture": "#0"},
+				"up": {"uv": [0, 0, 0.5, 0.5], "texture": "#0"},
+				"down": {"uv": [0, 0, 0.5, 0.5], "texture": "#0"}
+			}
+		},
+		{
+			"name": "walkway",
+			"from": [1.5, 15, 0],
+			"to": [14.5, 15, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [1.5, 15, 0]},
+			"faces": {
+				"up": {"uv": [1.5, 0, 14.5, 16], "texture": "#0"},
+				"down": {"uv": [1.5, 0, 14.5, 16], "texture": "#0"}
+			}
+		}
+	]
+}

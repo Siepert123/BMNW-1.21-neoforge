@@ -8,6 +8,7 @@ import net.minecraft.world.WorldlyContainerHolder;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
@@ -21,6 +22,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import nl.melonstudios.bmnw.block.decoration.CatwalkRailingBlock;
 import nl.melonstudios.bmnw.block.entity.LargeShredderBlockEntity;
 import nl.melonstudios.bmnw.init.BMNWBlocks;
@@ -41,6 +45,23 @@ public class LargeShredderBlock extends HorizontalDirectionalBlock implements En
                         .setValue(FACING, Direction.NORTH)
                         .setValue(MULTIBLOCK_SLAVE, false)
         );
+    }
+
+    public static final VoxelShape HOLE_SHAPE = Shapes.or(
+            box(0, 0, 0, 16, 8, 16),
+            box(0, 8, 0, 2, 16, 16),
+            box(14, 8, 0, 16, 16, 16),
+            box(0, 8, 0, 16, 16, 2),
+            box(0, 8, 14, 16, 16, 16)
+    );
+
+    @Override
+    protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        if (state.getValue(MULTIBLOCK_SLAVE)) {
+            BlockState below = level.getBlockState(pos.below());
+            if (below.is(this) && !below.getValue(MULTIBLOCK_SLAVE)) return HOLE_SHAPE;
+        }
+        return Shapes.block();
     }
 
     @Override

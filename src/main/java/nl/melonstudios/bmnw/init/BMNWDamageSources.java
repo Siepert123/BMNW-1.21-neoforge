@@ -32,4 +32,10 @@ public class BMNWDamageSources {
     public static DamageSource wp_burns(Level level) {
         return new DamageSource(level.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(WP_BURNS));
     }
+
+    public static final ResourceKey<DamageType> SHREDDED
+            = ResourceKey.create(Registries.DAMAGE_TYPE, BMNW.namespace("shredded"));
+    public static DamageSource shredded(Level level) {
+        return new DamageSource(level.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(SHREDDED));
+    }
 }

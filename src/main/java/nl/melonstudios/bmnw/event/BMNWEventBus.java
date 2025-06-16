@@ -400,6 +400,7 @@ public class BMNWEventBus {
             registerBlockEntityRenderingHandler(event, BMNWBlockEntities.METAL_SLIDING_DOOR, MetalSlidingDoorRenderer::new);
             registerBlockEntityRenderingHandler(event, BMNWBlockEntities.PRESS, PressRenderer::new);
             registerBlockEntityRenderingHandler(event, BMNWBlockEntities.LARGE_SHREDDER, LargeShredderRenderer::new);
+            registerBlockEntityRenderingHandler(event, BMNWBlockEntities.EXTENDABLE_CATWALK, ExtendableCatwalkRenderer::new);
 
             registerBlockEntityRenderingHandler(event, BMNWBlockEntities.TEST_EXCAVATOR, WireAttachedRenderer::new);
         }
@@ -487,6 +488,11 @@ public class BMNWEventBus {
         @SubscribeEvent
         public static void registerNetwork(RegisterPayloadHandlersEvent event) {
             final PayloadRegistrar registrar = event.registrar("1");
+            registrar.playToClient(
+                    PacketExtendableCatwalk.TYPE,
+                    PacketExtendableCatwalk.STREAM_CODEC,
+                    PacketExtendableCatwalk::handle
+            );
             registrar.playToClient(
                     PacketMetalLockableDoor.TYPE,
                     PacketMetalLockableDoor.STREAM_CODEC,

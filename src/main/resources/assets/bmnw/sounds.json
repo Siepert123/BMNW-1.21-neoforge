@@ -188,6 +188,18 @@
     ],
     "subtitle": "subtitles.bmnw.machinery"
   },
+  "extendable_catwalk_extend": {
+    "sounds": [
+      "bmnw:extendable_catwalk_extend"
+    ],
+    "subtitle": "subtitles.bmnw.machinery"
+  },
+  "extendable_catwalk_retract": {
+    "sounds": [
+      "bmnw:extendable_catwalk_retract"
+    ],
+    "subtitle": "subtitles.bmnw.machinery"
+  },
   "ambient.large_generator_in_off": {
     "sounds": [
       {

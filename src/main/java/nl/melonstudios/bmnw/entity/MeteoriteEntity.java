@@ -1,6 +1,5 @@
 package nl.melonstudios.bmnw.entity;
 
-import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -101,9 +100,9 @@ public class MeteoriteEntity extends Entity {
             }
             this.kill();
         } else {
-            if (this.level() instanceof ClientLevel level) {
+            if (this.level().isClientSide) {
                 for (int i = 0; i < 4; i++) {
-                    level.addParticle(BMNWParticleTypes.FIRE_TRAIL.get(),
+                    this.level().addParticle(BMNWParticleTypes.FIRE_TRAIL.get(),
                             this.xo, this.yo+i, this.zo,
                             random.nextDouble() * 0.2 - 0.1, random.nextDouble() * 0.05, random.nextDouble() * 0.2 - 0.1);
                 }

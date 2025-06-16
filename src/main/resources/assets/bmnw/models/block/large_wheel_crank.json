@@ -1,0 +1,10 @@
+{
+  "loader": "neoforge:obj",
+  "model": "bmnw:models/block/large_wheel_crank.obj",
+  "automatic_culling": false,
+  "shade_quads": true,
+  "flip_v": true,
+  "textures": {
+    "particle": "bmnw:block/metal1"
+  }
+}

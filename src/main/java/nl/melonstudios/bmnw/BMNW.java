@@ -114,7 +114,7 @@ public class BMNW {
         BMNWAdvancementTriggers.register(modEventBus);
         BMNWMenuTypes.register(modEventBus);
 
-        BMNWPartialModels.init();
+        DistrictHolder.clientOnly(() -> BMNW::clientInit);
 
         modEventBus.addListener(this::addCreative);
 
@@ -135,6 +135,10 @@ public class BMNW {
         }
 
         LOGGER.info(randomSplash);
+    }
+
+    private static void clientInit() {
+        BMNWPartialModels.init();
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {

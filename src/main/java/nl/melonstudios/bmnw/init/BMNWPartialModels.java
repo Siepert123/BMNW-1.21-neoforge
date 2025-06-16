@@ -27,6 +27,10 @@ public class BMNWPartialModels {
     public static final PartialModel LARGE_SHREDDER_HATCH = block("large_shredder_hatch");
     public static final PartialModel LARGE_SHREDDER_BLADES = block("large_shredder_blades");
 
+    public static final PartialModel EXTENDABLE_CATWALK_PART = block("extendable_catwalk_part");
+    public static final PartialModel EXTENDABLE_CATWALK_CONTROL_HOLDER = block("extendable_catwalk_control_holder");
+    public static final PartialModel LARGE_WHEEL_CRANK = block("large_wheel_crank");
+
     private static PartialModel block(String path) {
         return PartialModel.of(ModelResourceLocation.standalone(BMNW.namespace("block/" + path)));
     }

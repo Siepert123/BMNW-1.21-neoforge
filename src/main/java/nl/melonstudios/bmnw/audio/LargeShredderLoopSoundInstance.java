@@ -4,9 +4,12 @@ import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import nl.melonstudios.bmnw.block.entity.LargeShredderBlockEntity;
 import nl.melonstudios.bmnw.init.BMNWSounds;
 
+@OnlyIn(Dist.CLIENT)
 public class LargeShredderLoopSoundInstance extends AbstractTickableSoundInstance {
     public final LargeShredderBlockEntity be;
     public LargeShredderLoopSoundInstance(LargeShredderBlockEntity be) {

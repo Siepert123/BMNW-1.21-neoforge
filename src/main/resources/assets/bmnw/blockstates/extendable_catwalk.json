@@ -1,0 +1,18 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "bmnw:block/steel_catwalk"
+    },
+    "facing=south": {
+      "model": "bmnw:block/steel_catwalk"
+    },
+    "facing=east": {
+      "model": "bmnw:block/steel_catwalk",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "bmnw:block/steel_catwalk",
+      "y": 90
+    }
+  }
+}

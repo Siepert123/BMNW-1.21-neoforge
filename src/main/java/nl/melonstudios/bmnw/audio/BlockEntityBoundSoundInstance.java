@@ -5,7 +5,10 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public class BlockEntityBoundSoundInstance extends AbstractTickableSoundInstance {
     protected final BlockEntity be;
     public BlockEntityBoundSoundInstance(SoundEvent soundEvent, SoundSource source, float volume, float pitch, BlockEntity be, long seed) {

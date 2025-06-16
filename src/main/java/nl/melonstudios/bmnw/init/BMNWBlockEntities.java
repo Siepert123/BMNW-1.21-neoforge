@@ -108,6 +108,15 @@ public class BMNWBlockEntities {
             )
     );
 
+    public static final Supplier<BlockEntityType<ExtendableCatwalkBlockEntity>> EXTENDABLE_CATWALK = BLOCK_ENTITIES.register(
+            "extendable_catwalk",
+            () -> new BlockEntityType<>(
+                    ExtendableCatwalkBlockEntity::new,
+                    Set.of(BMNWBlocks.EXTENDABLE_CATWALK.get()),
+                    null
+            )
+    );
+
     public static final Supplier<BlockEntityType<MachineScrapBlockEntity>> MACHINE_SCRAP = BLOCK_ENTITIES.register(
             "machine_scrap",
             () -> new BlockEntityType<>(
