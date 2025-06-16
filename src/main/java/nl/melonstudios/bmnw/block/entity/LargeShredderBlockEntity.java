@@ -202,7 +202,18 @@ public class LargeShredderBlockEntity extends BlockEntity implements ITickable {
                 if (this.inventory.getStackInSlot(0).isEmpty()) {
                     this.shredProgress = 0;
                     BlockState state = level.getBlockState(this.itemSearchPos);
-                    if (state.isAir()) {
+                    Container container = StackMover.getBlockContainer(level, this.itemSearchPos, state);
+                    if (container != null) {
+                        for (int i = 0; i < container.getContainerSize(); i++) {
+                            ItemStack stack = container.getItem(i);
+                            if (!stack.isEmpty()) {
+                                this.inventory.setStackInSlot(0, stack.copy());
+                                container.setItem(i, ItemStack.EMPTY);
+                                this.setChanged();
+                                break;
+                            }
+                        }
+                    } else if (!state.isFaceSturdy(level, this.itemSearchPos, Direction.DOWN)) {
                         List<ItemEntity> items = level.getEntitiesOfClass(ItemEntity.class, this.itemSearchArea);
                         for (ItemEntity entity : items) {
                             if (!entity.isRemoved()) {
@@ -211,19 +222,6 @@ public class LargeShredderBlockEntity extends BlockEntity implements ITickable {
                                 entity.setRemoved(Entity.RemovalReason.DISCARDED);
                                 this.setChanged();
                                 break;
-                            }
-                        }
-                    } else {
-                        Container container = StackMover.getBlockContainer(level, this.itemSearchPos, state);
-                        if (container != null) {
-                            for (int i = 0; i < container.getContainerSize(); i++) {
-                                ItemStack stack = container.getItem(i);
-                                if (!stack.isEmpty()) {
-                                    this.inventory.setStackInSlot(0, stack.copy());
-                                    container.setItem(i, ItemStack.EMPTY);
-                                    this.setChanged();
-                                    break;
-                                }
                             }
                         }
                     }
