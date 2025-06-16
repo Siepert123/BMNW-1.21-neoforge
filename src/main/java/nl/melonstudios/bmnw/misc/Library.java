@@ -79,4 +79,10 @@ public class Library {
             };
         };
     }
+
+    public static Direction determineBlockPartition(Vec3 clickLocation) {
+        Direction d = Direction.getNearest(clickLocation.multiply(1, 0, 1));
+        if (d.getAxis() == Direction.Axis.Y) return null;
+        return d;
+    }
 }

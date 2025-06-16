@@ -1,0 +1,44 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "bmnw:block/steel_catwalk_railing_main"
+      }
+    },
+    {
+      "apply": {
+        "model": "bmnw:block/steel_catwalk_railing_side"
+      },
+      "when": {
+        "north": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "bmnw:block/steel_catwalk_railing_side",
+        "y": 90
+      },
+      "when": {
+        "east": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "bmnw:block/steel_catwalk_railing_side",
+        "y": 180
+      },
+      "when": {
+        "south": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "bmnw:block/steel_catwalk_railing_side",
+        "y": 270
+      },
+      "when": {
+        "west": "true"
+      }
+    }
+  ]
+}

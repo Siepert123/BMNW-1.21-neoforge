@@ -6,13 +6,18 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.shapes.CollisionContext;
 import nl.melonstudios.bmnw.interfaces.IScrewdriverUsable;
+
+import java.util.HashSet;
 
 public class ScrewdriverItem extends Item {
     private final boolean damageable;
     public ScrewdriverItem(Properties properties, boolean damageable) {
         super(properties);
         this.damageable = damageable;
+
+        SCREWDRIVERS.add(this);
     }
 
     @Override
@@ -26,5 +31,13 @@ public class ScrewdriverItem extends Item {
                     : InteractionResult.SUCCESS;
         }
         return InteractionResult.PASS;
+    }
+
+    private static final HashSet<ScrewdriverItem> SCREWDRIVERS = new HashSet<>();
+    public static boolean isHoldingScrewdriver(CollisionContext context) {
+        for (ScrewdriverItem item : SCREWDRIVERS) {
+            if (context.isHoldingItem(item)) return true;
+        }
+        return false;
     }
 }

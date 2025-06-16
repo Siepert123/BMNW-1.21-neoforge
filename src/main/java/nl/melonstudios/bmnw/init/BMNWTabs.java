@@ -150,6 +150,8 @@ public class BMNWTabs {
 
                         items.accept(STEEL_CATWALK);
                         items.accept(STEEL_CATWALK_STAIRS);
+                        items.accept(STEEL_CATWALK_RAILING);
+                        items.accept(STEEL_CATWALK_STAIRS_RAILING);
 
                         items.accept(OFFICE_DOOR);
                         items.accept(BUNKER_DOOR);

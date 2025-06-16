@@ -19,10 +19,11 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import nl.melonstudios.bmnw.interfaces.IOpensCatwalkRails;
 import nl.melonstudios.bmnw.interfaces.IScrewdriverUsable;
 import org.jetbrains.annotations.Nullable;
 
-public class CatwalkStairsBlock extends Block implements SimpleWaterloggedBlock, IScrewdriverUsable {
+public class CatwalkStairsBlock extends Block implements SimpleWaterloggedBlock, IScrewdriverUsable, IOpensCatwalkRails {
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty SUPPORT = CatwalkBlock.SUPPORT;

@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "bmnw:steel_catwalk_stairs_railing"
+    }
+  },
+  "pattern": [
+    "#"
+  ],
+  "result": {
+    "id": "bmnw:steel_catwalk_railing"
+  }
+}

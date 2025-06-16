@@ -23,7 +23,7 @@ import nl.melonstudios.bmnw.interfaces.IScrewdriverUsable;
 import nl.melonstudios.bmnw.misc.Library;
 import org.jetbrains.annotations.Nullable;
 
-public class CatwalkBlock extends Block implements SimpleWaterloggedBlock, IScrewdriverUsable {
+public class CatwalkBlock extends Block implements SimpleWaterloggedBlock, IScrewdriverUsable, CatwalkRailingBlock.ISupportsCatwalkRailing {
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     public static final EnumProperty<Direction.Axis> AXIS = BlockStateProperties.HORIZONTAL_AXIS;
     public static final BooleanProperty SUPPORT = BooleanProperty.create("support");

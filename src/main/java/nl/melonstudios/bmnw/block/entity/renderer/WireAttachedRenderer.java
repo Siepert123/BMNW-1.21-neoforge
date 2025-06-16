@@ -44,25 +44,23 @@ public class WireAttachedRenderer<T extends WireAttachedBlockEntity> extends Opt
             int connectionSky = level.getBrightness(LightLayer.SKY, connectionPos);
             int connectionBlock = level.getBrightness(LightLayer.BLOCK, connectionPos);
 
-            float x = (float) (connection.x - source.x);
-            float y = (float) (connection.y - source.y);
-            float z = (float) (connection.z - source.z);
-
             for (int i = 0; i < 24; i++) {
                 addVertexPair(
-                        leashConsumer, leashMatrix, x, y, z,
+                        leashConsumer, leashMatrix,
+                        (float)source.x, (float)source.y, (float)source.z,
                         connectionBlock, sourceBlock,
                         connectionSky, sourceSky,
-                        0, 0, 0, 0,
+                        0, (float)connection.x, (float)connection.x, (float)connection.z,
                         i, false
                 );
             }
             for (int i = 0; i < 24; i++) {
                 addVertexPair(
-                        leashConsumer, leashMatrix, x, y, z,
+                        leashConsumer, leashMatrix,
+                        (float)source.x, (float)source.y, (float)source.z,
                         connectionBlock, sourceBlock,
                         connectionSky, sourceSky,
-                        0, 0, 0, 0,
+                        0, (float)connection.x, (float)connection.x, (float)connection.z,
                         i, true
                 );
             }

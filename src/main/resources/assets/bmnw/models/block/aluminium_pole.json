@@ -1,0 +1,6 @@
+{
+  "parent": "bmnw:block/steel_pole",
+  "textures": {
+    "texture": "bmnw:block/aluminium_block"
+  }
+}

@@ -21,6 +21,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.PushReaction;
+import nl.melonstudios.bmnw.block.decoration.CatwalkRailingBlock;
 import nl.melonstudios.bmnw.block.entity.LargeShredderBlockEntity;
 import nl.melonstudios.bmnw.init.BMNWBlocks;
 import nl.melonstudios.bmnw.init.BMNWStateProperties;
@@ -30,7 +31,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class LargeShredderBlock extends HorizontalDirectionalBlock implements EntityBlock {
+public class LargeShredderBlock extends HorizontalDirectionalBlock implements EntityBlock, CatwalkRailingBlock.ISupportsCatwalkRailing {
     public static final BooleanProperty MULTIBLOCK_SLAVE = BMNWStateProperties.MULTIBLOCK_SLAVE;
     public LargeShredderBlock(Properties properties) {
         super(properties.noOcclusion());

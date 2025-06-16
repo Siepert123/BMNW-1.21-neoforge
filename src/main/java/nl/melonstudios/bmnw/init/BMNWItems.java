@@ -431,6 +431,10 @@ public class BMNWItems {
             () -> new BlockItem(BMNWBlocks.STEEL_CATWALK.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> STEEL_CATWALK_STAIRS = ITEMS.register("steel_catwalk_stairs",
             () -> new BlockItem(BMNWBlocks.STEEL_CATWALK_STAIRS.get(), new Item.Properties()));
+    public static final DeferredItem<BlockItem> STEEL_CATWALK_RAILING = ITEMS.register("steel_catwalk_railing",
+            () -> new BlockItem(BMNWBlocks.STEEL_CATWALK_RAILING.get(), new Item.Properties()));
+    public static final DeferredItem<BlockItem> STEEL_CATWALK_STAIRS_RAILING = ITEMS.register("steel_catwalk_stairs_railing",
+            () -> new BlockItem(BMNWBlocks.STEEL_CATWALK_STAIRS_RAILING.get(), new Item.Properties()));
 
     //endregion
 

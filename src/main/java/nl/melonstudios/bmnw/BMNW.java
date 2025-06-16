@@ -37,6 +37,7 @@ import nl.melonstudios.bmnw.hazard.HazardRegistry;
 import nl.melonstudios.bmnw.hazard.radiation.ChunkRadiationHandler;
 import nl.melonstudios.bmnw.hazard.radiation.ChunkRadiationManager;
 import nl.melonstudios.bmnw.init.*;
+import nl.melonstudios.bmnw.interfaces.IOpensCatwalkRails;
 import nl.melonstudios.bmnw.misc.*;
 import nl.melonstudios.bmnw.screen.AlloyFurnaceScreen;
 import nl.melonstudios.bmnw.screen.PressScreen;
@@ -78,6 +79,10 @@ public class BMNW {
 
     private static String versionStr;
     private static ModContainer modContainer;
+
+    static {
+        IOpensCatwalkRails.init();
+    }
 
     public BMNW(IEventBus modEventBus, @Nonnull ModContainer modContainer, Dist dist) {
         DistrictHolder.setDistrict(dist);
