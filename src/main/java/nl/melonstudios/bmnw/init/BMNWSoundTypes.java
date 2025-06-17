@@ -1,15 +1,14 @@
 package nl.melonstudios.bmnw.init;
 
-import net.minecraft.world.level.block.SoundType;
+import net.neoforged.neoforge.common.util.DeferredSoundType;
 
-@SuppressWarnings("deprecation")
 public class BMNWSoundTypes {
-    public static final SoundType PIPE = new SoundType(
+    public static final DeferredSoundType PIPE = new DeferredSoundType(
             1.0F, 1.0F,
-            BMNWSounds.Block.PIPE.get(),
-            BMNWSounds.Block.PIPE.get(),
-            BMNWSounds.Block.PIPE.get(),
-            BMNWSounds.Block.PIPE.get(),
-            BMNWSounds.Block.PIPE.get()
+            BMNWSounds.Block.PIPE,
+            BMNWSounds.Block.PIPE,
+            BMNWSounds.Block.PIPE,
+            BMNWSounds.Block.PIPE,
+            BMNWSounds.Block.PIPE
     );
 }

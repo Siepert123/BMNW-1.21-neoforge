@@ -35,18 +35,39 @@ public class BMNWServerConfig {
             .comment("The maximum length of the Extendable Catwalk")
             .comment("(Making this limit large may yield unexpected side effects)")
             .defineInRange("maxExtendableCatwalkParts", 10, 3, Integer.MAX_VALUE);
+    private static final ModConfigSpec.BooleanValue MOVING_PARTS_DRAG_ENTITIES = BUILDER
+            .comment("Whether moving parts (like the Extendable Catwalk) should drag entities with them")
+            .define("movingPartsDragEntities", true);
 
     public static final ModConfigSpec SPEC = BUILDER.build();
 
     public static RadiationSetting radiationSetting;
     public static boolean enableExcavationVeinDepletion;
     public static int maxExtendableCatwalkParts;
+    public static boolean movingPartsDragEntities;
+
+    public static RadiationSetting radiationSetting() {
+        return RADIATION_SETTING.get();
+    }
+    public static boolean enableExcavationVeinDepletion() {
+        return ENABLE_EXCAVATION_VEIN_DEPLETION.get();
+    }
+    public static int maxExtendableCatwalkParts() {
+        return MAX_EXTENDABLE_CATWALK_PARTS.get();
+    }
+    public static boolean movingPartsDragEntities() {
+        return MOVING_PARTS_DRAG_ENTITIES.get();
+    }
 
     public static void onLoad(final ModConfigEvent event) {
         if (event instanceof ModConfigEvent.Unloading) return;
-        if (event.getConfig().getType() == ModConfig.Type.CLIENT) return;
-        radiationSetting = RADIATION_SETTING.get();
-        enableExcavationVeinDepletion = ENABLE_EXCAVATION_VEIN_DEPLETION.get();
-        maxExtendableCatwalkParts = MAX_EXTENDABLE_CATWALK_PARTS.get();
+        try {
+            radiationSetting = RADIATION_SETTING.get();
+            enableExcavationVeinDepletion = ENABLE_EXCAVATION_VEIN_DEPLETION.get();
+            maxExtendableCatwalkParts = MAX_EXTENDABLE_CATWALK_PARTS.get();
+            movingPartsDragEntities = MOVING_PARTS_DRAG_ENTITIES.get();
+        } catch (Throwable throwable) {
+            throwable.printStackTrace(System.err);
+        }
     }
 }

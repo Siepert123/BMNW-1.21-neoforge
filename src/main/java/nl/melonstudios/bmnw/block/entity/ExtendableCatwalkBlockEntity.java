@@ -9,11 +9,14 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.network.PacketDistributor;
@@ -34,6 +37,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 
 public class ExtendableCatwalkBlockEntity extends SyncedBlockEntity implements ITickable {
@@ -79,7 +83,7 @@ public class ExtendableCatwalkBlockEntity extends SyncedBlockEntity implements I
         } else {
             this.extensionParts--;
         }
-        this.extensionParts = Mth.clamp(this.extensionParts, minimumExtensionParts, BMNWServerConfig.maxExtendableCatwalkParts);
+        this.extensionParts = Mth.clamp(this.extensionParts, minimumExtensionParts, BMNWServerConfig.maxExtendableCatwalkParts());
         this.notifyChange();
     }
     public int getCurrentExtensionParts() {
@@ -166,7 +170,9 @@ public class ExtendableCatwalkBlockEntity extends SyncedBlockEntity implements I
             } else {
                 this.animationTick--;
             }
-            if (!this.level.isClientSide()) this.placeBlocks();
+            if (!this.level.isClientSide()) {
+                this.placeBlocks();
+            }
 
             if (this.animationTick <= 0 || this.animationTick >= this.maxAnimationTick) {
                 this.animationTick = Mth.clamp(this.animationTick, 0, this.maxAnimationTick);
