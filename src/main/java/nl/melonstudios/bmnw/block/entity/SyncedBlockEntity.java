@@ -41,7 +41,7 @@ public abstract class SyncedBlockEntity extends OptimizedBlockEntity {
     @Override
     public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
         CompoundTag tag = new CompoundTag();
-        this.load(tag, registries, true);
+        this.save(tag, registries, true);
         return tag;
     }
 

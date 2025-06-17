@@ -70,6 +70,7 @@ public class ExtendableCatwalkBlock extends Block implements EntityBlock, IScrew
         BlockEntity be = context.getLevel().getBlockEntity(context.getClickedPos());
         if (be instanceof ExtendableCatwalkBlockEntity catwalk) {
             if (catwalk.modifiable()) {
+                if (context.getLevel().isClientSide) return true;
                 catwalk.modify(!sneak);
                 Player player = context.getPlayer();
                 if (player != null) {

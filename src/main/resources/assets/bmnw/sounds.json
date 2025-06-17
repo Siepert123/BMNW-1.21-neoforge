@@ -190,13 +190,25 @@
   },
   "extendable_catwalk_extend": {
     "sounds": [
-      "bmnw:extendable_catwalk_extend"
+      "bmnw:extendable_catwalk_extend_temp"
     ],
     "subtitle": "subtitles.bmnw.machinery"
   },
   "extendable_catwalk_retract": {
     "sounds": [
-      "bmnw:extendable_catwalk_retract"
+      "bmnw:extendable_catwalk_retract_temp"
+    ],
+    "subtitle": "subtitles.bmnw.machinery"
+  },
+  "extendable_catwalk_extend_stop": {
+    "sounds": [
+      "bmnw:extendable_catwalk_extend_stop"
+    ],
+    "subtitle": "subtitles.bmnw.machinery"
+  },
+  "extendable_catwalk_retract_stop": {
+    "sounds": [
+      "bmnw:extendable_catwalk_retract_stop"
     ],
     "subtitle": "subtitles.bmnw.machinery"
   },

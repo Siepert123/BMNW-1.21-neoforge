@@ -109,6 +109,11 @@ public class BMNWSounds {
     public static final DeferredHolder<SoundEvent, SoundEvent> EXTENDABLE_CATWALK_RETRACT =
             createDefaultSound("extendable_catwalk_retract");
 
+    public static final DeferredHolder<SoundEvent, SoundEvent> EXTENDABLE_CATWALK_EXTEND_STOP =
+            createDefaultSound("extendable_catwalk_extend_stop");
+    public static final DeferredHolder<SoundEvent, SoundEvent> EXTENDABLE_CATWALK_RETRACT_STOP =
+            createDefaultSound("extendable_catwalk_retract_stop");
+
     public static class Ambient {
         public static final DeferredHolder<SoundEvent, SoundEvent> LARGE_GENERATOR_IN_OFF =
                 createDefaultSound("ambient.large_generator_in_off");

@@ -11,7 +11,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "bmnw:extendable_catwalk_control"
+          "name": "bmnw:large_wheel_crank"
         }
       ],
       "rolls": 1.0

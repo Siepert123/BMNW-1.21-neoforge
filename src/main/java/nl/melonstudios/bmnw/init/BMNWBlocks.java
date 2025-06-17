@@ -301,6 +301,8 @@ public class BMNWBlocks {
             () -> new ExtendableCatwalkBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_CATWALK.get())));
     public static final DeferredBlock<ExtendableCatwalkControlBlock> EXTENDABLE_CATWALK_CONTROL = BLOCKS.register("extendable_catwalk_control",
             () -> new ExtendableCatwalkControlBlock(BlockBehaviour.Properties.ofFullCopy(EXTENDABLE_CATWALK.get())));
+    public static final DeferredBlock<ExtendableCatwalkDummyBlock> EXTENDABLE_CATWALK_DUMMY = BLOCKS.register("extendable_catwalk_dummy",
+            ExtendableCatwalkDummyBlock::new);
 
     //endregion
 
