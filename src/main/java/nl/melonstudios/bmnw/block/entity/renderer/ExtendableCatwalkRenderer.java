@@ -43,7 +43,7 @@ public class ExtendableCatwalkRenderer implements BlockEntityRenderer<Extendable
         if (blockEntity.hasControls()) {
             poseStack.pushPose();
             poseStack.translate(0, 2, 0);
-            poseStack.rotateAround(new Quaternionf().rotateX((float) -Math.toRadians(modProgress*360)), 0.5F, 0.5F, 0.5F);
+            poseStack.rotateAround(new Quaternionf().rotateX((float) -Math.toRadians(modProgress*360+blockEntity.getCrankOffset())), 0.5F, 0.5F, 0.5F);
             BakedModel crank = BMNWPartialModels.LARGE_WHEEL_CRANK.loadAndGet();
             this.renderBakedModel(consumer, poseStack.last(), crank, rnd, RenderType.SOLID, packedLight, packedOverlay);
             poseStack.popPose();

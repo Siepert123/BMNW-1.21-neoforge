@@ -20,20 +20,50 @@ import net.neoforged.neoforge.network.PacketDistributor;
 import nl.melonstudios.bmnw.audio.ExtendableCatwalkSoundInstance;
 import nl.melonstudios.bmnw.block.decoration.ExtendableCatwalkBlock;
 import nl.melonstudios.bmnw.block.decoration.ExtendableCatwalkControlBlock;
+import nl.melonstudios.bmnw.cfg.BMNWClientConfig;
+import nl.melonstudios.bmnw.cfg.BMNWServerConfig;
 import nl.melonstudios.bmnw.init.BMNWBlockEntities;
 import nl.melonstudios.bmnw.init.BMNWBlocks;
 import nl.melonstudios.bmnw.init.BMNWSounds;
 import nl.melonstudios.bmnw.interfaces.ITickable;
 import nl.melonstudios.bmnw.misc.DistrictHolder;
+import nl.melonstudios.bmnw.misc.RandomHelper;
 import nl.melonstudios.bmnw.wifi.PacketExtendableCatwalk;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Objects;
 
 public class ExtendableCatwalkBlockEntity extends SyncedBlockEntity implements ITickable {
+    public void validateDummies() {
+        if (this.animation != null) return;
+        assert this.level != null;
+        for (BlockPos pos : this.dummyPositions) {
+            if (this.level.getBlockState(pos).is(BMNWBlocks.EXTENDABLE_CATWALK_DUMMY.get())) {
+                continue;
+            }
+            this.level.destroyBlock(this.worldPosition, true);
+            return;
+        }
+    }
+
+    @Override
+    public void setLevel(Level level) {
+        super.setLevel(level);
+        this.crankOffset = RandomHelper.nextInt(this.worldPosition.asLong(), 2, 360);
+    }
+
+    private float crankOffset;
+    @OnlyIn(Dist.CLIENT)
+    public float getCrankOffset() {
+        return BMNWClientConfig.enableRandomRotationOffsets ? this.crankOffset : 0.0F;
+    }
+
     public ExtendableCatwalkBlockEntity(BlockPos pos, BlockState blockState) {
         super(BMNWBlockEntities.EXTENDABLE_CATWALK.get(), pos, blockState);
+        this.crankOffset = RandomHelper.nextInt(this.worldPosition.asLong(), 2, 360);
     }
 
     public boolean canSwitchStates() {
@@ -49,7 +79,7 @@ public class ExtendableCatwalkBlockEntity extends SyncedBlockEntity implements I
         } else {
             this.extensionParts--;
         }
-        this.extensionParts = Mth.clamp(this.extensionParts, minimumExtensionParts, maximumExtensionParts);
+        this.extensionParts = Mth.clamp(this.extensionParts, minimumExtensionParts, BMNWServerConfig.maxExtendableCatwalkParts);
         this.notifyChange();
     }
     public int getCurrentExtensionParts() {
@@ -69,6 +99,7 @@ public class ExtendableCatwalkBlockEntity extends SyncedBlockEntity implements I
     }
     public void setOpen(boolean open) {
         this.recalculateMaximumExtension();
+        if (this.maximumExtension == 0) return;
         if (this.canSwitchStates() && this.level instanceof ServerLevel level) {
             PacketDistributor.sendToPlayersTrackingChunk(level, new ChunkPos(this.worldPosition),
                     new PacketExtendableCatwalk(this.worldPosition, open));
@@ -94,29 +125,24 @@ public class ExtendableCatwalkBlockEntity extends SyncedBlockEntity implements I
     }
 
     private static final int minimumExtensionParts = 3;
+    @Deprecated //Use the config instead
     private static final int maximumExtensionParts = 10;
 
-    private static final int ticksPerBlock = 10;
-    private static final int animationTicks = 130;
+    private static final int ticksPerBlock = 15;
 
     public void recalculateMaximumExtension() {
         Direction d = this.getBlockState().getValue(ExtendableCatwalkBlock.FACING);
         Level level = Objects.requireNonNull(this.level);
         this.maximumExtension = this.extensionParts;
         for (int i = 1; i < this.extensionParts; i++) {
-            if (!this.replaceableState(level.getBlockState(this.worldPosition.relative(d, i)))) {
-                this.maximumExtension = i;
+            BlockPos pos = this.worldPosition.relative(d, i);
+            BlockState state = level.getBlockState(pos);
+            if (!state.canBeReplaced() && !this.dummyPositions.contains(pos)) {
+                this.maximumExtension = i-1;
                 break;
             }
         }
         this.maxAnimationTick = this.maximumExtension * ticksPerBlock;
-    }
-
-    private boolean replaceableState(BlockState state) {
-        return state.canBeReplaced() || state.is(BMNWBlocks.EXTENDABLE_CATWALK_DUMMY.get());
-    }
-    private boolean canRemove(BlockState state) {
-        return state.is(BMNWBlocks.EXTENDABLE_CATWALK_DUMMY.get());
     }
 
     private int extensionParts = 5;
@@ -125,12 +151,12 @@ public class ExtendableCatwalkBlockEntity extends SyncedBlockEntity implements I
     private int maxAnimationTick = this.maximumExtension * ticksPerBlock;
     private boolean hasControls = false;
     private boolean isOpened = false;
+    private final HashSet<BlockPos> dummyPositions = new HashSet<>();
     @Nullable
     private Boolean animation = null; //true = extending false = retracting null = no animation
     @Override
     public void update() {
-        this.setChanged();
-        assert this.level != null;
+        if (this.level == null) return;
         this.hasControls = this.level.getBlockState(this.worldPosition.above(2)).getBlock() instanceof ExtendableCatwalkControlBlock;
 
         if (this.animation != null) {
@@ -140,7 +166,7 @@ public class ExtendableCatwalkBlockEntity extends SyncedBlockEntity implements I
             } else {
                 this.animationTick--;
             }
-            this.placeBlocks();
+            if (!this.level.isClientSide()) this.placeBlocks();
 
             if (this.animationTick <= 0 || this.animationTick >= this.maxAnimationTick) {
                 this.animationTick = Mth.clamp(this.animationTick, 0, this.maxAnimationTick);
@@ -151,6 +177,11 @@ public class ExtendableCatwalkBlockEntity extends SyncedBlockEntity implements I
                 this.animation = null;
                 this.notifyChange();
             }
+            this.setChanged();
+        }
+
+        if (this.level.getGameTime() % 10 == 0) {
+            this.validateDummies();
         }
     }
 
@@ -166,9 +197,15 @@ public class ExtendableCatwalkBlockEntity extends SyncedBlockEntity implements I
         for (int i = 1; i <= max; i++) {
             pos.setWithOffset(this.worldPosition, d.getStepX() * i, 0, d.getStepZ() * i);
             if (i <= soFar) {
-                level.setBlock(pos, BMNWBlocks.EXTENDABLE_CATWALK_DUMMY.get().defaultBlockState(), 3);
-            } else if (this.canRemove(level.getBlockState(pos))) {
-                level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
+                if (level.getBlockState(pos).canBeReplaced()) {
+                    level.setBlock(pos, BMNWBlocks.EXTENDABLE_CATWALK_DUMMY.get().defaultBlockState(), 3);
+                    this.dummyPositions.add(pos.immutable());
+                }
+            } else if (this.dummyPositions.contains(pos)) {
+                this.dummyPositions.remove(pos);
+                if (level.getBlockState(pos).is(BMNWBlocks.EXTENDABLE_CATWALK_DUMMY.get())) {
+                    level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
+                }
             }
         }
     }
@@ -181,6 +218,13 @@ public class ExtendableCatwalkBlockEntity extends SyncedBlockEntity implements I
         this.maximumExtension = nbt.getInt("maximumExtension");
         this.maxAnimationTick = nbt.getInt("maxAnimationTick");
         this.isOpened = nbt.getBoolean("isOpened");
+        {
+            this.dummyPositions.clear();
+            long[] dummies = nbt.getLongArray("dummyPositions");
+            for (long l : dummies) {
+                this.dummyPositions.add(BlockPos.of(l));
+            }
+        }
     }
 
     @Override
@@ -191,6 +235,14 @@ public class ExtendableCatwalkBlockEntity extends SyncedBlockEntity implements I
         nbt.putInt("maximumExtension", this.maximumExtension);
         nbt.putInt("maxAnimationTick", this.maxAnimationTick);
         nbt.putBoolean("isOpened", this.isOpened);
+        {
+            long[] dummies = new long[this.dummyPositions.size()];
+            int next = 0;
+            for (BlockPos pos : this.dummyPositions) {
+                dummies[next++] = pos.asLong();
+            }
+            nbt.putLongArray("dummyPositions", dummies);
+        }
     }
 
     public boolean compareAnimation(boolean b) {
@@ -205,5 +257,20 @@ public class ExtendableCatwalkBlockEntity extends SyncedBlockEntity implements I
     @OnlyIn(Dist.CLIENT)
     private static void playSound0(ExtendableCatwalkBlockEntity be, boolean anim) {
         Minecraft.getInstance().getSoundManager().play(new ExtendableCatwalkSoundInstance(be, anim));
+    }
+
+    public void handleRemoval() {
+        assert this.level != null;
+        for (BlockPos pos : this.dummyPositions) {
+            if (this.level.getBlockState(pos).is(BMNWBlocks.EXTENDABLE_CATWALK_DUMMY.get())) {
+                this.level.destroyBlock(pos, false);
+            }
+        }
+    }
+
+    @Override
+    public void onLoad() {
+        super.onLoad();
+        this.recalculateMaximumExtension();
     }
 }

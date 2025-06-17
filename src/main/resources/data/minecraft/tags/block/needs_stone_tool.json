@@ -69,7 +69,13 @@
     "bmnw:light_bricks",
     "bmnw:vinyl_tile",
     "bmnw:small_vinyl_tiles",
-    "bmnw:steel_catwalk"
+    "bmnw:steel_catwalk",
+    "bmnw:steel_catwalk_railing",
+    "bmnw:steel_catwalk_stairs",
+    "bmnw:steel_catwalk_stairs_railing",
+    "bmnw:extendable_catwalk",
+    "bmnw:extendable_catwalk_control",
+    "bmnw:extendable_catwalk_dummy"
   ],
   "replace": false
 }

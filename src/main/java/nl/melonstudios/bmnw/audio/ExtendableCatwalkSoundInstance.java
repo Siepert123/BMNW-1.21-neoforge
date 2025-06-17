@@ -16,7 +16,7 @@ public class ExtendableCatwalkSoundInstance extends AbstractTickableSoundInstanc
     private final ExtendableCatwalkBlockEntity be;
     private final boolean animation;
     public ExtendableCatwalkSoundInstance(ExtendableCatwalkBlockEntity be, boolean animation) {
-        super(animation ? BMNWSounds.EXTENDABLE_CATWALK_EXTEND.get() : BMNWSounds.EXTENDABLE_CATWALK_RETRACT.get(),
+        super(/*animation ? BMNWSounds.EXTENDABLE_CATWALK_EXTEND.get() : */BMNWSounds.EXTENDABLE_CATWALK_RETRACT.get(),
                 SoundSource.BLOCKS, RandomSource.create());
         this.be = be;
         this.animation = animation;

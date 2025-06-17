@@ -10,6 +10,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
@@ -21,6 +22,8 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import nl.melonstudios.bmnw.block.entity.ExtendableCatwalkBlockEntity;
 import nl.melonstudios.bmnw.init.BMNWBlockEntities;
 import nl.melonstudios.bmnw.init.BMNWBlocks;
@@ -95,5 +98,21 @@ public class ExtendableCatwalkBlock extends Block implements EntityBlock, IScrew
             }
         }
         return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+    }
+
+    @Override
+    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
+        if (level.getBlockState(pos.above(2)).is(BMNWBlocks.EXTENDABLE_CATWALK_CONTROL.get()))
+            level.destroyBlock(pos.above(2), true);
+        BlockEntity be = level.getBlockEntity(pos);
+        if (be instanceof ExtendableCatwalkBlockEntity catwalk) catwalk.handleRemoval();
+        level.removeBlockEntity(pos);
+    }
+
+    public static final VoxelShape SHAPE = box(0, 13, 0, 16, 16, 16);
+
+    @Override
+    protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        return SHAPE;
     }
 }
