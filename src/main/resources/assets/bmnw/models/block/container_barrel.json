@@ -1,11 +1,11 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"particle": "block/front",
 		"front": "block/front",
 		"side": "block/side",
 		"top": "block/top",
-		"bottom": "block/bottom"
+		"bottom": "block/bottom",
+		"particle": "#front"
 	},
 	"elements": [
 		{

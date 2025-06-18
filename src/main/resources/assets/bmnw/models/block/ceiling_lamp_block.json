@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"textures": {
 		"side": "block/side",
-		"particle": "block/lamp",
-		"lamp": "block/lamp"
+		"lamp": "block/lamp",
+		"particle": "#lamp"
 	},
 	"elements": [
 		{
