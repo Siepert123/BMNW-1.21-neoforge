@@ -34,6 +34,7 @@ public class ShreddingRecipes implements PreparableReloadListener {
         this.recipes.clear();
         this.addRecipe(Ingredient.of(Items.COBBLESTONE), new ItemStack(Items.GRAVEL));
         this.addRecipe(Ingredient.of(Items.GRAVEL), new ItemStack(Items.SAND));
+        this.addRecipe(Ingredient.of(tag("c:sands")), new ItemStack(BMNWItems.DUST.get()));
         this.detectMetals().forEach(this::rawOreToDust);
     }
 
@@ -53,6 +54,8 @@ public class ShreddingRecipes implements PreparableReloadListener {
     private void rawOreToDust(String name) {
         Ingredient ingot = Ingredient.of(tag("c:ingots/" + name));
         Ingredient rawOre = Ingredient.of(tag("c:raw_materials/" + name));
+        Ingredient ore = Ingredient.of(tag("c:ores/" + name));
+        Ingredient crystal = Ingredient.of(tag("bmnw:crystals/" + name));
         Ingredient dust = Ingredient.of(tag("c:dusts/" + name));
         if (!this.validateIngredient(dust)) return;
         if (this.validateIngredient(ingot)) {
@@ -62,6 +65,16 @@ public class ShreddingRecipes implements PreparableReloadListener {
             ItemStack stack = dust.getItems()[0].copy();
             stack.setCount(2);
             this.addRecipe(rawOre, stack);
+        }
+        if (this.validateIngredient(ore)) {
+            ItemStack stack = dust.getItems()[0].copy();
+            stack.setCount(2);
+            this.addRecipe(ore, stack);
+        }
+        if (this.validateIngredient(crystal)) {
+            ItemStack stack = dust.getItems()[0].copy();
+            stack.setCount(3);
+            this.addRecipe(crystal, stack);
         }
     }
 
