@@ -624,6 +624,8 @@ public class BMNWItems {
     public static final DeferredItem<Item> DUST = ITEMS.register("dust",
             () -> new Item(new Item.Properties()));
 
+    public static final DeferredItem<Item> SMALL_WHEEL_CRANK = ITEMS.register("small_wheel_crank",
+            () -> new Item(new Item.Properties().stacksTo(16)));
     public static final DeferredItem<Item> LARGE_WHEEL_CRANK = ITEMS.register("large_wheel_crank",
             () -> new Item(new Item.Properties().stacksTo(16)));
 

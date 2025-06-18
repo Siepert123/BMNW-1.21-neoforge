@@ -336,6 +336,8 @@ public class BMNWTabs {
                         items.accept(ADVANCED_CIRCUIT);
 
                         items.accept(PRESSING_PART);
+
+                        items.accept(SMALL_WHEEL_CRANK);
                         items.accept(LARGE_WHEEL_CRANK);
                         //endregion
 
