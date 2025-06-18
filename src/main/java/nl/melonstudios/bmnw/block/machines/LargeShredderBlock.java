@@ -48,11 +48,11 @@ public class LargeShredderBlock extends HorizontalDirectionalBlock implements En
     }
 
     public static final VoxelShape HOLE_SHAPE = Shapes.or(
-            box(0, 0, 0, 16, 8, 16),
-            box(0, 8, 0, 2, 16, 16),
-            box(14, 8, 0, 16, 16, 16),
-            box(0, 8, 0, 16, 16, 2),
-            box(0, 8, 14, 16, 16, 16)
+            box(2, 0, 2, 14, 6, 14),
+            box(0, 0, 0, 2, 16, 16),
+            box(14, 0, 0, 16, 16, 16),
+            box(0, 0, 0, 16, 16, 2),
+            box(0, 0, 14, 16, 16, 16)
     );
 
     @Override

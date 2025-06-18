@@ -16,6 +16,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ChunkPos;
@@ -32,10 +33,7 @@ import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.network.PacketDistributor;
 import nl.melonstudios.bmnw.audio.LargeShredderLoopSoundInstance;
 import nl.melonstudios.bmnw.hardcoded.recipe.ShreddingRecipes;
-import nl.melonstudios.bmnw.init.BMNWBlockEntities;
-import nl.melonstudios.bmnw.init.BMNWBlocks;
-import nl.melonstudios.bmnw.init.BMNWSounds;
-import nl.melonstudios.bmnw.init.BMNWStateProperties;
+import nl.melonstudios.bmnw.init.*;
 import nl.melonstudios.bmnw.interfaces.IExtendedEnergyStorage;
 import nl.melonstudios.bmnw.interfaces.ITickable;
 import nl.melonstudios.bmnw.misc.BrokenConsumer;
@@ -63,7 +61,7 @@ public class LargeShredderBlockEntity extends BlockEntity implements ITickable {
         };
         this.energy = new ExtendedEnergyStorage(100000);
         this.itemSearchPos = pos.above(2);
-        this.itemSearchArea = new AABB(this.itemSearchPos);
+        this.itemSearchArea = new AABB(pos.above());
     }
 
     @Override
@@ -239,6 +237,11 @@ public class LargeShredderBlockEntity extends BlockEntity implements ITickable {
                             else this.inventory.getStackInSlot(1).grow(result.getCount());
                         }
                     }
+                }
+
+                List<LivingEntity> entities = level.getEntitiesOfClass(LivingEntity.class, this.itemSearchArea);
+                for (LivingEntity entity : entities) {
+                    entity.hurt(BMNWDamageSources.shredded(level), 10);
                 }
             }
         }
