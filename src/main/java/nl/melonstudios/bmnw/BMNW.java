@@ -42,14 +42,14 @@ import nl.melonstudios.bmnw.misc.*;
 import nl.melonstudios.bmnw.screen.AlloyFurnaceScreen;
 import nl.melonstudios.bmnw.screen.PressScreen;
 import nl.melonstudios.bmnw.screen.WorkbenchScreen;
+import org.checkerframework.checker.units.qual.C;
 import org.slf4j.Logger;
 
 import javax.annotation.Nonnull;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(BMNW.MODID)
@@ -68,7 +68,15 @@ public class BMNW {
             "The PlayStation can produce mind-boggling effects!",
     };
 
-    private static final boolean enforceMemz = true;
+    public static boolean checkApril1st() {
+        Calendar calendar = Calendar.getInstance();
+        if (calendar.get(Calendar.MONTH) == Calendar.APRIL) {
+            return calendar.get(Calendar.DAY_OF_MONTH) == 1;
+        }
+        return false;
+    }
+
+    private static final boolean enforceMemz = checkApril1st();
     public static final boolean memz = enforceMemz || RandomSource.create().nextInt(100) == 69;
     public static final int memzArguments = Math.abs(RandomSource.create().nextInt());
     public static final String randomSplash = splashes[memzArguments % splashes.length];
