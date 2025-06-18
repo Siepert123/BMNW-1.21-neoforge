@@ -104,6 +104,25 @@ public class WorkbenchRecipes {
                 Ingredient.of(tag("c:bricks/nether"))
         );
 
+        this.addRecipe("bmnw:workbench/small_wheel_crank", 1,
+                new ItemStack(BMNWItems.SMALL_WHEEL_CRANK.get()),
+                Ingredient.of(tag("c:ingots/iron")),
+                Ingredient.of(tag("c:ingots/iron")),
+                Ingredient.of(tag("c:ingots/iron")),
+                Ingredient.of(tag("c:ingots/iron"))
+        );
+        this.addRecipe("bmnw:workbench/large_wheel_crank", 1,
+                new ItemStack(BMNWItems.LARGE_WHEEL_CRANK.get()),
+                Ingredient.of(tag("c:ingots/iron")),
+                Ingredient.of(tag("c:ingots/iron")),
+                Ingredient.of(tag("c:ingots/iron")),
+                Ingredient.of(tag("c:ingots/iron")),
+                Ingredient.of(tag("c:ingots/iron")),
+                Ingredient.of(tag("c:ingots/iron")),
+                Ingredient.of(tag("c:ingots/iron")),
+                Ingredient.of(tag("c:ingots/iron"))
+        );
+
         this.addRecipe("bmnw:workbench/steel_deco_block", 0,
                 new ItemStack(BMNWItems.STEEL_DECO_BLOCK.get()),
                 Ingredient.of(tag("c:ingots/steel"))
@@ -122,6 +141,23 @@ public class WorkbenchRecipes {
                 Ingredient.of(BMNWItems.INSULATOR.get()),
                 Ingredient.of(tag("c:wires/copper")),
                 Ingredient.of(tag("c:wires/copper"))
+        );
+        this.addRecipe("bmnw:workbench/extendable_catwalk", 1,
+                new ItemStack(BMNWItems.EXTENDABLE_CATWALK.get()),
+                Ingredient.of(BMNWItems.STEEL_CATWALK.get()),
+                Ingredient.of(BMNWItems.STEEL_CATWALK.get()),
+                Ingredient.of(BMNWItems.STEEL_CATWALK.get()),
+                Ingredient.of(BMNWItems.STEEL_CATWALK.get()),
+                Ingredient.of(tag("c:ingots/steel")),
+                Ingredient.of(tag("c:ingots/steel")),
+                Ingredient.of(tag("c:ingots/steel")),
+                Ingredient.of(tag("c:ingots/steel")),
+                Ingredient.of(tag("c:ingots/steel")),
+                Ingredient.of(tag("c:plates/steel")),
+                Ingredient.of(tag("c:plates/steel")),
+                Ingredient.of(tag("c:plates/steel")),
+                Ingredient.of(tag("c:plates/steel")),
+                Ingredient.of(tag("c:plates/steel"))
         );
     }
 
