@@ -3,7 +3,7 @@
     "bmnw:nuclear_blast",
     "bmnw:radiation",
     "bmnw:wp_burns",
-    "bmnw:shredding"
+    "bmnw:shredded"
   ],
   "replace": false
 }
