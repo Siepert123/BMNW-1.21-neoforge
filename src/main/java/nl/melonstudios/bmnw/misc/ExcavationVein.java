@@ -144,7 +144,7 @@ public final class ExcavationVein {
 
     public boolean mayExcavate(ChunkAccess chunk) {
         if (this.isEmpty()) return false;
-        if (BMNWServerConfig.enableExcavationVeinDepletion) {
+        if (BMNWServerConfig.enableExcavationVeinDepletion()) {
             int depletion = chunk.getData(BMNWAttachments.EXCAVATION_VEIN_DEPLETION);
             return getMaximumExtraction() > depletion;
         }

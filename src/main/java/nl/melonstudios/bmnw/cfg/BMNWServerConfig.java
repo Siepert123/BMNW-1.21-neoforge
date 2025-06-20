@@ -3,6 +3,7 @@ package nl.melonstudios.bmnw.cfg;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.config.ModConfigEvent;
 import net.neoforged.neoforge.common.ModConfigSpec;
+import nl.melonstudios.bmnw.BMNW;
 import nl.melonstudios.bmnw.misc.OptionalBool;
 
 public class BMNWServerConfig {
@@ -40,18 +41,12 @@ public class BMNWServerConfig {
             .comment("Whether moving parts (like the Extendable Catwalk) should drag entities with them")
             .define("movingPartsDragEntities", true);
 
-    private static final ModConfigSpec.EnumValue<OptionalBool> MINIMIZE_MEMORY_USAGE = BUILDER
-            .comment("Whether to minimize memory usage (this will increase the CPU load)")
-            .comment("'MAYBE' will let the mod decide for you")
-            .defineEnum("minimizeMemoryUsage", OptionalBool.MAYBE);
-
     public static final ModConfigSpec SPEC = BUILDER.build();
 
     public static RadiationSetting radiationSetting;
     public static boolean enableExcavationVeinDepletion;
     public static int maxExtendableCatwalkParts;
     public static boolean movingPartsDragEntities;
-    public static OptionalBool minimizeMemoryUsage;
 
     public static RadiationSetting radiationSetting() {
         return RADIATION_SETTING.get();
@@ -65,9 +60,6 @@ public class BMNWServerConfig {
     public static boolean movingPartsDragEntities() {
         return MOVING_PARTS_DRAG_ENTITIES.get();
     }
-    public static OptionalBool minimizeMemoryUsage() {
-        return MINIMIZE_MEMORY_USAGE.get();
-    }
 
     public static void onLoad(final ModConfigEvent event) {
         if (event instanceof ModConfigEvent.Unloading) return;
@@ -76,7 +68,6 @@ public class BMNWServerConfig {
             enableExcavationVeinDepletion = ENABLE_EXCAVATION_VEIN_DEPLETION.get();
             maxExtendableCatwalkParts = MAX_EXTENDABLE_CATWALK_PARTS.get();
             movingPartsDragEntities = MOVING_PARTS_DRAG_ENTITIES.get();
-            minimizeMemoryUsage = MINIMIZE_MEMORY_USAGE.get();
         } catch (Throwable throwable) {
             throwable.printStackTrace(System.err);
         }

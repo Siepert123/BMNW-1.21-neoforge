@@ -1,7 +1,9 @@
 package nl.melonstudios.bmnw.misc;
 
 import com.google.common.collect.ImmutableList;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
@@ -9,7 +11,6 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 
-import java.util.Collections;
 import java.util.List;
 
 public class Library {
@@ -80,9 +81,36 @@ public class Library {
         };
     }
 
-    public static Direction determineBlockPartition(Vec3 clickLocation) {
+    public static Direction determineBlockPartition3D(UseOnContext context) {
+        return determineBlockPartition3D(context.getClickedPos(), context.getClickLocation());
+    }
+    public static Direction determineBlockPartition3D(BlockPos pos, Vec3 click) {
+        return determineBlockPartition3D(click.subtract(pos.getCenter()));
+    }
+    public static Direction determineBlockPartition3D(Vec3 clickLocation) {
+        return Direction.getNearest(clickLocation);
+    }
+    public static Direction determineBlockPartition2D(UseOnContext context) {
+        return determineBlockPartition2D(context.getClickedPos(), context.getClickLocation());
+    }
+    public static Direction determineBlockPartition2D(BlockPos pos, Vec3 click) {
+        return determineBlockPartition2D(click.subtract(pos.getCenter()));
+    }
+    public static Direction determineBlockPartition2D(Vec3 clickLocation) {
         Direction d = Direction.getNearest(clickLocation.multiply(1, 0, 1));
         if (d.getAxis() == Direction.Axis.Y) return null;
         return d;
+    }
+
+    public static final int A_GIGABYTE_I = 1073741824;
+    public static final long A_GIGABYTE_L = 1073741824L;
+    public static final float A_GIGABYTE_F = 1073741824.0F;
+    public static final double A_GIGABYTE_D = 1073741824.0D;
+    public static double toGB(long bytes, int precision) {
+        if (precision == -1) return bytes / A_GIGABYTE_D;
+        if (precision == 0) return bytes / A_GIGABYTE_L;
+        double thing = bytes / A_GIGABYTE_D;
+        int mul = (int)Math.pow(10, precision);
+        return (double)((int)(thing*mul))/mul;
     }
 }

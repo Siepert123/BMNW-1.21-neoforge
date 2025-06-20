@@ -29,6 +29,7 @@ import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.event.server.ServerStoppingEvent;
 import nl.melonstudios.bmnw.cfg.BMNWClientConfig;
+import nl.melonstudios.bmnw.cfg.BMNWCommonConfig;
 import nl.melonstudios.bmnw.cfg.BMNWServerConfig;
 import nl.melonstudios.bmnw.hardcoded.recipe.WorkbenchRecipes;
 import nl.melonstudios.bmnw.hardcoded.structure.*;
@@ -87,9 +88,11 @@ public class BMNW {
 
     private static String versionStr;
     private static ModContainer modContainer;
+    public static final boolean autoDecidedMemoryMinimization;
 
     static {
         IOpensCatwalkRails.init();
+        autoDecidedMemoryMinimization = Runtime.getRuntime().maxMemory() < Runtime.getRuntime().availableProcessors() * 1073741824L;
     }
 
     public BMNW(IEventBus modEventBus, @Nonnull ModContainer modContainer, Dist dist) {
@@ -105,6 +108,7 @@ public class BMNW {
 
         modContainer.registerConfig(ModConfig.Type.SERVER, BMNWServerConfig.SPEC);
         modContainer.registerConfig(ModConfig.Type.CLIENT, BMNWClientConfig.SPEC);
+        modContainer.registerConfig(ModConfig.Type.COMMON, BMNWCommonConfig.SPEC);
 
         modEventBus.addListener(BMNWServerConfig::onLoad);
         modEventBus.addListener(BMNWClientConfig::onLoad);
@@ -150,6 +154,21 @@ public class BMNW {
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
+        Runtime runtime = Runtime.getRuntime();
+        long memTotal = runtime.totalMemory();
+        long memFree = runtime.freeMemory();
+        long memMax = runtime.maxMemory();
+        LOGGER.debug("##Runtime Info Dump##\nCPU cores: {}\nTotal memory: {} bytes ({}GB)\nFree memory: {} bytes ({} GB)\nMax memory: {} bytes ({} GB)",
+                runtime.availableProcessors(),
+                memTotal, Library.toGB(memTotal, 2),
+                memFree, Library.toGB(memFree, 2),
+                memMax, Library.toGB(memMax, 2)
+        );
+        LOGGER.debug("Minimizing memory usage: {} (auto-decided: {})",
+                BMNWCommonConfig.minimizeMemoryUsage(),
+                BMNWCommonConfig.minimizeMemoryUsage == OptionalBool.MAYBE
+        );
+
         ExcavationVein.initialize();
         Books.registerBooks();
         HazardRegistry.register();

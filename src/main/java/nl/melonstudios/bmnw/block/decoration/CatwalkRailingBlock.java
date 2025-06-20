@@ -19,14 +19,11 @@ import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import nl.melonstudios.bmnw.init.BMNWItems;
 import nl.melonstudios.bmnw.interfaces.IOpensCatwalkRails;
 import nl.melonstudios.bmnw.interfaces.IScrewdriverUsable;
 import nl.melonstudios.bmnw.item.tools.ScrewdriverItem;
 import nl.melonstudios.bmnw.misc.Library;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.function.Supplier;
 
 public class CatwalkRailingBlock extends Block implements SimpleWaterloggedBlock, IScrewdriverUsable, IOpensCatwalkRails {
     public static final BooleanProperty NORTH = BlockStateProperties.NORTH;
@@ -138,7 +135,7 @@ public class CatwalkRailingBlock extends Block implements SimpleWaterloggedBlock
             level.setBlock(pos, getFittingState(level, pos, level.getBlockState(pos)), 3);
             return true;
         }
-        Direction side = Library.determineBlockPartition(context.getClickLocation().subtract(pos.getCenter()));
+        Direction side = Library.determineBlockPartition2D(context);
         if (side == null) return false;
         BlockState state = level.getBlockState(pos);
         state = switch (side) {
