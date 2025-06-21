@@ -1,6 +1,7 @@
 package nl.melonstudios.bmnw.init;
 
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.neoforged.bus.api.IEventBus;
@@ -43,10 +44,19 @@ public class BMNWEntityTypes {
                     .build("bmnw:meteorite")
     );
 
+    public static final DeferredHolder<EntityType<?>, EntityType<LavaEjectionEntity>> LAVA_EJECTION = ENTITY_TYPES.register(
+            "lava_ejection",
+            () -> EntityType.Builder.<LavaEjectionEntity>of(LavaEjectionEntity::new, MobCategory.MISC)
+                    .sized(0.5F, 0.5F)
+                    .clientTrackingRange(1024)
+                    .build("bmnw:lava_ejection")
+    );
+
     public static final DeferredHolder<EntityType<?>, EntityType<SimpleBulletEntity>> SIMPLE_BULLET = ENTITY_TYPES.register(
             "simple_bullet",
             () -> EntityType.Builder.<SimpleBulletEntity>of(SimpleBulletEntity::new, MobCategory.MISC)
                     .sized(0.125f, 0.125f)
+                    .noSummon()
                     .build("bmnw:simple_bullet")
     );
 

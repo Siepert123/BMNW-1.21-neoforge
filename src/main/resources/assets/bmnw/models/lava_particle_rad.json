@@ -1,0 +1,23 @@
+{
+	"format_version": "1.21.6",
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "bmnw:block/lava_particles",
+		"particle": "bmnw:block/lava_particles"
+	},
+	"elements": [
+		{
+			"from": [4, 4, 4],
+			"to": [12, 12, 12],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 8]},
+			"faces": {
+				"north": {"uv": [8.1, 0.1, 15.9, 7.9], "texture": "#0"},
+				"east": {"uv": [8.1, 0.1, 15.9, 7.9], "texture": "#0"},
+				"south": {"uv": [8.1, 0.1, 15.9, 7.9], "texture": "#0"},
+				"west": {"uv": [8.1, 0.1, 15.9, 7.9], "texture": "#0"},
+				"up": {"uv": [8.1, 0.1, 15.9, 7.9], "texture": "#0"},
+				"down": {"uv": [8.1, 0.1, 15.9, 7.9], "texture": "#0"}
+			}
+		}
+	]
+}

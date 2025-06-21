@@ -42,6 +42,14 @@ public class BMNWPartialModels {
         return PartialModel.of(ModelResourceLocation.standalone(BMNW.namespace("entity/" + path)));
     }
 
+    public static final PartialModel LAVA_PARTICLE_DEFAULT = other("lava_particle_default");
+    public static final PartialModel LAVA_PARTICLE_RAD = other("lava_particle_rad");
+    public static final PartialModel LAVA_PARTICLE_SOUL = other("lava_particle_soul");
+
+    private static PartialModel other(String path) {
+        return PartialModel.of(ModelResourceLocation.standalone(BMNW.namespace(path)));
+    }
+
     public static void init() {
 
     }

@@ -18,6 +18,7 @@ public class Library {
         return rfTick / 3_600_000.0f;
     }
 
+    public static final int PACKED_LIGHT = 0xf000f0;
     public static final Direction[] DIRECTIONS_WITH_NULL = {
             Direction.DOWN,
             Direction.UP,

@@ -413,6 +413,8 @@ public class BMNWEventBus {
 
             registerEntityRenderingHandler(event, BMNWEntityTypes.METEORITE, MeteoriteRenderer::new);
 
+            registerEntityRenderingHandler(event, BMNWEntityTypes.LAVA_EJECTION, LavaEjectionRenderer::new);
+
             registerEntityRenderingHandler(event, BMNWEntityTypes.SIMPLE_BULLET, SimpleBulletRenderer::new);
         }
 
