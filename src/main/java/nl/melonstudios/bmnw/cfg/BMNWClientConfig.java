@@ -81,6 +81,9 @@ public class BMNWClientConfig {
     private static final ModConfigSpec.BooleanValue DISABLE_JOIN_DEBUG = BUILDER
             .comment("Disables the \"loaded BMNW version (version)\" upon joining world.")
             .define("disableJoinDebug", false);
+    private static final ModConfigSpec.IntValue WIRE_VIEW_DISTANCE = BUILDER
+            .comment("The view distance of wires (32767 for infinite)")
+            .defineInRange("wireViewDistance", 256, 64, 32767);
 
     public static final ModConfigSpec SPEC = BUILDER.build();
 
@@ -89,6 +92,10 @@ public class BMNWClientConfig {
     public static MushroomCloudRenderType mushroomCloudRenderType;
     public static ExplosionFlashRenderType explosionFlashRenderType;
     public static boolean disableJoinDebug;
+
+    public static int wireViewDistance() {
+        return WIRE_VIEW_DISTANCE.get();
+    }
 
     public static void onLoad(final ModConfigEvent event) {
         if (event instanceof ModConfigEvent.Unloading || !DistrictHolder.isClient()) return;

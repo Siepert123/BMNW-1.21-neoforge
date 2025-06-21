@@ -11,6 +11,7 @@ import nl.melonstudios.bmnw.item.battery.BatteryItem;
 import nl.melonstudios.bmnw.item.battery.InfiniteBatteryItem;
 import nl.melonstudios.bmnw.item.misc.*;
 import nl.melonstudios.bmnw.item.tools.ScrewdriverItem;
+import nl.melonstudios.bmnw.item.tools.WireSpoolItem;
 import nl.melonstudios.bmnw.item.weapons.DetonatorItem;
 import nl.melonstudios.bmnw.item.weapons.LaserTargetDesignatorItem;
 import nl.melonstudios.bmnw.item.weapons.SniperItem;
@@ -455,7 +456,11 @@ public class BMNWItems {
 
     //endregion
 
-    //region energy & fluid storage
+    //region energy & fluid handling
+
+    public static final DeferredItem<BlockItem> ELECTRIC_WIRE_CONNECTOR = ITEMS.register("electric_wire_connector",
+            () -> new BlockItem(BMNWBlocks.ELECTRIC_WIRE_CONNECTOR.get(), new Item.Properties()));
+
     public static final DeferredItem<BlockItem> CREATIVE_ENERGY_STORAGE = ITEMS.register("creative_energy_storage",
             () -> new BlockItem(BMNWBlocks.CREATIVE_ENERGY_STORAGE.get(), new Item.Properties()));
     //endregion
@@ -614,6 +619,8 @@ public class BMNWItems {
             () -> new Item(new Item.Properties().stacksTo(1)));
     public static final DeferredItem<ScrewdriverItem> SCREWDRIVER = ITEMS.register("screwdriver",
             () -> new ScrewdriverItem(new Item.Properties().stacksTo(1), false));
+    public static final DeferredItem<WireSpoolItem> WIRE_SPOOL = ITEMS.register("wire_spool",
+            () -> new WireSpoolItem(new Item.Properties()));
 
     public static final DeferredItem<FireMarbleItem> FIRE_MARBLE = ITEMS.register("fire_marble",
             () -> new FireMarbleItem(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));

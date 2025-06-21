@@ -353,7 +353,10 @@ public class BMNWBlocks {
     );
     //endregion
 
-    //region energy & fluid storage
+    //region energy & fluid handling
+
+    public static final DeferredBlock<ElectricWireConnectorBlock> ELECTRIC_WIRE_CONNECTOR = BLOCKS.register("electric_wire_connector",
+            () -> new ElectricWireConnectorBlock(BlockBehaviour.Properties.ofFullCopy(CONDUCTIVE_COPPER_BLOCK.get())));
 
     public static final DeferredBlock<CreativeBatteryBlock> CREATIVE_ENERGY_STORAGE = BLOCKS.register("creative_energy_storage",
             () -> new CreativeBatteryBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)));

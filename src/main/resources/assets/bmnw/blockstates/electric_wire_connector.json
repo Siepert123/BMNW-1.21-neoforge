@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "facing=up": {
+      "model": "bmnw:block/electric_wire_connector"
+    },
+    "facing=down": {
+      "model": "bmnw:block/electric_wire_connector",
+      "x": 180
+    },
+    "facing=north": {
+      "model": "bmnw:block/electric_wire_connector",
+      "x": 90
+    },
+    "facing=east": {
+      "model": "bmnw:block/electric_wire_connector",
+      "x": 90,
+      "y": 90
+    },
+    "facing=south": {
+      "model": "bmnw:block/electric_wire_connector",
+      "x": 90,
+      "y": 180
+    },
+    "facing=west": {
+      "model": "bmnw:block/electric_wire_connector",
+      "x": 90,
+      "y": 270
+    }
+  }
+}

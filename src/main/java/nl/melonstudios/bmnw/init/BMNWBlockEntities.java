@@ -41,7 +41,6 @@ public class BMNWBlockEntities {
                     null
             )
     );
-
     public static final Supplier<BlockEntityType<ExcavatorBlockEntity>> EXCAVATOR = BLOCK_ENTITIES.register(
             "excavator",
             () -> new BlockEntityType<>(
@@ -134,7 +133,6 @@ public class BMNWBlockEntities {
                     null
             )
     );
-
     public static final Supplier<BlockEntityType<AlloyBlastFurnaceBlockEntity>> ALLOY_BLAST_FURNACE = BLOCK_ENTITIES.register(
             "alloy_blast_furnace",
             () -> new BlockEntityType<>(
@@ -143,12 +141,20 @@ public class BMNWBlockEntities {
                     null
             )
     );
-
     public static final Supplier<BlockEntityType<LargeShredderBlockEntity>> LARGE_SHREDDER = BLOCK_ENTITIES.register(
             "large_shredder",
             () -> new BlockEntityType<>(
                     LargeShredderBlockEntity::new,
                     Set.of(BMNWBlocks.LARGE_SHREDDER.get()),
+                    null
+            )
+    );
+
+    public static final Supplier<BlockEntityType<ElectricWireConnectorBlockEntity>> ELECTRIC_WIRE_CONNECTOR = BLOCK_ENTITIES.register(
+            "electric_wire_connector",
+            () -> new BlockEntityType<>(
+                    ElectricWireConnectorBlockEntity::new,
+                    Set.of(BMNWBlocks.ELECTRIC_WIRE_CONNECTOR.get()),
                     null
             )
     );

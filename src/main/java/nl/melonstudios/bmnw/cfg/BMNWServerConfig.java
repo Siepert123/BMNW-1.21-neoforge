@@ -40,6 +40,9 @@ public class BMNWServerConfig {
     private static final ModConfigSpec.BooleanValue MOVING_PARTS_DRAG_ENTITIES = BUILDER
             .comment("Whether moving parts (like the Extendable Catwalk) should drag entities with them")
             .define("movingPartsDragEntities", true);
+    private static final ModConfigSpec.IntValue MAX_WIRE_LENGTH = BUILDER
+            .comment("The maximum length of wires between two connectors")
+            .defineInRange("maxWireLength", 20, 8, 128);
 
     public static final ModConfigSpec SPEC = BUILDER.build();
 
@@ -59,6 +62,12 @@ public class BMNWServerConfig {
     }
     public static boolean movingPartsDragEntities() {
         return MOVING_PARTS_DRAG_ENTITIES.get();
+    }
+    public static int maxWireLength() {
+        return MAX_WIRE_LENGTH.get();
+    }
+    public static int maxWireLengthSqr() {
+        return maxWireLength() * maxWireLength();
     }
 
     public static void onLoad(final ModConfigEvent event) {

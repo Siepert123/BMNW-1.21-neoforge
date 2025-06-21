@@ -14,6 +14,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import nl.melonstudios.bmnw.cfg.BMNWServerConfig;
 import nl.melonstudios.bmnw.init.BMNWAttachments;
 import nl.melonstudios.bmnw.init.BMNWBlockEntities;
@@ -64,6 +66,7 @@ public class TestExcavatorBlockEntity extends WireAttachedBlockEntity {
         ((TestExcavatorBlockEntity) blockEntity).tick();
     }
 
+    @OnlyIn(Dist.CLIENT)
     @Override
     public Collection<Vec3> wireConnectionsForRendering() {
         return List.of(this.getBlockPos().getCenter().add(0, 5, 5));

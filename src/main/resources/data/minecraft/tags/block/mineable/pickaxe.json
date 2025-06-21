@@ -111,7 +111,8 @@
     "bmnw:vinyl_tile",
     "bmnw:small_vinyl_tiles",
     "bmnw:large_shredder",
-    "bmnw:missile_launch_pad"
+    "bmnw:missile_launch_pad",
+    "bmnw:electric_wire_connector"
   ],
   "replace": false
 }

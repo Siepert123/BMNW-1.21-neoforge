@@ -9,17 +9,24 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import org.joml.Matrix4f;
+import org.joml.*;
 
+import javax.annotation.Nullable;
+import java.lang.Math;
+import java.nio.ByteBuffer;
+import java.nio.FloatBuffer;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -38,6 +45,11 @@ public class Library {
             Direction.EAST,
             null
     };
+
+    public static void dropItem(Level level, BlockPos pos, ItemStack stack) {
+        ItemEntity entity = new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, stack);
+        level.addFreshEntity(entity);
+    }
 
     public static final float[] BRIGHTNESS_BY_AXIS = {
             0.85F, /* X */ 1.0F, /* Y */ 0.92F, /* Z */
@@ -71,6 +83,14 @@ public class Library {
             case Y -> SURROUND_Y;
             case Z -> SURROUND_Z;
         };
+    }
+
+    @SuppressWarnings("unchecked")
+    @Nullable
+    public static <T extends BlockEntity> T getBlockEntityOfType(Level level, BlockPos pos, Class<T> clazz) {
+        BlockEntity be = level.getBlockEntity(pos);
+        if (clazz.isInstance(be)) return (T) be;
+        return null;
     }
 
     public static Direction.Axis toggleAxis(Direction.Axis toggle, Direction.Axis around) {
@@ -126,6 +146,12 @@ public class Library {
         return (double)((int)(thing*mul))/mul;
     }
 
+    public static double limitPrecision(double value, int precision) {
+        if (precision == 0) return (long)value;
+        int mul = (int)Math.pow(10, precision);
+        return (double)((int)(value*mul))/mul;
+    }
+
     public static void renderLeash(
             Vec3 from, Vec3 to, PoseStack poseStack, MultiBufferSource bufferSource,
             int fromSky, int fromBlock, int toSky, int toBlock
@@ -179,6 +205,54 @@ public class Library {
 
         poseStack.popPose();
     }
+
+    @OnlyIn(Dist.CLIENT)
+    public static void renderLeash(
+            Vec3 from, Vec3 to, float r, float g, float b,
+            PoseStack poseStack, MultiBufferSource bufferSource,
+            int fromSky, int fromBlock, int toSky, int toBlock,
+            boolean disableSegmentation, int segments, Boolean limit
+    ) {
+        if (limit == null) {
+            renderLeash(from, to, r, g, b, poseStack, bufferSource, fromSky, fromBlock, toSky, toBlock, disableSegmentation, segments);
+            return;
+        }
+        poseStack.pushPose();
+        float dx = (float) (to.x - from.x);
+        float dy = (float) (to.y - from.y);
+        float dz = (float) (to.z - from.z);
+
+        VertexConsumer consumer = bufferSource.getBuffer(RenderType.LEASH);
+        Matrix4f matrix = poseStack.last().pose();
+
+        float x2 = Mth.invSqrt(dx * dx + dz * dz) * 0.025F / 2.0F;
+        float y2 = dz * x2;
+        float z2 = dx * x2;
+
+        if (limit == Boolean.FALSE) {
+            for (int i = 0; i <= segments; i++) {
+                addVertexPair_leash(
+                        consumer, matrix, dx, dy, dz,
+                        fromBlock, toBlock, fromSky, toSky,
+                        0.025F, 0.025F, y2, z2, i, false,
+                        r, g, b, disableSegmentation, segments
+                );
+            }
+        }
+        if (limit == Boolean.TRUE) {
+            for (int i = segments; i >= 0; i--) {
+                addVertexPair_leash(
+                        consumer, matrix, dx, dy, dz,
+                        fromBlock, toBlock, fromSky, toSky,
+                        0.025F, 0, y2, z2, i, true,
+                        r, g, b, disableSegmentation, segments
+                );
+            }
+        }
+
+        poseStack.popPose();
+    }
+
     @OnlyIn(Dist.CLIENT)
     private static void addVertexPair_leash(
             VertexConsumer buffer,

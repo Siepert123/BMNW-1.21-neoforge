@@ -45,6 +45,7 @@ import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
+import nl.melonstudios.bmnw.block.entity.ElectricWireConnectorBlockEntity;
 import nl.melonstudios.bmnw.block.entity.IronBarrelBlockEntity;
 import nl.melonstudios.bmnw.block.entity.LargeShredderBlockEntity;
 import nl.melonstudios.bmnw.block.entity.MissileLaunchPadBlockEntity;
@@ -402,6 +403,7 @@ public class BMNWEventBus {
             registerBlockEntityRenderingHandler(event, BMNWBlockEntities.LARGE_SHREDDER, LargeShredderRenderer::new);
             registerBlockEntityRenderingHandler(event, BMNWBlockEntities.EXTENDABLE_CATWALK, ExtendableCatwalkRenderer::new);
             registerBlockEntityRenderingHandler(event, BMNWBlockEntities.TEST_EXCAVATOR, WireAttachedRenderer::new);
+            registerBlockEntityRenderingHandler(event, BMNWBlockEntities.ELECTRIC_WIRE_CONNECTOR, WireAttachedRenderer::new);
         }
 
         @OnlyIn(Dist.CLIENT)
@@ -465,6 +467,12 @@ public class BMNWEventBus {
                     (level, pos, state, blockEntity, context) -> blockEntity != null?
                             ((IronBarrelBlockEntity)blockEntity).getIFluid() : null,
                     BMNWBlocks.IRON_BARREL.get()
+            );
+            event.registerBlock(
+                    Capabilities.EnergyStorage.BLOCK,
+                    ((level, pos, state, blockEntity, context) ->
+                            blockEntity instanceof ElectricWireConnectorBlockEntity connector ? connector.getEnergy(context) : null),
+                    BMNWBlocks.ELECTRIC_WIRE_CONNECTOR.get()
             );
         }
 

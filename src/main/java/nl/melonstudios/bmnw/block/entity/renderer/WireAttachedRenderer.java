@@ -9,7 +9,9 @@ import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import nl.melonstudios.bmnw.block.entity.WireAttachedBlockEntity;
+import nl.melonstudios.bmnw.cfg.BMNWClientConfig;
 import nl.melonstudios.bmnw.misc.Library;
+import org.joml.Vector3fc;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collection;
@@ -25,6 +27,10 @@ public class WireAttachedRenderer<T extends WireAttachedBlockEntity> extends Opt
         Vec3 source = blockEntity.getBlockPos().getCenter();
         BlockPos sourcePos = blockEntity.getBlockPos();
         Collection<Vec3> connections = blockEntity.wireConnectionsForRendering();
+        Vec3 color = blockEntity.getWireColor();
+        float r = (float)color.x;
+        float g = (float)color.y;
+        float b = (float)color.z;
         Level level = blockEntity.getLevel();
 
         assert level != null;
@@ -40,8 +46,9 @@ public class WireAttachedRenderer<T extends WireAttachedBlockEntity> extends Opt
             int connectionSky = level.getBrightness(LightLayer.SKY, connectionPos);
             int connectionBlock = level.getBrightness(LightLayer.BLOCK, connectionPos);
             Library.renderLeash(
-                    source, connection, poseStack, bufferSource,
-                    sourceSky, sourceBlock, connectionSky, connectionBlock
+                    source, connection, r, g, b, poseStack, bufferSource,
+                    sourceSky, sourceBlock, connectionSky, connectionBlock,
+                    false, 24, Boolean.FALSE
             );
 
             poseStack.popPose();
@@ -50,17 +57,12 @@ public class WireAttachedRenderer<T extends WireAttachedBlockEntity> extends Opt
     }
 
     @Override
-    public boolean shouldRenderOffScreen(T blockEntity) {
-        return true;
+    public int getViewDistance() {
+        return BMNWClientConfig.wireViewDistance();
     }
 
     @Override
     public boolean shouldRender(T blockEntity, Vec3 cameraPos) {
-        return true;
-    }
-
-    @Override
-    public AABB getRenderBoundingBox(T blockEntity) {
-        return AABB.INFINITE;
+        return BMNWClientConfig.wireViewDistance() == Short.MAX_VALUE || super.shouldRender(blockEntity, cameraPos);
     }
 }
