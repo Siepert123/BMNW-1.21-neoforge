@@ -27,19 +27,17 @@ public class VolcanoSmokeParticle extends TextureSheetParticle {
         this.startZ = (float)this.z;
         this.xOffset = rnd.nextFloat() * 16 - 8;
         this.zOffset = rnd.nextFloat() * 16 - 8;
-        this.maxQuadSize = 30 + rnd.nextFloat() * 4;
+        this.maxQuadSize = 20 + rnd.nextFloat() * 4;
     }
 
     private final float startX, startZ;
     private final float xOffset, zOffset;
     private final SpriteSet spriteSet;
-    private int rise = 16;
-    private float lastQuadSize = 0;
-    private boolean firstTick = true;
+    private int rise = 12;
     private final float maxQuadSize;
     @Override
     public float getQuadSize(float partialTick) {
-        return Easing.OUT_QUAD.clampedEasedLerp(0, this.maxQuadSize, Mth.clamp(this.ageToLifetime(partialTick) * 4, 0, 1));
+        return Easing.OUT_QUAD.clampedEasedLerp(0, this.maxQuadSize, Mth.clamp(this.ageToLifetime(partialTick) * 10, 0, 1));
     }
 
     private float ageToLifetime(float pt) {
@@ -48,7 +46,6 @@ public class VolcanoSmokeParticle extends TextureSheetParticle {
 
     @Override
     public void tick() {
-        this.lastQuadSize = this.quadSize;
         this.xo = this.x;
         this.yo = this.y;
         this.zo = this.z;
@@ -60,11 +57,10 @@ public class VolcanoSmokeParticle extends TextureSheetParticle {
         this.setSpriteFromAge(this.spriteSet);
         this.x = Easing.OUT_SINE.clampedEasedLerp(this.startX, this.startX+this.xOffset, (float)this.age / this.lifetime);
         this.z = Easing.OUT_SINE.clampedEasedLerp(this.startZ, this.startZ+this.zOffset, (float)this.age / this.lifetime);
-        if (!this.firstTick && this.rise > 0) {
+        if (this.rise > 0) {
             this.y += this.rise;
             this.rise--;
         }
-        this.firstTick = false;
     }
 
     @Override

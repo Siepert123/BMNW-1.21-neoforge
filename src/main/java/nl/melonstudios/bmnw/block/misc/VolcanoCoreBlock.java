@@ -22,14 +22,12 @@ public class VolcanoCoreBlock extends Block {
 
     @Override
     protected void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
-        level.scheduleTick(pos, this, 20);
+        level.scheduleTick(pos, this, 10);
     }
 
     @Override
     protected void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-        level.scheduleTick(pos, this, 20);
-        level.addFreshEntity(new LavaEjectionEntity(level, pos, this.type));
-        level.addFreshEntity(new LavaEjectionEntity(level, pos, this.type));
+        level.scheduleTick(pos, this, 10);
         level.addFreshEntity(new LavaEjectionEntity(level, pos, this.type));
         level.addFreshEntity(new LavaEjectionEntity(level, pos, this.type));
         for (ServerPlayer player : level.getPlayers(Library.ALWAYS_TRUE)) {
