@@ -16,7 +16,7 @@ public abstract class OptimizedBlockEntityRenderer<T extends OptimizedBlockEntit
     }
 
     @Override
-    public AABB getRenderBoundingBox(OptimizedBlockEntity blockEntity) {
+    public AABB getRenderBoundingBox(T blockEntity) {
         return blockEntity.getRenderBB();
     }
 }

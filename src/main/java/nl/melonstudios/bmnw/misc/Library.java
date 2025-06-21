@@ -1,8 +1,15 @@
 package nl.melonstudios.bmnw.misc;
 
 import com.google.common.collect.ImmutableList;
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.client.renderer.LightTexture;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.Mth;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
@@ -10,6 +17,9 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import org.joml.Matrix4f;
 
 import java.util.List;
 import java.util.function.Predicate;
@@ -115,5 +125,74 @@ public class Library {
         double thing = bytes / A_GIGABYTE_D;
         int mul = (int)Math.pow(10, precision);
         return (double)((int)(thing*mul))/mul;
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public static void renderLeash(
+            Vec3 from, Vec3 to, float r, float g, float b,
+            PoseStack poseStack, MultiBufferSource bufferSource,
+            int fromSky, int fromBlock, int toSky, int toBlock
+    ) {
+        poseStack.pushPose();
+        float dx = (float) (to.x - from.x);
+        float dy = (float) (to.y - from.y);
+        float dz = (float) (to.z - from.z);
+
+        VertexConsumer consumer = bufferSource.getBuffer(RenderType.LEASH);
+        Matrix4f matrix = poseStack.last().pose();
+
+        float x2 = Mth.invSqrt(dx * dx + dz * dz) * 0.025F / 2.0F;
+        float y2 = dz * x2;
+        float z2 = dx * x2;
+
+        RenderSystem.setShaderColor(r, g, b, 1.0F);
+        for (int i = 0; i <= 24; i++) {
+            addVertexPair_leash(
+                    consumer, matrix, dx, dy, dz,
+                    fromBlock, toBlock, fromSky, toSky,
+                    0.025F, 0.025F, y2, z2, i, false
+            );
+        }
+        for (int i = 24; i >= 0; i--) {
+            addVertexPair_leash(
+                    consumer, matrix, dx, dy, dz,
+                    fromBlock, toBlock, fromSky, toSky,
+                    0.025F, 0, y2, z2, i, true
+            );
+        }
+
+        poseStack.popPose();
+    }
+    @OnlyIn(Dist.CLIENT)
+    private static void addVertexPair_leash(
+            VertexConsumer buffer,
+            Matrix4f pose,
+            float startX,
+            float startY,
+            float startZ,
+            int entityBlockLight,
+            int holderBlockLight,
+            int entitySkyLight,
+            int holderSkyLight,
+            float yOffset,
+            float dy,
+            float dx,
+            float dz,
+            int index,
+            boolean reverse
+    ) {
+        float f = (float)index / 24.0F;
+        int i = (int) Mth.lerp(f, (float)entityBlockLight, (float)holderBlockLight);
+        int j = (int)Mth.lerp(f, (float)entitySkyLight, (float)holderSkyLight);
+        int k = LightTexture.pack(i, j);
+        float f1 = index % 2 == (reverse ? 1 : 0) ? 0.7F : 1.0F;
+        float f2 = 0.5F * f1;
+        float f3 = 0.4F * f1;
+        float f4 = 0.3F * f1;
+        float f5 = startX * f;
+        float f6 = startY > 0.0F ? startY * f * f : startY - startY * (1.0F - f) * (1.0F - f);
+        float f7 = startZ * f;
+        buffer.addVertex(pose, f5 - dx, f6 + dy, f7 + dz).setColor(f2, f3, f4, 1.0F).setLight(k);
+        buffer.addVertex(pose, f5 + dx, f6 + yOffset - dy, f7 - dz).setColor(f2, f3, f4, 1.0F).setLight(k);
     }
 }

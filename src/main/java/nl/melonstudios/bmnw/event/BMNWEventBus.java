@@ -401,7 +401,6 @@ public class BMNWEventBus {
             registerBlockEntityRenderingHandler(event, BMNWBlockEntities.PRESS, PressRenderer::new);
             registerBlockEntityRenderingHandler(event, BMNWBlockEntities.LARGE_SHREDDER, LargeShredderRenderer::new);
             registerBlockEntityRenderingHandler(event, BMNWBlockEntities.EXTENDABLE_CATWALK, ExtendableCatwalkRenderer::new);
-
             registerBlockEntityRenderingHandler(event, BMNWBlockEntities.TEST_EXCAVATOR, WireAttachedRenderer::new);
         }
 

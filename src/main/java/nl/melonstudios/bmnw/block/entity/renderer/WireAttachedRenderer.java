@@ -1,17 +1,22 @@
 package nl.melonstudios.bmnw.block.entity.renderer;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.entity.LeashKnotRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import nl.melonstudios.bmnw.block.entity.OptimizedBlockEntity;
 import nl.melonstudios.bmnw.block.entity.WireAttachedBlockEntity;
+import nl.melonstudios.bmnw.misc.Library;
 import org.joml.Matrix4f;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -28,9 +33,6 @@ public class WireAttachedRenderer<T extends WireAttachedBlockEntity> extends Opt
         Vec3 source = blockEntity.getBlockPos().getCenter();
         BlockPos sourcePos = blockEntity.getBlockPos();
         Collection<Vec3> connections = blockEntity.wireConnectionsForRendering();
-
-        VertexConsumer leashConsumer = bufferSource.getBuffer(RenderType.LEASH);
-        Matrix4f leashMatrix = poseStack.last().pose();
         Level level = blockEntity.getLevel();
 
         assert level != null;
@@ -38,35 +40,22 @@ public class WireAttachedRenderer<T extends WireAttachedBlockEntity> extends Opt
         int sourceSky = level.getBrightness(LightLayer.SKY, sourcePos);
         int sourceBlock = level.getBrightness(LightLayer.BLOCK, sourcePos);
 
+        poseStack.pushPose();
+        poseStack.translate(0.5, 0.5, 0.5);
         for (Vec3 connection : connections) {
             poseStack.pushPose();
             BlockPos connectionPos = BlockPos.containing(connection);
             int connectionSky = level.getBrightness(LightLayer.SKY, connectionPos);
             int connectionBlock = level.getBrightness(LightLayer.BLOCK, connectionPos);
-
-            for (int i = 0; i < 24; i++) {
-                addVertexPair(
-                        leashConsumer, leashMatrix,
-                        (float)source.x, (float)source.y, (float)source.z,
-                        connectionBlock, sourceBlock,
-                        connectionSky, sourceSky,
-                        0, (float)connection.x, (float)connection.x, (float)connection.z,
-                        i, false
-                );
-            }
-            for (int i = 0; i < 24; i++) {
-                addVertexPair(
-                        leashConsumer, leashMatrix,
-                        (float)source.x, (float)source.y, (float)source.z,
-                        connectionBlock, sourceBlock,
-                        connectionSky, sourceSky,
-                        0, (float)connection.x, (float)connection.x, (float)connection.z,
-                        i, true
-                );
-            }
+            Library.renderLeash(
+                    source, connection,
+                    1.0F, 1.0F, 1.0F, poseStack, bufferSource,
+                    sourceSky, sourceBlock, connectionSky, connectionBlock
+            );
 
             poseStack.popPose();
         }
+        poseStack.popPose();
     }
 
     @Override
@@ -74,35 +63,13 @@ public class WireAttachedRenderer<T extends WireAttachedBlockEntity> extends Opt
         return true;
     }
 
-    public static void addVertexPair(
-            VertexConsumer buffer,
-            Matrix4f pose,
-            float startX,
-            float startY,
-            float startZ,
-            int entityBlockLight,
-            int holderBlockLight,
-            int entitySkyLight,
-            int holderSkyLight,
-            float yOffset,
-            float dy,
-            float dx,
-            float dz,
-            int index,
-            boolean reverse
-    ) {
-        float f = (float)index / 24.0F;
-        int i = (int) Mth.lerp(f, (float)entityBlockLight, (float)holderBlockLight);
-        int j = (int)Mth.lerp(f, (float)entitySkyLight, (float)holderSkyLight);
-        int k = LightTexture.pack(i, j);
-        float f1 = index % 2 == (reverse ? 1 : 0) ? 0.7F : 1.0F;
-        float f2 = 0.5F * f1;
-        float f3 = 0.4F * f1;
-        float f4 = 0.3F * f1;
-        float f5 = startX * f;
-        float f6 = startY > 0.0F ? startY * f * f : startY - startY * (1.0F - f) * (1.0F - f);
-        float f7 = startZ * f;
-        buffer.addVertex(pose, f5 - dx, f6 + dy, f7 + dz).setColor(f2, f3, f4, 1.0F).setLight(k);
-        buffer.addVertex(pose, f5 + dx, f6 + yOffset - dy, f7 - dz).setColor(f2, f3, f4, 1.0F).setLight(k);
+    @Override
+    public boolean shouldRender(T blockEntity, Vec3 cameraPos) {
+        return true;
+    }
+
+    @Override
+    public AABB getRenderBoundingBox(T blockEntity) {
+        return AABB.INFINITE;
     }
 }

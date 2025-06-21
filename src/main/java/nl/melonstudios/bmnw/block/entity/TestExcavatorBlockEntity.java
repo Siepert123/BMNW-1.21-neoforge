@@ -66,7 +66,7 @@ public class TestExcavatorBlockEntity extends WireAttachedBlockEntity {
 
     @Override
     public Collection<Vec3> wireConnectionsForRendering() {
-        return List.of(Vec3.ZERO);
+        return List.of(this.getBlockPos().getCenter().add(0, 5, 5));
     }
 
     @Override
