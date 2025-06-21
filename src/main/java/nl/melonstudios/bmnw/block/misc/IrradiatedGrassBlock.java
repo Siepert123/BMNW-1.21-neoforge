@@ -11,10 +11,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import nl.melonstudios.bmnw.init.BMNWEffects;
-import nl.melonstudios.bmnw.init.BMNWStateProperties;
 
 public class IrradiatedGrassBlock extends Block {
     public IrradiatedGrassBlock(Properties properties) {

@@ -1,20 +1,15 @@
 package nl.melonstudios.bmnw.block.decoration;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import nl.melonstudios.bmnw.block.entity.ExtendableCatwalkBlockEntity;
 import nl.melonstudios.bmnw.init.BMNWItems;
-
-import java.util.HashSet;
 
 public class ExtendableCatwalkDummyBlock extends Block {
     public ExtendableCatwalkDummyBlock() {

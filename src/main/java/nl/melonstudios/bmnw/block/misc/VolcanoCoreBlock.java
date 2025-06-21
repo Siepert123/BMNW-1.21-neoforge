@@ -7,7 +7,6 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.shapes.BooleanOp;
 import nl.melonstudios.bmnw.entity.LavaEjectionEntity;
 import nl.melonstudios.bmnw.init.BMNWParticleTypes;
 import nl.melonstudios.bmnw.misc.Library;

@@ -6,12 +6,10 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import nl.melonstudios.bmnw.block.entity.WireAttachedBlockEntity;
 import nl.melonstudios.bmnw.cfg.BMNWClientConfig;
 import nl.melonstudios.bmnw.misc.Library;
-import org.joml.Vector3fc;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collection;

@@ -1,7 +1,6 @@
 package nl.melonstudios.bmnw.init;
 
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import nl.melonstudios.bmnw.block.doors.MetalLockableDoorBlock;
 
 public class BMNWStateProperties {

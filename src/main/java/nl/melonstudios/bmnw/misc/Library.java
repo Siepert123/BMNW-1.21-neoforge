@@ -22,12 +22,9 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import nl.melonstudios.bmnw.cfg.BMNWClientConfig;
-import org.joml.*;
+import org.joml.Matrix4f;
 
 import javax.annotation.Nullable;
-import java.lang.Math;
-import java.nio.ByteBuffer;
-import java.nio.FloatBuffer;
 import java.util.List;
 import java.util.function.Predicate;
 

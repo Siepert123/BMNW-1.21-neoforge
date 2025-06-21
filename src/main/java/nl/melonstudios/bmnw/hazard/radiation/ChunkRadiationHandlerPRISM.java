@@ -21,7 +21,6 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import nl.melonstudios.bmnw.BMNW;
 import nl.melonstudios.bmnw.init.BMNWBlocks;
 import nl.melonstudios.bmnw.init.BMNWParticleTypes;
-import nl.melonstudios.bmnw.init.BMNWStateProperties;
 import nl.melonstudios.bmnw.init.BMNWTags;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
