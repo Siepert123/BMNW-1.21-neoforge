@@ -32,7 +32,7 @@ public class LavaEjectionEntity extends Entity implements IEntityWithComplexSpaw
         this(BMNWEntityTypes.LAVA_EJECTION.get(), level);
         this.type = type;
         this.setPos(pos);
-        this.setDeltaMovement(this.random.nextFloat()*8-4, 32, this.random.nextFloat()*8-4);
+        this.setDeltaMovement(this.random.nextFloat()*1-0.5, 2, this.random.nextFloat()*1-0.5);
     }
     public LavaEjectionEntity(Level level, BlockPos corePos, Type type) {
         this(level, corePos.getCenter().add(0, 4, 0), type);
@@ -56,12 +56,15 @@ public class LavaEjectionEntity extends Entity implements IEntityWithComplexSpaw
             this.discard();
         }
 
+        this.applyGravity();
         this.move(MoverType.SELF, this.getDeltaMovement());
-        this.setDeltaMovement(this.getDeltaMovement().multiply(0.95, 0.95, 0.95));
-        this.addDeltaMovement(Vec3.ZERO.add(0, -0.05, 0));
+        this.setDeltaMovement(this.getDeltaMovement().scale(0.98));
         this.blockPos.set(this.getBlockX(), this.getBlockY(), this.getBlockZ());
+    }
 
-        this.tickCount++;
+    @Override
+    protected double getDefaultGravity() {
+        return 0.04;
     }
 
     private Type type = Type.DEFAULT;

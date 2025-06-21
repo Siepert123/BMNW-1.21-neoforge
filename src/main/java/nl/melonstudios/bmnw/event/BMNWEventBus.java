@@ -445,6 +445,7 @@ public class BMNWEventBus {
             event.registerSpriteSet(BMNWParticleTypes.FIRE_TRAIL.get(), FireTrailParticle.Provider::new);
             event.registerSpriteSet(BMNWParticleTypes.DUST_TRAIL.get(), DustTrailParticle.Provider::new);
             event.registerSpriteSet(BMNWParticleTypes.MUSHROOM_CLOUD.get(), MushroomCloudParticle.Provider::new);
+            event.registerSpriteSet(BMNWParticleTypes.VOLCANO_SMOKE.get(), VolcanoSmokeParticle.Provider::new);
         }
 
         @SubscribeEvent

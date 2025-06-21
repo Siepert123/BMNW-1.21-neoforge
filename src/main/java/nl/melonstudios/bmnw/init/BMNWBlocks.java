@@ -31,6 +31,7 @@ import nl.melonstudios.bmnw.block.misc.*;
 import nl.melonstudios.bmnw.block.settype.BMNWBlockSetType;
 import nl.melonstudios.bmnw.block.weapons.MissileLaunchPadBlock;
 import nl.melonstudios.bmnw.effect.WPEffect;
+import nl.melonstudios.bmnw.entity.LavaEjectionEntity;
 import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -411,6 +412,8 @@ public class BMNWBlocks {
 
     //endregion
 
+    public static final DeferredBlock<VolcanoCoreBlock> VOLCANO_CORE = BLOCKS.register("volcano_core",
+            () -> new VolcanoCoreBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.COBBLESTONE), LavaEjectionEntity.Type.DEFAULT));
     public static final DeferredBlock<Block> PRESS_HEAD = BLOCKS.register("press_head",
             () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)));
 

@@ -54,6 +54,10 @@ public class BMNWParticleTypes {
             "dust_trail",
             () -> new SimpleParticleType(true)
     );
+    public static final Supplier<SimpleParticleType> VOLCANO_SMOKE = PARTICLE_TYPES.register(
+            "volcano_smoke",
+            () -> new SimpleParticleType(true)
+    );
 
 
     public static void register(IEventBus eventBus) {
