@@ -21,6 +21,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
+import nl.melonstudios.bmnw.cfg.BMNWClientConfig;
 import org.joml.*;
 
 import javax.annotation.Nullable;
@@ -164,7 +165,8 @@ public class Library {
             PoseStack poseStack, MultiBufferSource bufferSource,
             int fromSky, int fromBlock, int toSky, int toBlock
     ) {
-        renderLeash(from, to, r, g, b, poseStack, bufferSource, fromSky, fromBlock, toSky, toBlock, false, 24);
+        renderLeash(from, to, r, g, b, poseStack, bufferSource, fromSky, fromBlock, toSky, toBlock,
+                false, BMNWClientConfig.defaultWireSegmentation());
     }
 
     @OnlyIn(Dist.CLIENT)

@@ -73,6 +73,12 @@ public class BMNWClientConfig {
             return this == ENDER_DRAGON;
         }
     }
+    private static final ModConfigSpec.IntValue WIRE_VIEW_DISTANCE = BUILDER
+            .comment("The view distance of wires (32767 for infinite)")
+            .defineInRange("wireViewDistance", 256, 64, 32767);
+    private static final ModConfigSpec.IntValue DEFAULT_WIRE_SEGMENTATION = BUILDER
+            .comment("The default segmentation of the leash-like wires")
+            .defineInRange("defaultWireSegmentation", 24, 2, 256);
 
     static {
         BUILDER.pop();
@@ -81,9 +87,6 @@ public class BMNWClientConfig {
     private static final ModConfigSpec.BooleanValue DISABLE_JOIN_DEBUG = BUILDER
             .comment("Disables the \"loaded BMNW version (version)\" upon joining world.")
             .define("disableJoinDebug", false);
-    private static final ModConfigSpec.IntValue WIRE_VIEW_DISTANCE = BUILDER
-            .comment("The view distance of wires (32767 for infinite)")
-            .defineInRange("wireViewDistance", 256, 64, 32767);
 
     public static final ModConfigSpec SPEC = BUILDER.build();
 
@@ -95,6 +98,9 @@ public class BMNWClientConfig {
 
     public static int wireViewDistance() {
         return WIRE_VIEW_DISTANCE.get();
+    }
+    public static int defaultWireSegmentation() {
+        return DEFAULT_WIRE_SEGMENTATION.get();
     }
 
     public static void onLoad(final ModConfigEvent event) {
