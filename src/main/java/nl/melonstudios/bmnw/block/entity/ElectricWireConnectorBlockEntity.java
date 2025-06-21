@@ -177,9 +177,11 @@ public class ElectricWireConnectorBlockEntity extends WireAttachedBlockEntity im
             }
         }
         this.level.getProfiler().popPush("propagate energy");
+        spread:
         if (this.cachedEnergy.getEnergyStored() > 0 && !this.connections.isEmpty()) {
             ArrayList<ElectricWireConnectorBlockEntity> connected = this.getConnectedBlockEntities();
             connected.removeIf(Objects::isNull);
+            if (connected.isEmpty()) break spread;
             int spread = this.cachedEnergy.getEnergyStored() / connected.size();
             int remaining = this.cachedEnergy.getEnergyStored() - (spread * connected.size());
             for (ElectricWireConnectorBlockEntity be : connected) {
