@@ -128,4 +128,9 @@ public class LavaEjectionEntity extends Entity implements IEntityWithComplexSpaw
 
         private static final Type[] VALUES = Arrays.stream(values()).sorted(Comparator.comparingInt(type -> type.id)).toArray(Type[]::new);
     }
+
+    @Override
+    public boolean shouldRenderAtSqrDistance(double distance) {
+        return true;
+    }
 }

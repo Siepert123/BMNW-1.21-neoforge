@@ -12,6 +12,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 public class Library {
     public static float getKiloRedstoneWattHour(int rfTick) {
@@ -46,7 +47,8 @@ public class Library {
         return result.getType() == HitResult.Type.MISS;
     }
 
-
+    public static final Predicate<Object> ALWAYS_TRUE = (obj) -> true;
+    public static final Predicate<Object> ALWAYS_FALSE = (obj) -> false;
 
     public static final List<Direction> SURROUND_X =
             ImmutableList.of(Direction.UP, Direction.DOWN, Direction.NORTH, Direction.SOUTH);
