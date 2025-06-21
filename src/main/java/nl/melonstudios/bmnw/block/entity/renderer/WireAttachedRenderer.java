@@ -1,23 +1,15 @@
 package nl.melonstudios.bmnw.block.entity.renderer;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.client.renderer.entity.LeashKnotRenderer;
 import net.minecraft.core.BlockPos;
-import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import nl.melonstudios.bmnw.block.entity.OptimizedBlockEntity;
 import nl.melonstudios.bmnw.block.entity.WireAttachedBlockEntity;
 import nl.melonstudios.bmnw.misc.Library;
-import org.joml.Matrix4f;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collection;
@@ -48,8 +40,7 @@ public class WireAttachedRenderer<T extends WireAttachedBlockEntity> extends Opt
             int connectionSky = level.getBrightness(LightLayer.SKY, connectionPos);
             int connectionBlock = level.getBrightness(LightLayer.BLOCK, connectionPos);
             Library.renderLeash(
-                    source, connection,
-                    1.0F, 1.0F, 1.0F, poseStack, bufferSource,
+                    source, connection, poseStack, bufferSource,
                     sourceSky, sourceBlock, connectionSky, connectionBlock
             );
 
