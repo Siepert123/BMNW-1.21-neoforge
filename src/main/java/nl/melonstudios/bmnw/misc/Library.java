@@ -31,6 +31,7 @@ import java.nio.FloatBuffer;
 import java.util.List;
 import java.util.function.Predicate;
 
+@SuppressWarnings("unused")
 public class Library {
     public static float getKiloRedstoneWattHour(int rfTick) {
         return rfTick / 3_600_000.0f;
