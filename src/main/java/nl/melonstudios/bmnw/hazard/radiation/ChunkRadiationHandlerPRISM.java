@@ -74,6 +74,7 @@ public class ChunkRadiationHandlerPRISM extends ChunkRadiationHandler {
         cycles++;
 
         for (ServerLevel level : server.getAllLevels()) {
+            level.getProfiler().push("radiation update system");
             RadPerWorld system = perWorld.get(level);
 
             if (system == null) continue;
@@ -128,7 +129,10 @@ public class ChunkRadiationHandlerPRISM extends ChunkRadiationHandler {
             Iterator<Map.Entry<ChunkPos, SubChunk[]>> it = system.radiation.entrySet().iterator();
             while (it.hasNext()) {
                 Map.Entry<ChunkPos, SubChunk[]> chunk = it.next();
-                if (getPreviousChunkRadiation(chunk.getValue()) <= 0) continue;
+                if (getPreviousChunkRadiation(chunk.getValue()) <= 0) {
+                    level.getProfiler().pop();
+                    continue;
+                }
 
                 int sectionCount = level.getSectionsCount();
                 int minSection = level.getMinSection();
@@ -137,7 +141,10 @@ public class ChunkRadiationHandlerPRISM extends ChunkRadiationHandler {
                     SubChunk sub = chunk.getValue()[i];
 
                     if (sub != null) {
-                        if (sub.prevRadiation <= 0 || Float.isNaN(sub.prevRadiation) || Float.isInfinite(sub.prevRadiation)) continue;
+                        if (sub.prevRadiation <= 0 || Float.isNaN(sub.prevRadiation) || Float.isInfinite(sub.prevRadiation)) {
+                            level.getProfiler().pop();
+                            continue;
+                        }
                         float radSpread = 0;
                         for (Direction direction : Direction.values()) {
                             radSpread += spreadRadiation(level, sub, i, chunk.getKey(), chunk.getValue(), system.radiation, direction);
@@ -151,6 +158,7 @@ public class ChunkRadiationHandlerPRISM extends ChunkRadiationHandler {
 
             system.radiation.putAll(newAdditions);
             newAdditions.clear();
+            level.getProfiler().pop();
         }
     }
 
@@ -182,25 +190,39 @@ public class ChunkRadiationHandlerPRISM extends ChunkRadiationHandler {
 
     private static float spreadRadiation(Level level, SubChunk source, int y, ChunkPos origin, SubChunk[] chunk,
                                          ConcurrentHashMap<ChunkPos, SubChunk[]> map, Direction direction) {
+        level.getProfiler().push("radiation spread");
         float spread = 0.1f;
         float amount = source.prevRadiation * spread;
 
-        if (amount <= 1) return 0;
+        if (amount <= 1) {
+            level.getProfiler().pop();
+            return 0;
+        }
 
         int sectionCount = level.getSectionsCount();
         int minSection = level.getMinSection();
 
         if (direction.getStepY() != 0) {
-            if (direction == Direction.UP && y == sectionCount-1) return amount;
-            if (direction == Direction.DOWN && y == 0) return amount;
+            if (direction == Direction.UP && y == sectionCount-1) {
+                level.getProfiler().pop();
+                return amount;
+            }
+            if (direction == Direction.DOWN && y == 0) {
+                level.getProfiler().pop();
+                return amount;
+            }
             if (chunk[y + direction.getStepY()] == null)
                 chunk[y + direction.getStepY()] =
                         new SubChunk().rebuild(level, origin.getBlockAt(0, (y+minSection) << 4, 0));
             SubChunk to = chunk[y + direction.getStepY()];
+            level.getProfiler().pop();
             return spreadRadiationTo(source, to, amount, direction);
         } else {
             ChunkPos newPos = new ChunkPos(origin.x+direction.getStepX(), origin.z+direction.getStepZ());
-            if (!level.isLoaded(newPos.getMiddleBlockPosition((y+minSection) << 4))) return amount;
+            if (!level.isLoaded(newPos.getMiddleBlockPosition((y+minSection) << 4))) {
+                level.getProfiler().pop();
+                return amount;
+            }
             SubChunk[] newChunk = map.get(newPos);
             if (newChunk == null) {
                 newChunk = new SubChunk[sectionCount];
@@ -209,6 +231,7 @@ public class ChunkRadiationHandlerPRISM extends ChunkRadiationHandler {
             if (newChunk[y] == null)
                 newChunk[y] = new SubChunk().rebuild(level, newPos.getBlockAt(0, (y+minSection) << 4, 0));
             SubChunk to = newChunk[y];
+            level.getProfiler().pop();
             return spreadRadiationTo(source, to, amount, direction);
         }
     }
@@ -230,6 +253,7 @@ public class ChunkRadiationHandlerPRISM extends ChunkRadiationHandler {
 
     @Override
     public float getRadiation(Level level, BlockPos pos) {
+        level.getProfiler().push("radiation get");
         RadPerWorld system = perWorld.get(level);
 
         int sectionCount = level.getSectionsCount();
@@ -241,14 +265,19 @@ public class ChunkRadiationHandlerPRISM extends ChunkRadiationHandler {
             SubChunk[] subChunks = system.radiation.get(cp);
             if (subChunks != null) {
                 SubChunk rad = subChunks[yReg];
-                if (rad != null) return rad.radiation;
+                if (rad != null) {
+                    level.getProfiler().pop();
+                    return rad.radiation;
+                }
             }
         }
+        level.getProfiler().pop();
         return 0;
     }
 
     @Override
     public void setRadiation(Level level, BlockPos pos, float rads) {
+        level.getProfiler().push("radiation set");
         if (Float.isNaN(rads)) rads = 0;
 
         RadPerWorld system = perWorld.get(level);
@@ -264,6 +293,7 @@ public class ChunkRadiationHandlerPRISM extends ChunkRadiationHandler {
             subChunks[yReg].radiation = Mth.clamp(rads, 0, MAX_RADIATION);
             level.getChunk(pos).setUnsaved(true);
         }
+        level.getProfiler().pop();
     }
 
     @Override
@@ -293,8 +323,10 @@ public class ChunkRadiationHandlerPRISM extends ChunkRadiationHandler {
     @Override
     public void onChunkLoad(ChunkEvent.Load event) {
         if (!event.getLevel().isClientSide()) {
+            Level level = (Level) event.getLevel();
+            level.getProfiler().push("radiation chunk load");
             ChunkPos cp = event.getChunk().getPos();
-            RadPerWorld system = perWorld.get((Level)event.getLevel());
+            RadPerWorld system = perWorld.get(level);
 
             if (system != null && !system.radiation.containsKey(cp)) {
                 system.uncheckedChunks.add(cp);
@@ -313,6 +345,7 @@ public class ChunkRadiationHandlerPRISM extends ChunkRadiationHandler {
                 system.radiation.put(cp, chunk);
                 */
             }
+            level.getProfiler().pop();
         }
     }
 
@@ -322,6 +355,7 @@ public class ChunkRadiationHandlerPRISM extends ChunkRadiationHandler {
             RadPerWorld system = entry.getValue();
             Level level = entry.getKey();
 
+            level.getProfiler().push("radiation tick");
             final int sectionCount = level.getSectionsCount();
             final int minSection = level.getMinSection();
 
@@ -340,6 +374,7 @@ public class ChunkRadiationHandlerPRISM extends ChunkRadiationHandler {
                     system.radiation.put(cp, chunk);
                 }
             }
+            level.getProfiler().pop();
         }
     }
 
