@@ -40,6 +40,9 @@ public class BMNWServerConfig {
     private static final ModConfigSpec.IntValue MAX_WIRE_LENGTH = BUILDER
             .comment("The maximum length of wires between two connectors")
             .defineInRange("maxWireLength", 20, 8, 128);
+    private static final ModConfigSpec.BooleanValue ENABLE_METEORITES = BUILDER
+            .comment("Whether meteorites should randomly fall from the sky")
+            .define("enableMeteorites", true);
 
     public static final ModConfigSpec SPEC = BUILDER.build();
 
@@ -65,6 +68,9 @@ public class BMNWServerConfig {
     }
     public static int maxWireLengthSqr() {
         return maxWireLength() * maxWireLength();
+    }
+    public static boolean enableMeteorites() {
+        return ENABLE_METEORITES.get();
     }
 
     public static void onLoad(final ModConfigEvent event) {

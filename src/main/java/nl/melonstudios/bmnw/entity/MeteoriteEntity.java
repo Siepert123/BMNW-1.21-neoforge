@@ -16,6 +16,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import nl.melonstudios.bmnw.cfg.BMNWServerConfig;
 import nl.melonstudios.bmnw.init.BMNWBlocks;
 import nl.melonstudios.bmnw.init.BMNWEntityTypes;
 import nl.melonstudios.bmnw.init.BMNWParticleTypes;
@@ -198,6 +199,7 @@ public class MeteoriteEntity extends Entity {
     private static final double chanceOfMeteorite = 1.0 / 48000;
 
     public static void spawnIfReady(Player player) {
+        if (!BMNWServerConfig.enableMeteorites()) return;
         if (player.level().isClientSide() || dimensionInvalid(player.level().dimension().location())) {
             return;
         }
