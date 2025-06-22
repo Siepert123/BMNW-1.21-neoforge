@@ -196,14 +196,12 @@ public class MeteoriteEntity extends Entity {
         invalidateDimension(ResourceLocation.withDefaultNamespace("the_end"));
     }
 
-    private static final double chanceOfMeteorite = 1.0 / 48000;
-
     public static void spawnIfReady(Player player) {
         if (!BMNWServerConfig.enableMeteorites()) return;
         if (player.level().isClientSide() || dimensionInvalid(player.level().dimension().location())) {
             return;
         }
-        if (random.nextDouble() < chanceOfMeteorite) {
+        if (random.nextDouble() < 1.0 / BMNWServerConfig.meteoriteSpawnChance()) {
             spawn(player);
         }
     }

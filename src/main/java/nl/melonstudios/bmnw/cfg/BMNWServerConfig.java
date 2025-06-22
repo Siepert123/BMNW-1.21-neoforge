@@ -43,6 +43,10 @@ public class BMNWServerConfig {
     private static final ModConfigSpec.BooleanValue ENABLE_METEORITES = BUILDER
             .comment("Whether meteorites should randomly fall from the sky")
             .define("enableMeteorites", true);
+    private static final ModConfigSpec.IntValue METEORITE_SPAWN_CHANCE = BUILDER
+            .comment("The chance of a meteorite spawning each tick per player")
+            .comment("Calculated with 1.0 / [value]")
+            .defineInRange("meteoriteSpawnChance", 48000, 1, Integer.MAX_VALUE);
 
     public static final ModConfigSpec SPEC = BUILDER.build();
 
@@ -71,6 +75,9 @@ public class BMNWServerConfig {
     }
     public static boolean enableMeteorites() {
         return ENABLE_METEORITES.get();
+    }
+    public static int meteoriteSpawnChance() {
+        return METEORITE_SPAWN_CHANCE.get();
     }
 
     public static void onLoad(final ModConfigEvent event) {
