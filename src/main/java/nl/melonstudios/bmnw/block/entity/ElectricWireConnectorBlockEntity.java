@@ -5,8 +5,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -59,11 +57,11 @@ public class ElectricWireConnectorBlockEntity extends WireAttachedBlockEntity im
         return this.getFacing().getOpposite() == side ? this.cachedEnergy : null;
     }
 
-    public void removeAllConnections() {
+    public boolean removeAllConnections() {
         if (this.level instanceof ServerLevel level) {
             this.loadAllConnectedChunks();
-            if (!this.connections.isEmpty()) {
-                level.playSound(null, this.worldPosition, SoundEvents.SHEEP_SHEAR, SoundSource.BLOCKS);
+            if (this.connections.isEmpty()) {
+                return false;
             }
             HashSet<BlockPos> connectionsCopy = new HashSet<>(this.connections);
             for (BlockPos pos : connectionsCopy) {
@@ -76,6 +74,7 @@ public class ElectricWireConnectorBlockEntity extends WireAttachedBlockEntity im
             this.connections.clear();
             this.notifyChange();
         }
+        return true;
     }
 
     public void onRemove() {
@@ -98,19 +97,18 @@ public class ElectricWireConnectorBlockEntity extends WireAttachedBlockEntity im
             this.level.getChunk(pos);
         }
     }
-    public boolean removeConnection(BlockPos pos, boolean dropWire) {
-        if (!this.connections.contains(pos)) return false;
+    public void removeConnection(BlockPos pos, boolean dropWire) {
+        if (!this.connections.contains(pos)) return;
         this.connections.remove(pos);
         if (dropWire) {
             Library.dropItem(this.level, this.worldPosition, BMNWItems.WIRE_SPOOL.toStack());
         }
         this.notifyChange();
-        return true;
     }
     public boolean addConnection(BlockPos pos) {
         if (this.connections.contains(pos)) return false;
         if (this.worldPosition.distSqr(pos) > BMNWServerConfig.maxWireLengthSqr()) return false;
-        BlockEntity be = this.level.getBlockEntity(pos);
+        BlockEntity be = Objects.requireNonNull(this.level).getBlockEntity(pos);
         if (be instanceof ElectricWireConnectorBlockEntity connector) {
             this.connections.add(pos);
             connector.addConnection(this.worldPosition);

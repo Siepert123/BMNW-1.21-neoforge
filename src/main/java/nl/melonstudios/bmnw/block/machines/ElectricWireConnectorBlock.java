@@ -2,6 +2,8 @@ package nl.melonstudios.bmnw.block.machines;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
@@ -87,7 +89,9 @@ public class ElectricWireConnectorBlock extends Block implements EntityBlock {
         if (stack.is(Items.SHEARS)) {
             BlockEntity be = level.getBlockEntity(pos);
             if (be instanceof ElectricWireConnectorBlockEntity connector) {
-                connector.removeAllConnections();
+                if (connector.removeAllConnections()) {
+                    level.playSound(null, pos, SoundEvents.SHEEP_SHEAR, SoundSource.BLOCKS);
+                }
                 return ItemInteractionResult.sidedSuccess(level.isClientSide);
             }
         }

@@ -92,6 +92,6 @@ public class ExtendableCatwalkRenderer implements BlockEntityRenderer<Extendable
 
     @Override
     public AABB getRenderBoundingBox(ExtendableCatwalkBlockEntity blockEntity) {
-        return AABB.INFINITE;
+        return blockEntity.getRenderBB();
     }
 }

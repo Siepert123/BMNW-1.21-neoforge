@@ -12,6 +12,8 @@ import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.phys.AABB;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.network.PacketDistributor;
@@ -77,6 +79,7 @@ public class ExtendableCatwalkBlockEntity extends SyncedBlockEntity implements I
             this.extensionParts--;
         }
         this.extensionParts = Mth.clamp(this.extensionParts, minimumExtensionParts, BMNWServerConfig.maxExtendableCatwalkParts());
+        this.invalidateRenderBB();
         this.notifyChange();
     }
     public int getCurrentExtensionParts() {
@@ -224,6 +227,7 @@ public class ExtendableCatwalkBlockEntity extends SyncedBlockEntity implements I
                 this.dummyPositions.add(BlockPos.of(l));
             }
         }
+        this.invalidateRenderBB();
     }
 
     @Override
@@ -271,5 +275,11 @@ public class ExtendableCatwalkBlockEntity extends SyncedBlockEntity implements I
     public void onLoad() {
         super.onLoad();
         this.recalculateMaximumExtension();
+    }
+
+    @Override
+    protected AABB createRenderBoundingBox() {
+        boolean xOrZ = this.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING).getAxis() == Direction.Axis.X;
+        return new AABB(this.worldPosition.above()).inflate(xOrZ ? this.extensionParts : 0, 1, xOrZ ? 0 : this.extensionParts);
     }
 }
