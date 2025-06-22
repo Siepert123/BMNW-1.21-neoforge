@@ -5,6 +5,8 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -60,6 +62,9 @@ public class ElectricWireConnectorBlockEntity extends WireAttachedBlockEntity im
     public void removeAllConnections() {
         if (this.level instanceof ServerLevel level) {
             this.loadAllConnectedChunks();
+            if (!this.connections.isEmpty()) {
+                level.playSound(null, this.worldPosition, SoundEvents.SHEEP_SHEAR, SoundSource.BLOCKS);
+            }
             HashSet<BlockPos> connectionsCopy = new HashSet<>(this.connections);
             for (BlockPos pos : connectionsCopy) {
                 BlockEntity be = level.getBlockEntity(pos);

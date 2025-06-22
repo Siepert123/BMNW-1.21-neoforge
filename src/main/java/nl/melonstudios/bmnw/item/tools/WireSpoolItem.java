@@ -2,7 +2,10 @@ package nl.melonstudios.bmnw.item.tools;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -36,11 +39,22 @@ public class WireSpoolItem extends Item {
                 stack.remove(BMNWDataComponents.TARGET);
                 if (be.addConnection(link)) {
                     if (player != null && level.isClientSide) {
-                        player.displayClientMessage(Component.translatable("text.bmnw.wire_connected_successfully"), true);
+                        player.displayClientMessage(
+                                Component.translatable("text.bmnw.wire_connected_successfully").withColor(0x00FF00),
+                                true
+                        );
+                    }
+                    if (!level.isClientSide) {
+                        level.playSound(null, pos, SoundEvents.LEASH_KNOT_PLACE, SoundSource.BLOCKS);
+                        level.playSound(null, link, SoundEvents.LEASH_KNOT_PLACE, SoundSource.BLOCKS);
+                        stack.shrink(1);
                     }
                 } else {
                     if (player != null && level.isClientSide) {
-                        player.displayClientMessage(Component.translatable("text.bmnw.wire_connection_failed"), false);
+                        player.displayClientMessage(
+                                Component.translatable("text.bmnw.wire_connection_failed").withColor(0xFF0000),
+                                true
+                        );
                     }
                 }
             }
