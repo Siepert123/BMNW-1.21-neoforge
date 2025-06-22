@@ -12,9 +12,10 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import nl.melonstudios.bmnw.interfaces.IRadioAntennaStructureBlock;
 import org.jetbrains.annotations.Nullable;
 
-public class TripoleBlock extends PoleBlock {
+public class TripoleBlock extends PoleBlock implements IRadioAntennaStructureBlock {
     public static final VoxelShape SHAPE = Shapes.box(0.125, 0, 0.125, 0.875, 1, 0.875);
 
     public TripoleBlock(Properties properties) {
@@ -40,5 +41,14 @@ public class TripoleBlock extends PoleBlock {
     @Override
     protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return SHAPE;
+    }
+
+    @Override
+    public Direction getFacing(BlockState state) {
+        return state.getValue(BlockStateProperties.HORIZONTAL_FACING);
+    }
+    @Override
+    public boolean allowsArbitraryFacing() {
+        return false;
     }
 }

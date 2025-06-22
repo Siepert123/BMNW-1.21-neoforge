@@ -143,7 +143,9 @@ public class ElectricWireConnectorBlockEntity extends WireAttachedBlockEntity im
     private HashSet<Vec3> cachedRenderConnections = new HashSet<>();
     public void precacheWireConnections() {
         this.cachedRenderConnections = new HashSet<>();
-        for (BlockPos pos : this.connections) this.cachedRenderConnections.add(pos.getCenter());
+        for (BlockPos pos : this.connections) {
+            this.cachedRenderConnections.add(pos.getCenter());
+        }
     }
 
     @OnlyIn(Dist.CLIENT)

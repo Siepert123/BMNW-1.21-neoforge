@@ -202,6 +202,9 @@ public class BMNWBlocks {
     public static final DeferredBlock<LargeShredderBlock> LARGE_SHREDDER = BLOCKS.register("large_shredder",
             () -> new LargeShredderBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get())));
 
+    public static final DeferredBlock<RadioAntennaControllerBlock> RADIO_ANTENNA_CONTROLLER = BLOCKS.register("radio_antenna_controller",
+            () -> new RadioAntennaControllerBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get())));
+
     public static final DeferredBlock<MachineScrapBlock> MACHINE_SCRAP = BLOCKS.register("machine_scrap",
             () -> new MachineScrapBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_DECO_BLOCK.get()).noOcclusion().noLootTable()));
     //endregion

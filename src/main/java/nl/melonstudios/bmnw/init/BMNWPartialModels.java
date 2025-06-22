@@ -31,6 +31,9 @@ public class BMNWPartialModels {
     public static final PartialModel EXTENDABLE_CATWALK_CONTROL_HOLDER = block("extendable_catwalk_control_holder");
     public static final PartialModel LARGE_WHEEL_CRANK = block("large_wheel_crank");
 
+    public static final PartialModel VERTICAL_CABLE_BLACK = block("vertical_cable_black");
+    public static final PartialModel VERTICAL_CABLE_REDSTONE = block("vertical_cable_redstone");
+
     private static PartialModel block(String path) {
         return PartialModel.of(ModelResourceLocation.standalone(BMNW.namespace("block/" + path)));
     }

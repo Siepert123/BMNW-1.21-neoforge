@@ -1,0 +1,6 @@
+{
+  "parent": "bmnw:block/vertical_cable_black",
+  "textures": {
+    "texture": "bmnw:block/cable_redstone"
+  }
+}

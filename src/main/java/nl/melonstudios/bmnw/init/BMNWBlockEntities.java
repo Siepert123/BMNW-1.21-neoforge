@@ -159,6 +159,15 @@ public class BMNWBlockEntities {
             )
     );
 
+    public static final Supplier<BlockEntityType<RadioAntennaControllerBlockEntity>> RADIO_ANTENNA_CONTROLLER = BLOCK_ENTITIES.register(
+            "radio_antenna_controller",
+            () -> new BlockEntityType<>(
+                    RadioAntennaControllerBlockEntity::new,
+                    Set.of(BMNWBlocks.RADIO_ANTENNA_CONTROLLER.get()),
+                    null
+            )
+    );
+
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);
     }

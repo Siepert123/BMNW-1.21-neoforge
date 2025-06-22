@@ -10,6 +10,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import nl.melonstudios.bmnw.item.battery.BatteryItem;
 import nl.melonstudios.bmnw.item.battery.InfiniteBatteryItem;
 import nl.melonstudios.bmnw.item.misc.*;
+import nl.melonstudios.bmnw.item.tools.RedstoneWireSpoolItem;
 import nl.melonstudios.bmnw.item.tools.ScrewdriverItem;
 import nl.melonstudios.bmnw.item.tools.WireSpoolItem;
 import nl.melonstudios.bmnw.item.weapons.DetonatorItem;
@@ -344,6 +345,8 @@ public class BMNWItems {
             () -> new BlockItem(BMNWBlocks.TEST_EXCAVATOR.get(), new Item.Properties()));
     public static final DeferredItem<LargeShredderBlockItem> LARGE_SHREDDER = ITEMS.register("large_shredder",
             () -> new LargeShredderBlockItem(BMNWBlocks.LARGE_SHREDDER.get(), new Item.Properties()));
+    public static final DeferredItem<BlockItem> RADIO_ANTENNA_CONTROLLER = ITEMS.register("radio_antenna_controller",
+            () -> new BlockItem(BMNWBlocks.RADIO_ANTENNA_CONTROLLER.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> MACHINE_SCRAP = ITEMS.register("machine_scrap",
             () -> new BlockItem(BMNWBlocks.MACHINE_SCRAP.get(), new Item.Properties()));
 
@@ -621,6 +624,8 @@ public class BMNWItems {
             () -> new ScrewdriverItem(new Item.Properties().stacksTo(1), false));
     public static final DeferredItem<WireSpoolItem> WIRE_SPOOL = ITEMS.register("wire_spool",
             () -> new WireSpoolItem(new Item.Properties()));
+    public static final DeferredItem<RedstoneWireSpoolItem> REDSTONE_WIRE_SPOOL = ITEMS.register("redstone_wire_spool",
+            () -> new RedstoneWireSpoolItem(new Item.Properties()));
 
     public static final DeferredItem<FireMarbleItem> FIRE_MARBLE = ITEMS.register("fire_marble",
             () -> new FireMarbleItem(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));

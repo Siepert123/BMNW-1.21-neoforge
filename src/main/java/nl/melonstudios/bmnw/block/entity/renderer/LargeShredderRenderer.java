@@ -32,12 +32,11 @@ public class LargeShredderRenderer implements BlockEntityRenderer<LargeShredderB
     @Override
     public void render(LargeShredderBlockEntity blockEntity, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
         poseStack.pushPose();
-        poseStack.rotateAround(new Quaternionf().rotateY((float) Math.toRadians(blockEntity.getFacing().toYRot())), 0.5F, 0.5F, 0.5F);
+        poseStack.rotateAround(new Quaternionf().rotateY((float) Math.toRadians(-blockEntity.getFacing().toYRot())), 0.5F, 0.5F, 0.5F);
 
         VertexConsumer consumer = bufferSource.getBuffer(RenderType.CUTOUT);
 
         poseStack.pushPose();
-        poseStack.rotateAround(new Quaternionf().rotateY(DEG_180), 0.5F, 0.5F, 0.5F);
         float thing = System.currentTimeMillis() % 60000 / 1000.0F;
         poseStack.rotateAround(new Quaternionf().rotateX((-thing)*BLADES_SPEED_MODIFIER),
                 0.5F, 0.25F, 0.5F);

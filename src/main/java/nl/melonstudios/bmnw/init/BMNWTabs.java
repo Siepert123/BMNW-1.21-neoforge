@@ -421,6 +421,7 @@ public class BMNWTabs {
                         items.accept(TUNGSTEN_REACHERS);
                         items.accept(SCREWDRIVER);
                         items.accept(WIRE_SPOOL);
+                        items.accept(REDSTONE_WIRE_SPOOL);
 
                         addItems(items,
                                 BLANK_IRON_STAMP,
@@ -491,6 +492,7 @@ public class BMNWTabs {
                         items.accept(DECONTAMINATOR);
                         items.accept(TEST_EXCAVATOR);
                         items.accept(LARGE_SHREDDER);
+                        items.accept(RADIO_ANTENNA_CONTROLLER);
                     })
                     .build()
     );
