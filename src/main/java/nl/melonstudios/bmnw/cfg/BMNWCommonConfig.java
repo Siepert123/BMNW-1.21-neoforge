@@ -1,8 +1,6 @@
 package nl.melonstudios.bmnw.cfg;
 
-import net.neoforged.fml.event.config.ModConfigEvent;
 import net.neoforged.neoforge.common.ModConfigSpec;
-import nl.melonstudios.bmnw.BMNW;
 import nl.melonstudios.bmnw.misc.OptionalBool;
 
 public class BMNWCommonConfig {
