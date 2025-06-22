@@ -166,8 +166,8 @@ public class BMNW {
                 memMax, Library.toGB(memMax, 2)
         );
         LOGGER.debug("Minimizing memory usage: {} (auto-decided: {})",
-                BMNWCommonConfig.minimizeMemoryUsage(),
-                BMNWCommonConfig.minimizeMemoryUsage == OptionalBool.MAYBE
+                BMNWCommonConfig.minimizeMemoryUsage().value(BMNW.autoDecidedMemoryMinimization),
+                BMNWCommonConfig.minimizeMemoryUsage().isMaybe()
         );
 
         ExcavationVein.initialize();

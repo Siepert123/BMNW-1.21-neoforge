@@ -15,19 +15,8 @@ public class BMNWCommonConfig {
 
     public static final ModConfigSpec SPEC = BUILDER.build();
 
-    public static OptionalBool minimizeMemoryUsage;
 
-
-    public static boolean minimizeMemoryUsage() {
-        return MINIMIZE_MEMORY_USAGE.get().value(BMNW.autoDecidedMemoryMinimization);
-    }
-
-    public static void onLoad(final ModConfigEvent event) {
-        if (event instanceof ModConfigEvent.Unloading) return;
-        try {
-            minimizeMemoryUsage = MINIMIZE_MEMORY_USAGE.get();
-        } catch (Throwable throwable) {
-            throwable.printStackTrace(System.err);
-        }
+    public static OptionalBool minimizeMemoryUsage() {
+        return MINIMIZE_MEMORY_USAGE.get();
     }
 }
