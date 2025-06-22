@@ -57,11 +57,11 @@ public class SlidingBlastDoorBlock extends HorizontalDirectionalBlock implements
             Block.box(15.5, 0, 16 - AABB_DOOR_THICKNESS, 16, 16, 16)
     );
     public static final VoxelShape WEST_AABB_OPEN = Shapes.or(
-            Block.box(16 - AABB_DOOR_THICKNESS, 0, 0.5, 16, 16, 1),
+            Block.box(16 - AABB_DOOR_THICKNESS, 0, 0, 16, 16, 0.5),
             Block.box(16 - AABB_DOOR_THICKNESS, 0, 15.5, 16, 16, 16)
     );
     public static final VoxelShape EAST_AABB_OPEN = Shapes.or(
-            Block.box(0, 0, 0.5, AABB_DOOR_THICKNESS, 16, 1),
+            Block.box(0, 0, 0, AABB_DOOR_THICKNESS, 16, 0.5),
             Block.box(0, 0, 15.5, AABB_DOOR_THICKNESS, 16, 16)
     );
 
