@@ -447,6 +447,9 @@ public class BMNWTabs {
                         items.accept(getFullBattery(DURAPIXEL_CAR_BATTERY.get()));
                         items.accept(CREATIVE_CAR_BATTERY);
 
+                        items.accept(INFINITE_WATER_TANK);
+                        items.accept(INFINITE_FLUID_TANK);
+
                         addItems(items,
                                 STEEL_SHOVEL,
                                 STEEL_PICKAXE,
