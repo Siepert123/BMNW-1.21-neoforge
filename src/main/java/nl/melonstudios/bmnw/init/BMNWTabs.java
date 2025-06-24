@@ -489,6 +489,9 @@ public class BMNWTabs {
                         items.accept(STEEL_WORKBENCH);
                         items.accept(PRESS);
                         items.accept(ALLOY_BLAST_FURNACE);
+
+                        items.accept(COMBUSTION_ENGINE);
+
                         items.accept(DECONTAMINATOR);
                         items.accept(TEST_EXCAVATOR);
                         items.accept(LARGE_SHREDDER);

@@ -212,6 +212,20 @@
     ],
     "subtitle": "subtitles.bmnw.machinery"
   },
+  "boiler": {
+    "sounds": [
+      "bmnw:boiler"
+    ],
+    "subtitle": "subtitles.bmnw.boiler"
+  },
+  "boiler_groan": {
+    "sounds": [
+      "bmnw:boiler_groan_1",
+      "bmnw:boiler_groan_2",
+      "bmnw:boiler_groan_3"
+    ],
+    "subtitle": "subtitles.bmnw.boiler"
+  },
   "ambient.large_generator_in_off": {
     "sounds": [
       {

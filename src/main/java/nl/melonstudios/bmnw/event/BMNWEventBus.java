@@ -139,7 +139,7 @@ public class BMNWEventBus {
          */
         @SubscribeEvent
         public static void entityTickEventPre(EntityTickEvent.Pre event) {
-            if (BMNWServerConfig.radiationSetting.chunk() && !event.getEntity().level().isClientSide()) {
+            if (BMNWServerConfig.radiationSetting().chunk() && !event.getEntity().level().isClientSide()) {
                 if (event.getEntity() instanceof LivingEntity entity) {
                     if (entity instanceof Player player && (player.isCreative() || player.isSpectator())) return;
                     CompoundTag nbt = entity.getPersistentData();
@@ -256,7 +256,7 @@ public class BMNWEventBus {
         public static void playerTickEventPre(PlayerTickEvent.Pre event) {
             MeteoriteEntity.spawnIfReady(event.getEntity());
 
-            if (BMNWServerConfig.radiationSetting.item()) {
+            if (BMNWServerConfig.radiationSetting().item()) {
                 Player player = event.getEntity();
                 if (player.isCreative() || player.isSpectator() || player.level().isClientSide()) return;
                 for (ItemStack stack : player.getInventory().items) {
@@ -300,11 +300,11 @@ public class BMNWEventBus {
             if (DiscardList.toDiscard.contains(stack.getItem())) {
                 event.addTooltipLines(Component.literal("[DEPRECATED]").withColor(0xFF0000));
             }
-            if (BMNWClientConfig.hazardInfoLevel.id() > 0) {
+            if (BMNWClientConfig.hazardInfoLevel().id() > 0) {
                 Item item = stack.getItem();
                 float itemRads = HazardRegistry.getRadRegistry(item);
                 if (itemRads > 0) {
-                    if (BMNWClientConfig.hazardInfoLevel.id() == 2) {
+                    if (BMNWClientConfig.hazardInfoLevel().id() == 2) {
                         event.addTooltipLines(Component.translatable("tooltip.bmnw.radioactive")
                                 .append(" - ").append(String.valueOf(itemRads)).append("RAD/s").withColor(0x00FF00));
                     } else {
@@ -313,7 +313,7 @@ public class BMNWEventBus {
                 }
                 float armorProtect = HazardRegistry.getArmorRadResRegistry(item);
                 if (armorProtect > 0) {
-                    if (BMNWClientConfig.hazardInfoLevel.id() == 2) {
+                    if (BMNWClientConfig.hazardInfoLevel().id() == 2) {
                         event.addTooltipLines(
                                 Component.translatable("tooltip.bmnw.armor_rad_resistance", Math.round((armorProtect)*100))
                                         .append("%")
@@ -476,6 +476,21 @@ public class BMNWEventBus {
                     Capabilities.EnergyStorage.BLOCK,
                     ((level, pos, state, blockEntity, context) -> blockEntity instanceof RadioAntennaControllerBlockEntity controller ? controller.energy : null),
                     BMNWBlocks.RADIO_ANTENNA_CONTROLLER.get()
+            );
+            event.registerBlock(
+                    Capabilities.ItemHandler.BLOCK,
+                    ((level, pos, state, be, context) -> be instanceof CombustionEngineBlockEntity engine ? engine.getItems(context) : null),
+                    BMNWBlocks.COMBUSTION_ENGINE.get()
+            );
+            event.registerBlock(
+                    Capabilities.EnergyStorage.BLOCK,
+                    ((level, pos, state, be, context) -> be instanceof CombustionEngineBlockEntity engine ? engine.getEnergy(context) : null),
+                    BMNWBlocks.COMBUSTION_ENGINE.get()
+            );
+            event.registerBlock(
+                    Capabilities.FluidHandler.BLOCK,
+                    ((level, pos, state, be, context) -> be instanceof CombustionEngineBlockEntity engine ? engine.getFluid(context) : null),
+                    BMNWBlocks.COMBUSTION_ENGINE.get()
             );
         }
 

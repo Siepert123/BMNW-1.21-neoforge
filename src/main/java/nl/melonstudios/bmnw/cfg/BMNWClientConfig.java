@@ -86,11 +86,13 @@ public class BMNWClientConfig {
 
     public static final ModConfigSpec SPEC = BUILDER.build();
 
-    public static HazardInfoLevel hazardInfoLevel;
     public static boolean enableRandomRotationOffsets;
     public static MushroomCloudRenderType mushroomCloudRenderType;
     public static ExplosionFlashRenderType explosionFlashRenderType;
 
+    public static HazardInfoLevel hazardInfoLevel() {
+        return HAZARD_INFO_LEVEL.get();
+    }
     public static int wireViewDistance() {
         return WIRE_VIEW_DISTANCE.get();
     }
@@ -100,7 +102,6 @@ public class BMNWClientConfig {
 
     public static void onLoad(final ModConfigEvent event) {
         if (event instanceof ModConfigEvent.Unloading || !DistrictHolder.isClient()) return;
-        hazardInfoLevel = HAZARD_INFO_LEVEL.get();
         enableRandomRotationOffsets = ENABLE_RANDOM_ROTATION_OFFSETS.get();
         mushroomCloudRenderType = MUSHROOM_CLOUD_RENDER_TYPE.get();
         explosionFlashRenderType = EXPLOSION_FLASH_RENDER_TYPE.get();

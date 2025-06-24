@@ -17,8 +17,8 @@ public abstract class SyncedBlockEntity extends OptimizedBlockEntity {
         super(type, pos, blockState);
     }
 
-    protected abstract void load(CompoundTag nbt, HolderLookup.Provider registries, boolean packet);
     protected abstract void save(CompoundTag nbt, HolderLookup.Provider registries, boolean packet);
+    protected abstract void load(CompoundTag nbt, HolderLookup.Provider registries, boolean packet);
 
     @Override
     protected final void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {

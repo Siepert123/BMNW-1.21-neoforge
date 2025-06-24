@@ -23,7 +23,7 @@ public class ExcavationVeinDetectorItem extends Item {
         ChunkAccess chunk = level.getChunk(player.getOnPos());
         ExcavationVein vein = ExcavationVein.getNextVein(chunk);
         if (!level.isClientSide()) {
-            if (BMNWServerConfig.enableExcavationVeinDepletion) {
+            if (BMNWServerConfig.enableExcavationVeinDepletion()) {
                 if (vein.isEmpty())
                     player.sendSystemMessage(Component.translatable("text.bmnw.excavation_vein_detector_fail"));
                 else {

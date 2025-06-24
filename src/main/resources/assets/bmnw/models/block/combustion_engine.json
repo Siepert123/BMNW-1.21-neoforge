@@ -1,0 +1,14 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "panel": "bmnw:block/combustion_engine_front",
+    "side": "bmnw:block/combustion_engine_side",
+    "up": "bmnw:block/steel_power_port",
+    "down": "bmnw:block/steel_block",
+    "north": "#panel",
+    "east": "#side",
+    "south": "#side",
+    "west": "#side",
+    "particle": "#side"
+  }
+}

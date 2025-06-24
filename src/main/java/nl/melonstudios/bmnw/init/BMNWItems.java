@@ -10,9 +10,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import nl.melonstudios.bmnw.item.battery.BatteryItem;
 import nl.melonstudios.bmnw.item.battery.InfiniteBatteryItem;
 import nl.melonstudios.bmnw.item.misc.*;
-import nl.melonstudios.bmnw.item.tools.RedstoneWireSpoolItem;
-import nl.melonstudios.bmnw.item.tools.ScrewdriverItem;
-import nl.melonstudios.bmnw.item.tools.WireSpoolItem;
+import nl.melonstudios.bmnw.item.tools.*;
 import nl.melonstudios.bmnw.item.weapons.DetonatorItem;
 import nl.melonstudios.bmnw.item.weapons.LaserTargetDesignatorItem;
 import nl.melonstudios.bmnw.item.weapons.SniperItem;
@@ -197,7 +195,7 @@ public class BMNWItems {
 
     //endregion
 
-    //region Batteries
+    //region Batteries & tanks
 
     public static final DeferredItem<BatteryItem> LEAD_ACID_BATTERY = ITEMS.register("lead_acid_battery",
             () -> new BatteryItem(new Item.Properties(), 10000, 25));
@@ -211,6 +209,11 @@ public class BMNWItems {
             () -> new InfiniteBatteryItem(new Item.Properties()));
     public static final DeferredItem<InfiniteBatteryItem> CREATIVE_CAR_BATTERY = ITEMS.register("creative_car_battery",
             () -> new InfiniteBatteryItem(new Item.Properties()).setLarge());
+
+    public static final DeferredItem<InfiniteWaterTank> INFINITE_WATER_TANK = ITEMS.register("infinite_water_tank",
+            () -> new InfiniteWaterTank(new Item.Properties(), 50));
+    public static final DeferredItem<InfiniteFluidTank> INFINITE_FLUID_TANK = ITEMS.register("infinite_fluid_tank",
+            () -> new InfiniteFluidTank(new Item.Properties(), Integer.MAX_VALUE));
 
     //endregion
 
@@ -325,10 +328,14 @@ public class BMNWItems {
 
     //endregion
 
+
     public static final DeferredItem<GeigerCounterItem> GEIGER_COUNTER = ITEMS.register("geiger_counter",
             () -> new GeigerCounterItem(new Item.Properties().stacksTo(1)));
     public static final DeferredItem<Item> PRESSING_PART = ITEMS.register("pressing_part",
             () -> new Item(new Item.Properties()));
+
+    //region machines
+    // Early game
     public static final DeferredItem<BlockItem> IRON_WORKBENCH = ITEMS.register("iron_workbench",
             () -> new BlockItem(BMNWBlocks.IRON_WORKBENCH.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> STEEL_WORKBENCH = ITEMS.register("steel_workbench",
@@ -337,6 +344,13 @@ public class BMNWItems {
             () -> new BlockItem(BMNWBlocks.PRESS.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> ALLOY_BLAST_FURNACE = ITEMS.register("alloy_blast_furnace",
             () -> new BlockItem(BMNWBlocks.ALLOY_BLAST_FURNACE.get(), new Item.Properties()));
+
+    // Generators
+
+    public static final DeferredItem<BlockItem> COMBUSTION_ENGINE = ITEMS.register("combustion_engine",
+            () -> new BlockItem(BMNWBlocks.COMBUSTION_ENGINE.get(), new Item.Properties()));
+
+    // Consumers
     public static final DeferredItem<BlockItem> DECONTAMINATOR = ITEMS.register("decontaminator",
             () -> new BlockItem(BMNWBlocks.DECONTAMINATOR.get(), new Item.Properties()));
     public static final DeferredItem<ExcavationVeinDetectorItem> EXCAVATION_VEIN_DETECTOR = ITEMS.register("excavation_vein_detector",
@@ -349,6 +363,7 @@ public class BMNWItems {
             () -> new BlockItem(BMNWBlocks.RADIO_ANTENNA_CONTROLLER.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> MACHINE_SCRAP = ITEMS.register("machine_scrap",
             () -> new BlockItem(BMNWBlocks.MACHINE_SCRAP.get(), new Item.Properties()));
+    //endregion
 
     public static final DeferredItem<BlockItem> METEORITE_COBBLESTONE = ITEMS.register("meteorite_cobblestone",
             () -> new BlockItem(BMNWBlocks.METEORITE_COBBLESTONE.get(), new Item.Properties()));

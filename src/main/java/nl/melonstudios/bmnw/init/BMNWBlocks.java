@@ -182,6 +182,8 @@ public class BMNWBlocks {
     //endregion
 
     //region Basic machines
+
+    // Early game
     public static final DeferredBlock<WorkbenchBlock> TEST_WORKBENCH = BLOCKS.register("test_workbench",
             () -> new WorkbenchBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CRAFTING_TABLE), 69420, "workbench"));
     public static final DeferredBlock<WorkbenchBlock> IRON_WORKBENCH = BLOCKS.register("iron_workbench",
@@ -193,6 +195,11 @@ public class BMNWBlocks {
     public static final DeferredBlock<AlloyBlastFurnaceBlock> ALLOY_BLAST_FURNACE = BLOCKS.register("alloy_blast_furnace",
             () -> new AlloyBlastFurnaceBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.NETHER_BRICKS)));
 
+    // Generators
+    public static final DeferredBlock<CombustionEngineBlock> COMBUSTION_ENGINE = BLOCKS.register("combustion_engine",
+            () -> new CombustionEngineBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get())));
+
+    // Consumers
     public static final DeferredBlock<DecontaminatorBlock> DECONTAMINATOR = BLOCKS.register("decontaminator",
             () -> new DecontaminatorBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)));
 

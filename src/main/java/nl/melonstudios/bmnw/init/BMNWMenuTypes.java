@@ -7,6 +7,7 @@ import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import nl.melonstudios.bmnw.screen.AlloyFurnaceMenu;
+import nl.melonstudios.bmnw.screen.CombustionEngineMenu;
 import nl.melonstudios.bmnw.screen.PressMenu;
 import nl.melonstudios.bmnw.screen.WorkbenchMenu;
 
@@ -25,6 +26,11 @@ public class BMNWMenuTypes {
     public static final DeferredHolder<MenuType<?>, MenuType<WorkbenchMenu>> WORKBENCH = MENU_TYPES.register(
             "workbench",
             () -> IMenuTypeExtension.create(WorkbenchMenu::new)
+    );
+
+    public static final DeferredHolder<MenuType<?>, MenuType<CombustionEngineMenu>> COMBUSTION_ENGINE = MENU_TYPES.register(
+            "combustion_engine",
+            () -> IMenuTypeExtension.create(CombustionEngineMenu::new)
     );
 
     public static void register(IEventBus eventBus) {

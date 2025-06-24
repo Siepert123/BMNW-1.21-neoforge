@@ -16,32 +16,32 @@ public class ChunkRadiationManager {
     public static final ChunkRadiationHandler handler = new ChunkRadiationHandlerPRISM();
 
     public static void onWorldLoad(LevelEvent.Load event) {
-        if (BMNWServerConfig.radiationSetting.chunk()) handler.onWorldLoad(event);
+        if (BMNWServerConfig.radiationSetting().chunk()) handler.onWorldLoad(event);
     }
 
     public static void onWorldUnload(LevelEvent.Unload event) {
-        if (BMNWServerConfig.radiationSetting.chunk()) handler.onWorldUnload(event);
+        if (BMNWServerConfig.radiationSetting().chunk()) handler.onWorldUnload(event);
     }
 
     public static void onChunkLoad(ChunkEvent.Load event) {
-        if (BMNWServerConfig.radiationSetting.chunk() && event.getLevel() != null) handler.onChunkLoad(event);
+        if (BMNWServerConfig.radiationSetting().chunk() && event.getLevel() != null) handler.onChunkLoad(event);
     }
     public static void onChunkDataLoad(ChunkDataEvent.Load event) {
-        if (BMNWServerConfig.radiationSetting.chunk() && event.getLevel() != null) handler.onChunkDataLoad(event);
+        if (BMNWServerConfig.radiationSetting().chunk() && event.getLevel() != null) handler.onChunkDataLoad(event);
     }
 
     public static void onChunkSave(ChunkDataEvent.Save event) {
-        if (BMNWServerConfig.radiationSetting.chunk() && event.getLevel() != null) handler.onChunkSave(event);
+        if (BMNWServerConfig.radiationSetting().chunk() && event.getLevel() != null) handler.onChunkSave(event);
     }
 
     public static void onChunkUnload(ChunkEvent.Unload event) {
-        if (BMNWServerConfig.radiationSetting.chunk() && event.getLevel() != null) handler.onChunkUnload(event);
+        if (BMNWServerConfig.radiationSetting().chunk() && event.getLevel() != null) handler.onChunkUnload(event);
     }
 
     static int eggTimer = 0;
 
     public static void updateSystem(ServerTickEvent.Post event) {
-        if (BMNWServerConfig.radiationSetting.chunk()) {
+        if (BMNWServerConfig.radiationSetting().chunk()) {
             eggTimer++;
 
             if (eggTimer >= 20) {

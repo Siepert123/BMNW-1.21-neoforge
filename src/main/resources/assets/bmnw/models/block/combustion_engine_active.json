@@ -1,0 +1,6 @@
+{
+  "parent": "bmnw:block/combustion_engine",
+  "textures": {
+    "panel": "bmnw:block/combustion_engine_front_active"
+  }
+}

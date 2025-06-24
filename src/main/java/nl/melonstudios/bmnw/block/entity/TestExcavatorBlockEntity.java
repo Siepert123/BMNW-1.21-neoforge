@@ -43,7 +43,7 @@ public class TestExcavatorBlockEntity extends WireAttachedBlockEntity {
                     Container container = StackMover.getBlockContainer(level, worldPosition.below(), level.getBlockState(worldPosition.below()));
                     if (container != null) {
                         StackMover.addItem(null, container, new ItemStack(item), Direction.UP);
-                        if (BMNWServerConfig.enableExcavationVeinDepletion) {
+                        if (BMNWServerConfig.enableExcavationVeinDepletion()) {
                             chunk.setData(BMNWAttachments.EXCAVATION_VEIN_DEPLETION,
                                     chunk.getData(BMNWAttachments.EXCAVATION_VEIN_DEPLETION) + 1);
                         }
@@ -52,7 +52,7 @@ public class TestExcavatorBlockEntity extends WireAttachedBlockEntity {
                                 worldPosition.getY() - 0.5, worldPosition.getZ() + 0.5, new ItemStack(item));
                         entity.setDeltaMovement(0, 0, 0);
                         level.addFreshEntity(entity);
-                        if (BMNWServerConfig.enableExcavationVeinDepletion) {
+                        if (BMNWServerConfig.enableExcavationVeinDepletion()) {
                             chunk.setData(BMNWAttachments.EXCAVATION_VEIN_DEPLETION,
                                     chunk.getData(BMNWAttachments.EXCAVATION_VEIN_DEPLETION) + 1);
                         }

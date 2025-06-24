@@ -141,6 +141,16 @@ public class BMNWBlockEntities {
                     null
             )
     );
+
+    public static final Supplier<BlockEntityType<CombustionEngineBlockEntity>> COMBUSTION_ENGINE = BLOCK_ENTITIES.register(
+            "combustion_engine",
+            () -> new BlockEntityType<>(
+                    CombustionEngineBlockEntity::new,
+                    Set.of(BMNWBlocks.COMBUSTION_ENGINE.get()),
+                    null
+            )
+    );
+
     public static final Supplier<BlockEntityType<LargeShredderBlockEntity>> LARGE_SHREDDER = BLOCK_ENTITIES.register(
             "large_shredder",
             () -> new BlockEntityType<>(

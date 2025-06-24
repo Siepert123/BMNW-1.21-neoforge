@@ -17,7 +17,7 @@ public class BatteryItem extends Item implements IBatteryItem {
         this.maxTransfer = maxTransfer;
     }
 
-    private static String formatNicely(int rf) {
+    public static String formatNicely(int rf) {
         if (rf > 1000000000) {
             return Mth.quantize((rf / 1000000000.0F) * 100.0F, 1) / 100.0F + "GRF";
         }
@@ -27,7 +27,7 @@ public class BatteryItem extends Item implements IBatteryItem {
         if (rf > 1000) {
             return Mth.quantize((rf / 1000.0F) * 100.0F, 1) / 100.0F + "kRF";
         }
-        return String.valueOf(rf);
+        return rf + "RF";
     }
 
     private static final boolean b = true;
@@ -40,9 +40,9 @@ public class BatteryItem extends Item implements IBatteryItem {
         final int nrg = getStoredEnergy(stack);
         final int maxNRG = getMaxStoredEnergy();
         if (b) {
-            tooltipComponents.add(Component.literal(String.format("%s/%sRF", formatNicely(nrg), formatNicely(maxNRG))).withColor(0xaaaaaa));
+            tooltipComponents.add(Component.literal(String.format("%s/%s", formatNicely(nrg), formatNicely(maxNRG))).withColor(0xaaaaaa));
         } else {
-            tooltipComponents.add(Component.literal(String.format("%s/%sRF", nrg, maxNRG)).withColor(0xaaaaaa));
+            tooltipComponents.add(Component.literal(String.format("%s/%s", nrg, maxNRG)).withColor(0xaaaaaa));
         }
         if (b) {
             if (getMaxEnergyTransfer() >= giga) {
