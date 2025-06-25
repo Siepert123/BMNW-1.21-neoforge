@@ -43,6 +43,7 @@ import net.neoforged.neoforge.event.level.ChunkEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
+import net.neoforged.neoforge.fluids.capability.templates.FluidHandlerItemStack;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import nl.melonstudios.bmnw.block.entity.*;
@@ -55,15 +56,16 @@ import nl.melonstudios.bmnw.discard.DiscardList;
 import nl.melonstudios.bmnw.effect.WPEffect;
 import nl.melonstudios.bmnw.entity.MeteoriteEntity;
 import nl.melonstudios.bmnw.entity.renderer.*;
-import nl.melonstudios.bmnw.hardcoded.recipe.ShreddingRecipes;
 import nl.melonstudios.bmnw.hardcoded.structure.Structures;
 import nl.melonstudios.bmnw.hazard.HazardRegistry;
 import nl.melonstudios.bmnw.hazard.radiation.ChunkRadiationManager;
 import nl.melonstudios.bmnw.hazard.radiation.RadiationTools;
 import nl.melonstudios.bmnw.init.*;
 import nl.melonstudios.bmnw.interfaces.IScopeableItem;
-import nl.melonstudios.bmnw.item.colorize.FireMarbleColorizer;
-import nl.melonstudios.bmnw.item.colorize.SmallLampColorizer;
+import nl.melonstudios.bmnw.item.client.FireMarbleColorizer;
+import nl.melonstudios.bmnw.item.client.FluidContainerColorizer;
+import nl.melonstudios.bmnw.item.client.PortableFluidTankClientExtensions;
+import nl.melonstudios.bmnw.item.client.SmallLampColorizer;
 import nl.melonstudios.bmnw.item.misc.CoreSampleItem;
 import nl.melonstudios.bmnw.item.misc.SmallLampBlockItem;
 import nl.melonstudios.bmnw.misc.DistrictHolder;
@@ -369,6 +371,11 @@ public class BMNWEventBus {
                 }
             }
         }
+
+        @SubscribeEvent
+        public static void registerReloadListeners(AddReloadListenerEvent event) {
+            //event.addListener(ShreddingRecipes.instance);
+        }
     }
 
     @EventBusSubscriber(modid = "bmnw", bus = EventBusSubscriber.Bus.MOD)
@@ -449,6 +456,11 @@ public class BMNWEventBus {
 
         @SubscribeEvent
         public static void registerCapabilitiesEvent(RegisterCapabilitiesEvent event) {
+            registerBlockCaps(event);
+            registerItemCaps(event);
+        }
+
+        private static void registerBlockCaps(RegisterCapabilitiesEvent event) {
             event.registerBlock(
                     Capabilities.EnergyStorage.BLOCK,
                     (level, pos, state, blockEntity, context) -> blockEntity != null ?
@@ -491,6 +503,13 @@ public class BMNWEventBus {
                     Capabilities.FluidHandler.BLOCK,
                     ((level, pos, state, be, context) -> be instanceof CombustionEngineBlockEntity engine ? engine.getFluid(context) : null),
                     BMNWBlocks.COMBUSTION_ENGINE.get()
+            );
+        }
+        private static void registerItemCaps(RegisterCapabilitiesEvent event) {
+            event.registerItem(
+                    Capabilities.FluidHandler.ITEM,
+                    (stack, ctx) -> new FluidHandlerItemStack(BMNWDataComponents.STORED_FLUID, stack, 2000),
+                    BMNWItems.PORTABLE_FLUID_TANK.get()
             );
         }
 
@@ -567,6 +586,7 @@ public class BMNWEventBus {
         @OnlyIn(Dist.CLIENT)
         public static void registerColorHandlersItem(RegisterColorHandlersEvent.Item event) {
             event.register(new FireMarbleColorizer(), BMNWItems.FIRE_MARBLE);
+            event.register(new FluidContainerColorizer(), BMNWItems.PORTABLE_FLUID_TANK);
             event.register(new SmallLampColorizer(), SmallLampBlockItem.ALL.toArray(ItemLike[]::new));
             LOGGER.debug("Registered {} small lamp colorizers", SmallLampBlockItem.ALL.size());
         }
@@ -575,10 +595,6 @@ public class BMNWEventBus {
         @OnlyIn(Dist.CLIENT)
         public static void registerClientExtensions(RegisterClientExtensionsEvent event) {
 
-        }
-
-        public static void registerReloadListeners(AddReloadListenerEvent event) {
-            event.addListener(ShreddingRecipes.instance);
         }
     }
 }

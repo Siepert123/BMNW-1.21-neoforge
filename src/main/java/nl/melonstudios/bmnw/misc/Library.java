@@ -1,6 +1,7 @@
 package nl.melonstudios.bmnw.misc;
 
 import com.google.common.collect.ImmutableList;
+import com.mojang.blaze3d.platform.NativeImage;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.LightTexture;
@@ -8,6 +9,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.FastColor;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
@@ -289,5 +291,36 @@ public class Library {
         float f7 = startZ * f;
         buffer.addVertex(pose, f5 - dx, f6 + dy, f7 + dz).setColor(br, bg, bb, 1.0F).setLight(k);
         buffer.addVertex(pose, f5 + dx, f6 + yOffset - dy, f7 - dz).setColor(br, bg, bb, 1.0F).setLight(k);
+    }
+
+    public static int convertRGBAtoARGB(int rgba) {
+        int a = rgba & 0xFF;
+        return (rgba >>> 8) & 0xFFFFFF | a << 24;
+    }
+    public static int convertABGRtoARGB(int abgr) {
+        int a = abgr & 0xFF00FF00;
+        int b = abgr & 0x00FF0000;
+        int r = abgr & 0x000000FF;
+        return a | b >> 16 | r << 16;
+    }
+
+    public static int averageColors(int... colors) {
+        int size = colors.length;
+        int combinedA = 0;
+        int combinedR = 0;
+        int combinedG = 0;
+        int combinedB = 0;
+        for (int color : colors) {
+            combinedA += FastColor.ARGB32.alpha(color);
+            combinedR += FastColor.ARGB32.red(color);
+            combinedG += FastColor.ARGB32.green(color);
+            combinedB += FastColor.ARGB32.blue(color);
+        }
+        return FastColor.ARGB32.color(combinedA / size, combinedR / size, combinedG / size, combinedB / size);
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public static int getCenterColorRGBA(NativeImage image) {
+        return image.getPixelRGBA(image.getWidth() / 2, image.getHeight() / 2);
     }
 }

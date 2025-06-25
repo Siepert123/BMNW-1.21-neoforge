@@ -8,7 +8,14 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.Fluids;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.common.NeoForgeMod;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import nl.melonstudios.bmnw.item.battery.BatteryItem;
 import nl.melonstudios.bmnw.misc.NoUnused;
@@ -22,6 +29,11 @@ public class BMNWTabs {
     private static void addItems(CreativeModeTab.Output items, ItemLike... itemLikes) {
         for (ItemLike itemLike : itemLikes) {
             items.accept(itemLike);
+        }
+    }
+    private static void addItems(CreativeModeTab.Output items, ItemStack... stacks) {
+        for (ItemStack stack : stacks) {
+            items.accept(stack);
         }
     }
 
@@ -447,6 +459,12 @@ public class BMNWTabs {
                         items.accept(getFullBattery(DURAPIXEL_CAR_BATTERY.get()));
                         items.accept(CREATIVE_CAR_BATTERY);
 
+                        items.accept(PORTABLE_FLUID_TANK);
+                        addItems(items,
+                                filledFluid(PORTABLE_FLUID_TANK, Fluids.WATER),
+                                filledFluid(PORTABLE_FLUID_TANK, Fluids.LAVA)
+                        );
+
                         items.accept(INFINITE_WATER_TANK);
                         items.accept(INFINITE_FLUID_TANK);
 
@@ -462,6 +480,18 @@ public class BMNWTabs {
                     })
                     .build()
     );
+
+    private static ItemStack filledFluid(ItemLike item, Fluid fluid) {
+        ItemStack stack = new ItemStack(item);
+        IFluidHandlerItem handler = stack.getCapability(Capabilities.FluidHandler.ITEM);
+        if (handler == null) throw new IllegalStateException("Cannot fill item without fluid handler!");
+        int cap = handler.getTankCapacity(0);
+        FluidStack fluidStack = new FluidStack(fluid, cap);
+        if (handler.isFluidValid(0, fluidStack)) {
+            handler.fill(fluidStack, IFluidHandler.FluidAction.EXECUTE);
+        }
+        return stack;
+    }
 
     @NoUnused
     public static final Supplier<CreativeModeTab> MACHINES = CREATIVE_TABS.register("machines",

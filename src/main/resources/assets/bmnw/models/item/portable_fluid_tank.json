@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "bmnw:item/portable_fluid_tank",
+    "layer1": "bmnw:item/portable_fluid_tank_fluid"
+  }
+}

@@ -6,6 +6,7 @@ import net.minecraft.core.component.DataComponentType;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.util.ExtraCodecs;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.fluids.SimpleFluidContent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -53,6 +54,13 @@ public class BMNWDataComponents {
             builder -> builder
                     .persistent(Codec.INT)
                     .networkSynchronized(ByteBufCodecs.INT)
+    );
+
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<SimpleFluidContent>> STORED_FLUID = COMPONENTS.registerComponentType(
+            "stored_fluid",
+            builder -> builder
+                    .persistent(SimpleFluidContent.CODEC)
+                    .networkSynchronized(SimpleFluidContent.STREAM_CODEC)
     );
 
     public static void register(IEventBus eventBus) {

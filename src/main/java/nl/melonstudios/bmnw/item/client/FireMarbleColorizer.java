@@ -1,4 +1,4 @@
-package nl.melonstudios.bmnw.item.colorize;
+package nl.melonstudios.bmnw.item.client;
 
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.client.color.item.ItemColor;

@@ -215,6 +215,9 @@ public class BMNWItems {
     public static final DeferredItem<InfiniteFluidTank> INFINITE_FLUID_TANK = ITEMS.register("infinite_fluid_tank",
             () -> new InfiniteFluidTank(new Item.Properties(), Integer.MAX_VALUE));
 
+    public static final DeferredItem<FluidContainerItem> PORTABLE_FLUID_TANK = ITEMS.register("portable_fluid_tank",
+            () -> new FluidContainerItem(new Item.Properties()));
+
     //endregion
 
     //region Weapons
