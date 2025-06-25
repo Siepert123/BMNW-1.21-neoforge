@@ -2,6 +2,7 @@ package nl.melonstudios.bmnw.hardcoded.recipe.jei;
 
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
+import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.registration.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -9,21 +10,26 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.ItemLike;
 import nl.melonstudios.bmnw.BMNW;
 import nl.melonstudios.bmnw.hardcoded.recipe.AlloyingRecipes;
 import nl.melonstudios.bmnw.hardcoded.recipe.PressingRecipes;
 import nl.melonstudios.bmnw.hardcoded.recipe.ShreddingRecipes;
 import nl.melonstudios.bmnw.hardcoded.recipe.WorkbenchRecipes;
+import nl.melonstudios.bmnw.hardcoded.recipe.jei.subtype.FluidContainerSubtype;
 import nl.melonstudios.bmnw.init.BMNWItems;
 import nl.melonstudios.bmnw.init.BMNWTabs;
-import nl.melonstudios.bmnw.item.subtype.FireMarbleSubtypeInterpreter;
+import nl.melonstudios.bmnw.hardcoded.recipe.jei.subtype.FireMarbleSubtypeInterpreter;
+import nl.melonstudios.bmnw.item.tools.FluidContainerItem;
 import nl.melonstudios.bmnw.screen.AlloyFurnaceScreen;
 import nl.melonstudios.bmnw.screen.PressScreen;
 import nl.melonstudios.bmnw.screen.WorkbenchScreen;
 
 import javax.annotation.Nonnull;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @JeiPlugin
 public class JEICompat implements IModPlugin {
@@ -134,8 +140,24 @@ public class JEICompat implements IModPlugin {
     @Override
     public void registerItemSubtypes(ISubtypeRegistration registration) {
         registration.registerSubtypeInterpreter(BMNWItems.FIRE_MARBLE.get(), new FireMarbleSubtypeInterpreter());
+        for (FluidContainerItem item : FluidContainerItem.getAllFluidContainers()) {
+            registration.registerSubtypeInterpreter(item, FluidContainerSubtype.interpreter());
+        }
     }
 
+    @Override
+    public void registerIngredientAliases(IIngredientAliasRegistration registration) {
+        registration.addAliases(VanillaTypes.ITEM_STACK, tagItemList("bmnw:stamps"), "mold");
+        registration.addAliases(VanillaTypes.ITEM_STACK, itemsToStacks(
+                BMNWItems.COMBUSTION_ENGINE
+        ), "generator");
+    }
+
+    private static Set<ItemStack> itemsToStacks(ItemLike... items) {
+        HashSet<ItemStack> stacks = new HashSet<>();
+        for (ItemLike item : items) stacks.add(item.asItem().getDefaultInstance());
+        return stacks;
+    }
     private static List<ItemStack> tagItemList(String tag) {
         return Arrays.asList(Ingredient.of(TagKey.create(Registries.ITEM, ResourceLocation.parse(tag))).getItems());
     }

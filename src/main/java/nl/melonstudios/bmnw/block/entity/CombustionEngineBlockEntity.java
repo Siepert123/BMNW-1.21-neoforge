@@ -14,6 +14,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.inventory.SimpleContainerData;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.state.BlockState;
@@ -24,6 +25,7 @@ import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
@@ -36,6 +38,7 @@ import nl.melonstudios.bmnw.init.BMNWTags;
 import nl.melonstudios.bmnw.interfaces.IBatteryItem;
 import nl.melonstudios.bmnw.interfaces.IInfiniteFluidSupply;
 import nl.melonstudios.bmnw.interfaces.ITickable;
+import nl.melonstudios.bmnw.item.tools.FluidContainerItem;
 import nl.melonstudios.bmnw.misc.DistrictHolder;
 import nl.melonstudios.bmnw.misc.ExtendedEnergyStorage;
 import nl.melonstudios.bmnw.misc.Library;
@@ -61,6 +64,11 @@ public class CombustionEngineBlockEntity extends SyncedBlockEntity implements Me
         protected void onContentsChanged(int slot) {
             super.onContentsChanged(slot);
             CombustionEngineBlockEntity.this.notifyChange();
+        }
+
+        @Override
+        public int getSlotLimit(int slot) {
+            return slot == SLOT_BATTERY || slot == SLOT_WATER_BUCKET ? 1 : Item.ABSOLUTE_MAX_STACK_SIZE;
         }
     };
     public final ExtendedEnergyStorage energy = new ExtendedEnergyStorage(ENERGY_CAPACITY) {
@@ -191,6 +199,82 @@ public class CombustionEngineBlockEntity extends SyncedBlockEntity implements Me
         }
     };
 
+    private final IEnergyStorage energyInterface = new IEnergyStorage() {
+        private ExtendedEnergyStorage getEnergy() {
+            return CombustionEngineBlockEntity.this.energy;
+        }
+        @Override
+        public int receiveEnergy(int toReceive, boolean simulate) {
+            return 0;
+        }
+
+        @Override
+        public int extractEnergy(int toExtract, boolean simulate) {
+            return this.getEnergy().extractEnergy(toExtract, simulate);
+        }
+
+        @Override
+        public int getEnergyStored() {
+            return this.getEnergy().getEnergyStored();
+        }
+
+        @Override
+        public int getMaxEnergyStored() {
+            return this.getEnergy().getMaxEnergyStored();
+        }
+
+        @Override
+        public boolean canExtract() {
+            return this.getEnergy().canExtract();
+        }
+
+        @Override
+        public boolean canReceive() {
+            return false;
+        }
+    };
+
+    private final IFluidHandler fluidInterface = new IFluidHandler() {
+        private FluidTank getFluid() {
+            return CombustionEngineBlockEntity.this.fluid;
+        }
+
+        @Override
+        public int getTanks() {
+            return this.getFluid().getTanks();
+        }
+
+        @Override
+        public FluidStack getFluidInTank(int tank) {
+            return this.getFluid().getFluidInTank(tank);
+        }
+
+        @Override
+        public int getTankCapacity(int tank) {
+            return this.getFluid().getTankCapacity(tank);
+        }
+
+        @Override
+        public boolean isFluidValid(int tank, FluidStack stack) {
+            return this.getFluid().isFluidValid(tank, stack);
+        }
+
+        @Override
+        public int fill(FluidStack resource, FluidAction action) {
+            return 0;
+        }
+
+        @Override
+        public FluidStack drain(FluidStack resource, FluidAction action) {
+            return this.getFluid().drain(resource, action);
+        }
+
+        @Override
+        public FluidStack drain(int maxDrain, FluidAction action) {
+            return this.getFluid().drain(maxDrain, action);
+        }
+    };
+
     @Nullable
     public IItemHandler getItems(@Nullable Direction face) {
         if (face == null) return this.inventory;
@@ -201,11 +285,11 @@ public class CombustionEngineBlockEntity extends SyncedBlockEntity implements Me
     }
     @Nullable
     public IEnergyStorage getEnergy(@Nullable Direction face) {
-        return this.isFront(face) ? null : this.energy;
+        return this.isFront(face) ? null : this.energyInterface;
     }
     @Nullable
     public IFluidHandler getFluid(@Nullable Direction face) {
-        return this.isFront(face) ? null : this.fluid;
+        return this.isFront(face) ? null : this.fluidInterface;
     }
 
     public boolean isFront(@Nullable Direction face) {
@@ -289,8 +373,8 @@ public class CombustionEngineBlockEntity extends SyncedBlockEntity implements Me
                     if (this.fluid.drain(10, IFluidHandler.FluidAction.EXECUTE).getAmount() == 10) {
                         this.energy.receiveEnergy(25, false);
                     }
-                    this.setChanged();
                 }
+                this.setChanged();
             }
             if (this.fluid.getSpace() > 0) {
                 ItemStack bucket = this.inventory.getStackInSlot(SLOT_WATER_BUCKET);
@@ -302,6 +386,21 @@ public class CombustionEngineBlockEntity extends SyncedBlockEntity implements Me
                     this.notifyChange();
                 } else if (bucket.getItem() instanceof IInfiniteFluidSupply supply && supply.compatible(bucket, Fluids.WATER)) {
                     this.fluid.fill(new FluidStack(Fluids.WATER, supply.transferSpeed(bucket)), IFluidHandler.FluidAction.EXECUTE);
+                    this.notifyChange();
+                } else {
+                    IFluidHandlerItem handler = FluidContainerItem.getHandler(bucket);
+                    water:
+                    if (handler != null) {
+                        FluidStack drained = handler.drain(new FluidStack(Fluids.WATER, this.fluid.getSpace()),
+                                IFluidHandler.FluidAction.SIMULATE);
+                        if (drained.isEmpty()) {
+                            ItemStack remain = this.inventory.insertItem(SLOT_EMPTY_BUCKET, bucket.copy(), false);
+                            this.inventory.setStackInSlot(SLOT_WATER_BUCKET, remain);
+                            break water;
+                        }
+                        this.fluid.fill(handler.drain(drained, IFluidHandler.FluidAction.EXECUTE), IFluidHandler.FluidAction.EXECUTE);
+                        this.notifyChange();
+                    }
                 }
             }
             if (this.energy.getEnergyStored() > 0) {

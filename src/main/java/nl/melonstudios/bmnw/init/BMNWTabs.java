@@ -1,6 +1,7 @@
 package nl.melonstudios.bmnw.init;
 
 import net.minecraft.core.component.DataComponentType;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -18,8 +19,11 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import nl.melonstudios.bmnw.item.battery.BatteryItem;
+import nl.melonstudios.bmnw.misc.Library;
 import nl.melonstudios.bmnw.misc.NoUnused;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.Iterator;
 import java.util.Random;
 import java.util.function.Supplier;
 
@@ -460,10 +464,7 @@ public class BMNWTabs {
                         items.accept(CREATIVE_CAR_BATTERY);
 
                         items.accept(PORTABLE_FLUID_TANK);
-                        addItems(items,
-                                filledFluid(PORTABLE_FLUID_TANK, Fluids.WATER),
-                                filledFluid(PORTABLE_FLUID_TANK, Fluids.LAVA)
-                        );
+                        fillWithAllFluids(items, PORTABLE_FLUID_TANK);
 
                         items.accept(INFINITE_WATER_TANK);
                         items.accept(INFINITE_FLUID_TANK);
@@ -481,6 +482,12 @@ public class BMNWTabs {
                     .build()
     );
 
+    private static void fillWithAllFluids(CreativeModeTab.Output items, ItemLike item) {
+        for (Fluid fluid : Library.wrapIterator(BuiltInRegistries.FLUID.iterator())) {
+            if (!fluid.isSource(fluid.defaultFluidState())) continue;
+            items.accept(filledFluid(item, fluid));
+        }
+    }
     private static ItemStack filledFluid(ItemLike item, Fluid fluid) {
         ItemStack stack = new ItemStack(item);
         IFluidHandlerItem handler = stack.getCapability(Capabilities.FluidHandler.ITEM);

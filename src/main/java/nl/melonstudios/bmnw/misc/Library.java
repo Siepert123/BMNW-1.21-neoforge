@@ -24,9 +24,12 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import nl.melonstudios.bmnw.cfg.BMNWClientConfig;
+import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Iterator;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -322,5 +325,17 @@ public class Library {
     @OnlyIn(Dist.CLIENT)
     public static int getCenterColorRGBA(NativeImage image) {
         return image.getPixelRGBA(image.getWidth() / 2, image.getHeight() / 2);
+    }
+
+    public static <T> Iterable<T> wrapIterator(Iterator<T> iterator) {
+        return new WrappedIterable<>(iterator);
+    }
+
+    private record WrappedIterable<T>(Iterator<T> iterator) implements Iterable<T> {
+        @Nonnull
+        @Override
+        public Iterator<T> iterator() {
+            return this.iterator;
+        }
     }
 }

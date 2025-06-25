@@ -7,6 +7,8 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 import nl.melonstudios.bmnw.BMNW;
 import nl.melonstudios.bmnw.block.entity.CombustionEngineBlockEntity;
 import nl.melonstudios.bmnw.item.battery.BatteryItem;
@@ -28,6 +30,19 @@ public class CombustionEngineScreen extends AbstractContainerScreen<CombustionEn
         int y = (height - imageHeight) / 2;
 
         graphics.blit(GUI_TEXTURE, x, y, 0, 0, imageWidth, imageHeight);
+
+        ItemStack battery = this.menu.be.inventory.getStackInSlot(CombustionEngineBlockEntity.SLOT_BATTERY);
+        ItemStack water = this.menu.be.inventory.getStackInSlot(CombustionEngineBlockEntity.SLOT_WATER_BUCKET);
+        ItemStack bucket = this.menu.be.inventory.getStackInSlot(CombustionEngineBlockEntity.SLOT_EMPTY_BUCKET);
+        if (battery.isEmpty()) {
+            graphics.blit(GUI_TEXTURE, x+26, y+60, 208, 60, 16, 16);
+        }
+        if (water.isEmpty()) {
+            graphics.blit(GUI_TEXTURE, x+134, y+16, 176, 60, 16, 16);
+        }
+        if (bucket.isEmpty()) {
+            graphics.blit(GUI_TEXTURE, x+134, y+60, 192, 60, 16, 16);
+        }
     }
 
     @Override
@@ -35,7 +50,6 @@ public class CombustionEngineScreen extends AbstractContainerScreen<CombustionEn
         super.render(graphics, mouseX, mouseY, partialTick);
         int x = (width - imageWidth) / 2;
         int y = (height - imageHeight) / 2;
-        CombustionEngineBlockEntity be = this.menu.be;
         int scaledFuel = this.menu.scaledFuel(14);
         if (scaledFuel > 0) {
             int offset = 14 - scaledFuel;

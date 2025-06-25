@@ -10,10 +10,12 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.material.Fluids;
+import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
 import nl.melonstudios.bmnw.block.entity.CombustionEngineBlockEntity;
 import nl.melonstudios.bmnw.init.BMNWBlocks;
 import nl.melonstudios.bmnw.init.BMNWMenuTypes;
 import nl.melonstudios.bmnw.interfaces.IInfiniteFluidSupply;
+import nl.melonstudios.bmnw.item.tools.FluidContainerItem;
 import nl.melonstudios.bmnw.screen.slot.BatterySlot;
 import nl.melonstudios.bmnw.screen.slot.FuelSlot;
 import nl.melonstudios.bmnw.screen.slot.PredicateSlot;
@@ -40,7 +42,8 @@ public class CombustionEngineMenu extends AbstractBMNWContainerMenu {
         this.addSlot(new BatterySlot(this.be.inventory, 1, 26, 60, false));
         this.addSlot(new PredicateSlot(this.be.inventory, 2, 134, 16,
                 stack -> stack.is(Items.WATER_BUCKET) ||
-                        stack.getItem() instanceof IInfiniteFluidSupply supply && supply.compatible(stack, Fluids.WATER)));
+                        stack.getItem() instanceof IInfiniteFluidSupply supply && supply.compatible(stack, Fluids.WATER) ||
+                        FluidContainerItem.getContents(stack).is(Fluids.WATER)));
         this.addSlot(new ResultSlot(this.be.inventory, 3, 134, 60));
 
         this.addDataSlots(data);

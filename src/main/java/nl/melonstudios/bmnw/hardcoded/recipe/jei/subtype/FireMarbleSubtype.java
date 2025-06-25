@@ -1,4 +1,4 @@
-package nl.melonstudios.bmnw.item.subtype;
+package nl.melonstudios.bmnw.hardcoded.recipe.jei.subtype;
 
 import java.util.Objects;
 
