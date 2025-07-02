@@ -40,10 +40,7 @@ import nl.melonstudios.bmnw.hazard.radiation.ChunkRadiationManager;
 import nl.melonstudios.bmnw.init.*;
 import nl.melonstudios.bmnw.interfaces.IOpensCatwalkRails;
 import nl.melonstudios.bmnw.misc.*;
-import nl.melonstudios.bmnw.screen.AlloyFurnaceScreen;
-import nl.melonstudios.bmnw.screen.CombustionEngineScreen;
-import nl.melonstudios.bmnw.screen.PressScreen;
-import nl.melonstudios.bmnw.screen.WorkbenchScreen;
+import nl.melonstudios.bmnw.screen.*;
 import org.slf4j.Logger;
 
 import javax.annotation.Nonnull;
@@ -126,6 +123,7 @@ public class BMNW {
         BMNWSounds.register(modEventBus);
         BMNWAdvancementTriggers.register(modEventBus);
         BMNWMenuTypes.register(modEventBus);
+        BMNWRecipes.register(modEventBus);
 
         DistrictHolder.clientOnly(() -> BMNW::clientInit);
 
@@ -213,6 +211,7 @@ public class BMNW {
     private void registerMenuScreens(RegisterMenuScreensEvent event) {
         event.register(BMNWMenuTypes.PRESS.get(), PressScreen::new);
         event.register(BMNWMenuTypes.ALLOY_BLAST_FURNACE.get(), AlloyFurnaceScreen::new);
+        event.register(BMNWMenuTypes.BUILDERS_FURNACE.get(), BuildersFurnaceScreen::new);
         event.register(BMNWMenuTypes.WORKBENCH.get(), WorkbenchScreen::new);
 
         event.register(BMNWMenuTypes.COMBUSTION_ENGINE.get(), CombustionEngineScreen::new);

@@ -144,6 +144,15 @@ public class BMNWBlockEntities {
             )
     );
 
+    public static final Supplier<BlockEntityType<BuildersFurnaceBlockEntity>> BUILDERS_FURNACE = BLOCK_ENTITIES.register(
+            "builders_furnace",
+            () -> new BlockEntityType<>(
+                    BuildersFurnaceBlockEntity::new,
+                    Set.of(BMNWBlocks.BUILDERS_FURNACE.get()),
+                    null
+            )
+    );
+
     public static final Supplier<BlockEntityType<CombustionEngineBlockEntity>> COMBUSTION_ENGINE = BLOCK_ENTITIES.register(
             "combustion_engine",
             () -> new BlockEntityType<>(
