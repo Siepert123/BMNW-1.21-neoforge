@@ -1,0 +1,6 @@
+{
+  "parent": "bmnw:block/builders_furnace",
+  "textures": {
+    "north": "bmnw:block/builders_furnace_front_lit"
+  }
+}

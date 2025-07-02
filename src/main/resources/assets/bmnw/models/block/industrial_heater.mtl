@@ -1,0 +1,10 @@
+# Made in Blockbench 4.12.5
+newmtl m_02b08f4f-b44a-675d-1358-27281c183b56
+map_Kd #front
+newmtl m_70e916d3-64b9-af6c-db55-13612a4b1fb7
+map_Kd #side
+newmtl m_a7377a29-4927-7027-4e29-128581f7d299
+map_Kd bmnw:block/industrial_generic_base_48x
+newmtl m_a13df4e5-48c0-c861-8ca8-b87661816ce5
+map_Kd bmnw:block/industrial_heater_top
+newmtl none

@@ -58,7 +58,7 @@ public interface IBatteryItem {
      * @return How much more RF can be added before the capacity is reached.
      */
     default int getRemainingEnergyStorageSpace(ItemStack stack) {
-        return getMaxStoredEnergy() - getStoredEnergy(stack);
+        return this.getMaxStoredEnergy() - this.getStoredEnergy(stack);
     }
 
     /**
@@ -67,7 +67,7 @@ public interface IBatteryItem {
      * @return How much would actually be inserted.
      */
     default int tryInsertEnergy(ItemStack stack, int amount) {
-        return Math.min(getRemainingEnergyStorageSpace(stack), amount);
+        return Math.min(this.getRemainingEnergyStorageSpace(stack), Math.min(amount, this.getMaxEnergyTransfer()));
     }
 
     /**
@@ -76,7 +76,7 @@ public interface IBatteryItem {
      * @return How much would actually be extracted.
      */
     default int tryRemoveEnergy(ItemStack stack, int amount) {
-        return Math.min(getStoredEnergy(stack), amount);
+        return Math.min(this.getStoredEnergy(stack), Math.min(amount, this.getMaxEnergyTransfer()));
     }
 
     /**

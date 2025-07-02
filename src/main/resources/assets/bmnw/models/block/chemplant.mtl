@@ -1,0 +1,6 @@
+# Made in Blockbench 4.12.5
+newmtl m_4ff2fee4-b23e-3240-1eac-5938178346d6
+map_Kd bmnw:block/chemplant_baseplate
+newmtl m_9e694b72-ee3c-acb8-6441-f8fa33fc6de0
+map_Kd bmnw:block/chemplant_tank
+newmtl none

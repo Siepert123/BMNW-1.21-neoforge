@@ -529,6 +529,7 @@ public class BMNWTabs {
                         items.accept(STEEL_WORKBENCH);
                         items.accept(PRESS);
                         items.accept(ALLOY_BLAST_FURNACE);
+                        items.accept(BUILDERS_FURNACE);
 
                         items.accept(COMBUSTION_ENGINE);
 
@@ -536,6 +537,9 @@ public class BMNWTabs {
                         items.accept(TEST_EXCAVATOR);
                         items.accept(LARGE_SHREDDER);
                         items.accept(RADIO_ANTENNA_CONTROLLER);
+
+                        items.accept(INDUSTRIAL_HEATER);
+                        items.accept(CHEMPLANT);
                     })
                     .build()
     );

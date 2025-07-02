@@ -38,6 +38,7 @@ import net.neoforged.neoforge.common.data.AdvancementProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.event.AddReloadListenerEvent;
+import net.neoforged.neoforge.event.furnace.FurnaceFuelBurnTimeEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.level.ChunkEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
@@ -56,6 +57,7 @@ import nl.melonstudios.bmnw.discard.DiscardList;
 import nl.melonstudios.bmnw.effect.WPEffect;
 import nl.melonstudios.bmnw.entity.MeteoriteEntity;
 import nl.melonstudios.bmnw.entity.renderer.*;
+import nl.melonstudios.bmnw.hardcoded.recipe.ShreddingRecipes;
 import nl.melonstudios.bmnw.hardcoded.structure.Structures;
 import nl.melonstudios.bmnw.hazard.HazardRegistry;
 import nl.melonstudios.bmnw.hazard.radiation.ChunkRadiationManager;
@@ -70,6 +72,7 @@ import nl.melonstudios.bmnw.item.misc.CoreSampleItem;
 import nl.melonstudios.bmnw.item.misc.SmallLampBlockItem;
 import nl.melonstudios.bmnw.misc.DistrictHolder;
 import nl.melonstudios.bmnw.misc.ExcavationVein;
+import nl.melonstudios.bmnw.misc.FluidTextureData;
 import nl.melonstudios.bmnw.particle.*;
 import nl.melonstudios.bmnw.wifi.*;
 import org.apache.logging.log4j.LogManager;
@@ -374,7 +377,12 @@ public class BMNWEventBus {
 
         @SubscribeEvent
         public static void registerReloadListeners(AddReloadListenerEvent event) {
-            //event.addListener(ShreddingRecipes.instance);
+            event.addListener(ShreddingRecipes.instance);
+        }
+
+        @SubscribeEvent
+        public static void getBurnTime(FurnaceFuelBurnTimeEvent event) {
+            if (event.getItemStack().is(BMNWItems.DUST)) event.setBurnTime(1);
         }
     }
 
@@ -471,12 +479,6 @@ public class BMNWEventBus {
                     Capabilities.EnergyStorage.BLOCK,
                     (level, pos, state, be, context) -> be != null ? ((LargeShredderBlockEntity)be).getEnergy(context) : null,
                     BMNWBlocks.LARGE_SHREDDER.get()
-            );
-            event.registerBlock(
-                    Capabilities.FluidHandler.BLOCK,
-                    (level, pos, state, blockEntity, context) -> blockEntity != null?
-                            ((IronBarrelBlockEntity)blockEntity).getIFluid() : null,
-                    BMNWBlocks.IRON_BARREL.get()
             );
             event.registerBlock(
                     Capabilities.EnergyStorage.BLOCK,
@@ -595,6 +597,12 @@ public class BMNWEventBus {
         @OnlyIn(Dist.CLIENT)
         public static void registerClientExtensions(RegisterClientExtensionsEvent event) {
 
+        }
+
+        @SubscribeEvent
+        @OnlyIn(Dist.CLIENT)
+        public static void registerClientReloadListeners(RegisterClientReloadListenersEvent event) {
+            event.registerReloadListener(FluidTextureData.getListener());
         }
     }
 }

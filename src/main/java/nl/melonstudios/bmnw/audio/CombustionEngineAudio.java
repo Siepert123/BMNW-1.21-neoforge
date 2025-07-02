@@ -13,13 +13,17 @@ public class CombustionEngineAudio extends AbstractTickableSoundInstance {
         super(BMNWSounds.BOILER.get(), SoundSource.BLOCKS, RandomSource.create(be.getBlockPos().asLong()));
         this.be = be;
 
-        this.volume = 0.25F;
+        this.volume = 0.05F;
+        this.pitch = 2;
         this.looping = true;
 
         Vec3 vec = be.getBlockPos().getCenter();
         this.x = vec.x;
         this.y = vec.y;
         this.z = vec.z;
+
+        this.relative = false;
+        this.attenuation = Attenuation.LINEAR;
     }
 
     @Override

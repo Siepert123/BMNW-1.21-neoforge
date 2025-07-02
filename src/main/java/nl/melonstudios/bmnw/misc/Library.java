@@ -2,13 +2,16 @@ package nl.melonstudios.bmnw.misc;
 
 import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.platform.NativeImage;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.*;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FastColor;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -24,7 +27,6 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import nl.melonstudios.bmnw.cfg.BMNWClientConfig;
-import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 
 import javax.annotation.Nonnull;
@@ -337,5 +339,98 @@ public class Library {
         public Iterator<T> iterator() {
             return this.iterator;
         }
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public static void blitWithColor(
+            GuiGraphics graphics, ResourceLocation atlasLocation, int x, int y, float uOffset, float vOffset,
+            int width, int height, int textureWidth, int textureHeight,
+            float r, float g, float b, float a
+    ) {
+        blitWithColor(graphics, atlasLocation, x, y, width, height, uOffset, vOffset, width, height, textureWidth, textureHeight, r, g, b, a);
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public static void blitWithColor(
+            GuiGraphics graphics,
+            ResourceLocation atlasLocation,
+            int x,
+            int y,
+            int width,
+            int height,
+            float uOffset,
+            float vOffset,
+            int uWidth,
+            int vHeight,
+            int textureWidth,
+            int textureHeight,
+            float r, float g, float b, float a
+    ) {
+        blitWithColor(graphics,
+                atlasLocation, x, x + width, y, y + height, 0, uWidth, vHeight, uOffset, vOffset, textureWidth, textureHeight, r, g, b, a
+        );
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    private static void blitWithColor(
+            GuiGraphics graphics,
+            ResourceLocation atlasLocation,
+            int x1,
+            int x2,
+            int y1,
+            int y2,
+            int blitOffset,
+            int uWidth,
+            int vHeight,
+            float uOffset,
+            float vOffset,
+            int textureWidth,
+            int textureHeight,
+            float r, float g, float b, float a
+    ) {
+        innerBlitWithColor(
+                graphics,
+                atlasLocation,
+                x1,
+                x2,
+                y1,
+                y2,
+                blitOffset,
+                (uOffset + 0.0F) / (float)textureWidth,
+                (uOffset + (float)uWidth) / (float)textureWidth,
+                (vOffset + 0.0F) / (float)textureHeight,
+                (vOffset + (float)vHeight) / (float)textureHeight,
+                r, g, b, a
+        );
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    private static void innerBlitWithColor(
+            GuiGraphics graphics,
+            ResourceLocation atlasLocation,
+            int x1,
+            int x2,
+            int y1,
+            int y2,
+            int blitOffset,
+            float minU,
+            float maxU,
+            float minV,
+            float maxV,
+            float r, float g, float b, float a
+    ) {
+        RenderSystem.setShaderTexture(0, atlasLocation);
+        RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
+        RenderSystem.enableBlend();
+        RenderSystem.disableDepthTest();
+        Matrix4f matrix4f = graphics.pose().last().pose();
+        BufferBuilder bufferbuilder = Tesselator.getInstance().begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
+        bufferbuilder.addVertex(matrix4f, (float)x1, (float)y1, (float)blitOffset).setUv(minU, minV).setColor(r, g, b, a);
+        bufferbuilder.addVertex(matrix4f, (float)x1, (float)y2, (float)blitOffset).setUv(minU, maxV).setColor(r, g, b, a);
+        bufferbuilder.addVertex(matrix4f, (float)x2, (float)y2, (float)blitOffset).setUv(maxU, maxV).setColor(r, g, b, a);
+        bufferbuilder.addVertex(matrix4f, (float)x2, (float)y1, (float)blitOffset).setUv(maxU, minV).setColor(r, g, b, a);
+        BufferUploader.drawWithShader(bufferbuilder.buildOrThrow());
+        RenderSystem.disableBlend();
+        RenderSystem.enableDepthTest();
     }
 }

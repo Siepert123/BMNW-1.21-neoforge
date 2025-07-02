@@ -6,6 +6,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import nl.melonstudios.bmnw.init.BMNWItems;
 import org.jetbrains.annotations.Contract;
@@ -158,6 +159,26 @@ public class WorkbenchRecipes {
                 Ingredient.of(tag("c:plates/steel")),
                 Ingredient.of(tag("c:plates/steel")),
                 Ingredient.of(tag("c:plates/steel"))
+        );
+        this.addRecipe("bmnw:workbench/industrial_heater", 1,
+                new ItemStack(BMNWItems.INDUSTRIAL_HEATER.get()),
+                Ingredient.of(Items.FURNACE),
+                Ingredient.of(tag("c:plates/steel")),
+                Ingredient.of(tag("c:plates/steel")),
+                Ingredient.of(tag("c:plates/steel")),
+                Ingredient.of(tag("c:plates/steel")),
+                Ingredient.of(tag("c:plates/steel")),
+                Ingredient.of(tag("c:plates/steel")),
+                Ingredient.of(tag("c:plates/steel")),
+                Ingredient.of(tag("c:plates/steel")),
+                Ingredient.of(tag("c:ingots/copper")),
+                Ingredient.of(tag("c:ingots/copper")),
+                Ingredient.of(tag("c:ingots/copper")),
+                Ingredient.of(tag("c:ingots/copper")),
+                Ingredient.of(tag("c:ingots/copper")),
+                Ingredient.of(tag("c:ingots/copper")),
+                Ingredient.of(tag("c:ingots/copper")),
+                Ingredient.of(tag("c:ingots/copper"))
         );
     }
 

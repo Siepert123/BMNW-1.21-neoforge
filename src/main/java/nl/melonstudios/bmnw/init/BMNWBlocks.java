@@ -57,6 +57,9 @@ public class BMNWBlocks {
 
     static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks("bmnw");
 
+    public static final DeferredBlock<DummyBlock> DUMMY = BLOCKS.register("dummy",
+            () -> new DummyBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)));
+
     //region Material ores & storage blocks
     public static final DeferredBlock<Block> STEEL_BLOCK = BLOCKS.register("steel_block",
             () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.DIAMOND_BLOCK).sound(SoundType.METAL)));
@@ -168,9 +171,7 @@ public class BMNWBlocks {
     //endregion
 
     //region Barrels
-
-    public static final DeferredBlock<IronBarrelBlock> IRON_BARREL = BLOCKS.register("iron_barrel",
-            () -> new IronBarrelBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).noOcclusion()));
+    
     public static final DeferredBlock<NuclearWasteBarrelBlock> NUCLEAR_WASTE_BARREL = BLOCKS.register("nuclear_waste_barrel",
             () -> new NuclearWasteBarrelBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).noOcclusion(), 50));
 
@@ -194,6 +195,8 @@ public class BMNWBlocks {
             () -> new PressBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).noOcclusion()));
     public static final DeferredBlock<AlloyBlastFurnaceBlock> ALLOY_BLAST_FURNACE = BLOCKS.register("alloy_blast_furnace",
             () -> new AlloyBlastFurnaceBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.NETHER_BRICKS)));
+    public static final DeferredBlock<BuildersFurnaceBlock> BUILDERS_FURNACE = BLOCKS.register("builders_furnace",
+            () -> new BuildersFurnaceBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.FURNACE)));
 
     // Generators
     public static final DeferredBlock<CombustionEngineBlock> COMBUSTION_ENGINE = BLOCKS.register("combustion_engine",
@@ -211,6 +214,11 @@ public class BMNWBlocks {
 
     public static final DeferredBlock<RadioAntennaControllerBlock> RADIO_ANTENNA_CONTROLLER = BLOCKS.register("radio_antenna_controller",
             () -> new RadioAntennaControllerBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get())));
+
+    public static final DeferredBlock<IndustrialHeaterBlock> INDUSTRIAL_HEATER = BLOCKS.register("industrial_heater",
+            () -> new IndustrialHeaterBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get())));
+    public static final DeferredBlock<ChemplantBlock> CHEMPLANT = BLOCKS.register("chemplant",
+            () -> new ChemplantBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get())));
 
     public static final DeferredBlock<MachineScrapBlock> MACHINE_SCRAP = BLOCKS.register("machine_scrap",
             () -> new MachineScrapBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_DECO_BLOCK.get()).noOcclusion().noLootTable()));

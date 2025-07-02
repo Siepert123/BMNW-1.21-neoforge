@@ -3,19 +3,19 @@ package nl.melonstudios.bmnw.block.machines;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityTicker;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -24,12 +24,10 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import nl.melonstudios.bmnw.audio.BEBoundPredicateSoundInstance;
 import nl.melonstudios.bmnw.audio.CombustionEngineAudio;
 import nl.melonstudios.bmnw.block.entity.CombustionEngineBlockEntity;
 import nl.melonstudios.bmnw.block.misc.TickingEntityBlock;
 import nl.melonstudios.bmnw.init.BMNWStateProperties;
-import nl.melonstudios.bmnw.misc.DistrictHolder;
 import org.jetbrains.annotations.Nullable;
 
 public class CombustionEngineBlock extends TickingEntityBlock {
@@ -42,6 +40,36 @@ public class CombustionEngineBlock extends TickingEntityBlock {
                 .setValue(FACING, Direction.NORTH)
                 .setValue(ACTIVE, false)
         );
+    }
+
+    @Override
+    protected boolean isRandomlyTicking(BlockState state) {
+        return state.getValue(ACTIVE);
+    }
+
+    @Override
+    protected void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+        if (state.getValue(ACTIVE)) {
+            level.playSound(null, pos, SoundEvents.FURNACE_FIRE_CRACKLE, SoundSource.BLOCKS);
+        }
+    }
+
+    @Override
+    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
+        if (state.getValue(ACTIVE)) {
+            double d0 = pos.getX() + 0.5;
+            double d1 = pos.getY();
+            double d2 = pos.getZ() + 0.5;
+
+            Direction direction = state.getValue(FACING);
+            Direction.Axis direction$axis = direction.getAxis();
+            double d4 = random.nextDouble() * 0.6 - 0.3;
+            double d5 = direction$axis == Direction.Axis.X ? (double)direction.getStepX() * 0.52 : d4;
+            double d6 = random.nextDouble() * 6.0 / 16.0;
+            double d7 = direction$axis == Direction.Axis.Z ? (double)direction.getStepZ() * 0.52 : d4;
+            level.addParticle(ParticleTypes.SMOKE, d0 + d5, d1 + d6, d2 + d7, 0.0, 0.0, 0.0);
+            level.addParticle(ParticleTypes.FLAME, d0 + d5, d1 + d6, d2 + d7, 0.0, 0.0, 0.0);
+        }
     }
 
     @Override
@@ -90,7 +118,6 @@ public class CombustionEngineBlock extends TickingEntityBlock {
 
     @OnlyIn(Dist.CLIENT)
     public static void playSound0(CombustionEngineBlockEntity be) {
-        System.out.println("sound fx!");
         Minecraft.getInstance().getSoundManager().play(new CombustionEngineAudio(be));
     }
 }

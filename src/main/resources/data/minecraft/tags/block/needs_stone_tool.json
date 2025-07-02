@@ -75,7 +75,11 @@
     "bmnw:steel_catwalk_stairs_railing",
     "bmnw:extendable_catwalk",
     "bmnw:extendable_catwalk_control",
-    "bmnw:extendable_catwalk_dummy"
+    "bmnw:extendable_catwalk_dummy",
+    "bmnw:chemplant",
+    "bmnw:industrial_heater",
+    "bmnw:radio_antenna_controller",
+    "bmnw:dummy"
   ],
   "replace": false
 }

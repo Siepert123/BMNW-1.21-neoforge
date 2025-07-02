@@ -7,6 +7,8 @@ import net.minecraft.world.item.*;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import nl.melonstudios.bmnw.item.ChemplantBlockItem;
+import nl.melonstudios.bmnw.item.IndustrialHeaterBlockItem;
 import nl.melonstudios.bmnw.item.battery.BatteryItem;
 import nl.melonstudios.bmnw.item.battery.InfiniteBatteryItem;
 import nl.melonstudios.bmnw.item.misc.*;
@@ -347,6 +349,8 @@ public class BMNWItems {
             () -> new BlockItem(BMNWBlocks.PRESS.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> ALLOY_BLAST_FURNACE = ITEMS.register("alloy_blast_furnace",
             () -> new BlockItem(BMNWBlocks.ALLOY_BLAST_FURNACE.get(), new Item.Properties()));
+    public static final DeferredItem<BlockItem> BUILDERS_FURNACE = ITEMS.register("builders_furnace",
+            () -> new BlockItem(BMNWBlocks.BUILDERS_FURNACE.get(), new Item.Properties()));
 
     // Generators
 
@@ -364,6 +368,10 @@ public class BMNWItems {
             () -> new LargeShredderBlockItem(BMNWBlocks.LARGE_SHREDDER.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> RADIO_ANTENNA_CONTROLLER = ITEMS.register("radio_antenna_controller",
             () -> new BlockItem(BMNWBlocks.RADIO_ANTENNA_CONTROLLER.get(), new Item.Properties()));
+    public static final DeferredItem<IndustrialHeaterBlockItem> INDUSTRIAL_HEATER = ITEMS.register("industrial_heater",
+            () -> new IndustrialHeaterBlockItem(BMNWBlocks.INDUSTRIAL_HEATER.get(), new Item.Properties()));
+    public static final DeferredItem<ChemplantBlockItem> CHEMPLANT = ITEMS.register("chemplant",
+            () -> new ChemplantBlockItem(BMNWBlocks.CHEMPLANT.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> MACHINE_SCRAP = ITEMS.register("machine_scrap",
             () -> new BlockItem(BMNWBlocks.MACHINE_SCRAP.get(), new Item.Properties()));
     //endregion

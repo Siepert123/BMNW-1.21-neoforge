@@ -52,7 +52,7 @@ public class CombustionEngineBlockEntity extends SyncedBlockEntity implements Me
     public static final int SLOT_WATER_BUCKET = 2;
     public static final int SLOT_EMPTY_BUCKET = 3;
 
-    public static final int ENERGY_CAPACITY = 4000;
+    public static final int ENERGY_CAPACITY = 20000;
     public static final int WATER_CAPACITY = 8000;
 
     public CombustionEngineBlockEntity(BlockPos pos, BlockState blockState) {
@@ -364,6 +364,7 @@ public class CombustionEngineBlockEntity extends SyncedBlockEntity implements Me
                         } else {
                             this.inventory.extractItem(SLOT_FUEL, 1, false);
                         }
+                        this.level.playSound(null, this.worldPosition, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.1F, 1.0F);
                         this.notifyChange();
                     }
                 }
@@ -399,6 +400,10 @@ public class CombustionEngineBlockEntity extends SyncedBlockEntity implements Me
                             break water;
                         }
                         this.fluid.fill(handler.drain(drained, IFluidHandler.FluidAction.EXECUTE), IFluidHandler.FluidAction.EXECUTE);
+                        if (handler.getFluidInTank(0).isEmpty()) {
+                            ItemStack remain = this.inventory.insertItem(SLOT_EMPTY_BUCKET, bucket.copy(), false);
+                            this.inventory.setStackInSlot(SLOT_WATER_BUCKET, remain);
+                        }
                         this.notifyChange();
                     }
                 }
@@ -443,7 +448,7 @@ public class CombustionEngineBlockEntity extends SyncedBlockEntity implements Me
 
         if (this.level.isClientSide) {
             if (!this.wasBoiling && this.maxBurnTime > 0) {
-                DistrictHolder.clientOnly(() -> () -> CombustionEngineBlock.playSound(this));
+                //DistrictHolder.clientOnly(() -> () -> CombustionEngineBlock.playSound(this));
             }
             this.wasBoiling = this.maxBurnTime > 0;
         }

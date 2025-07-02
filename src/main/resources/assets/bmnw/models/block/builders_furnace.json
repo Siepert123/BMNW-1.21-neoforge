@@ -1,0 +1,13 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "side": "bmnw:block/builders_furnace_side",
+    "north": "bmnw:block/builders_furnace_front",
+    "east": "#side",
+    "south": "#side",
+    "west": "#side",
+    "up": "minecraft:block/chiseled_stone_bricks",
+    "down": "minecraft:block/stonecutter_bottom",
+    "particle": "#side"
+  }
+}

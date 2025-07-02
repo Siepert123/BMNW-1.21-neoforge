@@ -3,6 +3,7 @@ package nl.melonstudios.bmnw.init;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import nl.melonstudios.bmnw.block.decoration.BaseSmallLampBlock;
 import nl.melonstudios.bmnw.block.entity.*;
@@ -14,6 +15,15 @@ import java.util.function.Supplier;
 public class BMNWBlockEntities {
     private static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES
             = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, "bmnw");
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<DummyBlockEntity>> DUMMY = BLOCK_ENTITIES.register(
+            "dummy",
+            () -> new BlockEntityType<>(
+                    DummyBlockEntity::new,
+                    Set.of(BMNWBlocks.DUMMY.get()),
+                    null
+            )
+    );
 
     public static final Supplier<BlockEntityType<SmallLampBlockEntity>> SMALL_LAMP = BLOCK_ENTITIES.register(
             "small_lamp",
@@ -54,14 +64,6 @@ public class BMNWBlockEntities {
             () -> new BlockEntityType<>(
                     ExcavatorBlockEntitySlave::new,
                     Set.of(),
-                    null
-            )
-    );
-    public static final Supplier<BlockEntityType<IronBarrelBlockEntity>> IRON_BARREL = BLOCK_ENTITIES.register(
-            "iron_barrel",
-            () -> new BlockEntityType<>(
-                    IronBarrelBlockEntity::new,
-                    Set.of(BMNWBlocks.IRON_BARREL.get()),
                     null
             )
     );
@@ -174,6 +176,23 @@ public class BMNWBlockEntities {
             () -> new BlockEntityType<>(
                     RadioAntennaControllerBlockEntity::new,
                     Set.of(BMNWBlocks.RADIO_ANTENNA_CONTROLLER.get()),
+                    null
+            )
+    );
+
+    public static final Supplier<BlockEntityType<IndustrialHeaterBlockEntity>> INDUSTRIAL_HEATER = BLOCK_ENTITIES.register(
+            "industrial_heater",
+            () -> new BlockEntityType<>(
+                    IndustrialHeaterBlockEntity::new,
+                    Set.of(BMNWBlocks.INDUSTRIAL_HEATER.get()),
+                    null
+            )
+    );
+    public static final Supplier<BlockEntityType<ChemplantBlockEntity>> CHEMPLANT = BLOCK_ENTITIES.register(
+            "chemplant",
+            () -> new BlockEntityType<>(
+                    ChemplantBlockEntity::new,
+                    Set.of(BMNWBlocks.CHEMPLANT.get()),
                     null
             )
     );

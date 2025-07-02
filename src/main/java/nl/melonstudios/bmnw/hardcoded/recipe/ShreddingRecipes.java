@@ -4,6 +4,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.PreparableReloadListener;
 import net.minecraft.server.packs.resources.ResourceManager;
+import net.minecraft.server.packs.resources.ResourceManagerReloadListener;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.item.Item;
@@ -11,14 +12,13 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import nl.melonstudios.bmnw.init.BMNWItems;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
 
-//TODO: implement more recipes
-public class ShreddingRecipes implements PreparableReloadListener {
+public class ShreddingRecipes implements ResourceManagerReloadListener {
+    private static final Logger LOGGER = IngredientPair.LOGGER;
     private static TagKey<Item> tag(String id) {
         return TagKey.create(Registries.ITEM, ResourceLocation.parse(id));
     }
@@ -30,7 +30,7 @@ public class ShreddingRecipes implements PreparableReloadListener {
     }
 
     public void reload() {
-        System.out.println("reloading shredding recipes...");
+        LOGGER.debug("Reloading shredding recipes");
         this.recipes.clear();
         this.addRecipe(Ingredient.of(Items.COBBLESTONE), new ItemStack(Items.GRAVEL));
         this.addRecipe(Ingredient.of(Items.GRAVEL), new ItemStack(Items.SAND));
@@ -103,15 +103,12 @@ public class ShreddingRecipes implements PreparableReloadListener {
     }
 
     @Override
-    public CompletableFuture<Void> reload(PreparationBarrier preparationBarrier, ResourceManager resourceManager,
-                                          ProfilerFiller preparationsProfiler, ProfilerFiller reloadProfiler,
-                                          Executor backgroundExecutor, Executor gameExecutor) {
-        this.reload();
-        return CompletableFuture.completedFuture(null);
+    public String getName() {
+        return "ShreddingRecipes";
     }
 
     @Override
-    public String getName() {
-        return "ShreddingRecipes";
+    public void onResourceManagerReload(ResourceManager resourceManager) {
+        this.reload();
     }
 }
