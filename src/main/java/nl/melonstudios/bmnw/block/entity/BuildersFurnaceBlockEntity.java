@@ -122,6 +122,10 @@ public class BuildersFurnaceBlockEntity extends SyncedBlockEntity implements Men
         ItemStack input = this.inventory.getStackInSlot(SLOT_INPUT);
         boolean canRecipeBeMade = !input.isEmpty() && recipe != null && this.inventory.insertItem(SLOT_OUTPUT, recipe.value().output().copy(), true).isEmpty();
 
+        boolean shouldReset = true;
+        boolean shouldBeLit = false;
+
+        if (this.fuelTicks <= 0) this.maxFuelTicks = 0;
         if (canRecipeBeMade && this.fuelTicks <= 0 && !level.isClientSide()) {
             ItemStack fuel = this.inventory.getStackInSlot(SLOT_FUEL);
             if (!fuel.isEmpty()) {
@@ -130,7 +134,7 @@ public class BuildersFurnaceBlockEntity extends SyncedBlockEntity implements Men
                     this.maxFuelTicks = 20;
                     this.notifyChange();
                 } else {
-                    int ticks = fuel.getBurnTime(null);
+                    int ticks = fuel.getBurnTime(null) / 2;
                     if (ticks > 0) {
                         this.fuelTicks = ticks;
                         this.maxFuelTicks = ticks;
@@ -142,17 +146,18 @@ public class BuildersFurnaceBlockEntity extends SyncedBlockEntity implements Men
             }
         }
 
-        boolean shouldReset = true;
-        boolean shouldBeLit = false;
+        optionalRecipe = this.getRecipe();
+        recipe = optionalRecipe.orElse(null);
+        input = this.inventory.getStackInSlot(SLOT_INPUT);
+        canRecipeBeMade = !input.isEmpty() && recipe != null && this.inventory.insertItem(SLOT_OUTPUT, recipe.value().output().copy(), true).isEmpty();
 
-        recipe:
         if (this.fuelTicks > 0) {
             shouldBeLit = true;
             this.fuelTicks--;
             if (canRecipeBeMade) {
                 shouldReset = false;
                 this.maxProgress = recipe.value().recipeTime();
-                if (this.progress++ >= this.maxProgress) {
+                if (this.progress >= this.maxProgress) {
                     this.progress = 0;
                     if (!this.level.isClientSide) {
                         input.shrink(1);
@@ -160,8 +165,9 @@ public class BuildersFurnaceBlockEntity extends SyncedBlockEntity implements Men
                         this.notifyChange();
                     }
                 }
+                this.progress++;
             }
-        } else this.maxFuelTicks = 0;
+        }
 
         if (shouldReset) {
             this.progress = 0;

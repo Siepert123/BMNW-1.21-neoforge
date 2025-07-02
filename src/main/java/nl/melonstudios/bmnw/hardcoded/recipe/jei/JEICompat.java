@@ -4,12 +4,15 @@ import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.registration.*;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.ItemLike;
 import nl.melonstudios.bmnw.BMNW;
 import nl.melonstudios.bmnw.hardcoded.recipe.AlloyingRecipes;
@@ -19,11 +22,14 @@ import nl.melonstudios.bmnw.hardcoded.recipe.WorkbenchRecipes;
 import nl.melonstudios.bmnw.hardcoded.recipe.jei.subtype.FireMarbleSubtypeInterpreter;
 import nl.melonstudios.bmnw.hardcoded.recipe.jei.subtype.FluidContainerSubtype;
 import nl.melonstudios.bmnw.init.BMNWItems;
+import nl.melonstudios.bmnw.init.BMNWRecipes;
 import nl.melonstudios.bmnw.init.BMNWTabs;
 import nl.melonstudios.bmnw.item.tools.FluidContainerItem;
 import nl.melonstudios.bmnw.screen.AlloyFurnaceScreen;
+import nl.melonstudios.bmnw.screen.BuildersFurnaceScreen;
 import nl.melonstudios.bmnw.screen.PressScreen;
 import nl.melonstudios.bmnw.screen.WorkbenchScreen;
+import nl.melonstudios.bmnw.softcoded.recipe.BuildersSmeltingRecipe;
 
 import javax.annotation.Nonnull;
 import java.util.Arrays;
@@ -92,6 +98,11 @@ public class JEICompat implements IModPlugin {
                 Component.literal("They can also be extinguished in water."),
                 Component.literal("(This is yet to be added...)")
         );
+
+        RecipeManager recipeManager = Minecraft.getInstance().level.getRecipeManager();
+        List<RecipeHolder<BuildersSmeltingRecipe>> buildersSmeltingRecipes = recipeManager
+                .getAllRecipesFor(BMNWRecipes.BUILDERS_SMELTING_TYPE.get()).stream().toList();
+        registration.addRecipes(BMNWRecipeTypes.BUILDERS_SMELTING, buildersSmeltingRecipes);
     }
 
     @Override
@@ -103,6 +114,8 @@ public class JEICompat implements IModPlugin {
         registration.addRecipeCatalyst(BMNWItems.PRESS, BMNWRecipeTypes.PRESSING);
         registration.addRecipeCatalyst(BMNWItems.ALLOY_BLAST_FURNACE, BMNWRecipeTypes.ALLOYING);
         registration.addRecipeCatalyst(BMNWItems.LARGE_SHREDDER, BMNWRecipeTypes.SHREDDING);
+
+        registration.addRecipeCatalyst(BMNWItems.BUILDERS_FURNACE, BMNWRecipeTypes.BUILDERS_SMELTING);
     }
 
     @Override
@@ -111,6 +124,10 @@ public class JEICompat implements IModPlugin {
         registration.addRecipeCategories(new PressingRecipeCategory());
         registration.addRecipeCategories(new AlloyingRecipeCategory());
         registration.addRecipeCategories(new ShreddingRecipeCategory());
+
+        registration.addRecipeCategories(new BuildersSmeltingRecipeCategory(
+                registration.getJeiHelpers().getGuiHelper()
+        ));
     }
 
     @Override
@@ -134,6 +151,12 @@ public class JEICompat implements IModPlugin {
                 AlloyFurnaceScreen.class,
                 83, 22, 28, 38,
                 BMNWRecipeTypes.ALLOYING
+        );
+
+        registration.addRecipeClickArea(
+                BuildersFurnaceScreen.class,
+                79, 34, 24, 17,
+                BMNWRecipeTypes.BUILDERS_SMELTING
         );
     }
 
