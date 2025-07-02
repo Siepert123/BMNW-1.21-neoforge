@@ -1,7 +1,6 @@
 package nl.melonstudios.bmnw.hardcoded.recipe.jei;
 
 import mezz.jei.api.recipe.RecipeType;
-import net.minecraft.core.Holder;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import nl.melonstudios.bmnw.hardcoded.recipe.ShreddingRecipe;
 import nl.melonstudios.bmnw.hardcoded.recipe.WorkbenchRecipe;
