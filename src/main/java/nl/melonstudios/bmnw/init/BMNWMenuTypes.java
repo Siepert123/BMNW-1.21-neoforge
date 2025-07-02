@@ -35,6 +35,11 @@ public class BMNWMenuTypes {
             () -> IMenuTypeExtension.create(CombustionEngineMenu::new)
     );
 
+    public static final DeferredHolder<MenuType<?>, MenuType<IndustrialHeaterMenu>> INDUSTRIAL_HEATER = MENU_TYPES.register(
+            "industrial_heater",
+            () -> IMenuTypeExtension.create(IndustrialHeaterMenu::new)
+    );
+
     public static void register(IEventBus eventBus) {
         MENU_TYPES.register(eventBus);
     }

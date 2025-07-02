@@ -215,6 +215,7 @@ public class BMNW {
         event.register(BMNWMenuTypes.WORKBENCH.get(), WorkbenchScreen::new);
 
         event.register(BMNWMenuTypes.COMBUSTION_ENGINE.get(), CombustionEngineScreen::new);
+        event.register(BMNWMenuTypes.INDUSTRIAL_HEATER.get(), IndustrialHeaterScreen::new);
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call

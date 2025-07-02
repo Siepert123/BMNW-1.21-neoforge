@@ -27,6 +27,8 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import nl.melonstudios.bmnw.cfg.BMNWClientConfig;
+import nl.melonstudios.bmnw.item.battery.BatteryItem;
+import nl.melonstudios.bmnw.item.tools.FluidContainerItem;
 import org.joml.Matrix4f;
 
 import javax.annotation.Nonnull;
@@ -432,5 +434,24 @@ public class Library {
         BufferUploader.drawWithShader(bufferbuilder.buildOrThrow());
         RenderSystem.disableBlend();
         RenderSystem.enableDepthTest();
+    }
+
+    public static String formatRedstoneFlux(int rf) {
+        return BatteryItem.formatNicely(rf);
+    }
+    public static String formatMilliBuckets(int mB) {
+        return FluidContainerItem.formatNicely(mB);
+    }
+    public static String formatThermalUnits(int Tu) {
+        if (Tu > 1000000000) {
+            return Mth.quantize((Tu / 1000000000.0F) * 100.0F, 1) / 100.0F + "GTu";
+        }
+        if (Tu > 1000000) {
+            return Mth.quantize((Tu / 1000000.0F) * 100.0F, 1) / 100.0F + "MTu";
+        }
+        if (Tu > 1000) {
+            return Mth.quantize((Tu / 1000.0F) * 100.0F, 1) / 100.0F + "kTu";
+        }
+        return Tu + "Tu";
     }
 }

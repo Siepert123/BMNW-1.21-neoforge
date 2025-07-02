@@ -3,11 +3,14 @@ package nl.melonstudios.bmnw.block.machines;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -102,14 +105,15 @@ public class IndustrialHeaterBlock extends TickingEntityBlock {
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
+        if (player.isShiftKeyDown()) return InteractionResult.PASS;
         if (level.getBlockEntity(pos) instanceof IndustrialHeaterBlockEntity be) {
-            if (be.inventory.getStackInSlot(0).isEmpty()) {
-                be.inventory.setStackInSlot(0, stack.copy());
-                return ItemInteractionResult.sidedSuccess(level.isClientSide);
+            if (!level.isClientSide) {
+                player.openMenu(new SimpleMenuProvider(be, Component.translatable("block.bmnw.industrial_heater")), pos);
             }
+            return InteractionResult.SUCCESS;
         }
-        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        return InteractionResult.PASS;
     }
 
     @Override
