@@ -127,6 +127,7 @@ public class BuildersFurnaceBlockEntity extends SyncedBlockEntity implements Men
 
         if (this.fuelTicks <= 0) this.maxFuelTicks = 0;
         if (canRecipeBeMade && this.fuelTicks <= 0 && !level.isClientSide()) {
+            shouldReset = false;
             ItemStack fuel = this.inventory.getStackInSlot(SLOT_FUEL);
             if (!fuel.isEmpty()) {
                 if (fuel.is(BMNWTags.Items.INFINITE_FUEL_SOURCES)) {
