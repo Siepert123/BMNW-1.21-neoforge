@@ -37,7 +37,7 @@ public class BuildersSmeltingRecipeCategory implements IRecipeCategory<RecipeHol
 
     @Override
     public RecipeType<RecipeHolder<BuildersSmeltingRecipe>> getRecipeType() {
-        return BMNWRecipeTypes.BUILDERS_SMELTING;
+        return BMNWRecipeTypes.BUILDERS_SMELTING.get();
     }
 
     @Override

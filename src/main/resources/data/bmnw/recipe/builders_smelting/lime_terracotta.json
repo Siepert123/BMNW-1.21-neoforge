@@ -1,0 +1,10 @@
+{
+  "type": "bmnw:builders_smelting",
+  "input": {
+    "item": "minecraft:lime_terracotta"
+  },
+  "output": {
+    "id": "minecraft:lime_glazed_terracotta"
+  },
+  "time": 100
+}

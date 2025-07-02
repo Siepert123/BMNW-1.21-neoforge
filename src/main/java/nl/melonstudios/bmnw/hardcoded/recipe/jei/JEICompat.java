@@ -102,7 +102,7 @@ public class JEICompat implements IModPlugin {
         RecipeManager recipeManager = Minecraft.getInstance().level.getRecipeManager();
         List<RecipeHolder<BuildersSmeltingRecipe>> buildersSmeltingRecipes = recipeManager
                 .getAllRecipesFor(BMNWRecipes.BUILDERS_SMELTING_TYPE.get()).stream().toList();
-        registration.addRecipes(BMNWRecipeTypes.BUILDERS_SMELTING, buildersSmeltingRecipes);
+        registration.addRecipes(BMNWRecipeTypes.BUILDERS_SMELTING.get(), buildersSmeltingRecipes);
     }
 
     @Override
@@ -115,7 +115,7 @@ public class JEICompat implements IModPlugin {
         registration.addRecipeCatalyst(BMNWItems.ALLOY_BLAST_FURNACE, BMNWRecipeTypes.ALLOYING);
         registration.addRecipeCatalyst(BMNWItems.LARGE_SHREDDER, BMNWRecipeTypes.SHREDDING);
 
-        registration.addRecipeCatalyst(BMNWItems.BUILDERS_FURNACE, BMNWRecipeTypes.BUILDERS_SMELTING);
+        registration.addRecipeCatalyst(BMNWItems.BUILDERS_FURNACE, BMNWRecipeTypes.BUILDERS_SMELTING.get());
     }
 
     @Override
@@ -156,7 +156,7 @@ public class JEICompat implements IModPlugin {
         registration.addRecipeClickArea(
                 BuildersFurnaceScreen.class,
                 79, 34, 24, 17,
-                BMNWRecipeTypes.BUILDERS_SMELTING
+                BMNWRecipeTypes.BUILDERS_SMELTING.get()
         );
     }
 

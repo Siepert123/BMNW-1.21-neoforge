@@ -144,14 +144,7 @@ public class BuildersFurnaceBlockEntity extends SyncedBlockEntity implements Men
                     }
                 }
             }
-        }
-
-        optionalRecipe = this.getRecipe();
-        recipe = optionalRecipe.orElse(null);
-        input = this.inventory.getStackInSlot(SLOT_INPUT);
-        canRecipeBeMade = !input.isEmpty() && recipe != null && this.inventory.insertItem(SLOT_OUTPUT, recipe.value().output().copy(), true).isEmpty();
-
-        if (this.fuelTicks > 0) {
+        } else if (this.fuelTicks > 0) {
             shouldBeLit = true;
             this.fuelTicks--;
             if (canRecipeBeMade) {
