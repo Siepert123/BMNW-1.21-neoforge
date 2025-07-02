@@ -7,4 +7,6 @@ newmtl m_a7377a29-4927-7027-4e29-128581f7d299
 map_Kd bmnw:block/industrial_generic_base_48x
 newmtl m_a13df4e5-48c0-c861-8ca8-b87661816ce5
 map_Kd bmnw:block/industrial_heater_top
+newmtl m_0f11f8e1-8149-d6e5-c23c-bf7972611d1c
+map_Kd bmnw:block/heat_coil
 newmtl none
