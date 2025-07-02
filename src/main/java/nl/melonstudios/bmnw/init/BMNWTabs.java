@@ -10,10 +10,8 @@ import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.material.Fluid;
-import net.minecraft.world.level.material.Fluids;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
@@ -21,9 +19,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import nl.melonstudios.bmnw.item.battery.BatteryItem;
 import nl.melonstudios.bmnw.misc.Library;
 import nl.melonstudios.bmnw.misc.NoUnused;
-import org.jetbrains.annotations.NotNull;
 
-import java.util.Iterator;
 import java.util.Random;
 import java.util.function.Supplier;
 

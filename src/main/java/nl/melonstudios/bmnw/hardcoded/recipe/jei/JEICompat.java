@@ -16,10 +16,10 @@ import nl.melonstudios.bmnw.hardcoded.recipe.AlloyingRecipes;
 import nl.melonstudios.bmnw.hardcoded.recipe.PressingRecipes;
 import nl.melonstudios.bmnw.hardcoded.recipe.ShreddingRecipes;
 import nl.melonstudios.bmnw.hardcoded.recipe.WorkbenchRecipes;
+import nl.melonstudios.bmnw.hardcoded.recipe.jei.subtype.FireMarbleSubtypeInterpreter;
 import nl.melonstudios.bmnw.hardcoded.recipe.jei.subtype.FluidContainerSubtype;
 import nl.melonstudios.bmnw.init.BMNWItems;
 import nl.melonstudios.bmnw.init.BMNWTabs;
-import nl.melonstudios.bmnw.hardcoded.recipe.jei.subtype.FireMarbleSubtypeInterpreter;
 import nl.melonstudios.bmnw.item.tools.FluidContainerItem;
 import nl.melonstudios.bmnw.screen.AlloyFurnaceScreen;
 import nl.melonstudios.bmnw.screen.PressScreen;
@@ -102,7 +102,6 @@ public class JEICompat implements IModPlugin {
         );
         registration.addRecipeCatalyst(BMNWItems.PRESS, BMNWRecipeTypes.PRESSING);
         registration.addRecipeCatalyst(BMNWItems.ALLOY_BLAST_FURNACE, BMNWRecipeTypes.ALLOYING);
-        registration.addRecipeCatalyst(BMNWItems.BUILDERS_FURNACE, BMNWRecipeTypes.BUILDERS_SMELTING);
         registration.addRecipeCatalyst(BMNWItems.LARGE_SHREDDER, BMNWRecipeTypes.SHREDDING);
     }
 

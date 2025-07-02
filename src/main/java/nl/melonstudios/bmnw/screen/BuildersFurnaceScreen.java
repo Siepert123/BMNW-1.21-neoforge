@@ -7,6 +7,7 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.ContainerData;
 import nl.melonstudios.bmnw.BMNW;
 
 public class BuildersFurnaceScreen extends AbstractContainerScreen<BuildersFurnaceMenu> {
@@ -26,6 +27,28 @@ public class BuildersFurnaceScreen extends AbstractContainerScreen<BuildersFurna
         int y = (this.height - this.imageHeight) / 2;
 
         graphics.blit(GUI_TEXTURE, x, y, 0, 0, this.imageWidth, this.imageHeight);
+
+        ContainerData data = this.menu.data;
+
+        int scaledArrow = this.scaledArrow(data, 24);
+        int scaledFire = this.scaledFuel(data, 14);
+
+        if (scaledArrow > 0) {
+            graphics.blit(GUI_TEXTURE, x+79, y+34, 176, 14, scaledArrow, 17);
+        }
+        if (scaledFire > 0) {
+            int offset = 14 - scaledFire;
+            graphics.blit(GUI_TEXTURE, x+56, y+36+offset, 176, offset, 14, scaledFire);
+        }
+    }
+
+    private int scaledArrow(ContainerData data, int w) {
+        if (data.get(1) == 0) return 0;
+        return data.get(0) * w / data.get(1);
+    }
+    private int scaledFuel(ContainerData data, int h) {
+        if (data.get(3) == 0) return 0;
+        return data.get(2) * h / data.get(3);
     }
 
     @Override

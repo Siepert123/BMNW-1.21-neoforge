@@ -19,6 +19,7 @@ import nl.melonstudios.bmnw.init.BMNWBlockEntities;
 import nl.melonstudios.bmnw.init.BMNWRecipes;
 import nl.melonstudios.bmnw.init.BMNWTags;
 import nl.melonstudios.bmnw.interfaces.ITickable;
+import nl.melonstudios.bmnw.misc.Library;
 import nl.melonstudios.bmnw.screen.BuildersFurnaceMenu;
 import nl.melonstudios.bmnw.softcoded.recipe.BuildersSmeltingRecipe;
 import nl.melonstudios.bmnw.softcoded.recipe.BuildersSmeltingRecipeInput;
@@ -90,28 +91,38 @@ public class BuildersFurnaceBlockEntity extends SyncedBlockEntity implements Men
     @Override
     protected void save(CompoundTag nbt, HolderLookup.Provider registries, boolean packet) {
         nbt.put("Inventory", this.inventory.serializeNBT(registries));
-        if (!packet) {
-            nbt.putInt("progress", this.progress);
-            nbt.putInt("maxProgress", this.maxProgress);
-            nbt.putInt("fuelTicks", this.fuelTicks);
-            nbt.putInt("maxFuelTicks", this.maxFuelTicks);
-        }
+        nbt.putInt("progress", this.progress);
+        nbt.putInt("maxProgress", this.maxProgress);
+        nbt.putInt("fuelTicks", this.fuelTicks);
+        nbt.putInt("maxFuelTicks", this.maxFuelTicks);
     }
     @Override
     protected void load(CompoundTag nbt, HolderLookup.Provider registries, boolean packet) {
         this.inventory.deserializeNBT(registries, nbt.getCompound("Inventory"));
-        if (!packet) {
-            this.progress = nbt.getInt("progress");
-            this.maxProgress = nbt.getInt("maxProgress");
-            this.fuelTicks = nbt.getInt("fuelTicks");
-            this.maxFuelTicks = nbt.getInt("maxFuelTicks");
+        this.progress = nbt.getInt("progress");
+        this.maxProgress = nbt.getInt("maxProgress");
+        this.fuelTicks = nbt.getInt("fuelTicks");
+        this.maxFuelTicks = nbt.getInt("maxFuelTicks");
+    }
+
+    public void drops() {
+        for (int i = 0; i < this.inventory.getSlots(); i++) {
+            ItemStack stack = this.inventory.getStackInSlot(i);
+            if (stack.isEmpty()) continue;
+            Library.dropItem(this.level, this.worldPosition, stack.copy());
         }
     }
 
     @Override
     public void update() {
-        if (this.level.isClientSide) return;
-        if (this.maxFuelTicks <= 0) {
+        this.setChanged();
+
+        Optional<RecipeHolder<BuildersSmeltingRecipe>> optionalRecipe = this.getRecipe();
+        RecipeHolder<BuildersSmeltingRecipe> recipe = optionalRecipe.orElse(null);
+        ItemStack input = this.inventory.getStackInSlot(SLOT_INPUT);
+        boolean canRecipeBeMade = !input.isEmpty() && recipe != null && this.inventory.insertItem(SLOT_OUTPUT, recipe.value().output().copy(), true).isEmpty();
+
+        if (canRecipeBeMade && this.fuelTicks <= 0 && !level.isClientSide()) {
             ItemStack fuel = this.inventory.getStackInSlot(SLOT_FUEL);
             if (!fuel.isEmpty()) {
                 if (fuel.is(BMNWTags.Items.INFINITE_FUEL_SOURCES)) {
@@ -136,33 +147,28 @@ public class BuildersFurnaceBlockEntity extends SyncedBlockEntity implements Men
 
         recipe:
         if (this.fuelTicks > 0) {
-            this.setChanged();
             shouldBeLit = true;
             this.fuelTicks--;
-            ItemStack input = this.inventory.getStackInSlot(SLOT_INPUT);
-            if (input.isEmpty()) break recipe;
-            Optional<RecipeHolder<BuildersSmeltingRecipe>> optionalRecipe = this.getRecipe();
-            if (optionalRecipe.isEmpty()) break recipe;
-            RecipeHolder<BuildersSmeltingRecipe> recipe = optionalRecipe.get();
-            if (this.inventory.insertItem(SLOT_OUTPUT, recipe.value().output(), true).isEmpty()) {
+            if (canRecipeBeMade) {
                 shouldReset = false;
                 this.maxProgress = recipe.value().recipeTime();
                 if (this.progress++ >= this.maxProgress) {
                     this.progress = 0;
-                    input.shrink(1);
-                    this.inventory.insertItem(SLOT_OUTPUT, recipe.value().output(), false);
-                    this.notifyChange();
+                    if (!this.level.isClientSide) {
+                        input.shrink(1);
+                        this.inventory.insertItem(SLOT_OUTPUT, recipe.value().output().copy(), false);
+                        this.notifyChange();
+                    }
                 }
             }
         } else this.maxFuelTicks = 0;
 
         if (shouldReset) {
-            this.setChanged();
             this.progress = 0;
             this.maxProgress = 0;
         }
 
-        if (shouldBeLit != this.getBlockState().getValue(BlockStateProperties.LIT)) {
+        if (shouldBeLit != this.getBlockState().getValue(BlockStateProperties.LIT) && !this.level.isClientSide) {
             this.level.setBlock(this.worldPosition, this.getBlockState().setValue(BlockStateProperties.LIT, shouldBeLit), 3);
         }
     }

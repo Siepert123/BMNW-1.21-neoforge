@@ -66,7 +66,6 @@ import nl.melonstudios.bmnw.init.*;
 import nl.melonstudios.bmnw.interfaces.IScopeableItem;
 import nl.melonstudios.bmnw.item.client.FireMarbleColorizer;
 import nl.melonstudios.bmnw.item.client.FluidContainerColorizer;
-import nl.melonstudios.bmnw.item.client.PortableFluidTankClientExtensions;
 import nl.melonstudios.bmnw.item.client.SmallLampColorizer;
 import nl.melonstudios.bmnw.item.misc.CoreSampleItem;
 import nl.melonstudios.bmnw.item.misc.SmallLampBlockItem;

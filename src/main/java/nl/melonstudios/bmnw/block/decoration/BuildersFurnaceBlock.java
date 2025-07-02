@@ -2,7 +2,11 @@ package nl.melonstudios.bmnw.block.decoration;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
@@ -65,5 +69,38 @@ public class BuildersFurnaceBlock extends TickingEntityBlock {
             return InteractionResult.SUCCESS;
         }
         return InteractionResult.PASS;
+    }
+
+    @Override
+    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
+        if (state.is(newState.getBlock())) return;
+        if (level.getBlockEntity(pos) instanceof BuildersFurnaceBlockEntity be) {
+            be.drops();
+        }
+        level.invalidateCapabilities(pos);
+        level.removeBlockEntity(pos);
+    }
+
+    @Override
+    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
+        if (state.getValue(LIT)) {
+            if (random.nextFloat() < 0.2F) {
+                level.playLocalSound(pos, SoundEvents.FURNACE_FIRE_CRACKLE, SoundSource.BLOCKS,
+                        1.0F, 0.9F + random.nextFloat() * 0.2F, false);
+            }
+
+            double x = pos.getX() + 0.5;
+            double y = pos.getY();
+            double z = pos.getZ() + 0.5;
+
+            Direction direction = state.getValue(FACING);
+            Direction.Axis direction$axis = direction.getAxis();
+            double slide = random.nextDouble() * 0.6 - 0.3;
+            double offsetX = direction$axis == Direction.Axis.X ? (double)direction.getStepX() * 0.52 : slide;
+            double vertical = random.nextDouble() * 6.0 / 16.0;
+            double offsetZ = direction$axis == Direction.Axis.Z ? (double)direction.getStepZ() * 0.52 : slide;
+            level.addParticle(ParticleTypes.SMOKE, x + offsetX, y + vertical, z + offsetZ, 0.0, 0.0, 0.0);
+            level.addParticle(ParticleTypes.FLAME, x + offsetX, y + vertical, z + offsetZ, 0.0, 0.0, 0.0);
+        }
     }
 }

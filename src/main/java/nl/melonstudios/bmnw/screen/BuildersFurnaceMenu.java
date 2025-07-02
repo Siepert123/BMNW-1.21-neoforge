@@ -5,7 +5,6 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.ContainerLevelAccess;
-import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -35,9 +34,9 @@ public class BuildersFurnaceMenu extends AbstractBMNWContainerMenu {
         this.addPlayerInventory(inv, 8, 84);
         this.addPlayerHotbar(inv, 8, 142);
 
-        this.addSlot(new FuelSlot(this.be.inventory, 0, 18, 50));
-        this.addSlot(new SlotItemHandler(this.be.inventory, 1, 66, 16));
-        this.addSlot(new ResultSlot(this.be.inventory, 2, 118, 33));
+        this.addSlot(new FuelSlot(this.be.inventory, 0, 56, 53));
+        this.addSlot(new SlotItemHandler(this.be.inventory, 1, 56, 17));
+        this.addSlot(new ResultSlot(this.be.inventory, 2, 116, 35));
 
         this.addDataSlots(data);
         this.data = data;

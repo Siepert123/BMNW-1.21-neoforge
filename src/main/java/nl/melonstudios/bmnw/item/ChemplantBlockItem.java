@@ -6,7 +6,6 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import nl.melonstudios.bmnw.init.BMNWBlocks;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
