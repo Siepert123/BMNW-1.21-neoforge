@@ -91,7 +91,9 @@ public class JEICompat implements IModPlugin {
 
         RecipeManager recipeManager = Objects.requireNonNull(Minecraft.getInstance().level).getRecipeManager();
         List<RecipeHolder<WorkbenchRecipe>> workbenchRecipes = recipeManager
-                .getAllRecipesFor(BMNWRecipes.WORKBENCH_TYPE.get()).stream().toList();
+                .getAllRecipesFor(BMNWRecipes.WORKBENCH_TYPE.get()).stream()
+                .sorted((l, r) -> WorkbenchRecipeComparator.instance.compare(l.value(), r.value()))
+                .toList();
         registration.addRecipes(BMNWRecipeTypes.WORKBENCH.get(), workbenchRecipes);
         List<RecipeHolder<PressingRecipe>> pressingRecipes = recipeManager
                 .getAllRecipesFor(BMNWRecipes.PRESSING_TYPE.get()).stream().toList();
