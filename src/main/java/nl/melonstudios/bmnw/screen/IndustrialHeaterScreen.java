@@ -10,7 +10,6 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import nl.melonstudios.bmnw.BMNW;
 import nl.melonstudios.bmnw.block.entity.IndustrialHeaterBlockEntity;
-import nl.melonstudios.bmnw.item.battery.BatteryItem;
 import nl.melonstudios.bmnw.misc.Library;
 
 public class IndustrialHeaterScreen extends AbstractContainerScreen<IndustrialHeaterMenu> {

@@ -31,7 +31,10 @@ import nl.melonstudios.bmnw.hardcoded.recipe.WrappedSingletonRecipeInput;
 import nl.melonstudios.bmnw.init.*;
 import nl.melonstudios.bmnw.interfaces.IExtendedEnergyStorage;
 import nl.melonstudios.bmnw.interfaces.ITickable;
-import nl.melonstudios.bmnw.misc.*;
+import nl.melonstudios.bmnw.misc.BrokenConsumer;
+import nl.melonstudios.bmnw.misc.DistrictHolder;
+import nl.melonstudios.bmnw.misc.ExtendedEnergyStorage;
+import nl.melonstudios.bmnw.misc.StackMover;
 import nl.melonstudios.bmnw.softcoded.recipe.ShreddingRecipe;
 import org.jetbrains.annotations.Nullable;
 
