@@ -20,6 +20,7 @@ import nl.melonstudios.bmnw.init.BMNWBlockEntities;
 import nl.melonstudios.bmnw.interfaces.IHeatable;
 import nl.melonstudios.bmnw.interfaces.ISlaveOwner;
 import nl.melonstudios.bmnw.interfaces.ITickable;
+import nl.melonstudios.bmnw.misc.Library;
 import nl.melonstudios.bmnw.screen.IndustrialHeaterMenu;
 import org.jetbrains.annotations.Nullable;
 
@@ -38,6 +39,7 @@ public class IndustrialHeaterBlockEntity extends SyncedBlockEntity implements IT
     };
 
     public int storedHeat = 0;
+    public int heatIncrease = 100;
 
 
     public boolean initialized = false;
@@ -84,6 +86,7 @@ public class IndustrialHeaterBlockEntity extends SyncedBlockEntity implements IT
     @Override
     protected void save(CompoundTag nbt, HolderLookup.Provider registries, boolean packet) {
         nbt.put("Inventory", this.inventory.serializeNBT(registries));
+        nbt.putInt("heatIncrease", this.heatIncrease);
 
         if (!packet) {
             nbt.putBoolean("initialized", this.initialized);
@@ -96,6 +99,7 @@ public class IndustrialHeaterBlockEntity extends SyncedBlockEntity implements IT
     @Override
     protected void load(CompoundTag nbt, HolderLookup.Provider registries, boolean packet) {
         this.inventory.deserializeNBT(registries, nbt.getCompound("Inventory"));
+        this.heatIncrease = nbt.getInt("heatIncrease");
 
         if (!packet) {
             this.initialized = nbt.getBoolean("initialized");
@@ -158,7 +162,7 @@ public class IndustrialHeaterBlockEntity extends SyncedBlockEntity implements IT
             this.burnTime = 0;
             this.totalBurnTime = 0;
         } else {
-            this.storedHeat = Math.min(this.storedHeat + 100, MAX_HEAT_STORAGE);
+            this.storedHeat = Math.min(this.storedHeat + this.heatIncrease, MAX_HEAT_STORAGE);
         }
     }
     private void burnNewItem() {
@@ -174,6 +178,7 @@ public class IndustrialHeaterBlockEntity extends SyncedBlockEntity implements IT
         if (selectedStack != null) {
             int burnTime = Mth.ceil(selectedStack.getBurnTime(null) * this.getBurnTimeMultiplier(selectedStack));
             this.burnTime = this.totalBurnTime = burnTime;
+            this.heatIncrease = Mth.ceil(100 * this.getHeatMultiplier(selectedStack));
             selectedStack.shrink(1);
             this.notifyChange();
         }
@@ -187,6 +192,9 @@ public class IndustrialHeaterBlockEntity extends SyncedBlockEntity implements IT
     }
 
     private float getBurnTimeMultiplier(ItemStack stack) {
+        return stack.is(ItemTags.COALS) ? 1.25F : 1.0F;
+    }
+    private float getHeatMultiplier(ItemStack stack) {
         return stack.is(ItemTags.COALS) ? 2.0F : 1.0F;
     }
 
@@ -199,5 +207,12 @@ public class IndustrialHeaterBlockEntity extends SyncedBlockEntity implements IT
     @Override
     public AbstractContainerMenu createMenu(int containerId, Inventory playerInventory, Player player) {
         return new IndustrialHeaterMenu(containerId, playerInventory, this, this.data);
+    }
+
+    public void drops() {
+        ItemStack i0 = this.inventory.getStackInSlot(0);
+        if (!i0.isEmpty()) Library.dropItem(this.level, this.worldPosition, i0.copy());
+        ItemStack i1 = this.inventory.getStackInSlot(1);
+        if (!i1.isEmpty()) Library.dropItem(this.level, this.worldPosition, i1.copy());
     }
 }

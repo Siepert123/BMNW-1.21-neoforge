@@ -80,6 +80,7 @@ public class IndustrialHeaterBlock extends TickingEntityBlock {
     @Override
     protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
         if (state.is(newState.getBlock())) return;
+        if (level.getBlockEntity(pos) instanceof IndustrialHeaterBlockEntity be) be.drops();
         BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
         for (int x = -1; x <= 1; x++) {
             for (int z = -1; z <= 1; z++) {
@@ -106,7 +107,7 @@ public class IndustrialHeaterBlock extends TickingEntityBlock {
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-        if (player.isShiftKeyDown()) return InteractionResult.PASS;
+        if (player.isShiftKeyDown() || hitResult.getDirection() != state.getValue(FACING)) return InteractionResult.PASS;
         if (level.getBlockEntity(pos) instanceof IndustrialHeaterBlockEntity be) {
             if (!level.isClientSide) {
                 player.openMenu(new SimpleMenuProvider(be, Component.translatable("block.bmnw.industrial_heater")), pos);
