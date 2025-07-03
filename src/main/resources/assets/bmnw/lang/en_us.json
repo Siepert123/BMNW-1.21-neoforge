@@ -380,6 +380,7 @@
   "itemGroup.bmnw.tools": "BMNW: Tools & Consumables",
   "recipe.bmnw.alloy_blast_furnace": "Alloying",
   "recipe.bmnw.builders_smelting": "Builder's Smelting",
+  "recipe.bmnw.fluid_container_exchange": "Fluid <-> Container",
   "recipe.bmnw.pressing": "Stamp Pressing",
   "recipe.bmnw.shredding": "Shredding",
   "recipe.bmnw.workbench": "Workbench Crafting",

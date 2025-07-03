@@ -49,6 +49,8 @@ public class JEICompat implements IModPlugin {
 
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
+        registration.addRecipes(BMNWRecipeTypes.FLUID_CONTAINER_EXCHANGE, FluidContainerExchangeCategory.collectRecipes());
+
         registration.addRecipes(BMNWRecipeTypes.WORKBENCH, WorkbenchRecipes.instance.recipes);
 
         registration.addItemStackInfo(
@@ -123,6 +125,7 @@ public class JEICompat implements IModPlugin {
 
     @Override
     public void registerCategories(IRecipeCategoryRegistration registration) {
+        registration.addRecipeCategories(new FluidContainerExchangeCategory(registration.getJeiHelpers().getGuiHelper()));
         registration.addRecipeCategories(new WorkbenchRecipeCategory());
 
         registration.addRecipeCategories(new PressingRecipeCategory(

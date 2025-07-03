@@ -54,7 +54,7 @@ public class ElectricWireConnectorBlockEntity extends WireAttachedBlockEntity im
 
     @Nullable
     public IExtendedEnergyStorage getEnergy(@Nullable Direction side) {
-        return this.getFacing().getOpposite() == side ? this.cachedEnergy : null;
+        return this.getFacing().getOpposite() == side || side == null ? this.cachedEnergy : null;
     }
 
     public boolean removeAllConnections() {

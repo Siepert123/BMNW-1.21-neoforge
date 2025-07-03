@@ -12,6 +12,9 @@ import nl.melonstudios.bmnw.softcoded.recipe.ShreddingRecipe;
 import java.util.function.Supplier;
 
 public class BMNWRecipeTypes {
+    public static final RecipeType<FluidContainerExchange> FLUID_CONTAINER_EXCHANGE =
+            RecipeType.create("bmnw", "fluid_container_exchange", FluidContainerExchange.class);
+
     public static final RecipeType<WorkbenchRecipe> WORKBENCH =
             RecipeType.create("bmnw", "workbench", WorkbenchRecipe.class);
 
