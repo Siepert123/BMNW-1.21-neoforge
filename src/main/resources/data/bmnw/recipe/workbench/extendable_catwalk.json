@@ -47,5 +47,6 @@
   "result": {
     "id": "bmnw:extendable_catwalk"
   },
-  "group": "deco"
+  "group": "deco",
+  "requiredTier": 1
 }

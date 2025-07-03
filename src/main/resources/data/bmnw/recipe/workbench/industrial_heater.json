@@ -55,5 +55,6 @@
   ],
   "result": {
     "id": "bmnw:industrial_heater"
-  }
+  },
+  "requiredTier": 1
 }

@@ -29,5 +29,6 @@
   "result": {
     "id": "bmnw:large_wheel_crank"
   },
-  "group": "deco"
+  "group": "deco",
+  "requiredTier": 1
 }
