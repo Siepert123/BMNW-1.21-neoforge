@@ -96,16 +96,24 @@ public class JEICompat implements IModPlugin {
                 .toList();
         registration.addRecipes(BMNWRecipeTypes.WORKBENCH.get(), workbenchRecipes);
         List<RecipeHolder<PressingRecipe>> pressingRecipes = recipeManager
-                .getAllRecipesFor(BMNWRecipes.PRESSING_TYPE.get()).stream().toList();
+                .getAllRecipesFor(BMNWRecipes.PRESSING_TYPE.get()).stream()
+                .sorted(Comparator.comparing(RecipeHolder::id))
+                .toList();
         registration.addRecipes(BMNWRecipeTypes.PRESSING.get(), pressingRecipes);
         List<RecipeHolder<AlloyingRecipe>> alloyingRecipes = recipeManager
-                .getAllRecipesFor(BMNWRecipes.ALLOYING_TYPE.get()).stream().toList();
+                .getAllRecipesFor(BMNWRecipes.ALLOYING_TYPE.get()).stream()
+                .sorted(Comparator.comparing(RecipeHolder::id))
+                .toList();
         registration.addRecipes(BMNWRecipeTypes.ALLOYING.get(), alloyingRecipes);
         List<RecipeHolder<BuildersSmeltingRecipe>> buildersSmeltingRecipes = recipeManager
-                .getAllRecipesFor(BMNWRecipes.BUILDERS_SMELTING_TYPE.get()).stream().toList();
+                .getAllRecipesFor(BMNWRecipes.BUILDERS_SMELTING_TYPE.get()).stream()
+                .sorted(Comparator.comparing(RecipeHolder::id))
+                .toList();
         registration.addRecipes(BMNWRecipeTypes.BUILDERS_SMELTING.get(), buildersSmeltingRecipes);
         List<RecipeHolder<ShreddingRecipe>> shreddingRecipes = recipeManager
-                .getAllRecipesFor(BMNWRecipes.SHREDDING_TYPE.get()).stream().toList();
+                .getAllRecipesFor(BMNWRecipes.SHREDDING_TYPE.get()).stream()
+                .sorted(Comparator.comparing(RecipeHolder::id))
+                .toList();
         registration.addRecipes(BMNWRecipeTypes.SHREDDING.get(), shreddingRecipes);
     }
 
