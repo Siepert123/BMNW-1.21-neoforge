@@ -127,16 +127,17 @@ public class BuildersFurnaceBlockEntity extends SyncedBlockEntity implements Men
 
         if (this.fuelTicks <= 0) this.maxFuelTicks = 0;
         if (canRecipeBeMade && this.fuelTicks <= 0 && !level.isClientSide()) {
-            shouldReset = false;
             ItemStack fuel = this.inventory.getStackInSlot(SLOT_FUEL);
             if (!fuel.isEmpty()) {
                 if (fuel.is(BMNWTags.Items.INFINITE_FUEL_SOURCES)) {
+                    shouldReset = false;
                     this.fuelTicks = 20;
                     this.maxFuelTicks = 20;
                     this.notifyChange();
                 } else {
                     int ticks = fuel.getBurnTime(null) / 2;
                     if (ticks > 0) {
+                        shouldReset = false;
                         this.fuelTicks = ticks;
                         this.maxFuelTicks = ticks;
                         if (!fuel.is(Items.LAVA_BUCKET)) fuel.shrink(1);
@@ -145,13 +146,14 @@ public class BuildersFurnaceBlockEntity extends SyncedBlockEntity implements Men
                     }
                 }
             }
-        } else if (this.fuelTicks > 0) {
+        }
+        if (this.fuelTicks > 0) {
             shouldBeLit = true;
             this.fuelTicks--;
             if (canRecipeBeMade) {
                 shouldReset = false;
-                this.maxProgress = recipe.value().recipeTime();
-                if (this.progress >= this.maxProgress) {
+                this.maxProgress = recipe.value().recipeTime()-1; // -1 because for some reason the timing is off?? I don't really understand
+                if (this.progress++ >= this.maxProgress) {
                     this.progress = 0;
                     if (!this.level.isClientSide) {
                         input.shrink(1);
@@ -159,7 +161,6 @@ public class BuildersFurnaceBlockEntity extends SyncedBlockEntity implements Men
                         this.notifyChange();
                     }
                 }
-                this.progress++;
             }
         }
 
