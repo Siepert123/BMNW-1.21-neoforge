@@ -13,9 +13,13 @@ import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import nl.melonstudios.bmnw.BMNW;
 import nl.melonstudios.bmnw.init.BMNWItems;
@@ -54,6 +58,9 @@ public class BuildersSmeltingRecipeCategory implements IRecipeCategory<RecipeHol
     public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<BuildersSmeltingRecipe> recipe, IFocusGroup focuses) {
         builder.addSlot(RecipeIngredientRole.INPUT, 1, 1).addIngredients(recipe.value().input());
         builder.addSlot(RecipeIngredientRole.OUTPUT, 61, 19).addItemStack(recipe.value().output());
+        builder.addSlot(RecipeIngredientRole.RENDER_ONLY, 1, 37).addIngredients(
+                Ingredient.of(Items.COAL, Items.OAK_SAPLING, Items.OAK_LOG, Items.STICK, Items.CHARCOAL, Items.OAK_PLANKS, Items.LAVA_BUCKET)
+        );
     }
 
     @Override

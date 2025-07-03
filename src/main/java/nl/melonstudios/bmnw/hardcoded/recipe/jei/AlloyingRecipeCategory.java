@@ -5,12 +5,15 @@ import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
+import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import nl.melonstudios.bmnw.BMNW;
 import nl.melonstudios.bmnw.init.BMNWItems;
@@ -24,7 +27,7 @@ public class AlloyingRecipeCategory implements IRecipeCategory<RecipeHolder<Allo
 
     public AlloyingRecipeCategory(IGuiHelper guiHelper) {
         this.icon = guiHelper.createDrawableItemStack(new ItemStack(BMNWItems.ALLOY_BLAST_FURNACE.get()));
-        this.background = guiHelper.createDrawable(GUI_TEXTURE, 65, 15, 74, 52);
+        this.background = guiHelper.createDrawable(GUI_TEXTURE, 17, 15, 122, 52);
     }
 
     @Override
@@ -44,9 +47,12 @@ public class AlloyingRecipeCategory implements IRecipeCategory<RecipeHolder<Allo
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<AlloyingRecipe> recipe, IFocusGroup focuses) {
-        builder.addInputSlot(1, 1).addIngredients(recipe.value().input1());
-        builder.addInputSlot(1, 35).addIngredients(recipe.value().input2());
-        builder.addOutputSlot(53, 18).addItemStack(recipe.value().result());
+        builder.addInputSlot(49, 1).addIngredients(recipe.value().input1());
+        builder.addInputSlot(49, 35).addIngredients(recipe.value().input2());
+        builder.addOutputSlot(101, 18).addItemStack(recipe.value().result());
+        builder.addSlot(RecipeIngredientRole.RENDER_ONLY, 1, 35).addIngredients(
+                Ingredient.of(Items.COAL, Items.OAK_SAPLING, Items.OAK_LOG, Items.STICK, Items.CHARCOAL, Items.OAK_PLANKS, Items.LAVA_BUCKET)
+        );
     }
 
     @Override
@@ -57,7 +63,7 @@ public class AlloyingRecipeCategory implements IRecipeCategory<RecipeHolder<Allo
 
     @Override
     public int getWidth() {
-        return 74;
+        return 122;
     }
     @Override
     public int getHeight() {
