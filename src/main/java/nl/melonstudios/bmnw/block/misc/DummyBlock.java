@@ -22,7 +22,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class DummyBlock extends Block implements EntityBlock {
     public DummyBlock(Properties properties) {
-        super(properties.noOcclusion());
+        super(properties.noOcclusion().noLootTable());
     }
 
     @Override
