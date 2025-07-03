@@ -1,0 +1,10 @@
+{
+  "type": "bmnw:shredding",
+  "input": {
+    "tag": "c:raw_materials/gold"
+  },
+  "result": {
+    "id": "bmnw:gold_dust",
+    "count": 2
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "type": "bmnw:shredding",
+  "input": {
+    "tag": "c:sands"
+  },
+  "result": {
+    "id": "bmnw:dust"
+  }
+}

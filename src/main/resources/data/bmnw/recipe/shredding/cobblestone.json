@@ -1,0 +1,9 @@
+{
+  "type": "bmnw:shredding",
+  "input": {
+    "item": "minecraft:cobblestone"
+  },
+  "result": {
+    "id": "minecraft:gravel"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "type": "bmnw:shredding",
+  "input": {
+    "tag": "c:raw_materials/iron"
+  },
+  "result": {
+    "id": "bmnw:iron_dust",
+    "count": 2
+  }
+}

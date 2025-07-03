@@ -1,0 +1,10 @@
+{
+  "type": "bmnw:shredding",
+  "input": {
+    "tag": "c:raw_materials/lead"
+  },
+  "result": {
+    "id": "bmnw:lead_dust",
+    "count": 2
+  }
+}

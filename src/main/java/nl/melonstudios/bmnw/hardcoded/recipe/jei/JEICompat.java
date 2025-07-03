@@ -17,7 +17,6 @@ import net.minecraft.world.level.ItemLike;
 import nl.melonstudios.bmnw.BMNW;
 import nl.melonstudios.bmnw.hardcoded.recipe.AlloyingRecipes;
 import nl.melonstudios.bmnw.hardcoded.recipe.PressingRecipes;
-import nl.melonstudios.bmnw.hardcoded.recipe.ShreddingRecipes;
 import nl.melonstudios.bmnw.hardcoded.recipe.WorkbenchRecipes;
 import nl.melonstudios.bmnw.hardcoded.recipe.jei.subtype.FireMarbleSubtypeInterpreter;
 import nl.melonstudios.bmnw.hardcoded.recipe.jei.subtype.FluidContainerSubtype;
@@ -30,6 +29,7 @@ import nl.melonstudios.bmnw.screen.BuildersFurnaceScreen;
 import nl.melonstudios.bmnw.screen.PressScreen;
 import nl.melonstudios.bmnw.screen.WorkbenchScreen;
 import nl.melonstudios.bmnw.softcoded.recipe.BuildersSmeltingRecipe;
+import nl.melonstudios.bmnw.softcoded.recipe.ShreddingRecipe;
 
 import javax.annotation.Nonnull;
 import java.util.Arrays;
@@ -55,7 +55,6 @@ public class JEICompat implements IModPlugin {
         registration.addRecipes(BMNWRecipeTypes.WORKBENCH, WorkbenchRecipes.instance.recipes);
         registration.addRecipes(BMNWRecipeTypes.PRESSING, PressingRecipes.instance.getJEIRecipeList());
         registration.addRecipes(BMNWRecipeTypes.ALLOYING, AlloyingRecipes.instance.getJEIRecipeList());
-        registration.addRecipes(BMNWRecipeTypes.SHREDDING, ShreddingRecipes.instance.getJEIRecipeList());
 
         registration.addItemStackInfo(
                 Arrays.asList(Ingredient.of(TagKey.create(Registries.ITEM, ResourceLocation.parse("bmnw:stamps"))).getItems()),
@@ -103,6 +102,9 @@ public class JEICompat implements IModPlugin {
         List<RecipeHolder<BuildersSmeltingRecipe>> buildersSmeltingRecipes = recipeManager
                 .getAllRecipesFor(BMNWRecipes.BUILDERS_SMELTING_TYPE.get()).stream().toList();
         registration.addRecipes(BMNWRecipeTypes.BUILDERS_SMELTING.get(), buildersSmeltingRecipes);
+        List<RecipeHolder<ShreddingRecipe>> shreddingRecipes = recipeManager
+                .getAllRecipesFor(BMNWRecipes.SHREDDING_TYPE.get()).stream().toList();
+        registration.addRecipes(BMNWRecipeTypes.SHREDDING.get(), shreddingRecipes);
     }
 
     @Override
@@ -113,9 +115,9 @@ public class JEICompat implements IModPlugin {
         );
         registration.addRecipeCatalyst(BMNWItems.PRESS, BMNWRecipeTypes.PRESSING);
         registration.addRecipeCatalyst(BMNWItems.ALLOY_BLAST_FURNACE, BMNWRecipeTypes.ALLOYING);
-        registration.addRecipeCatalyst(BMNWItems.LARGE_SHREDDER, BMNWRecipeTypes.SHREDDING);
 
         registration.addRecipeCatalyst(BMNWItems.BUILDERS_FURNACE, BMNWRecipeTypes.BUILDERS_SMELTING.get());
+        registration.addRecipeCatalyst(BMNWItems.LARGE_SHREDDER, BMNWRecipeTypes.SHREDDING.get());
     }
 
     @Override
@@ -123,9 +125,11 @@ public class JEICompat implements IModPlugin {
         registration.addRecipeCategories(new WorkbenchRecipeCategory());
         registration.addRecipeCategories(new PressingRecipeCategory());
         registration.addRecipeCategories(new AlloyingRecipeCategory());
-        registration.addRecipeCategories(new ShreddingRecipeCategory());
 
         registration.addRecipeCategories(new BuildersSmeltingRecipeCategory(
+                registration.getJeiHelpers().getGuiHelper()
+        ));
+        registration.addRecipeCategories(new ShreddingRecipeCategory(
                 registration.getJeiHelpers().getGuiHelper()
         ));
     }

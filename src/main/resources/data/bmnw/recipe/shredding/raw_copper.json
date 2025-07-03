@@ -1,0 +1,10 @@
+{
+  "type": "bmnw:shredding",
+  "input": {
+    "tag": "c:raw_materials/copper"
+  },
+  "result": {
+    "id": "bmnw:copper_dust",
+    "count": 2
+  }
+}

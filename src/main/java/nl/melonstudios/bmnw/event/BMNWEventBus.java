@@ -57,7 +57,6 @@ import nl.melonstudios.bmnw.discard.DiscardList;
 import nl.melonstudios.bmnw.effect.WPEffect;
 import nl.melonstudios.bmnw.entity.MeteoriteEntity;
 import nl.melonstudios.bmnw.entity.renderer.*;
-import nl.melonstudios.bmnw.hardcoded.recipe.ShreddingRecipes;
 import nl.melonstudios.bmnw.hardcoded.structure.Structures;
 import nl.melonstudios.bmnw.hazard.HazardRegistry;
 import nl.melonstudios.bmnw.hazard.radiation.ChunkRadiationManager;
@@ -376,7 +375,7 @@ public class BMNWEventBus {
 
         @SubscribeEvent
         public static void registerReloadListeners(AddReloadListenerEvent event) {
-            event.addListener(ShreddingRecipes.instance);
+
         }
 
         @SubscribeEvent

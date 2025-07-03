@@ -1,0 +1,10 @@
+{
+  "type": "bmnw:shredding",
+  "input": {
+    "tag": "c:raw_materials/aluminium"
+  },
+  "result": {
+    "id": "bmnw:aluminium_dust",
+    "count": 2
+  }
+}

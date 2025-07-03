@@ -1,0 +1,10 @@
+{
+  "type": "bmnw:shredding",
+  "input": {
+    "tag": "c:raw_materials/titanium"
+  },
+  "result": {
+    "id": "bmnw:titanium_dust",
+    "count": 2
+  }
+}

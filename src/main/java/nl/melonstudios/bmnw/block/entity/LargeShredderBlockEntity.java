@@ -17,6 +17,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -26,17 +27,15 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import nl.melonstudios.bmnw.audio.LargeShredderLoopSoundInstance;
-import nl.melonstudios.bmnw.hardcoded.recipe.ShreddingRecipes;
 import nl.melonstudios.bmnw.init.*;
 import nl.melonstudios.bmnw.interfaces.IExtendedEnergyStorage;
 import nl.melonstudios.bmnw.interfaces.ITickable;
-import nl.melonstudios.bmnw.misc.BrokenConsumer;
-import nl.melonstudios.bmnw.misc.DistrictHolder;
-import nl.melonstudios.bmnw.misc.ExtendedEnergyStorage;
-import nl.melonstudios.bmnw.misc.StackMover;
+import nl.melonstudios.bmnw.misc.*;
+import nl.melonstudios.bmnw.softcoded.recipe.ShreddingRecipe;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class LargeShredderBlockEntity extends BlockEntity implements ITickable {
@@ -56,6 +55,7 @@ public class LargeShredderBlockEntity extends BlockEntity implements ITickable {
         this.energy = new ExtendedEnergyStorage(100000);
         this.itemSearchPos = pos.above(2);
         this.itemSearchArea = new AABB(pos.above());
+        this.recipeInput = new WrappedSingletonRecipeInput(this.inventory, 0);
     }
 
     @Override
@@ -80,6 +80,7 @@ public class LargeShredderBlockEntity extends BlockEntity implements ITickable {
 
     public final ItemStackHandler inventory;
     public final IExtendedEnergyStorage energy;
+    public final WrappedSingletonRecipeInput recipeInput;
 
     @Nullable
     public IExtendedEnergyStorage getEnergy(@Nullable Direction d) {
@@ -221,8 +222,10 @@ public class LargeShredderBlockEntity extends BlockEntity implements ITickable {
                     }
                 } else {
                     ItemStack input = this.inventory.getStackInSlot(0);
-                    ItemStack result = ShreddingRecipes.instance.getResult(input);
-                    if (this.inventory.getStackInSlot(1).isEmpty() || StackMover.canMergeItems(this.inventory.getStackInSlot(1), result)) {
+                    RecipeHolder<ShreddingRecipe> recipe = this.getRecipe().orElse(null);
+                    boolean b = !input.isEmpty() && recipe != null;
+                    ItemStack result = b ? recipe.value().result().copy() : new ItemStack(BMNWItems.DUST.get());
+                    if ((this.inventory.getStackInSlot(1).isEmpty() || StackMover.canMergeItems(this.inventory.getStackInSlot(1), result))) {
                         this.setChanged();
                         if (++this.shredProgress >= 4) {
                             this.shredProgress = 0;
@@ -368,4 +371,10 @@ public class LargeShredderBlockEntity extends BlockEntity implements ITickable {
     }
 
     public AABB renderBB = null;
+
+    private Optional<RecipeHolder<ShreddingRecipe>> getRecipe() {
+        return this.level.getRecipeManager()
+                .getRecipeFor(BMNWRecipes.SHREDDING_TYPE.get(),
+                        this.recipeInput, this.level);
+    }
 }

@@ -1,0 +1,10 @@
+{
+  "type": "bmnw:shredding",
+  "input": {
+    "tag": "c:raw_materials/tungsten"
+  },
+  "result": {
+    "id": "bmnw:tungsten_dust",
+    "count": 2
+  }
+}
