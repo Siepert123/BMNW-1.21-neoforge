@@ -15,7 +15,6 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.ItemLike;
 import nl.melonstudios.bmnw.BMNW;
-import nl.melonstudios.bmnw.hardcoded.recipe.WorkbenchRecipes;
 import nl.melonstudios.bmnw.hardcoded.recipe.jei.subtype.FireMarbleSubtypeInterpreter;
 import nl.melonstudios.bmnw.hardcoded.recipe.jei.subtype.FluidContainerSubtype;
 import nl.melonstudios.bmnw.init.BMNWItems;
@@ -26,10 +25,7 @@ import nl.melonstudios.bmnw.screen.AlloyFurnaceScreen;
 import nl.melonstudios.bmnw.screen.BuildersFurnaceScreen;
 import nl.melonstudios.bmnw.screen.PressScreen;
 import nl.melonstudios.bmnw.screen.WorkbenchScreen;
-import nl.melonstudios.bmnw.softcoded.recipe.AlloyingRecipe;
-import nl.melonstudios.bmnw.softcoded.recipe.BuildersSmeltingRecipe;
-import nl.melonstudios.bmnw.softcoded.recipe.PressingRecipe;
-import nl.melonstudios.bmnw.softcoded.recipe.ShreddingRecipe;
+import nl.melonstudios.bmnw.softcoded.recipe.*;
 
 import javax.annotation.Nonnull;
 import java.util.*;
@@ -50,8 +46,6 @@ public class JEICompat implements IModPlugin {
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
         registration.addRecipes(BMNWRecipeTypes.FLUID_CONTAINER_EXCHANGE, FluidContainerExchangeCategory.collectRecipes());
-
-        registration.addRecipes(BMNWRecipeTypes.WORKBENCH, WorkbenchRecipes.instance.recipes);
 
         registration.addItemStackInfo(
                 Arrays.asList(Ingredient.of(TagKey.create(Registries.ITEM, ResourceLocation.parse("bmnw:stamps"))).getItems()),
@@ -96,6 +90,9 @@ public class JEICompat implements IModPlugin {
         );
 
         RecipeManager recipeManager = Objects.requireNonNull(Minecraft.getInstance().level).getRecipeManager();
+        List<RecipeHolder<WorkbenchRecipe>> workbenchRecipes = recipeManager
+                .getAllRecipesFor(BMNWRecipes.WORKBENCH_TYPE.get()).stream().toList();
+        registration.addRecipes(BMNWRecipeTypes.WORKBENCH.get(), workbenchRecipes);
         List<RecipeHolder<PressingRecipe>> pressingRecipes = recipeManager
                 .getAllRecipesFor(BMNWRecipes.PRESSING_TYPE.get()).stream().toList();
         registration.addRecipes(BMNWRecipeTypes.PRESSING.get(), pressingRecipes);
@@ -112,11 +109,10 @@ public class JEICompat implements IModPlugin {
 
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
-        registration.addRecipeCatalysts(BMNWRecipeTypes.WORKBENCH,
+        registration.addRecipeCatalysts(BMNWRecipeTypes.WORKBENCH.get(),
                 BMNWItems.IRON_WORKBENCH,
                 BMNWItems.STEEL_WORKBENCH
         );
-
         registration.addRecipeCatalyst(BMNWItems.PRESS, BMNWRecipeTypes.PRESSING.get());
         registration.addRecipeCatalyst(BMNWItems.ALLOY_BLAST_FURNACE, BMNWRecipeTypes.ALLOYING.get());
         registration.addRecipeCatalyst(BMNWItems.BUILDERS_FURNACE, BMNWRecipeTypes.BUILDERS_SMELTING.get());
@@ -126,8 +122,10 @@ public class JEICompat implements IModPlugin {
     @Override
     public void registerCategories(IRecipeCategoryRegistration registration) {
         registration.addRecipeCategories(new FluidContainerExchangeCategory(registration.getJeiHelpers().getGuiHelper()));
-        registration.addRecipeCategories(new WorkbenchRecipeCategory());
 
+        registration.addRecipeCategories(new WorkbenchRecipeCategory(
+                registration.getJeiHelpers().getGuiHelper()
+        ));
         registration.addRecipeCategories(new PressingRecipeCategory(
                 registration.getJeiHelpers().getGuiHelper()
         ));
@@ -147,7 +145,7 @@ public class JEICompat implements IModPlugin {
         registration.addRecipeClickArea(
                 WorkbenchScreen.class,
                 113, 14, 55, 64,
-                BMNWRecipeTypes.WORKBENCH
+                BMNWRecipeTypes.WORKBENCH.get()
         );
 
         registration.addRecipeClickArea(

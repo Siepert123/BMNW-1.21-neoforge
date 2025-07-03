@@ -1,0 +1,51 @@
+{
+  "type": "bmnw:workbench",
+  "ingredients": [
+    {
+      "item": "bmnw:steel_catwalk"
+    },
+    {
+      "item": "bmnw:steel_catwalk"
+    },
+    {
+      "item": "bmnw:steel_catwalk"
+    },
+    {
+      "item": "bmnw:steel_catwalk"
+    },
+    {
+      "tag": "c:ingots/steel"
+    },
+    {
+      "tag": "c:ingots/steel"
+    },
+    {
+      "tag": "c:ingots/steel"
+    },
+    {
+      "tag": "c:ingots/steel"
+    },
+    {
+      "tag": "c:ingots/steel"
+    },
+    {
+      "tag": "c:plates/steel"
+    },
+    {
+      "tag": "c:plates/steel"
+    },
+    {
+      "tag": "c:plates/steel"
+    },
+    {
+      "tag": "c:plates/steel"
+    },
+    {
+      "tag": "c:plates/steel"
+    }
+  ],
+  "result": {
+    "id": "bmnw:extendable_catwalk"
+  },
+  "group": "deco"
+}

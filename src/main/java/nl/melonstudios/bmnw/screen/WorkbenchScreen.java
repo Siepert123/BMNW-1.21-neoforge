@@ -13,11 +13,13 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.neoforged.neoforge.network.PacketDistributor;
 import nl.melonstudios.bmnw.BMNW;
-import nl.melonstudios.bmnw.hardcoded.recipe.WorkbenchRecipe;
-import nl.melonstudios.bmnw.hardcoded.recipe.WorkbenchRecipes;
+import nl.melonstudios.bmnw.init.BMNWRecipes;
 import nl.melonstudios.bmnw.init.BMNWSounds;
+import nl.melonstudios.bmnw.softcoded.recipe.WorkbenchRecipe;
+import nl.melonstudios.bmnw.softcoded.recipe.WorkbenchRecipeComparator;
 import nl.melonstudios.bmnw.wifi.PacketWorkbenchCraft;
 
 import java.util.*;
@@ -35,7 +37,7 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
     protected int selectionScroll = 0;
     protected final int maxSelectionScroll;
     protected final int maxRecipeIdx;
-    protected final List<WorkbenchRecipe> availableRecipes;
+    protected final List<RecipeHolder<WorkbenchRecipe>> availableRecipes;
 
     public WorkbenchScreen(WorkbenchMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
@@ -57,7 +59,11 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
         this.ingredientListX = 113;
         this.ingredientListY = 14;
 
-        this.availableRecipes = WorkbenchRecipes.instance.tierMap.getOrDefault(this.getMenu().tier, Collections.emptyList());
+        this.availableRecipes = this.getMenu().level.getRecipeManager()
+                .getAllRecipesFor(BMNWRecipes.WORKBENCH_TYPE.get()).stream()
+                .filter((recipe) -> recipe.value().requiredTier() <= menu.tier)
+                .sorted((l, r) -> WorkbenchRecipeComparator.instance.compare(l.value(), r.value()))
+                .toList();
         this.maxSelectionScroll = Math.max(Mth.ceil(this.availableRecipes.size() / 2f) - 5, 0);
         this.maxRecipeIdx = this.availableRecipes.size();
     }
@@ -90,7 +96,7 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
             graphics.blit(GUI_TEXTURE, x+50, y+61, 188, 0, 18, 18);
         }
 
-        WorkbenchRecipe recipe = this.selectedRecipe < 0 ? null : this.availableRecipes.get(this.selectedRecipe);
+        WorkbenchRecipe recipe = this.selectedRecipe < 0 ? null : this.availableRecipes.get(this.selectedRecipe).value();
 
         if (recipe != null && !recipe.result().isEmpty()) {
             poseStack.pushPose();
@@ -122,7 +128,7 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
         int endIndex = this.maxRecipeIdx > 10+startIndex ? 10 : this.maxRecipeIdx - startIndex;
         for (int i = 0; i < endIndex; i++) {
             int idx = startIndex + i;
-            WorkbenchRecipe rcp = this.availableRecipes.get(idx);
+            WorkbenchRecipe rcp = this.availableRecipes.get(idx).value();
             ItemStack stack = Objects.requireNonNull(rcp, "Null recipe!").result();
             if (!stack.isEmpty()) {
                 poseStack.pushPose();
@@ -165,9 +171,9 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
             return true;
         }
         if (this.canTryCraft() && this.craft.isInArea(mouseX, mouseY)) {
-            WorkbenchRecipe recipe = this.selectedRecipe < 0 ? null : this.availableRecipes.get(this.selectedRecipe);
+            RecipeHolder<WorkbenchRecipe> recipe = this.selectedRecipe < 0 ? null : this.availableRecipes.get(this.selectedRecipe);
             if (recipe != null) {
-                PacketDistributor.sendToServer(new PacketWorkbenchCraft(recipe.rsl().toString(), Screen.hasShiftDown()));
+                PacketDistributor.sendToServer(new PacketWorkbenchCraft(recipe.id(), Screen.hasShiftDown()));
             }
             BMNWSounds.playClickOld();
             return true;

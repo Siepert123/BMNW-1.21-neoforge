@@ -1,0 +1,18 @@
+{
+  "type": "bmnw:workbench",
+  "ingredients": [
+    {
+      "tag": "c:ingots/steel"
+    },
+    {
+      "tag": "c:ingots/steel"
+    },
+    {
+      "tag": "c:ingots/steel"
+    }
+  ],
+  "result": {
+    "id": "bmnw:blank_steel_stamp"
+  },
+  "group": "stamps"
+}

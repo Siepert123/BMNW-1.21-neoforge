@@ -1,0 +1,29 @@
+{
+  "type": "bmnw:workbench",
+  "ingredients": [
+    {
+      "tag": "c:plates/iron"
+    },
+    {
+      "tag": "c:plates/iron"
+    },
+    {
+      "tag": "c:plates/iron"
+    },
+    {
+      "tag": "c:bricks/nether"
+    },
+    {
+      "tag": "c:bricks/nether"
+    },
+    {
+      "tag": "c:bricks/nether"
+    },
+    {
+      "tag": "c:bricks/nether"
+    }
+  ],
+  "result": {
+    "id": "bmnw:alloy_blast_furnace"
+  }
+}

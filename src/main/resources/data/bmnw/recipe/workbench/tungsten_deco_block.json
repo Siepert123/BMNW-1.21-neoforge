@@ -1,0 +1,12 @@
+{
+  "type": "bmnw:workbench",
+  "ingredients": [
+    {
+      "tag": "c:ingots/tungsten"
+    }
+  ],
+  "result": {
+    "id": "bmnw:tungsten_deco_block"
+  },
+  "group": "deco"
+}

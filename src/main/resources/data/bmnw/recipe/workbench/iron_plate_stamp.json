@@ -1,0 +1,12 @@
+{
+  "type": "bmnw:workbench",
+  "ingredients": [
+    {
+      "item": "bmnw:blank_iron_stamp"
+    }
+  ],
+  "result": {
+    "id": "bmnw:iron_plate_stamp"
+  },
+  "group": "stamps"
+}

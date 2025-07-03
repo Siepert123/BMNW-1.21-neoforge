@@ -1,0 +1,12 @@
+{
+  "type": "bmnw:workbench",
+  "ingredients": [
+    {
+      "item": "bmnw:blank_titanium_stamp"
+    }
+  ],
+  "result": {
+    "id": "bmnw:titanium_plate_stamp"
+  },
+  "group": "stamps"
+}

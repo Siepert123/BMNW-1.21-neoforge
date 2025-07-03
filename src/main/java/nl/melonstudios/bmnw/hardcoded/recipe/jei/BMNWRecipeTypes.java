@@ -2,12 +2,8 @@ package nl.melonstudios.bmnw.hardcoded.recipe.jei;
 
 import mezz.jei.api.recipe.RecipeType;
 import net.minecraft.world.item.crafting.RecipeHolder;
-import nl.melonstudios.bmnw.hardcoded.recipe.WorkbenchRecipe;
 import nl.melonstudios.bmnw.init.BMNWRecipes;
-import nl.melonstudios.bmnw.softcoded.recipe.AlloyingRecipe;
-import nl.melonstudios.bmnw.softcoded.recipe.BuildersSmeltingRecipe;
-import nl.melonstudios.bmnw.softcoded.recipe.PressingRecipe;
-import nl.melonstudios.bmnw.softcoded.recipe.ShreddingRecipe;
+import nl.melonstudios.bmnw.softcoded.recipe.*;
 
 import java.util.function.Supplier;
 
@@ -15,10 +11,8 @@ public class BMNWRecipeTypes {
     public static final RecipeType<FluidContainerExchange> FLUID_CONTAINER_EXCHANGE =
             RecipeType.create("bmnw", "fluid_container_exchange", FluidContainerExchange.class);
 
-    public static final RecipeType<WorkbenchRecipe> WORKBENCH =
-            RecipeType.create("bmnw", "workbench", WorkbenchRecipe.class);
-
-
+    public static final Supplier<RecipeType<RecipeHolder<WorkbenchRecipe>>> WORKBENCH =
+            RecipeType.createFromDeferredVanilla(BMNWRecipes.WORKBENCH_TYPE);
     public static final Supplier<RecipeType<RecipeHolder<PressingRecipe>>> PRESSING =
             RecipeType.createFromDeferredVanilla(BMNWRecipes.PRESSING_TYPE);
     public static final Supplier<RecipeType<RecipeHolder<AlloyingRecipe>>> ALLOYING =

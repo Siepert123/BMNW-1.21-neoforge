@@ -1,0 +1,12 @@
+{
+  "type": "bmnw:workbench",
+  "ingredients": [
+    {
+      "tag": "c:ingots/steel"
+    }
+  ],
+  "result": {
+    "id": "bmnw:steel_deco_block"
+  },
+  "group": "deco"
+}

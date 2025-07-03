@@ -14,6 +14,11 @@ public class BMNWRecipes {
     public static final DeferredRegister<RecipeType<?>> TYPES =
             DeferredRegister.create(Registries.RECIPE_TYPE, "bmnw");
 
+    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<WorkbenchRecipe>> WORKBENCH_SERIALIZER =
+            SERIALIZERS.register("workbench", WorkbenchRecipe.Serializer::new);
+    public static final DeferredHolder<RecipeType<?>, RecipeType<WorkbenchRecipe>> WORKBENCH_TYPE =
+            TYPES.register("workbench", RecipeTypeImpl.create("workbench"));
+
     public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<PressingRecipe>> PRESSING_SERIALIZER =
             SERIALIZERS.register("pressing", PressingRecipe.Serializer::new);
     public static final DeferredHolder<RecipeType<?>, RecipeType<PressingRecipe>> PRESSING_TYPE =

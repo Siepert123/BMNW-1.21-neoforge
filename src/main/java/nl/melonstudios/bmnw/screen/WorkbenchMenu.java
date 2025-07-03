@@ -5,11 +5,13 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import nl.melonstudios.bmnw.init.BMNWMenuTypes;
 
 public class WorkbenchMenu extends AbstractBMNWContainerMenu {
     public final ContainerLevelAccess access;
     public final int tier;
+    public final Level level;
     public WorkbenchMenu(int containerId, Inventory playerInv, FriendlyByteBuf friendlyByteBuf) {
         this(containerId, playerInv, ContainerLevelAccess.NULL, friendlyByteBuf.readInt());
     }
@@ -17,6 +19,7 @@ public class WorkbenchMenu extends AbstractBMNWContainerMenu {
         super(BMNWMenuTypes.WORKBENCH.get(), containerId);
         this.access = access;
         this.tier = tier;
+        this.level = playerInv.player.level();
 
         this.addPlayerInventory(playerInv, 8, 84);
         this.addPlayerHotbar(playerInv, 8, 142);

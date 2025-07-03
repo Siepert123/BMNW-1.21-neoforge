@@ -1,0 +1,12 @@
+{
+  "type": "bmnw:workbench",
+  "ingredients": [
+    {
+      "item": "bmnw:blank_steel_stamp"
+    }
+  ],
+  "result": {
+    "id": "bmnw:steel_wire_stamp"
+  },
+  "group": "stamps"
+}

@@ -3,8 +3,11 @@ package nl.melonstudios.bmnw.hardcoded.recipe.jei;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
+import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
+import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
+import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.AbstractRecipeCategory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -14,8 +17,10 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import nl.melonstudios.bmnw.BMNW;
-import nl.melonstudios.bmnw.hardcoded.recipe.WorkbenchRecipe;
+import nl.melonstudios.bmnw.init.BMNWItems;
+import nl.melonstudios.bmnw.softcoded.recipe.WorkbenchRecipe;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
 
@@ -24,15 +29,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class WorkbenchRecipeCategory extends AbstractRecipeCategory<WorkbenchRecipe> {
+public class WorkbenchRecipeCategory extends AbstractRecipeCategory<RecipeHolder<WorkbenchRecipe>> {
     public static final ResourceLocation GUI_TEXTURE = BMNW.namespace("textures/gui/workbench/jei.png");
-    public WorkbenchRecipeCategory() {
-        super(BMNWRecipeTypes.WORKBENCH, Component.translatable("recipe.bmnw.workbench"), null, 92, 57);
+
+    public WorkbenchRecipeCategory(IGuiHelper guiHelper) {
+        super(BMNWRecipeTypes.WORKBENCH.get(), Component.translatable("recipe.bmnw.workbench"),
+                guiHelper.createDrawableItemStack(new ItemStack(BMNWItems.IRON_WORKBENCH.get())), 92, 57);
     }
 
     @Override
-    public void setRecipe(IRecipeLayoutBuilder builder, WorkbenchRecipe recipe, IFocusGroup focuses) {
-        List<Ingredient> ingredients = recipe.ingredients();
+    public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<WorkbenchRecipe> recipe, IFocusGroup focuses) {
+        List<Ingredient> ingredients = recipe.value().ingredients();
         Map<Ingredient, Integer> nameToInt = new HashMap<>();
         for (Ingredient ingredient : ingredients) {
             nameToInt.putIfAbsent(ingredient, 0);
@@ -52,16 +59,16 @@ public class WorkbenchRecipeCategory extends AbstractRecipeCategory<WorkbenchRec
             builder.addInputSlot(x, y).addItemStacks(Arrays.asList(copy));
         }
         builder.addOutputSlot(56, 39)
-                .addItemStack(recipe.result());
+                .addItemStack(recipe.value().result());
     }
 
     @Override
-    public @Nullable ResourceLocation getRegistryName(WorkbenchRecipe recipe) {
-        return recipe.rsl();
+    public @Nullable ResourceLocation getRegistryName(RecipeHolder<WorkbenchRecipe> recipe) {
+        return recipe.id();
     }
 
     @Override
-    public void draw(WorkbenchRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics graphics, double mouseX, double mouseY) {
+    public void draw(RecipeHolder<WorkbenchRecipe> recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics graphics, double mouseX, double mouseY) {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderTexture(0, GUI_TEXTURE);
 
@@ -90,7 +97,7 @@ public class WorkbenchRecipeCategory extends AbstractRecipeCategory<WorkbenchRec
         poseStack.pushPose();
         poseStack.scale(0.5f, 0.5f, 0.5f);
         Font font = Minecraft.getInstance().font;
-        String tierText = "Tier " + (recipe.minTier()+1);
+        String tierText = "Tier " + (recipe.value().requiredTier()+1);
         int w = font.width(tierText);
         graphics.drawString(font, tierText, 56 - w/2, 90, 0xFFFFFF00);
         poseStack.popPose();

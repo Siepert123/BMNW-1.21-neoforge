@@ -1,0 +1,12 @@
+{
+  "type": "bmnw:workbench",
+  "ingredients": [
+    {
+      "tag": "c:ingots/lead"
+    }
+  ],
+  "result": {
+    "id": "bmnw:lead_deco_block"
+  },
+  "group": "deco"
+}
