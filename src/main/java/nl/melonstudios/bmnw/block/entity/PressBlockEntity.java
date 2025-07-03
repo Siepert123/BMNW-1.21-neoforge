@@ -1,6 +1,7 @@
 package nl.melonstudios.bmnw.block.entity;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -23,6 +24,7 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.network.PacketDistributor;
 import nl.melonstudios.bmnw.hardcoded.recipe.PressRecipeInput;
@@ -49,6 +51,77 @@ public class PressBlockEntity extends BlockEntity implements MenuProvider {
             }
         }
     };
+
+    public final IItemHandler itemInput = new IItemHandler() {
+        @Override
+        public int getSlots() {
+            return 1;
+        }
+
+        @Override
+        public ItemStack getStackInSlot(int slot) {
+            return inventory.getStackInSlot(2);
+        }
+
+        @Override
+        public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
+            return inventory.insertItem(2, stack, simulate);
+        }
+
+        @Override
+        public ItemStack extractItem(int slot, int amount, boolean simulate) {
+            return ItemStack.EMPTY;
+        }
+
+        @Override
+        public int getSlotLimit(int slot) {
+            return 64;
+        }
+
+        @Override
+        public boolean isItemValid(int slot, ItemStack stack) {
+            return true;
+        }
+    };
+    public final IItemHandler itemOutput = new IItemHandler() {
+        @Override
+        public int getSlots() {
+            return 1;
+        }
+
+        @Override
+        public ItemStack getStackInSlot(int slot) {
+            return inventory.getStackInSlot(3);
+        }
+
+        @Override
+        public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
+            return stack;
+        }
+
+        @Override
+        public ItemStack extractItem(int slot, int amount, boolean simulate) {
+            return inventory.extractItem(3, amount, simulate);
+        }
+
+        @Override
+        public int getSlotLimit(int slot) {
+            return 64;
+        }
+
+        @Override
+        public boolean isItemValid(int slot, ItemStack stack) {
+            return false;
+        }
+    };
+
+    @Nullable
+    public IItemHandler getItems(@Nullable Direction face) {
+        if (face == null) return this.inventory;
+        if (face == Direction.DOWN) return this.itemOutput;
+        if (face == Direction.UP) return null;
+        return this.itemInput;
+    }
 
     public PressBlockEntity(BlockPos pos, BlockState blockState) {
         super(BMNWBlockEntities.PRESS.get(), pos, blockState);
@@ -134,6 +207,7 @@ public class PressBlockEntity extends BlockEntity implements MenuProvider {
         if (!fuel.isEmpty() && this.fuel < 1) {
             int burnTime = fuel.getBurnTime(null);
             if (burnTime > 0) {
+                this.setChanged();
                 this.fuel += burnTime / 100f;
                 if (!fuel.is(BMNWTags.Items.INFINITE_FUEL_SOURCES)) fuel.shrink(1);
             }
@@ -150,6 +224,7 @@ public class PressBlockEntity extends BlockEntity implements MenuProvider {
                     && (output.isEmpty() || ItemStack.isSameItem(output, result))
                     && result.getCount() + output.getCount() <= result.getMaxStackSize()) {
                 shouldReset = false;
+                this.setChanged();
                 if (this.progress != 0 || !this.level.isClientSide()) this.progress++;
                 if (this.progress > maxProgress) {
                     this.reset();
@@ -170,6 +245,7 @@ public class PressBlockEntity extends BlockEntity implements MenuProvider {
                                 1, 0.95f + this.soundRand.nextFloat() * .1f);
                     }
                 } else if (enablePacket && this.progress == 38 && !level.isClientSide()) {
+                    this.setChanged();
                     int ax = this.worldPosition.getX();
                     int ay = this.worldPosition.getY();
                     int az = this.worldPosition.getZ();

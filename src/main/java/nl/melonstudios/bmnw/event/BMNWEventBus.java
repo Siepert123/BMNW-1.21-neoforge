@@ -486,26 +486,24 @@ public class BMNWEventBus {
 
             event.registerBlock(
                     Capabilities.EnergyStorage.BLOCK,
-                    (level, pos, state, blockEntity, context) -> blockEntity != null ?
-                            ((MissileLaunchPadBlockEntity) blockEntity).getIEnergy() : null,
-                    BMNWBlocks.MISSILE_LAUNCH_PAD.get()
-            );
-            event.registerBlock(
-                    Capabilities.EnergyStorage.BLOCK,
-                    (level, pos, state, be, context) -> be != null ? ((LargeShredderBlockEntity)be).getEnergy(context) : null,
-                    BMNWBlocks.LARGE_SHREDDER.get()
-            );
-            event.registerBlock(
-                    Capabilities.EnergyStorage.BLOCK,
                     ((level, pos, state, blockEntity, context) ->
                             blockEntity instanceof ElectricWireConnectorBlockEntity connector ? connector.getEnergy(context) : null),
                     BMNWBlocks.ELECTRIC_WIRE_CONNECTOR.get()
             );
+
+            event.registerBlock(
+                    Capabilities.ItemHandler.BLOCK,
+                    ((level, pos, state, be, context) ->
+                            be instanceof PressBlockEntity press ? press.getItems(context) : null),
+                    BMNWBlocks.PRESS.get()
+            );
+
             event.registerBlock(
                     Capabilities.ItemHandler.BLOCK,
                     ((level, pos, state, be, context) -> be instanceof BuildersFurnaceBlockEntity furnace ? furnace.getItemHandler(context) : null),
                     BMNWBlocks.BUILDERS_FURNACE.get()
             );
+
             event.registerBlock(
                     Capabilities.ItemHandler.BLOCK,
                     ((level, pos, state, be, context) -> be instanceof CombustionEngineBlockEntity engine ? engine.getItems(context) : null),
@@ -521,10 +519,23 @@ public class BMNWEventBus {
                     ((level, pos, state, be, context) -> be instanceof CombustionEngineBlockEntity engine ? engine.getFluid(context) : null),
                     BMNWBlocks.COMBUSTION_ENGINE.get()
             );
+
+            event.registerBlock(
+                    Capabilities.EnergyStorage.BLOCK,
+                    (level, pos, state, be, context) -> be != null ? ((LargeShredderBlockEntity)be).getEnergy(context) : null,
+                    BMNWBlocks.LARGE_SHREDDER.get()
+            );
             event.registerBlock(
                     Capabilities.EnergyStorage.BLOCK,
                     ((level, pos, state, blockEntity, context) -> blockEntity instanceof RadioAntennaControllerBlockEntity controller ? controller.energy : null),
                     BMNWBlocks.RADIO_ANTENNA_CONTROLLER.get()
+            );
+
+            event.registerBlock(
+                    Capabilities.EnergyStorage.BLOCK,
+                    (level, pos, state, blockEntity, context) -> blockEntity != null ?
+                            ((MissileLaunchPadBlockEntity) blockEntity).getIEnergy() : null,
+                    BMNWBlocks.MISSILE_LAUNCH_PAD.get()
             );
         }
         private static void registerItemCaps(RegisterCapabilitiesEvent event) {
