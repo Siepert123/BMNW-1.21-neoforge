@@ -1,10 +1,10 @@
 {
   "type": "bmnw:builders_smelting",
   "input": {
-    "item": "minecraft:cobblestone"
+    "item": "minecraft:netherrack"
   },
   "output": {
-    "id": "minecraft:stone"
+    "id": "minecraft:nether_brick"
   },
   "time": 50
 }

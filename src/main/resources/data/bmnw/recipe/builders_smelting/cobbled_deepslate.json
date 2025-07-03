@@ -1,10 +1,10 @@
 {
   "type": "bmnw:builders_smelting",
   "input": {
-    "item": "minecraft:cobblestone"
+    "item": "minecraft:cobbled_deepslate"
   },
   "output": {
-    "id": "minecraft:stone"
+    "id": "minecraft:deepslate"
   },
   "time": 50
 }
