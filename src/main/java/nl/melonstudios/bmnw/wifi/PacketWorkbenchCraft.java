@@ -20,7 +20,6 @@ import nl.melonstudios.bmnw.softcoded.recipe.WorkbenchRecipe;
 import org.slf4j.Logger;
 
 import java.util.List;
-import java.util.Optional;
 
 public record PacketWorkbenchCraft(ResourceLocation id, boolean stack) implements CustomPacketPayload {
     private static final Logger LOGGER = LogUtils.getLogger();

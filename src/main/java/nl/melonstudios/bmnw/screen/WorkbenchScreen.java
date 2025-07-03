@@ -22,7 +22,10 @@ import nl.melonstudios.bmnw.softcoded.recipe.WorkbenchRecipe;
 import nl.melonstudios.bmnw.softcoded.recipe.WorkbenchRecipeComparator;
 import nl.melonstudios.bmnw.wifi.PacketWorkbenchCraft;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
     public static final RandomSource random = RandomSource.create();

@@ -1,7 +1,6 @@
 package nl.melonstudios.bmnw.hardcoded.recipe.jei;
 
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.material.Fluid;
