@@ -4,6 +4,7 @@ import mezz.jei.api.recipe.RecipeType;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import nl.melonstudios.bmnw.hardcoded.recipe.WorkbenchRecipe;
 import nl.melonstudios.bmnw.init.BMNWRecipes;
+import nl.melonstudios.bmnw.softcoded.recipe.AlloyingRecipe;
 import nl.melonstudios.bmnw.softcoded.recipe.BuildersSmeltingRecipe;
 import nl.melonstudios.bmnw.softcoded.recipe.ShreddingRecipe;
 
@@ -14,9 +15,10 @@ public class BMNWRecipeTypes {
             RecipeType.create("bmnw", "workbench", WorkbenchRecipe.class);
     public static final RecipeType<PressingRecipe> PRESSING =
             RecipeType.create("bmnw", "pressing", PressingRecipe.class);
-    public static final RecipeType<AlloyingRecipe> ALLOYING =
-            RecipeType.create("bmnw", "alloying", AlloyingRecipe.class);
 
+
+    public static final Supplier<RecipeType<RecipeHolder<AlloyingRecipe>>> ALLOYING =
+            RecipeType.createFromDeferredVanilla(BMNWRecipes.ALLOYING_TYPE);
     public static final Supplier<RecipeType<RecipeHolder<BuildersSmeltingRecipe>>> BUILDERS_SMELTING =
             RecipeType.createFromDeferredVanilla(BMNWRecipes.BUILDERS_SMELTING_TYPE);
     public static final Supplier<RecipeType<RecipeHolder<ShreddingRecipe>>> SHREDDING =

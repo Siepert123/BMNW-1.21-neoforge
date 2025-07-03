@@ -18,16 +18,21 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.items.ItemStackHandler;
-import nl.melonstudios.bmnw.hardcoded.recipe.AlloyingRecipes;
+import nl.melonstudios.bmnw.hardcoded.recipe.WrappedUnorderedDoubleRecipeInput;
 import nl.melonstudios.bmnw.init.BMNWBlockEntities;
+import nl.melonstudios.bmnw.init.BMNWRecipes;
 import nl.melonstudios.bmnw.init.BMNWTags;
 import nl.melonstudios.bmnw.screen.AlloyFurnaceMenu;
+import nl.melonstudios.bmnw.softcoded.recipe.AlloyingRecipe;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Optional;
 
 public class AlloyBlastFurnaceBlockEntity extends BlockEntity implements MenuProvider {
     private final RandomSource soundRand = RandomSource.create();
@@ -35,12 +40,14 @@ public class AlloyBlastFurnaceBlockEntity extends BlockEntity implements MenuPro
         super(BMNWBlockEntities.ALLOY_BLAST_FURNACE.get(), pos, blockState);
     }
 
+
     public final ItemStackHandler inventory = new ItemStackHandler(4);
     public int progress = 0;
     public static final int maxProgress = 100;
     public int fuelTicks = 0;
     public int maxFuelTicks = 0;
     public int infiniteFuel = 0;
+    public final WrappedUnorderedDoubleRecipeInput recipeInput = new WrappedUnorderedDoubleRecipeInput(this.inventory, 1, 2);
 
     protected final ContainerData dataAccess = new ContainerData() {
         @Override
@@ -100,7 +107,7 @@ public class AlloyBlastFurnaceBlockEntity extends BlockEntity implements MenuPro
             ItemStack input2 = this.inventory.getStackInSlot(2);
             ItemStack output = this.inventory.getStackInSlot(3);
             if (output.isEmpty() || output.getCount() < output.getMaxStackSize()) {
-                ItemStack result = AlloyingRecipes.instance.getResult(input1, input2);
+                ItemStack result = this.getRecipeResult();
                 if (!result.isEmpty()) {
                     if (output.isEmpty() || (ItemStack.isSameItem(result, output) &&
                             result.getCount() + output.getCount() <= result.getMaxStackSize())) {
@@ -132,7 +139,7 @@ public class AlloyBlastFurnaceBlockEntity extends BlockEntity implements MenuPro
                     1, 0.9f + this.soundRand.nextFloat() * 0.2f
             );
         }
-        if (shouldBeLit != lit) {
+        if (shouldBeLit != lit && !this.level.isClientSide) {
             this.level.setBlock(this.worldPosition, state.setValue(BlockStateProperties.LIT, shouldBeLit), 3);
         }
     }
@@ -192,5 +199,15 @@ public class AlloyBlastFurnaceBlockEntity extends BlockEntity implements MenuPro
     @Override
     public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
         return saveWithoutMetadata(registries);
+    }
+
+    private Optional<RecipeHolder<AlloyingRecipe>> getRecipe() {
+        return this.level.getRecipeManager()
+                .getRecipeFor(BMNWRecipes.ALLOYING_TYPE.get(), this.recipeInput, this.level);
+    }
+    private ItemStack getRecipeResult() {
+        RecipeHolder<AlloyingRecipe> recipe = this.getRecipe().orElse(null);
+        if (recipe == null) return ItemStack.EMPTY;
+        return recipe.value().result().copy();
     }
 }

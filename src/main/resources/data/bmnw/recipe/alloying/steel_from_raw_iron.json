@@ -1,0 +1,14 @@
+{
+  "type": "bmnw:alloying",
+  "input1": {
+    "tag": "c:raw_materials/iron"
+  },
+  "input2": {
+    "item": "minecraft:coal"
+  },
+  "result": {
+    "id": "bmnw:steel_ingot",
+    "count": 2
+  },
+  "recipeTime": 100
+}

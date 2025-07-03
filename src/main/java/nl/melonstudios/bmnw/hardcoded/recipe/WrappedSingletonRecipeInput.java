@@ -1,4 +1,4 @@
-package nl.melonstudios.bmnw.misc;
+package nl.melonstudios.bmnw.hardcoded.recipe;
 
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeInput;

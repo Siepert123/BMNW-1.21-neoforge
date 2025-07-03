@@ -1,0 +1,14 @@
+{
+  "type": "bmnw:alloying",
+  "input1": {
+    "tag": "c:ingots/copper"
+  },
+  "input2": {
+    "tag": "c:dusts/redstone"
+  },
+  "result": {
+    "id": "bmnw:conductive_copper_ingot",
+    "count": 2
+  },
+  "recipeTime": 100
+}

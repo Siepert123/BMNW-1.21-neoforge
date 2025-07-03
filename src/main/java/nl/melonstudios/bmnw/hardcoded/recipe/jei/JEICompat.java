@@ -15,7 +15,6 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.ItemLike;
 import nl.melonstudios.bmnw.BMNW;
-import nl.melonstudios.bmnw.hardcoded.recipe.AlloyingRecipes;
 import nl.melonstudios.bmnw.hardcoded.recipe.PressingRecipes;
 import nl.melonstudios.bmnw.hardcoded.recipe.WorkbenchRecipes;
 import nl.melonstudios.bmnw.hardcoded.recipe.jei.subtype.FireMarbleSubtypeInterpreter;
@@ -28,6 +27,7 @@ import nl.melonstudios.bmnw.screen.AlloyFurnaceScreen;
 import nl.melonstudios.bmnw.screen.BuildersFurnaceScreen;
 import nl.melonstudios.bmnw.screen.PressScreen;
 import nl.melonstudios.bmnw.screen.WorkbenchScreen;
+import nl.melonstudios.bmnw.softcoded.recipe.AlloyingRecipe;
 import nl.melonstudios.bmnw.softcoded.recipe.BuildersSmeltingRecipe;
 import nl.melonstudios.bmnw.softcoded.recipe.ShreddingRecipe;
 
@@ -54,7 +54,6 @@ public class JEICompat implements IModPlugin {
     public void registerRecipes(IRecipeRegistration registration) {
         registration.addRecipes(BMNWRecipeTypes.WORKBENCH, WorkbenchRecipes.instance.recipes);
         registration.addRecipes(BMNWRecipeTypes.PRESSING, PressingRecipes.instance.getJEIRecipeList());
-        registration.addRecipes(BMNWRecipeTypes.ALLOYING, AlloyingRecipes.instance.getJEIRecipeList());
 
         registration.addItemStackInfo(
                 Arrays.asList(Ingredient.of(TagKey.create(Registries.ITEM, ResourceLocation.parse("bmnw:stamps"))).getItems()),
@@ -99,6 +98,9 @@ public class JEICompat implements IModPlugin {
         );
 
         RecipeManager recipeManager = Minecraft.getInstance().level.getRecipeManager();
+        List<RecipeHolder<AlloyingRecipe>> alloyingRecipes = recipeManager
+                .getAllRecipesFor(BMNWRecipes.ALLOYING_TYPE.get()).stream().toList();
+        registration.addRecipes(BMNWRecipeTypes.ALLOYING.get(), alloyingRecipes);
         List<RecipeHolder<BuildersSmeltingRecipe>> buildersSmeltingRecipes = recipeManager
                 .getAllRecipesFor(BMNWRecipes.BUILDERS_SMELTING_TYPE.get()).stream().toList();
         registration.addRecipes(BMNWRecipeTypes.BUILDERS_SMELTING.get(), buildersSmeltingRecipes);
@@ -114,8 +116,8 @@ public class JEICompat implements IModPlugin {
                 BMNWItems.STEEL_WORKBENCH
         );
         registration.addRecipeCatalyst(BMNWItems.PRESS, BMNWRecipeTypes.PRESSING);
-        registration.addRecipeCatalyst(BMNWItems.ALLOY_BLAST_FURNACE, BMNWRecipeTypes.ALLOYING);
 
+        registration.addRecipeCatalyst(BMNWItems.ALLOY_BLAST_FURNACE, BMNWRecipeTypes.ALLOYING.get());
         registration.addRecipeCatalyst(BMNWItems.BUILDERS_FURNACE, BMNWRecipeTypes.BUILDERS_SMELTING.get());
         registration.addRecipeCatalyst(BMNWItems.LARGE_SHREDDER, BMNWRecipeTypes.SHREDDING.get());
     }
@@ -124,8 +126,10 @@ public class JEICompat implements IModPlugin {
     public void registerCategories(IRecipeCategoryRegistration registration) {
         registration.addRecipeCategories(new WorkbenchRecipeCategory());
         registration.addRecipeCategories(new PressingRecipeCategory());
-        registration.addRecipeCategories(new AlloyingRecipeCategory());
 
+        registration.addRecipeCategories(new AlloyingRecipeCategory(
+                registration.getJeiHelpers().getGuiHelper()
+        ));
         registration.addRecipeCategories(new BuildersSmeltingRecipeCategory(
                 registration.getJeiHelpers().getGuiHelper()
         ));
@@ -154,7 +158,7 @@ public class JEICompat implements IModPlugin {
         registration.addRecipeClickArea(
                 AlloyFurnaceScreen.class,
                 83, 22, 28, 38,
-                BMNWRecipeTypes.ALLOYING
+                BMNWRecipeTypes.ALLOYING.get()
         );
 
         registration.addRecipeClickArea(
