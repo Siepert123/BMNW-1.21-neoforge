@@ -1,0 +1,11 @@
+{
+  "type": "bmnw:pressing",
+  "input": {
+    "tag": "c:ingots/gold"
+  },
+  "stamp": "wire",
+  "result": {
+    "id": "bmnw:gold_wire",
+    "count": 8
+  }
+}

@@ -19,17 +19,22 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.network.PacketDistributor;
-import nl.melonstudios.bmnw.hardcoded.recipe.PressingRecipes;
+import nl.melonstudios.bmnw.hardcoded.recipe.PressRecipeInput;
 import nl.melonstudios.bmnw.init.BMNWBlockEntities;
+import nl.melonstudios.bmnw.init.BMNWRecipes;
 import nl.melonstudios.bmnw.init.BMNWTags;
 import nl.melonstudios.bmnw.screen.PressMenu;
+import nl.melonstudios.bmnw.softcoded.recipe.PressingRecipe;
 import nl.melonstudios.bmnw.wifi.PacketUpdatePressState;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Optional;
 
 public class PressBlockEntity extends BlockEntity implements MenuProvider {
     private final RandomSource soundRand = RandomSource.create();
@@ -105,6 +110,7 @@ public class PressBlockEntity extends BlockEntity implements MenuProvider {
         return new PressMenu(containerId, playerInventory, this, this.progressData);
     }
 
+    public final PressRecipeInput recipeInput = new PressRecipeInput(this.inventory, 1, 2);
     public float fuel = 0;
     public int progressOld;
     public int progress;
@@ -139,7 +145,7 @@ public class PressBlockEntity extends BlockEntity implements MenuProvider {
         ItemStack output = this.inventory.getStackInSlot(3);
         if (output.getCount() >= output.getMaxStackSize() || this.fuel < 1) this.reset();
         else {
-            ItemStack result = PressingRecipes.instance.getResult(mold, input);
+            ItemStack result = this.getRecipeResult();
             if (!result.isEmpty()
                     && (output.isEmpty() || ItemStack.isSameItem(output, result))
                     && result.getCount() + output.getCount() <= result.getMaxStackSize()) {
@@ -189,5 +195,16 @@ public class PressBlockEntity extends BlockEntity implements MenuProvider {
 
     public static void tick(Level level, BlockPos pos, BlockState state, BlockEntity be) {
         if (be instanceof PressBlockEntity press) press.tick();
+    }
+
+
+    private Optional<RecipeHolder<PressingRecipe>> getRecipe() {
+        return this.level.getRecipeManager()
+                .getRecipeFor(BMNWRecipes.PRESSING_TYPE.get(), this.recipeInput, this.level);
+    }
+    private ItemStack getRecipeResult() {
+        RecipeHolder<PressingRecipe> recipe = this.getRecipe().orElse(null);
+        if (recipe == null) return ItemStack.EMPTY;
+        return recipe.value().result().copy();
     }
 }

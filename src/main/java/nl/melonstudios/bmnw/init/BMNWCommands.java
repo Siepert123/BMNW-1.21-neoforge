@@ -21,7 +21,6 @@ import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.network.PacketDistributor;
 import nl.melonstudios.bmnw.entity.MeteoriteEntity;
-import nl.melonstudios.bmnw.hardcoded.recipe.PressingRecipes;
 import nl.melonstudios.bmnw.hardcoded.structure.Structures;
 import nl.melonstudios.bmnw.hazard.radiation.ChunkRadiationManager;
 import nl.melonstudios.bmnw.interfaces.IBatteryItem;
@@ -181,32 +180,7 @@ public class BMNWCommands {
                                 )
                         )
                 ).then(Commands.literal("debug")
-                        .then(Commands.literal("recipe")
-                                .then(Commands.literal("pressing_blank")
-                                        .executes(context -> {
-                                            context.getSource().sendSuccess(() -> Component.literal(
-                                                    String.format("%s blank pressing recipes",
-                                                            PressingRecipes.instance.recipeCount(PressingRecipes.MoldType.BLANK))
-                                            ), false);
-                                            return Command.SINGLE_SUCCESS;
-                                        }))
-                                .then(Commands.literal("pressing_plate")
-                                        .executes(context -> {
-                                            context.getSource().sendSuccess(() -> Component.literal(
-                                                    String.format("%s plate pressing recipes",
-                                                            PressingRecipes.instance.recipeCount(PressingRecipes.MoldType.PLATE))
-                                            ), false);
-                                            return Command.SINGLE_SUCCESS;
-                                        }))
-                                .then(Commands.literal("pressing_wire")
-                                        .executes(context -> {
-                                            context.getSource().sendSuccess(() -> Component.literal(
-                                                    String.format("%s wire pressing recipes",
-                                                            PressingRecipes.instance.recipeCount(PressingRecipes.MoldType.WIRE))
-                                            ), false);
-                                            return Command.SINGLE_SUCCESS;
-                                        }))
-                        ).then(Commands.literal("meteor")
+                        .then(Commands.literal("meteor")
                                 .executes(context -> {
                                     Player player = context.getSource().getPlayerOrException();
                                     if (player.level().isClientSide()) return 1;

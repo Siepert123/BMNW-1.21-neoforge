@@ -6,16 +6,18 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import nl.melonstudios.bmnw.softcoded.recipe.AlloyingRecipe;
-import nl.melonstudios.bmnw.softcoded.recipe.BuildersSmeltingRecipe;
-import nl.melonstudios.bmnw.softcoded.recipe.RecipeTypeImpl;
-import nl.melonstudios.bmnw.softcoded.recipe.ShreddingRecipe;
+import nl.melonstudios.bmnw.softcoded.recipe.*;
 
 public class BMNWRecipes {
     public static final DeferredRegister<RecipeSerializer<?>> SERIALIZERS =
             DeferredRegister.create(Registries.RECIPE_SERIALIZER, "bmnw");
     public static final DeferredRegister<RecipeType<?>> TYPES =
             DeferredRegister.create(Registries.RECIPE_TYPE, "bmnw");
+
+    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<PressingRecipe>> PRESSING_SERIALIZER =
+            SERIALIZERS.register("pressing", PressingRecipe.Serializer::new);
+    public static final DeferredHolder<RecipeType<?>, RecipeType<PressingRecipe>> PRESSING_TYPE =
+            TYPES.register("pressing", RecipeTypeImpl.create("pressing"));
 
     public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<AlloyingRecipe>> ALLOYING_SERIALIZER =
             SERIALIZERS.register("alloying", AlloyingRecipe.Serializer::new);

@@ -1,0 +1,11 @@
+{
+  "type": "bmnw:pressing",
+  "input": {
+    "tag": "c:ingots/copper"
+  },
+  "stamp": "wire",
+  "result": {
+    "id": "bmnw:copper_wire",
+    "count": 8
+  }
+}

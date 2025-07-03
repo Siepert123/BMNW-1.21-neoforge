@@ -1,0 +1,11 @@
+{
+  "type": "bmnw:pressing",
+  "input": {
+    "tag": "c:ingots/conductive_copper"
+  },
+  "stamp": "wire",
+  "result": {
+    "id": "bmnw:conductive_copper_wire",
+    "count": 8
+  }
+}

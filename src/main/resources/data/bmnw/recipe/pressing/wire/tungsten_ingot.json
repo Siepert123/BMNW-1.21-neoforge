@@ -1,0 +1,11 @@
+{
+  "type": "bmnw:pressing",
+  "input": {
+    "tag": "c:ingots/tungsten"
+  },
+  "stamp": "wire",
+  "result": {
+    "id": "bmnw:tungsten_wire",
+    "count": 8
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "type": "bmnw:pressing",
+  "input": {
+    "tag": "c:ingots/titanium"
+  },
+  "stamp": "wire",
+  "result": {
+    "id": "bmnw:titanium_wire",
+    "count": 8
+  }
+}

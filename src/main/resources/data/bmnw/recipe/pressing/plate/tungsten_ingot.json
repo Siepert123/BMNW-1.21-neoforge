@@ -1,0 +1,10 @@
+{
+  "type": "bmnw:pressing",
+  "input": {
+    "tag": "c:ingots/tungsten"
+  },
+  "stamp": "plate",
+  "result": {
+    "id": "bmnw:tungsten_plate"
+  }
+}

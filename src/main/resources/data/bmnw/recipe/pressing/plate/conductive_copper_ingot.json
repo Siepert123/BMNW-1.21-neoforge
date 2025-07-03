@@ -1,0 +1,10 @@
+{
+  "type": "bmnw:pressing",
+  "input": {
+    "tag": "c:ingots/conductive_copper"
+  },
+  "stamp": "plate",
+  "result": {
+    "id": "bmnw:conductive_copper_plate"
+  }
+}

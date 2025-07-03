@@ -1,0 +1,10 @@
+{
+  "type": "bmnw:pressing",
+  "input": {
+    "tag": "c:ingots/iron"
+  },
+  "stamp": "plate",
+  "result": {
+    "id": "bmnw:iron_plate"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "type": "bmnw:pressing",
+  "input": {
+    "tag": "c:ingots/aluminium"
+  },
+  "stamp": "plate",
+  "result": {
+    "id": "bmnw:aluminium_plate"
+  }
+}
