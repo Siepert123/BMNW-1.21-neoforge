@@ -1,6 +1,7 @@
 package nl.melonstudios.bmnw.block.entity;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -14,6 +15,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import nl.melonstudios.bmnw.init.BMNWBlockEntities;
 import nl.melonstudios.bmnw.init.BMNWRecipes;
@@ -23,8 +25,8 @@ import nl.melonstudios.bmnw.misc.Library;
 import nl.melonstudios.bmnw.screen.BuildersFurnaceMenu;
 import nl.melonstudios.bmnw.softcoded.recipe.BuildersSmeltingRecipe;
 import nl.melonstudios.bmnw.softcoded.recipe.BuildersSmeltingRecipeInput;
-import org.jetbrains.annotations.Nullable;
 
+import javax.annotation.Nullable;
 import java.util.Optional;
 
 public class BuildersFurnaceBlockEntity extends SyncedBlockEntity implements MenuProvider, ITickable {
@@ -43,6 +45,120 @@ public class BuildersFurnaceBlockEntity extends SyncedBlockEntity implements Men
             BuildersFurnaceBlockEntity.this.notifyChange();
         }
     };
+
+    public final IItemHandler fuelInterface = new IItemHandler() {
+        private ItemStackHandler getInventory() {
+            return BuildersFurnaceBlockEntity.this.inventory;
+        }
+
+        @Override
+        public int getSlots() {
+            return 1;
+        }
+
+        @Override
+        public ItemStack getStackInSlot(int slot) {
+            return this.getInventory().getStackInSlot(SLOT_FUEL);
+        }
+
+        @Override
+        public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
+            return this.isItemValid(slot, stack) ? this.getInventory().insertItem(SLOT_FUEL, stack, simulate) : stack;
+        }
+
+        @Override
+        public ItemStack extractItem(int slot, int amount, boolean simulate) {
+            ItemStack there = this.getInventory().getStackInSlot(SLOT_FUEL);
+            return there.is(Items.BUCKET) ? this.getInventory().extractItem(SLOT_FUEL, amount, simulate) : ItemStack.EMPTY;
+        }
+
+        @Override
+        public int getSlotLimit(int slot) {
+            return 64;
+        }
+
+        @Override
+        public boolean isItemValid(int slot, ItemStack stack) {
+            return stack.getBurnTime(null) / 2 > 0 || stack.is(BMNWTags.Items.INFINITE_FUEL_SOURCES);
+        }
+    };
+    public final IItemHandler inputInterface = new IItemHandler() {
+        private ItemStackHandler getInventory() {
+            return BuildersFurnaceBlockEntity.this.inventory;
+        }
+
+        @Override
+        public int getSlots() {
+            return 1;
+        }
+
+        @Override
+        public ItemStack getStackInSlot(int slot) {
+            return this.getInventory().getStackInSlot(SLOT_INPUT);
+        }
+
+        @Override
+        public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
+            return this.getInventory().insertItem(SLOT_INPUT, stack, simulate);
+        }
+
+        @Override
+        public ItemStack extractItem(int slot, int amount, boolean simulate) {
+            return ItemStack.EMPTY;
+        }
+
+        @Override
+        public int getSlotLimit(int slot) {
+            return 64;
+        }
+
+        @Override
+        public boolean isItemValid(int slot, ItemStack stack) {
+            return true;
+        }
+    };
+    public final IItemHandler outputInterface = new IItemHandler() {
+        private ItemStackHandler getInventory() {
+            return BuildersFurnaceBlockEntity.this.inventory;
+        }
+
+        @Override
+        public int getSlots() {
+            return 1;
+        }
+
+        @Override
+        public ItemStack getStackInSlot(int slot) {
+            return this.getInventory().getStackInSlot(SLOT_OUTPUT);
+        }
+
+        @Override
+        public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
+            return stack;
+        }
+
+        @Override
+        public ItemStack extractItem(int slot, int amount, boolean simulate) {
+            return this.getInventory().extractItem(SLOT_OUTPUT, amount, simulate);
+        }
+
+        @Override
+        public int getSlotLimit(int slot) {
+            return 64;
+        }
+
+        @Override
+        public boolean isItemValid(int slot, ItemStack stack) {
+            return false;
+        }
+    };
+
+    public IItemHandler getItemHandler(@Nullable Direction face) {
+        if (face == null) return this.inventory;
+        if (face == Direction.UP) return this.inputInterface;
+        if (face == Direction.DOWN) return this.outputInterface;
+        return this.fuelInterface;
+    }
 
     public int progress;
     public int maxProgress;

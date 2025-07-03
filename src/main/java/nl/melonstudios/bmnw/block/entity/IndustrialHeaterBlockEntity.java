@@ -1,7 +1,9 @@
 package nl.melonstudios.bmnw.block.entity;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.tags.ItemTags;
@@ -15,8 +17,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import nl.melonstudios.bmnw.init.BMNWBlockEntities;
+import nl.melonstudios.bmnw.interfaces.IDummyableCapabilities;
 import nl.melonstudios.bmnw.interfaces.IHeatable;
 import nl.melonstudios.bmnw.interfaces.ISlaveOwner;
 import nl.melonstudios.bmnw.interfaces.ITickable;
@@ -24,7 +28,7 @@ import nl.melonstudios.bmnw.misc.Library;
 import nl.melonstudios.bmnw.screen.IndustrialHeaterMenu;
 import org.jetbrains.annotations.Nullable;
 
-public class IndustrialHeaterBlockEntity extends SyncedBlockEntity implements ITickable, ISlaveOwner<IndustrialHeaterBlockEntity>, MenuProvider {
+public class IndustrialHeaterBlockEntity extends SyncedBlockEntity implements ITickable, ISlaveOwner<IndustrialHeaterBlockEntity>, MenuProvider, IDummyableCapabilities {
     public static final int MAX_HEAT_STORAGE = 100000;
     public IndustrialHeaterBlockEntity(BlockPos pos, BlockState blockState) {
         super(BMNWBlockEntities.INDUSTRIAL_HEATER.get(), pos, blockState);
@@ -214,5 +218,47 @@ public class IndustrialHeaterBlockEntity extends SyncedBlockEntity implements IT
         if (!i0.isEmpty()) Library.dropItem(this.level, this.worldPosition, i0.copy());
         ItemStack i1 = this.inventory.getStackInSlot(1);
         if (!i1.isEmpty()) Library.dropItem(this.level, this.worldPosition, i1.copy());
+    }
+
+    public final IItemHandler itemInterface = new IItemHandler() {
+        private ItemStackHandler inventory() {
+            return IndustrialHeaterBlockEntity.this.inventory;
+        }
+        @Override
+        public int getSlots() {
+            return 2;
+        }
+
+        @Override
+        public ItemStack getStackInSlot(int slot) {
+            return this.inventory().getStackInSlot(slot);
+        }
+
+        @Override
+        public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
+            return this.isItemValid(slot, stack) ? this.inventory().insertItem(slot, stack, simulate) : stack;
+        }
+
+        @Override
+        public ItemStack extractItem(int slot, int amount, boolean simulate) {
+            return ItemStack.EMPTY;
+        }
+
+        @Override
+        public int getSlotLimit(int slot) {
+            return 64;
+        }
+
+        @Override
+        public boolean isItemValid(int slot, ItemStack stack) {
+            return stack.getBurnTime(null) > 0;
+        }
+    };
+
+    @Nullable
+    @Override
+    public IItemHandler getItemHandler(Vec3i offset, @Nullable Direction face) {
+        if (Direction.Axis.Y.test(face)) return null;
+        return this.itemInterface;
     }
 }

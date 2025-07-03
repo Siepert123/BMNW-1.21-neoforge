@@ -1,6 +1,7 @@
 package nl.melonstudios.bmnw.block.misc;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
@@ -17,7 +18,12 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
+import net.neoforged.neoforge.capabilities.BlockCapability;
+import net.neoforged.neoforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.items.IItemHandler;
 import nl.melonstudios.bmnw.block.entity.DummyBlockEntity;
+import nl.melonstudios.bmnw.interfaces.IDummyableCapabilities;
 import org.jetbrains.annotations.Nullable;
 
 public class DummyBlock extends Block implements EntityBlock {
@@ -78,5 +84,33 @@ public class DummyBlock extends Block implements EntityBlock {
             return level.getBlockState(corePos).useItemOn(stack, level, player, hand, hitResult.withPosition(corePos));
         }
         return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+    }
+
+    public static IItemHandler getItemHandler(Level level, BlockPos pos, BlockState state, BlockEntity be, @Nullable Direction face) {
+        if (be instanceof DummyBlockEntity dummy) {
+            BlockPos corePos = dummy.getCore();
+            if (level.getBlockEntity(corePos) instanceof IDummyableCapabilities capabilities) {
+                return capabilities.getItemHandler(pos.subtract(corePos), face);
+            }
+        }
+        return null;
+    }
+    public static IFluidHandler getFluidHandler(Level level, BlockPos pos, BlockState state, BlockEntity be, @Nullable Direction face) {
+        if (be instanceof DummyBlockEntity dummy) {
+            BlockPos corePos = dummy.getCore();
+            if (level.getBlockEntity(corePos) instanceof IDummyableCapabilities capabilities) {
+                return capabilities.getFluidHandler(pos.subtract(corePos), face);
+            }
+        }
+        return null;
+    }
+    public static IEnergyStorage getEnergyStorage(Level level, BlockPos pos, BlockState state, BlockEntity be, @Nullable Direction face) {
+        if (be instanceof DummyBlockEntity dummy) {
+            BlockPos corePos = dummy.getCore();
+            if (level.getBlockEntity(corePos) instanceof IDummyableCapabilities capabilities) {
+                return capabilities.getEnergyStorage(pos.subtract(corePos), face);
+            }
+        }
+        return null;
     }
 }

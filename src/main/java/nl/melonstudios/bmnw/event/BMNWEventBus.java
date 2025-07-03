@@ -49,6 +49,7 @@ import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import nl.melonstudios.bmnw.block.entity.*;
 import nl.melonstudios.bmnw.block.entity.renderer.*;
+import nl.melonstudios.bmnw.block.misc.DummyBlock;
 import nl.melonstudios.bmnw.cfg.BMNWClientConfig;
 import nl.melonstudios.bmnw.cfg.BMNWServerConfig;
 import nl.melonstudios.bmnw.client.BMNWClient;
@@ -468,6 +469,22 @@ public class BMNWEventBus {
 
         private static void registerBlockCaps(RegisterCapabilitiesEvent event) {
             event.registerBlock(
+                    Capabilities.ItemHandler.BLOCK,
+                    DummyBlock::getItemHandler,
+                    BMNWBlocks.DUMMY.get()
+            );
+            event.registerBlock(
+                    Capabilities.FluidHandler.BLOCK,
+                    DummyBlock::getFluidHandler,
+                    BMNWBlocks.DUMMY.get()
+            );
+            event.registerBlock(
+                    Capabilities.EnergyStorage.BLOCK,
+                    DummyBlock::getEnergyStorage,
+                    BMNWBlocks.DUMMY.get()
+            );
+
+            event.registerBlock(
                     Capabilities.EnergyStorage.BLOCK,
                     (level, pos, state, blockEntity, context) -> blockEntity != null ?
                             ((MissileLaunchPadBlockEntity) blockEntity).getIEnergy() : null,
@@ -485,9 +502,9 @@ public class BMNWEventBus {
                     BMNWBlocks.ELECTRIC_WIRE_CONNECTOR.get()
             );
             event.registerBlock(
-                    Capabilities.EnergyStorage.BLOCK,
-                    ((level, pos, state, blockEntity, context) -> blockEntity instanceof RadioAntennaControllerBlockEntity controller ? controller.energy : null),
-                    BMNWBlocks.RADIO_ANTENNA_CONTROLLER.get()
+                    Capabilities.ItemHandler.BLOCK,
+                    ((level, pos, state, be, context) -> be instanceof BuildersFurnaceBlockEntity furnace ? furnace.getItemHandler(context) : null),
+                    BMNWBlocks.BUILDERS_FURNACE.get()
             );
             event.registerBlock(
                     Capabilities.ItemHandler.BLOCK,
@@ -503,6 +520,11 @@ public class BMNWEventBus {
                     Capabilities.FluidHandler.BLOCK,
                     ((level, pos, state, be, context) -> be instanceof CombustionEngineBlockEntity engine ? engine.getFluid(context) : null),
                     BMNWBlocks.COMBUSTION_ENGINE.get()
+            );
+            event.registerBlock(
+                    Capabilities.EnergyStorage.BLOCK,
+                    ((level, pos, state, blockEntity, context) -> blockEntity instanceof RadioAntennaControllerBlockEntity controller ? controller.energy : null),
+                    BMNWBlocks.RADIO_ANTENNA_CONTROLLER.get()
             );
         }
         private static void registerItemCaps(RegisterCapabilitiesEvent event) {
