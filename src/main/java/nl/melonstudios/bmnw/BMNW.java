@@ -14,6 +14,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
@@ -43,12 +44,12 @@ import nl.melonstudios.bmnw.screen.*;
 import org.slf4j.Logger;
 
 import javax.annotation.Nonnull;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
-import java.util.Calendar;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(BMNW.MODID)
@@ -87,6 +88,13 @@ public class BMNW {
     private static String versionStr;
     private static ModContainer modContainer;
     public static final boolean autoDecidedMemoryMinimization;
+
+    private static int hintIndex = 0;
+    private static final ArrayList<String> hints = new ArrayList<>();
+    @OnlyIn(Dist.CLIENT)
+    public static String getRandomHint() {
+        return hints.get(RandomHelper.nextInt(System.currentTimeMillis() / 2000, 3, hints.size()));
+    }
 
     static {
         IOpensCatwalkRails.init();
@@ -145,6 +153,22 @@ public class BMNW {
         }
 
         LOGGER.info(randomSplash);
+
+        if (dist.isClient()) {
+            try (
+                    InputStream in = getJarInputStream("hints.txt");
+                    InputStreamReader reader = new InputStreamReader(in);
+                    BufferedReader buf = new BufferedReader(reader)
+            ) {
+                buf.lines().filter((s) -> !s.isBlank()).forEach(hints::add);
+            } catch (IOException e) {
+                hints.clear();
+                hints.add("Error loading hints:$" + e.getClass().getName() + ":$" + e.getLocalizedMessage());
+            } finally {
+                LOGGER.debug("Loaded {} hints:", hints.size());
+                hints.forEach(LOGGER::debug);
+            }
+        }
     }
 
     private static void clientInit() {

@@ -80,6 +80,10 @@ public class BMNWClientConfig {
             .comment("The default segmentation of the leash-like wires")
             .defineInRange("defaultWireSegmentation", 24, 2, 256);
 
+    private static final ModConfigSpec.BooleanValue DISABLE_HINTS = BUILDER
+            .comment("Whether to disable the hints in the world loading screen")
+            .define("disableHints", false);
+
     static {
         BUILDER.pop();
     }
@@ -98,6 +102,10 @@ public class BMNWClientConfig {
     }
     public static int defaultWireSegmentation() {
         return DEFAULT_WIRE_SEGMENTATION.get();
+    }
+
+    public static boolean disableHints() {
+        return DISABLE_HINTS.get();
     }
 
     public static void onLoad(final ModConfigEvent event) {
