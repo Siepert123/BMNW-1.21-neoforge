@@ -420,6 +420,7 @@ public class BMNWEventBus {
 
         @OnlyIn(Dist.CLIENT)
         private static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
+            registerEntityRenderingHandler(event, BMNWEntityTypes.TEST_NUKE, EmptyEntityRenderer::new);
             registerEntityRenderingHandler(event, BMNWEntityTypes.BLOCK_DEBRIS, BlockDebrisRenderer::new);
             registerEntityRenderingHandler(event, BMNWEntityTypes.MULTIBLOCK_DEBRIS, MultiblockDebrisRenderer::new);
             registerEntityRenderingHandler(event, BMNWEntityTypes.RUBBLE, RubbleRenderer::new);

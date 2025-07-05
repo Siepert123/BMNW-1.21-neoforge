@@ -20,7 +20,7 @@ public class ChunkRadiationManager {
     }
 
     public static void onWorldUnload(LevelEvent.Unload event) {
-        if (BMNWServerConfig.radiationSetting().chunk()) handler.onWorldUnload(event);
+        handler.onWorldUnload(event);
     }
 
     public static void onChunkLoad(ChunkEvent.Load event) {

@@ -7,10 +7,19 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import nl.melonstudios.bmnw.entity.*;
+import nl.melonstudios.bmnw.nuke.TestNukeEntity;
 
 public class BMNWEntityTypes {
     private static final DeferredRegister<EntityType<?>> ENTITY_TYPES =
             DeferredRegister.create(BuiltInRegistries.ENTITY_TYPE, "bmnw");
+
+    public static final DeferredHolder<EntityType<?>, EntityType<TestNukeEntity>> TEST_NUKE = ENTITY_TYPES.register(
+            "test_nuke",
+            () -> EntityType.Builder.<TestNukeEntity>of(TestNukeEntity::new, MobCategory.MISC)
+                    .clientTrackingRange(128)
+                    .sized(1.0F, 1.0F)
+                    .build("bmnw:test_nuke")
+    );
 
     public static final DeferredHolder<EntityType<?>, EntityType<BlockDebrisEntity>> BLOCK_DEBRIS = ENTITY_TYPES.register(
             "block_debris",
