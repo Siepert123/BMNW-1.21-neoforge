@@ -54,14 +54,14 @@ public record HeaterFuelBonusRecipe(Ingredient input, float durationMultiplier, 
                         .forGetter(HeaterFuelBonusRecipe::input),
                 Codec.FLOAT.fieldOf("duration_multiplier")
                         .orElse(1.0F)
-                        .validate((f) -> f <= 0.0F ?
-                                DataResult.error(() -> "duration multiplier must be positive", 1.0F) :
+                        .validate((f) -> f < 0.0F ?
+                                DataResult.error(() -> "duration multiplier must be non negative", 0.0F) :
                                 DataResult.success(f))
                         .forGetter(HeaterFuelBonusRecipe::durationMultiplier),
                 Codec.FLOAT.fieldOf("heat_multiplier")
                         .orElse(1.0F)
-                        .validate((f) -> f <= 0.0F ?
-                                DataResult.error(() -> "heat multiplier must be positive", 1.0F) :
+                        .validate((f) -> f < 0.0F ?
+                                DataResult.error(() -> "heat multiplier must be non negative", 0.0F) :
                                 DataResult.success(f))
                         .forGetter(HeaterFuelBonusRecipe::durationMultiplier)
         ).apply(inst, HeaterFuelBonusRecipe::new));

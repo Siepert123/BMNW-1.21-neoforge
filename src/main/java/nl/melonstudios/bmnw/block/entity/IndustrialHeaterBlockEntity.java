@@ -196,14 +196,14 @@ public class IndustrialHeaterBlockEntity extends SyncedBlockEntity implements IT
             HeaterFuelBonusRecipe recipe = this.getRecipe();
             int burnTime = Mth.ceil(selectedStack.getBurnTime(null) * this.getBurnTimeMultiplier(recipe));
             if (burnTime > 0) {
-            this.burnTime = this.totalBurnTime = burnTime;
-            this.heatIncrease = Mth.ceil(100 * this.getHeatMultiplier(recipe));
-            if (selectedStack.is(Items.LAVA_BUCKET)) {
-                this.inventory.setStackInSlot(slot, Items.BUCKET.getDefaultInstance());
-            } else {
-                selectedStack.shrink(1);
-            }
-            this.notifyChange();
+                this.burnTime = this.totalBurnTime = burnTime;
+                this.heatIncrease = Mth.ceil(100 * this.getHeatMultiplier(recipe));
+                if (selectedStack.is(Items.LAVA_BUCKET)) {
+                    this.inventory.setStackInSlot(slot, Items.BUCKET.getDefaultInstance());
+                } else {
+                    selectedStack.shrink(1);
+                }
+                this.notifyChange();
             }
         }
     }

@@ -1,0 +1,8 @@
+{
+  "type": "bmnw:heater_fuel_bonus",
+  "item": {
+    "item": "bmnw:dust"
+  },
+  "duration_multiplier": 0.0,
+  "heat_multiplier": 0.0
+}
