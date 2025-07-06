@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "bmnw:block/basalt_iron_ore_top",
+    "side": "bmnw:block/basalt_iron_ore"
+  }
+}

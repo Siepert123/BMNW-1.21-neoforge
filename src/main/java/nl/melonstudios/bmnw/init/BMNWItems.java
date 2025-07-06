@@ -653,6 +653,23 @@ public class BMNWItems {
 
     //endregion
 
+    //region Volcano blocks
+
+    public static final DeferredItem<BlockItem> VOLCANO_CORE = ITEMS.register("volcano_core",
+            () -> new BlockItem(BMNWBlocks.VOLCANO_CORE.get(), new Item.Properties().stacksTo(1)));
+    public static final DeferredItem<BlockItem> VOLCANO_CORE_EXTINGUISHES = ITEMS.register("volcano_core_extinguishes",
+            () -> new BlockItem(BMNWBlocks.VOLCANO_CORE_EXTINGUISHES.get(), new Item.Properties().stacksTo(1)));
+    public static final DeferredItem<BlockItem> VOLCANO_CORE_GROWS = ITEMS.register("volcano_core_grows",
+            () -> new BlockItem(BMNWBlocks.VOLCANO_CORE_GROWS.get(), new Item.Properties().stacksTo(1)));
+    public static final DeferredItem<BlockItem> VOLCANO_CORE_EXTINGUISHES_GROWS = ITEMS.register("volcano_core_extinguishes_grows",
+            () -> new BlockItem(BMNWBlocks.VOLCANO_CORE_EXTINGUISHES_GROWS.get(), new Item.Properties().stacksTo(1)));
+
+    public static final DeferredItem<BlockItem> BASALT_IRON_ORE = ITEMS.register("basalt_iron_ore",
+            () -> new BlockItem(BMNWBlocks.BASALT_IRON_ORE.get(), new Item.Properties()));
+    public static final DeferredItem<BlockItem> BASALT_BAUXITE_ORE = ITEMS.register("basalt_bauxite_ore",
+            () -> new BlockItem(BMNWBlocks.BASALT_BAUXITE_ORE.get(), new Item.Properties()));
+    //endregion
+
     public static final DeferredItem<SimpleRadioactiveBlockItem> NUCLEAR_WASTE_BARREL = ITEMS.register("nuclear_waste_barrel",
             () -> new SimpleRadioactiveBlockItem(BMNWBlocks.NUCLEAR_WASTE_BARREL.get(), new Item.Properties()));
 

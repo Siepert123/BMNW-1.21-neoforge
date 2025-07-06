@@ -5,6 +5,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -12,7 +13,9 @@ import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.FireBlock;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -25,6 +28,7 @@ import net.neoforged.neoforge.common.SoundActions;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.fluids.FluidType;
 import nl.melonstudios.bmnw.cfg.BMNWClientConfig;
+import nl.melonstudios.bmnw.cfg.BMNWServerConfig;
 import nl.melonstudios.bmnw.init.BMNWBlocks;
 import nl.melonstudios.bmnw.init.BMNWFluids;
 import nl.melonstudios.bmnw.init.BMNWItems;
@@ -111,18 +115,21 @@ public abstract class VolcanicLavaFluid extends LavaFluid {
     public static void solidify(Level level, BlockPos pos, int lava, int basalt, RandomSource rnd) {
         int randomizer = rnd.nextInt(200);
 
+        if (lava + basalt > 3) {
+            if (randomizer < 5) {
+                level.setBlock(pos, BMNWBlocks.BASALT_IRON_ORE.get().defaultBlockState(), 3);
+                return;
+            } else if (randomizer < 10) {
+                level.setBlock(pos, BMNWBlocks.BASALT_BAUXITE_ORE.get().defaultBlockState(), 3);
+                return;
+            }
+        }
         level.setBlock(pos, Blocks.BASALT.defaultBlockState(), 3);
     }
 
     @Override
     public boolean canBeReplacedWith(FluidState fluidState, BlockGetter blockReader, BlockPos pos, Fluid fluid, Direction direction) {
         return false;
-    }
-
-    @Override
-    protected boolean canSpreadTo(BlockGetter level, BlockPos fromPos, BlockState fromBlockState, Direction direction, BlockPos toPos, BlockState toBlockState, FluidState toFluidState, Fluid fluid) {
-        return toBlockState.is(Tags.Blocks.GLASS_PANES) || toBlockState.is(Tags.Blocks.GLASS_BLOCKS_CHEAP) ||
-                super.canSpreadTo(level, fromPos, fromBlockState, direction, toPos, toBlockState, toFluidState, fluid);
     }
 
     @Override

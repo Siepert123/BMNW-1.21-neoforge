@@ -3,9 +3,13 @@ package nl.melonstudios.bmnw.block.misc;
 import it.unimi.dsi.fastutil.longs.LongSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.SectionPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
@@ -18,6 +22,8 @@ import nl.melonstudios.bmnw.entity.LavaEjectionEntity;
 import nl.melonstudios.bmnw.init.BMNWParticleTypes;
 import nl.melonstudios.bmnw.misc.Library;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public class VolcanoCoreBlock extends TickingEntityBlock {
     private static final BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
@@ -50,5 +56,17 @@ public class VolcanoCoreBlock extends TickingEntityBlock {
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new VolcanoCoreBlockEntity(pos, state);
+    }
+
+    @Override
+    public String getDescriptionId() {
+        return "block.bmnw.volcano_core";
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+        tooltipComponents.add(Component.literal("Volcano type: " + this.type).withColor(0x888888));
+        tooltipComponents.add(Component.literal("Extinguishes: " + this.extinguishes).withColor(0x888888));
+        tooltipComponents.add(Component.literal("Grows: " + this.grows).withColor(0x888888));
     }
 }

@@ -117,7 +117,10 @@
     "bmnw:builders_furnace",
     "bmnw:industrial_heater",
     "bmnw:radio_antenna_controller",
-    "bmnw:dummy"
+    "bmnw:dummy",
+    "bmnw:basalt_iron_ore",
+    "bmnw:basalt_bauxite_ore",
+    "bmnw:combustion_engine"
   ],
   "replace": false
 }

@@ -46,12 +46,22 @@ public class BMNWServerConfig {
             .comment("The chance of a meteorite spawning each tick per player")
             .comment("Calculated with 1.0 / [value]")
             .defineInRange("meteoriteSpawnChance", 48000, 1, Integer.MAX_VALUE);
+
+    static {
+        BUILDER.push("Volcanoes");
+    }
     private static final ModConfigSpec.IntValue MAX_VOLCANO_HEIGHT = BUILDER
             .comment("How high a volcano should be able to grow")
             .defineInRange("maxVolcanoHeight", 200, 128, 300);
     private static final ModConfigSpec.BooleanValue FORCE_LOAD_VOLCANO_CHUNKS = BUILDER
             .comment("Force load chunks near volcanoes? Ensures that volcanoes will still tick even if no one is nearby")
             .define("forceLoadVolcanoChunks", false);
+    private static final ModConfigSpec.BooleanValue MORE_DESTRUCTIVE_VOLCANIC_LAVA = BUILDER
+            .comment("Whether volcanic lava can dig through weak blocks like dirt")
+            .define("moreDestructiveVolcanicLava", true);
+    static {
+        BUILDER.pop();
+    }
 
     public static final ModConfigSpec SPEC = BUILDER.build();
 
@@ -84,5 +94,8 @@ public class BMNWServerConfig {
     }
     public static boolean forceLoadVolcanoChunks() {
         return FORCE_LOAD_VOLCANO_CHUNKS.get();
+    }
+    public static boolean moreDestructiveVolcanicLava() {
+        return MORE_DESTRUCTIVE_VOLCANIC_LAVA.get();
     }
 }

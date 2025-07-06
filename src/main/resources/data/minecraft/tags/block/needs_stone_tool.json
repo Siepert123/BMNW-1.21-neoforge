@@ -79,7 +79,8 @@
     "bmnw:chemplant",
     "bmnw:industrial_heater",
     "bmnw:radio_antenna_controller",
-    "bmnw:dummy"
+    "bmnw:dummy",
+    "bmnw:combustion_engine"
   ],
   "replace": false
 }

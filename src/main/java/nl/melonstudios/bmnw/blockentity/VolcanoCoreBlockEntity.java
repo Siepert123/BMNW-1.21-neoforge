@@ -1,14 +1,12 @@
 package nl.melonstudios.bmnw.blockentity;
 
-import it.unimi.dsi.fastutil.longs.LongSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.SectionPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.level.ChunkPos;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -16,11 +14,13 @@ import nl.melonstudios.bmnw.block.misc.VolcanoCoreBlock;
 import nl.melonstudios.bmnw.cfg.BMNWServerConfig;
 import nl.melonstudios.bmnw.entity.LavaEjectionEntity;
 import nl.melonstudios.bmnw.init.BMNWBlockEntities;
+import nl.melonstudios.bmnw.init.BMNWBlocks;
 import nl.melonstudios.bmnw.init.BMNWParticleTypes;
 import nl.melonstudios.bmnw.interfaces.ITickable;
 import nl.melonstudios.bmnw.misc.Library;
 
 import java.util.Random;
+import java.util.Set;
 
 public class VolcanoCoreBlockEntity extends BlockEntity implements ITickable {
     private static final int GROWTH_TIMER = 256;
@@ -122,7 +122,7 @@ public class VolcanoCoreBlockEntity extends BlockEntity implements ITickable {
             for (int z = -2; z <= 2; z++) {
                 for (int y = 2; y <= 16; y++) {
                     pos.setWithOffset(this.worldPosition, x, y, z);
-                    if (this.level.getBlockState(pos).is(Blocks.BASALT)) {
+                    if (this.basalts.contains(this.level.getBlockState(pos).getBlock())) {
                         this.level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
                     }
                 }
@@ -156,4 +156,10 @@ public class VolcanoCoreBlockEntity extends BlockEntity implements ITickable {
         this.updateTimer = tag.getInt("updateTimer");
         this.age = tag.getInt("age");
     }
+
+    private final Set<Block> basalts = Set.of(
+            Blocks.BASALT,
+            BMNWBlocks.BASALT_IRON_ORE.get(),
+            BMNWBlocks.BASALT_BAUXITE_ORE.get()
+    );
 }

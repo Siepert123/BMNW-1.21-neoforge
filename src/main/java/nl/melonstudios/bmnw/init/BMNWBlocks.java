@@ -441,7 +441,7 @@ public class BMNWBlocks {
 
     //endregion
 
-    //region Volcano cores
+    //region Volcano blocks
 
     public static final DeferredBlock<VolcanoCoreBlock> VOLCANO_CORE = BLOCKS.register("volcano_core",
             () -> new VolcanoCoreBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BEDROCK),
@@ -461,6 +461,11 @@ public class BMNWBlocks {
     public static final DeferredBlock<VolcanoCoreBlock> SOUL_VOLCANO_CORE = BLOCKS.register("soul_volcano_core",
             () -> new VolcanoCoreBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BEDROCK),
                     LavaEjectionEntity.Type.SOUL, false, false));
+
+    public static final DeferredBlock<Block> BASALT_IRON_ORE = BLOCKS.register("basalt_iron_ore",
+            () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.BASALT)));
+    public static final DeferredBlock<Block> BASALT_BAUXITE_ORE = BLOCKS.register("basalt_bauxite_ore",
+            () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.BASALT)));
 
     //endregion
     public static final DeferredBlock<Block> PRESS_HEAD = BLOCKS.register("press_head",
