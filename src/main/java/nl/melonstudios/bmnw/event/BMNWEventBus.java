@@ -1,5 +1,7 @@
 package nl.melonstudios.bmnw.event;
 
+import net.minecraft.client.Camera;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.core.BlockPos;
@@ -8,6 +10,7 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -33,6 +36,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.client.event.*;
+import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.common.data.AdvancementProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
@@ -47,6 +51,7 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import net.neoforged.neoforge.fluids.capability.templates.FluidHandlerItemStack;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
+import nl.melonstudios.bmnw.BMNW;
 import nl.melonstudios.bmnw.block.entity.*;
 import nl.melonstudios.bmnw.block.entity.renderer.*;
 import nl.melonstudios.bmnw.block.misc.DummyBlock;
@@ -58,6 +63,7 @@ import nl.melonstudios.bmnw.discard.DiscardList;
 import nl.melonstudios.bmnw.effect.WPEffect;
 import nl.melonstudios.bmnw.entity.MeteoriteEntity;
 import nl.melonstudios.bmnw.entity.renderer.*;
+import nl.melonstudios.bmnw.fluid.VolcanicLavaFluid;
 import nl.melonstudios.bmnw.hardcoded.structure.Structures;
 import nl.melonstudios.bmnw.hazard.HazardRegistry;
 import nl.melonstudios.bmnw.hazard.radiation.ChunkRadiationManager;
@@ -76,6 +82,8 @@ import nl.melonstudios.bmnw.particle.*;
 import nl.melonstudios.bmnw.wifi.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.Nullable;
+import org.joml.Vector3f;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -628,7 +636,33 @@ public class BMNWEventBus {
         @SubscribeEvent
         @OnlyIn(Dist.CLIENT)
         public static void registerClientExtensions(RegisterClientExtensionsEvent event) {
+            event.registerFluidType(
+                new IClientFluidTypeExtensions() {
+                    private static final ResourceLocation TEXTURE_STILL = BMNW.namespace("block/fluid/volcanic_lava_still");
+                    private static final ResourceLocation TEXTURE_FLOW = BMNW.namespace("block/fluid/volcanic_lava_flow");
 
+                    @Override
+                    public ResourceLocation getStillTexture() {
+                        return TEXTURE_STILL;
+                    }
+
+                    @Override
+                    public ResourceLocation getFlowingTexture() {
+                        return TEXTURE_FLOW;
+                    }
+
+                    @Override
+                    public ResourceLocation getOverlayTexture() {
+                        return TEXTURE_STILL;
+                    }
+
+                    @Override
+                    public Vector3f modifyFogColor(Camera camera, float partialTick, ClientLevel level, int renderDistance, float darkenWorldAmount, Vector3f fluidFogColor) {
+                        return fluidFogColor.set(1.0F, 0.0F, 0.0F);
+                    }
+                },
+                VolcanicLavaFluid.TYPE
+            );
         }
 
         @SubscribeEvent

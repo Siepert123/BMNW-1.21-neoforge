@@ -79,14 +79,17 @@ public class BMNWClientConfig {
     private static final ModConfigSpec.IntValue DEFAULT_WIRE_SEGMENTATION = BUILDER
             .comment("The default segmentation of the leash-like wires")
             .defineInRange("defaultWireSegmentation", 24, 2, 256);
-
-    private static final ModConfigSpec.BooleanValue DISABLE_HINTS = BUILDER
-            .comment("Whether to disable the hints in the world loading screen")
-            .define("disableHints", false);
+    private static final ModConfigSpec.BooleanValue DECREASED_PARTICLES = BUILDER
+            .comment("It speaks for itself")
+            .define("decreasedParticles", false);
 
     static {
         BUILDER.pop();
     }
+
+    private static final ModConfigSpec.BooleanValue DISABLE_HINTS = BUILDER
+            .comment("Whether to disable the hints in the world loading screen")
+            .define("disableHints", false);
 
     public static final ModConfigSpec SPEC = BUILDER.build();
 
@@ -106,6 +109,9 @@ public class BMNWClientConfig {
 
     public static boolean disableHints() {
         return DISABLE_HINTS.get();
+    }
+    public static boolean decreasedParticles() {
+        return DECREASED_PARTICLES.get();
     }
 
     public static void onLoad(final ModConfigEvent event) {

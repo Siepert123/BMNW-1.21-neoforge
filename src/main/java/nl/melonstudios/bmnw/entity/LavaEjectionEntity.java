@@ -1,9 +1,12 @@
 package nl.melonstudios.bmnw.entity;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -15,7 +18,9 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.entity.IEntityWithComplexSpawn;
+import nl.melonstudios.bmnw.init.BMNWBlocks;
 import nl.melonstudios.bmnw.init.BMNWEntityTypes;
+import nl.melonstudios.bmnw.init.BMNWFluids;
 import nl.melonstudios.bmnw.init.BMNWPartialModels;
 import nl.melonstudios.bmnw.misc.PartialModel;
 
@@ -32,26 +37,26 @@ public class LavaEjectionEntity extends Entity implements IEntityWithComplexSpaw
         this(BMNWEntityTypes.LAVA_EJECTION.get(), level);
         this.type = type;
         this.setPos(pos);
-        this.setDeltaMovement(this.random.nextFloat()*1-0.5, 2, this.random.nextFloat()*1-0.5);
+        this.setDeltaMovement(this.random.nextGaussian() * 0.2, 1.0 + this.random.nextDouble(), this.random.nextGaussian() * 0.2);
     }
     public LavaEjectionEntity(Level level, BlockPos corePos, Type type) {
-        this(level, corePos.getCenter().add(0, 4, 0), type);
+        this(level, corePos.getCenter().add(0, 1, 0), type);
     }
-
-    private final BlockPos.MutableBlockPos blockPos = new BlockPos.MutableBlockPos();
 
     @Override
     public void tick() {
         Level level = this.level();
         super.tick();
         if (this.isInWater()) {
+            level.playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.LAVA_EXTINGUISH, SoundSource.AMBIENT);
+            level.addParticle(ParticleTypes.LARGE_SMOKE, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
             this.discard();
             return;
         }
 
         if (this.verticalCollisionBelow) {
             if (this.getLavaType().state != null) {
-                level.setBlock(this.blockPos, this.getLavaType().state, 3);
+                level.setBlock(this.getBlockPosBelowThatAffectsMyMovement().above(), this.getLavaType().state, 3);
             }
             this.discard();
         }
@@ -59,7 +64,6 @@ public class LavaEjectionEntity extends Entity implements IEntityWithComplexSpaw
         this.applyGravity();
         this.move(MoverType.SELF, this.getDeltaMovement());
         this.setDeltaMovement(this.getDeltaMovement().scale(0.98));
-        this.blockPos.set(this.getBlockX(), this.getBlockY(), this.getBlockZ());
     }
 
     @Override
@@ -98,12 +102,12 @@ public class LavaEjectionEntity extends Entity implements IEntityWithComplexSpaw
     }
 
     public enum Type {
-        DEFAULT(0, Fluids.FLOWING_LAVA.getFlowing(4, false).createLegacyBlock()),
+        DEFAULT(0, BMNWBlocks.VOLCANIC_LAVA.get().defaultBlockState()),
         RAD(1, null),
         SOUL(2, null);
 
         private final byte id;
-        private final BlockState state;
+        public final BlockState state;
         Type(int id, @Nullable BlockState placeOnLand) {
             this.id = (byte)id;
             this.state = placeOnLand;
@@ -132,5 +136,15 @@ public class LavaEjectionEntity extends Entity implements IEntityWithComplexSpaw
     @Override
     public boolean shouldRenderAtSqrDistance(double distance) {
         return true;
+    }
+
+    @Override
+    public boolean fireImmune() {
+        return true;
+    }
+
+    @Override
+    public boolean isOnFire() {
+        return false;
     }
 }

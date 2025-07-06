@@ -9,4 +9,5 @@ public class BMNWStateProperties {
     public static final BooleanProperty MIRRORED = MetalLockableDoorBlock.MIRRORED;
     public static final BooleanProperty UPPER_HALF = MetalLockableDoorBlock.UPPER_HALF;
     public static final BooleanProperty ACTIVE = BooleanProperty.create("active");
+    public static final BooleanProperty FLOWING = BooleanProperty.create("flowing");
 }

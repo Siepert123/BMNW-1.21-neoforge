@@ -46,6 +46,9 @@ public class BMNWServerConfig {
             .comment("The chance of a meteorite spawning each tick per player")
             .comment("Calculated with 1.0 / [value]")
             .defineInRange("meteoriteSpawnChance", 48000, 1, Integer.MAX_VALUE);
+    private static final ModConfigSpec.IntValue MAX_VOLCANO_HEIGHT = BUILDER
+            .comment("How high a volcano should be able to grow")
+            .defineInRange("maxVolcanoHeight", 200, 128, 300);
 
     public static final ModConfigSpec SPEC = BUILDER.build();
 
@@ -72,5 +75,8 @@ public class BMNWServerConfig {
     }
     public static int meteoriteSpawnChance() {
         return METEORITE_SPAWN_CHANCE.get();
+    }
+    public static int maxVolcanoHeight() {
+        return MAX_VOLCANO_HEIGHT.get();
     }
 }

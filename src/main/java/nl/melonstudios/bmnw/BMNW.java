@@ -26,6 +26,7 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.event.server.ServerStoppingEvent;
@@ -102,6 +103,8 @@ public class BMNW {
     }
 
     public BMNW(IEventBus modEventBus, @Nonnull ModContainer modContainer, Dist dist) {
+        NeoForgeMod.enableMilkFluid();
+
         DistrictHolder.setDistrict(dist);
         modEventBus.addListener(this::commonSetup);
 
@@ -121,6 +124,7 @@ public class BMNW {
         BMNWBlocks.register(modEventBus);
         BMNWBlockEntities.register(modEventBus);
         BMNWItems.register(modEventBus);
+        BMNWFluids.register(modEventBus);
         BMNWTabs.register(modEventBus);
         BMNWDataComponents.register(modEventBus);
         BMNWAttachments.register(modEventBus);

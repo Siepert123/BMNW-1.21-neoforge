@@ -14,6 +14,11 @@ public class BMNWRecipes {
     public static final DeferredRegister<RecipeType<?>> TYPES =
             DeferredRegister.create(Registries.RECIPE_TYPE, "bmnw");
 
+    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<HeaterFuelBonusRecipe>> HEATER_FUEL_BONUS_SERIALIZER =
+            SERIALIZERS.register("heater_fuel_bonus", HeaterFuelBonusRecipe.Serializer::new);
+    public static final DeferredHolder<RecipeType<?>, RecipeType<HeaterFuelBonusRecipe>> HEATER_FUEL_BONUS_TYPE =
+            TYPES.register("heater_fuel_bonus", RecipeTypeImpl.create("heater_fuel_bonus"));
+
     public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<WorkbenchRecipe>> WORKBENCH_SERIALIZER =
             SERIALIZERS.register("workbench", WorkbenchRecipe.Serializer::new);
     public static final DeferredHolder<RecipeType<?>, RecipeType<WorkbenchRecipe>> WORKBENCH_TYPE =

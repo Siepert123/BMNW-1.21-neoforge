@@ -26,11 +26,13 @@ import nl.melonstudios.bmnw.block.doors.MetalLockableDoorBlock;
 import nl.melonstudios.bmnw.block.doors.MetalSlidingDoorBlock;
 import nl.melonstudios.bmnw.block.doors.SealedHatchBlock;
 import nl.melonstudios.bmnw.block.doors.SlidingBlastDoorBlock;
+import nl.melonstudios.bmnw.block.fluid.VolcanicLavaBlock;
 import nl.melonstudios.bmnw.block.machines.*;
 import nl.melonstudios.bmnw.block.misc.*;
 import nl.melonstudios.bmnw.block.settype.BMNWBlockSetType;
 import nl.melonstudios.bmnw.block.weapons.MissileLaunchPadBlock;
 import nl.melonstudios.bmnw.effect.WPEffect;
+import nl.melonstudios.bmnw.entity.LavaEjectionEntity;
 import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -59,6 +61,13 @@ public class BMNWBlocks {
 
     public static final DeferredBlock<DummyBlock> DUMMY = BLOCKS.register("dummy",
             () -> new DummyBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)));
+
+    //region fluids
+    public static final DeferredBlock<LiquidBlock> VOLCANIC_LAVA = BLOCKS.register("volcanic_lava",
+            () -> new VolcanicLavaBlock(BMNWFluids.VOLCANIC_LAVA.get(),
+                    BlockBehaviour.Properties.ofFullCopy(Blocks.LAVA))
+    );
+    //endregion
 
     //region Material ores & storage blocks
     public static final DeferredBlock<Block> STEEL_BLOCK = BLOCKS.register("steel_block",
@@ -432,6 +441,28 @@ public class BMNWBlocks {
 
     //endregion
 
+    //region Volcano cores
+
+    public static final DeferredBlock<VolcanoCoreBlock> VOLCANO_CORE = BLOCKS.register("volcano_core",
+            () -> new VolcanoCoreBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BEDROCK),
+                    LavaEjectionEntity.Type.DEFAULT, false, false));
+    public static final DeferredBlock<VolcanoCoreBlock> VOLCANO_CORE_EXTINGUISHES = BLOCKS.register("volcano_core_extinguishes",
+            () -> new VolcanoCoreBlock(BlockBehaviour.Properties.ofFullCopy(VOLCANO_CORE.get()),
+                    LavaEjectionEntity.Type.DEFAULT, true, false));
+    public static final DeferredBlock<VolcanoCoreBlock> VOLCANO_CORE_GROWS = BLOCKS.register("volcano_core_grows",
+            () -> new VolcanoCoreBlock(BlockBehaviour.Properties.ofFullCopy(VOLCANO_CORE.get()),
+                    LavaEjectionEntity.Type.DEFAULT, false, true));
+    public static final DeferredBlock<VolcanoCoreBlock> VOLCANO_CORE_EXTINGUISHES_GROWS = BLOCKS.register("volcano_core_extinguishes_grows",
+            () -> new VolcanoCoreBlock(BlockBehaviour.Properties.ofFullCopy(VOLCANO_CORE.get()),
+                    LavaEjectionEntity.Type.DEFAULT, true, true));
+    public static final DeferredBlock<VolcanoCoreBlock> RAD_VOLCANO_CORE = BLOCKS.register("rad_volcano_core",
+            () -> new VolcanoCoreBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BEDROCK),
+                    LavaEjectionEntity.Type.RAD, false, false));
+    public static final DeferredBlock<VolcanoCoreBlock> SOUL_VOLCANO_CORE = BLOCKS.register("soul_volcano_core",
+            () -> new VolcanoCoreBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BEDROCK),
+                    LavaEjectionEntity.Type.SOUL, false, false));
+
+    //endregion
     public static final DeferredBlock<Block> PRESS_HEAD = BLOCKS.register("press_head",
             () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)));
 
