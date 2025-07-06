@@ -11,6 +11,8 @@ public class BMNWRecipeTypes {
     public static final RecipeType<FluidContainerExchange> FLUID_CONTAINER_EXCHANGE =
             RecipeType.create("bmnw", "fluid_container_exchange", FluidContainerExchange.class);
 
+    public static final Supplier<RecipeType<RecipeHolder<HeaterFuelBonusRecipe>>> HEATER_FUEL_BONUS =
+            RecipeType.createFromDeferredVanilla(BMNWRecipes.HEATER_FUEL_BONUS_TYPE);
     public static final Supplier<RecipeType<RecipeHolder<WorkbenchRecipe>>> WORKBENCH =
             RecipeType.createFromDeferredVanilla(BMNWRecipes.WORKBENCH_TYPE);
     public static final Supplier<RecipeType<RecipeHolder<PressingRecipe>>> PRESSING =

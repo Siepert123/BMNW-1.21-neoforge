@@ -14,18 +14,24 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
+import nl.melonstudios.bmnw.hardcoded.recipe.WrappedSingletonRecipeInput;
 import nl.melonstudios.bmnw.init.BMNWBlockEntities;
+import nl.melonstudios.bmnw.init.BMNWRecipes;
 import nl.melonstudios.bmnw.interfaces.IDummyableCapabilities;
 import nl.melonstudios.bmnw.interfaces.IHeatable;
 import nl.melonstudios.bmnw.interfaces.ISlaveOwner;
 import nl.melonstudios.bmnw.interfaces.ITickable;
 import nl.melonstudios.bmnw.misc.Library;
 import nl.melonstudios.bmnw.screen.IndustrialHeaterMenu;
+import nl.melonstudios.bmnw.softcoded.recipe.HeaterFuelBonusRecipe;
+import nl.melonstudios.bmnw.softcoded.recipe.MutableRecipeInput;
 import org.jetbrains.annotations.Nullable;
 
 public class IndustrialHeaterBlockEntity extends SyncedBlockEntity implements ITickable, ISlaveOwner<IndustrialHeaterBlockEntity>, MenuProvider, IDummyableCapabilities {
@@ -175,16 +181,30 @@ public class IndustrialHeaterBlockEntity extends SyncedBlockEntity implements IT
         ItemStack secondStack = this.inventory.getStackInSlot(0);
 
         ItemStack selectedStack = null;
+        int slot = -1;
 
-        if (!firstStack.isEmpty() && firstStack.getBurnTime(null) > 0) selectedStack = firstStack;
-        else if (!secondStack.isEmpty() && secondStack.getBurnTime(null) > 0) selectedStack = secondStack;
+        if (!firstStack.isEmpty() && firstStack.getBurnTime(null) > 0) {
+            selectedStack = firstStack;
+            slot = 0;
+        } else if (!secondStack.isEmpty() && secondStack.getBurnTime(null) > 0) {
+            selectedStack = secondStack;
+            slot = 1;
+        }
 
         if (selectedStack != null) {
-            int burnTime = Mth.ceil(selectedStack.getBurnTime(null) * this.getBurnTimeMultiplier(selectedStack));
+            this.recipeInput.stack = selectedStack;
+            HeaterFuelBonusRecipe recipe = this.getRecipe();
+            int burnTime = Mth.ceil(selectedStack.getBurnTime(null) * this.getBurnTimeMultiplier(recipe));
+            if (burnTime > 0) {
             this.burnTime = this.totalBurnTime = burnTime;
-            this.heatIncrease = Mth.ceil(100 * this.getHeatMultiplier(selectedStack));
-            selectedStack.shrink(1);
+            this.heatIncrease = Mth.ceil(100 * this.getHeatMultiplier(recipe));
+            if (selectedStack.is(Items.LAVA_BUCKET)) {
+                this.inventory.setStackInSlot(slot, Items.BUCKET.getDefaultInstance());
+            } else {
+                selectedStack.shrink(1);
+            }
             this.notifyChange();
+            }
         }
     }
     private void updateState() {
@@ -195,11 +215,19 @@ public class IndustrialHeaterBlockEntity extends SyncedBlockEntity implements IT
         }
     }
 
-    private float getBurnTimeMultiplier(ItemStack stack) {
-        return stack.is(ItemTags.COALS) ? 1.25F : 1.0F;
+    private float getBurnTimeMultiplier(@Nullable HeaterFuelBonusRecipe recipe) {
+        return recipe != null ? recipe.durationMultiplier() : 1.0F;
     }
-    private float getHeatMultiplier(ItemStack stack) {
-        return stack.is(ItemTags.COALS) ? 2.0F : 1.0F;
+    private float getHeatMultiplier(@Nullable HeaterFuelBonusRecipe recipe) {
+        return recipe != null ? recipe.heatMultiplier() : 1.0F;
+    }
+
+    private final MutableRecipeInput recipeInput = new MutableRecipeInput();
+    @Nullable
+    private HeaterFuelBonusRecipe getRecipe() {
+        RecipeHolder<HeaterFuelBonusRecipe> holder = this.level.getRecipeManager()
+                .getRecipeFor(BMNWRecipes.HEATER_FUEL_BONUS_TYPE.get(), this.recipeInput, this.level).orElse(null);
+        return holder != null ? holder.value() : null;
     }
 
     @Override

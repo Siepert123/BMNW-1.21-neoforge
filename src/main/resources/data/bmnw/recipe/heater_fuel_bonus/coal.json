@@ -1,0 +1,8 @@
+{
+  "type": "bmnw:heater_fuel_bonus",
+  "item": {
+    "item": "minecraft:coal"
+  },
+  "duration_multiplier": 1.25,
+  "heat_multiplier": 2.0
+}

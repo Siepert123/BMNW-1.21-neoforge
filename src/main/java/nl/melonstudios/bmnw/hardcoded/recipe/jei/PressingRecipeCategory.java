@@ -39,7 +39,7 @@ public class PressingRecipeCategory implements IRecipeCategory<RecipeHolder<Pres
 
     @Override
     public @Nullable IDrawable getIcon() {
-        return null;
+        return this.icon;
     }
 
     @Override

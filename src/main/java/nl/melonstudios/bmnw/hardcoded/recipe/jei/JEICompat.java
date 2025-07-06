@@ -21,10 +21,7 @@ import nl.melonstudios.bmnw.init.BMNWItems;
 import nl.melonstudios.bmnw.init.BMNWRecipes;
 import nl.melonstudios.bmnw.init.BMNWTabs;
 import nl.melonstudios.bmnw.item.tools.FluidContainerItem;
-import nl.melonstudios.bmnw.screen.AlloyFurnaceScreen;
-import nl.melonstudios.bmnw.screen.BuildersFurnaceScreen;
-import nl.melonstudios.bmnw.screen.PressScreen;
-import nl.melonstudios.bmnw.screen.WorkbenchScreen;
+import nl.melonstudios.bmnw.screen.*;
 import nl.melonstudios.bmnw.softcoded.recipe.*;
 
 import javax.annotation.Nonnull;
@@ -90,6 +87,12 @@ public class JEICompat implements IModPlugin {
         );
 
         RecipeManager recipeManager = Objects.requireNonNull(Minecraft.getInstance().level).getRecipeManager();
+        List<RecipeHolder<HeaterFuelBonusRecipe>> heaterFuelBonusRecipes = recipeManager
+                .getAllRecipesFor(BMNWRecipes.HEATER_FUEL_BONUS_TYPE.get()).stream()
+                .filter((holder) -> holder.value().durationMultiplier() != 1.0F || holder.value().heatMultiplier() != 1.0F)
+                .sorted(Comparator.comparing(RecipeHolder::id))
+                .toList();
+        registration.addRecipes(BMNWRecipeTypes.HEATER_FUEL_BONUS.get(), heaterFuelBonusRecipes);
         List<RecipeHolder<WorkbenchRecipe>> workbenchRecipes = recipeManager
                 .getAllRecipesFor(BMNWRecipes.WORKBENCH_TYPE.get()).stream()
                 .sorted((l, r) -> WorkbenchRecipeComparator.instance.compare(l.value(), r.value()))
@@ -119,6 +122,7 @@ public class JEICompat implements IModPlugin {
 
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
+        registration.addRecipeCatalyst(BMNWItems.INDUSTRIAL_HEATER.get(), BMNWRecipeTypes.HEATER_FUEL_BONUS.get());
         registration.addRecipeCatalysts(BMNWRecipeTypes.WORKBENCH.get(),
                 BMNWItems.IRON_WORKBENCH,
                 BMNWItems.STEEL_WORKBENCH
@@ -133,6 +137,9 @@ public class JEICompat implements IModPlugin {
     public void registerCategories(IRecipeCategoryRegistration registration) {
         registration.addRecipeCategories(new FluidContainerExchangeCategory(registration.getJeiHelpers().getGuiHelper()));
 
+        registration.addRecipeCategories(new HeaterFuelBonusRecipeCategory(
+                registration.getJeiHelpers().getGuiHelper()
+        ));
         registration.addRecipeCategories(new WorkbenchRecipeCategory(
                 registration.getJeiHelpers().getGuiHelper()
         ));
@@ -153,11 +160,15 @@ public class JEICompat implements IModPlugin {
     @Override
     public void registerGuiHandlers(IGuiHandlerRegistration registration) {
         registration.addRecipeClickArea(
+                IndustrialHeaterScreen.class,
+                7, 17, 16, 16,
+                BMNWRecipeTypes.HEATER_FUEL_BONUS.get()
+        );
+        registration.addRecipeClickArea(
                 WorkbenchScreen.class,
                 113, 14, 55, 64,
                 BMNWRecipeTypes.WORKBENCH.get()
         );
-
         registration.addRecipeClickArea(
                 PressScreen.class,
                 55, 34, 18, 18,

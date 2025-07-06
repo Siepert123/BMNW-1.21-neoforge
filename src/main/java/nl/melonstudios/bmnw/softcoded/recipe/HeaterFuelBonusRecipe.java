@@ -14,18 +14,17 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
-import nl.melonstudios.bmnw.hardcoded.recipe.WrappedSingletonRecipeInput;
 import nl.melonstudios.bmnw.init.BMNWRecipes;
 
-public record HeaterFuelBonusRecipe(Ingredient input, float durationMultiplier, float heatMultiplier) implements Recipe<WrappedSingletonRecipeInput> {
+public record HeaterFuelBonusRecipe(Ingredient input, float durationMultiplier, float heatMultiplier) implements Recipe<MutableRecipeInput> {
     @Override
-    public boolean matches(WrappedSingletonRecipeInput input, Level level) {
+    public boolean matches(MutableRecipeInput input, Level level) {
         if (level.isClientSide) return false;
-        return this.input.test(input.getItem(0));
+        return this.input.test(input.stack);
     }
 
     @Override
-    public ItemStack assemble(WrappedSingletonRecipeInput input, HolderLookup.Provider registries) {
+    public ItemStack assemble(MutableRecipeInput input, HolderLookup.Provider registries) {
         return ItemStack.EMPTY;
     }
 
