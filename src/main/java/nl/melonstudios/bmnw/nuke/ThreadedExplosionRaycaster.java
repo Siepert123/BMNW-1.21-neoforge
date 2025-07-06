@@ -19,7 +19,6 @@ import org.joml.Vector3fc;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 public class ThreadedExplosionRaycaster {

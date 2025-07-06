@@ -8,8 +8,6 @@ import org.apache.logging.log4j.Logger;
 import org.joml.Vector3f;
 import org.joml.Vector3fc;
 
-import java.util.Random;
-
 public class Raycast {
     private static final Logger LOGGER = LogManager.getLogger(Raycast.class);
     private final Vector3fc source;
