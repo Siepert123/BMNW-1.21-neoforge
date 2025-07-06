@@ -185,10 +185,10 @@ public class IndustrialHeaterBlockEntity extends SyncedBlockEntity implements IT
 
         if (!firstStack.isEmpty() && firstStack.getBurnTime(null) > 0) {
             selectedStack = firstStack;
-            slot = 0;
+            slot = 1;
         } else if (!secondStack.isEmpty() && secondStack.getBurnTime(null) > 0) {
             selectedStack = secondStack;
-            slot = 1;
+            slot = 0;
         }
 
         if (selectedStack != null) {
