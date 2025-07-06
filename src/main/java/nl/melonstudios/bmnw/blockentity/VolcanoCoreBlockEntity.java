@@ -1,10 +1,14 @@
 package nl.melonstudios.bmnw.blockentity;
 
+import it.unimi.dsi.fastutil.longs.LongSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.SectionPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -32,15 +36,17 @@ public class VolcanoCoreBlockEntity extends BlockEntity implements ITickable {
 
     public int volcanoTimer = 10;
     public int updateTimer = 0;
+    private int age = 0;
     @Override
     public void update() {
         if (!this.level.isClientSide) {
             this.updateTimer++;
+            this.age++;
             if (this.volcanoTimer-- <= 0) {
                 this.volcanoTimer = 10;
                 VolcanoCoreBlock block = this.getBlock();
                 this.level.addFreshEntity(new LavaEjectionEntity(this.level, this.worldPosition, block.type));
-                for (int i = 0; i <= volcanoRnd.nextInt(3); i++) {
+                for (int i = 0; i < volcanoRnd.nextInt(4); i++) {
                     this.level.addFreshEntity(new LavaEjectionEntity(this.level, this.worldPosition, block.type));
                 }
                 this.raiseChannel();
@@ -48,10 +54,19 @@ public class VolcanoCoreBlockEntity extends BlockEntity implements ITickable {
                 this.freeTheWay();
                 for (ServerPlayer player : ((ServerLevel)this.level).getPlayers(Library.ALWAYS_TRUE)) {
                     ((ServerLevel)this.level).sendParticles(player, BMNWParticleTypes.VOLCANO_SMOKE.get(), true,
-                            this.worldPosition.getX() + 0.5,
+                            this.worldPosition.getX() + volcanoRnd.nextDouble()*4-1.5,
                             this.worldPosition.getY() + 0.5,
-                            this.worldPosition.getZ() + 0.5,
+                            this.worldPosition.getZ() + volcanoRnd.nextDouble()*4-1.5,
                             1, 0, 0, 0, 0);
+                }
+                if (BMNWServerConfig.forceLoadVolcanoChunks() && this.level instanceof ServerLevel serverLevel) {
+                    int x = SectionPos.blockToSectionCoord(this.worldPosition.getX());
+                    int z = SectionPos.blockToSectionCoord(this.worldPosition.getZ());
+                    for (int i = -2; i <= 2; i++) {
+                        for (int j = -2; j <= 2; j++) {
+                            serverLevel.setChunkForced(x+i, z+j, true);
+                        }
+                    }
                 }
             }
             if (this.shouldGrow() && this.updateTimer >= GROWTH_TIMER) {
@@ -59,6 +74,19 @@ public class VolcanoCoreBlockEntity extends BlockEntity implements ITickable {
                 this.grow();
             } else if (this.shouldExtinguish() && this.updateTimer >= EXTINGUISH_TIMER) {
                 this.level.setBlock(this.worldPosition, this.getBlock().type.state, 3);
+            }
+        }
+    }
+
+    @Override
+    public void onLoad() {
+        if (BMNWServerConfig.forceLoadVolcanoChunks() && this.level instanceof ServerLevel serverLevel) {
+            int x = SectionPos.blockToSectionCoord(this.worldPosition.getX());
+            int z = SectionPos.blockToSectionCoord(this.worldPosition.getZ());
+            for (int i = -2; i <= 2; i++) {
+                for (int j = -2; j <= 2; j++) {
+                    serverLevel.setChunkForced(x+i, z+j, true);
+                }
             }
         }
     }
@@ -118,6 +146,7 @@ public class VolcanoCoreBlockEntity extends BlockEntity implements ITickable {
         super.saveAdditional(tag, registries);
         tag.putInt("volcanoTimer", this.volcanoTimer);
         tag.putInt("updateTimer", this.updateTimer);
+        tag.putInt("age", this.age);
     }
 
     @Override
@@ -125,5 +154,6 @@ public class VolcanoCoreBlockEntity extends BlockEntity implements ITickable {
         super.loadAdditional(tag, registries);
         this.volcanoTimer = tag.getInt("volcanoTimer");
         this.updateTimer = tag.getInt("updateTimer");
+        this.age = tag.getInt("age");
     }
 }

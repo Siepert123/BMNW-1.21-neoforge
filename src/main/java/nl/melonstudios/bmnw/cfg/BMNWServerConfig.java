@@ -49,6 +49,9 @@ public class BMNWServerConfig {
     private static final ModConfigSpec.IntValue MAX_VOLCANO_HEIGHT = BUILDER
             .comment("How high a volcano should be able to grow")
             .defineInRange("maxVolcanoHeight", 200, 128, 300);
+    private static final ModConfigSpec.BooleanValue FORCE_LOAD_VOLCANO_CHUNKS = BUILDER
+            .comment("Force load chunks near volcanoes? Ensures that volcanoes will still tick even if no one is nearby")
+            .define("forceLoadVolcanoChunks", false);
 
     public static final ModConfigSpec SPEC = BUILDER.build();
 
@@ -78,5 +81,8 @@ public class BMNWServerConfig {
     }
     public static int maxVolcanoHeight() {
         return MAX_VOLCANO_HEIGHT.get();
+    }
+    public static boolean forceLoadVolcanoChunks() {
+        return FORCE_LOAD_VOLCANO_CHUNKS.get();
     }
 }

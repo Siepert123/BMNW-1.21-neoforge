@@ -11,6 +11,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -21,10 +22,12 @@ import net.minecraft.world.level.material.LavaFluid;
 import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.common.SoundActions;
+import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.fluids.FluidType;
 import nl.melonstudios.bmnw.cfg.BMNWClientConfig;
 import nl.melonstudios.bmnw.init.BMNWBlocks;
 import nl.melonstudios.bmnw.init.BMNWFluids;
+import nl.melonstudios.bmnw.init.BMNWItems;
 
 import java.util.Random;
 
@@ -56,7 +59,7 @@ public abstract class VolcanicLavaFluid extends LavaFluid {
 
     @Override
     public Item getBucket() {
-        return Items.AIR;
+        return BMNWItems.VOLCANIC_LAVA_BUCKET.get();
     }
 
     @Override
@@ -100,10 +103,26 @@ public abstract class VolcanicLavaFluid extends LavaFluid {
         }
     }
 
+    @Override
+    public int getTickDelay(LevelReader level) {
+        return 10;
+    }
+
     public static void solidify(Level level, BlockPos pos, int lava, int basalt, RandomSource rnd) {
         int randomizer = rnd.nextInt(200);
 
         level.setBlock(pos, Blocks.BASALT.defaultBlockState(), 3);
+    }
+
+    @Override
+    public boolean canBeReplacedWith(FluidState fluidState, BlockGetter blockReader, BlockPos pos, Fluid fluid, Direction direction) {
+        return false;
+    }
+
+    @Override
+    protected boolean canSpreadTo(BlockGetter level, BlockPos fromPos, BlockState fromBlockState, Direction direction, BlockPos toPos, BlockState toBlockState, FluidState toFluidState, Fluid fluid) {
+        return toBlockState.is(Tags.Blocks.GLASS_PANES) || toBlockState.is(Tags.Blocks.GLASS_BLOCKS_CHEAP) ||
+                super.canSpreadTo(level, fromPos, fromBlockState, direction, toPos, toBlockState, toFluidState, fluid);
     }
 
     @Override

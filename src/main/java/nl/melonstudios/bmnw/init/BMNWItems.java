@@ -1,9 +1,13 @@
 package nl.melonstudios.bmnw.init;
 
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
+import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -198,6 +202,21 @@ public class BMNWItems {
     //endregion
 
     //region Batteries & tanks
+
+    public static final DeferredItem<BucketItem> VOLCANIC_LAVA_BUCKET = ITEMS.register("volcanic_lava_bucket",
+            () -> new BucketItem(BMNWFluids.VOLCANIC_LAVA.get(), new Item.Properties().stacksTo(1)) {
+                @Override
+                public void inventoryTick(ItemStack stack, Level level, Entity entity, int slotId, boolean isSelected) {
+                    if (!level.isClientSide && !stack.isEmpty()) {
+                        if (entity instanceof Player player && (player.isCreative() || player.isSpectator())) return;
+                        if (RandomSource.create().nextInt(100) == 0) {
+                            stack.shrink(1);
+                            level.setBlock(entity.getBlockPosBelowThatAffectsMyMovement().above(),
+                                    BMNWBlocks.VOLCANIC_LAVA.get().defaultBlockState(), 3);
+                        }
+                    }
+                }
+            });
 
     public static final DeferredItem<BatteryItem> LEAD_ACID_BATTERY = ITEMS.register("lead_acid_battery",
             () -> new BatteryItem(new Item.Properties(), 10000, 25));
