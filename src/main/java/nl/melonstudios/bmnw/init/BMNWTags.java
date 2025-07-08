@@ -6,6 +6,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.material.Fluid;
 
 import javax.annotation.Nonnull;
 public class BMNWTags {
@@ -17,6 +18,9 @@ public class BMNWTags {
     }
     public static TagKey<Biome> biomeTag(String key) {
         return TagKey.create(Registries.BIOME, ResourceLocation.parse(key));
+    }
+    public static TagKey<Fluid> fluidTag(String key) {
+        return TagKey.create(Registries.FLUID, ResourceLocation.parse(key));
     }
     public static class Blocks {
         public static final TagKey<Block> RADIATION_SHIELDING = TagKey.create(
@@ -72,6 +76,11 @@ public class BMNWTags {
         public static final TagKey<Biome> HAS_RADIO_ANTENNA = biomeTag("bmnw:has_structure/radio_antenna");
         public static final TagKey<Biome> HAS_BRICK_BUILDING = biomeTag("bmnw:has_structure/brick_building");
         public static final TagKey<Biome> HAS_MISSILE_SILO = biomeTag("bmnw:has_structure/missile_silo");
+    }
+
+    public static class Fluids {
+        public static final TagKey<Fluid> HOT = fluidTag("bmnw:hot");
+        public static final TagKey<Fluid> CORROSIVE = fluidTag("bmnw:corrosive");
     }
 
     public static class NeoForge {

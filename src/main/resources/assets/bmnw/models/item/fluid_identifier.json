@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "bmnw:item/fluid_identifier_base",
+    "layer1": "bmnw:item/fluid_identifier_overlay"
+  }
+}

@@ -4,6 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
@@ -19,6 +20,7 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.LavaFluid;
 import net.minecraft.world.level.pathfinder.PathType;
 import net.neoforged.neoforge.common.SoundActions;
+import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.fluids.FluidType;
 import nl.melonstudios.bmnw.cfg.BMNWClientConfig;
 import nl.melonstudios.bmnw.init.BMNWBlocks;
@@ -85,13 +87,18 @@ public abstract class VolcanicLavaFluid extends LavaFluid {
         int basalt = 0;
 
         for (Direction d : Direction.values()) {
-            BlockState s = level.getBlockState(pos.relative(d));
+            BlockPos relative = pos.relative(d);
+            BlockState s = level.getBlockState(relative);
 
             if (s.is(BMNWBlocks.VOLCANIC_LAVA.get())) lava++;
-            if (s.is(Blocks.BASALT)) basalt++;
+            else if (s.is(Blocks.BASALT)) basalt++;
+            else if (s.getFlammability(level, relative, d.getOpposite()) > 0) {
+                this.beforeDestroyingBlock(level, relative, s);
+                level.setBlock(relative, Blocks.AIR.defaultBlockState(), 3);
+            }
         }
 
-        if (((!this.isSource(state) && lava < 2) || (level.random.nextInt(5) == 0) && lava < 5) &&
+        if (!level.getBlockState(pos.below()).canBeReplaced(this) && ((!this.isSource(state) && lava < 2) || (level.random.nextInt(5) == 0) && lava < 5) &&
                 !level.getBlockState(pos.below()).is(BMNWBlocks.VOLCANIC_LAVA.get())) {
             solidify(level, pos, lava, basalt, level.random);
         }

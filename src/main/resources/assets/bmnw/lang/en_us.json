@@ -80,6 +80,7 @@
   "block.bmnw.industrial_furnace": "Industrial Furnace",
   "block.bmnw.industrial_heater": "Industrial Heater",
   "block.bmnw.iron_barrel": "Iron Fluid Barrel",
+  "block.bmnw.iron_fluid_barrel": "Iron Fluid Barrel",
   "block.bmnw.iron_workbench": "Iron Workbench",
   "block.bmnw.irradiated_grass_block": "Irradiated Grass Block",
   "block.bmnw.irradiated_leaf_pile": "Irradiated Leaf Pile",
@@ -149,6 +150,7 @@
   "block.bmnw.steel_catwalk_stairs": "Steel Catwalk Stairs",
   "block.bmnw.steel_catwalk_stairs_railing": "Steel Catwalk Stairs Railing",
   "block.bmnw.steel_deco_block": "Steel Deco Block",
+  "block.bmnw.steel_fluid_barrel": "Steel Fluid Barrel",
   "block.bmnw.steel_ladder": "Steel Ladder",
   "block.bmnw.steel_pole": "Steel Beam",
   "block.bmnw.steel_quad_pole": "Steel Quad Beam",
@@ -260,6 +262,7 @@
   "item.bmnw.enhanced_circuit": "Enhanced Circuit",
   "item.bmnw.excavation_vein_detector": "Excavation Vein Scanner",
   "item.bmnw.fire_marble": "Fire Marble",
+  "item.bmnw.fluid_identifier": "Fluid Identifier (%s)",
   "item.bmnw.geiger_counter": "Geiger Counter",
   "item.bmnw.gold_dust": "Gold Dust",
   "item.bmnw.gold_plate": "Gold Plate",
@@ -397,6 +400,7 @@
   "recipe.bmnw.pressing": "Stamp Pressing",
   "recipe.bmnw.shredding": "Shredding",
   "recipe.bmnw.workbench": "Workbench Crafting",
+  "screen.bmnw.fluid_identifier": "Fluid Selection",
   "subtitles.bmnw.boiler": "Boiler",
   "subtitles.bmnw.door_close": "Door closes",
   "subtitles.bmnw.door_open": "Door opens",
@@ -502,5 +506,8 @@
   "tooltip.bmnw.radioactive": "[Radioactive]",
   "tooltip.bmnw.radius": "Radius: ~%s",
   "tooltip.bmnw.workbench": "Tier %s workbench",
-  "tooltip.bmnw.wp": "[White Phosphorus]"
+  "tooltip.bmnw.wp": "[White Phosphorus]",
+  "screen.bmnw.previousPage": "Previous page",
+  "screen.bmnw.nextPage": "Next page",
+  "screen.bmnw.apply": "Apply"
 }

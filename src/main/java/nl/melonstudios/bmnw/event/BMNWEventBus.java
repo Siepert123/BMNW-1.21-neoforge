@@ -52,9 +52,11 @@ import net.neoforged.neoforge.fluids.capability.templates.FluidHandlerItemStack;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import nl.melonstudios.bmnw.BMNW;
+import nl.melonstudios.bmnw.block.container.fluid.FluidBarrelBlock;
 import nl.melonstudios.bmnw.block.entity.*;
 import nl.melonstudios.bmnw.block.entity.renderer.*;
 import nl.melonstudios.bmnw.block.misc.DummyBlock;
+import nl.melonstudios.bmnw.blockentity.FluidBarrelBlockEntity;
 import nl.melonstudios.bmnw.cfg.BMNWClientConfig;
 import nl.melonstudios.bmnw.cfg.BMNWServerConfig;
 import nl.melonstudios.bmnw.client.BMNWClient;
@@ -72,9 +74,11 @@ import nl.melonstudios.bmnw.init.*;
 import nl.melonstudios.bmnw.interfaces.IScopeableItem;
 import nl.melonstudios.bmnw.item.client.FireMarbleColorizer;
 import nl.melonstudios.bmnw.item.client.FluidContainerColorizer;
+import nl.melonstudios.bmnw.item.client.FluidIdentifierColorizer;
 import nl.melonstudios.bmnw.item.client.SmallLampColorizer;
 import nl.melonstudios.bmnw.item.misc.CoreSampleItem;
 import nl.melonstudios.bmnw.item.misc.SmallLampBlockItem;
+import nl.melonstudios.bmnw.item.tools.FluidContainerItem;
 import nl.melonstudios.bmnw.misc.DistrictHolder;
 import nl.melonstudios.bmnw.misc.ExcavationVein;
 import nl.melonstudios.bmnw.misc.FluidTextureData;
@@ -545,13 +549,22 @@ public class BMNWEventBus {
                             ((MissileLaunchPadBlockEntity) blockEntity).getIEnergy() : null,
                     BMNWBlocks.MISSILE_LAUNCH_PAD.get()
             );
+
+            event.registerBlock(
+                    Capabilities.FluidHandler.BLOCK,
+                    (level, pos, state, be, context) -> be instanceof FluidBarrelBlockEntity barrel ?
+                            barrel.getFluidInterface(context) : null,
+                    FluidBarrelBlock.getAllFluidBarrels().toArray(FluidBarrelBlock[]::new)
+            );
         }
         private static void registerItemCaps(RegisterCapabilitiesEvent event) {
-            event.registerItem(
-                    Capabilities.FluidHandler.ITEM,
-                    (stack, ctx) -> new FluidHandlerItemStack(BMNWDataComponents.STORED_FLUID, stack, 2000),
-                    BMNWItems.PORTABLE_FLUID_TANK.get()
-            );
+            for (FluidContainerItem item : FluidContainerItem.getAllFluidContainers()) {
+                event.registerItem(
+                        Capabilities.FluidHandler.ITEM,
+                        (stack, ctx) -> new FluidHandlerItemStack(BMNWDataComponents.STORED_FLUID, stack, 2000),
+                        item
+                );
+            }
         }
 
         /**
@@ -580,6 +593,11 @@ public class BMNWEventBus {
                     PacketExtendableCatwalk.TYPE,
                     PacketExtendableCatwalk.STREAM_CODEC,
                     PacketExtendableCatwalk::handle
+            );
+            registrar.playToServer(
+                    PacketFluidIdentifier.TYPE,
+                    PacketFluidIdentifier.STREAM_CODEC,
+                    PacketFluidIdentifier::handle
             );
             registrar.playToClient(
                     PacketMetalLockableDoor.TYPE,
@@ -628,6 +646,7 @@ public class BMNWEventBus {
         public static void registerColorHandlersItem(RegisterColorHandlersEvent.Item event) {
             event.register(new FireMarbleColorizer(), BMNWItems.FIRE_MARBLE);
             event.register(new FluidContainerColorizer(), BMNWItems.PORTABLE_FLUID_TANK);
+            event.register(new FluidIdentifierColorizer(), BMNWItems.FLUID_IDENTIFIER);
             event.register(new SmallLampColorizer(), SmallLampBlockItem.ALL.toArray(ItemLike[]::new));
             LOGGER.debug("Registered {} small lamp colorizers", SmallLampBlockItem.ALL.size());
         }

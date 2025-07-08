@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "side": "bmnw:block/steel_fluid_barrel_side",
+    "top": "bmnw:block/steel_fluid_barrel_top",
+    "bottom": "bmnw:block/steel_fluid_barrel_bottom"
+  }
+}

@@ -116,6 +116,9 @@ public class BMNWSounds {
     public static final DeferredHolder<SoundEvent, SoundEvent> BOILER_GROAN =
             createDefaultSound("boiler_groan");
 
+    public static final DeferredHolder<SoundEvent, SoundEvent> ASSEMBLER =
+            createDefaultSound("assembler");
+
     public static class Ambient {
         public static final DeferredHolder<SoundEvent, SoundEvent> LARGE_GENERATOR_IN_OFF =
                 createDefaultSound("ambient.large_generator_in_off");

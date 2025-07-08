@@ -76,7 +76,7 @@ public enum StampType implements StringRepresentable {
         return TagKey.create(Registries.ITEM, ResourceLocation.parse(id));
     }
 
-    public static final Codec<StampType> CODEC = StringRepresentable.fromValues(() -> StampType.VALUES);
+    public static final Codec<StampType> CODEC = StringRepresentable.fromEnum(() -> StampType.VALUES);
     public static final StreamCodec<ByteBuf, StampType> STREAM_CODEC = new StreamCodec<>() {
         @Override
         public StampType decode(ByteBuf buffer) {

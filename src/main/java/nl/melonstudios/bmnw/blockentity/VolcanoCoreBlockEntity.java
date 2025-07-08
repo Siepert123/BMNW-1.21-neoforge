@@ -13,6 +13,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import nl.melonstudios.bmnw.block.misc.VolcanoCoreBlock;
 import nl.melonstudios.bmnw.cfg.BMNWServerConfig;
 import nl.melonstudios.bmnw.entity.LavaEjectionEntity;
+import nl.melonstudios.bmnw.init.BMNWBiomes;
 import nl.melonstudios.bmnw.init.BMNWBlockEntities;
 import nl.melonstudios.bmnw.init.BMNWBlocks;
 import nl.melonstudios.bmnw.init.BMNWParticleTypes;
@@ -37,6 +38,8 @@ public class VolcanoCoreBlockEntity extends BlockEntity implements ITickable {
     public int volcanoTimer = 10;
     public int updateTimer = 0;
     private int age = 0;
+    private int biomeReplacementCountdown = 1200;
+    private int biomeExtent = 0;
     @Override
     public void update() {
         if (!this.level.isClientSide) {
@@ -74,6 +77,28 @@ public class VolcanoCoreBlockEntity extends BlockEntity implements ITickable {
                 this.grow();
             } else if (this.shouldExtinguish() && this.updateTimer >= EXTINGUISH_TIMER) {
                 this.level.setBlock(this.worldPosition, this.getBlock().type.state, 3);
+            }
+            if (this.biomeExtent < 3) {
+                if (this.biomeReplacementCountdown-- <= 0) {
+                    this.biomeExtent++;
+                    this.biomeReplacementCountdown = 1200*(this.biomeExtent+1);
+                    if (this.level instanceof ServerLevel level) {
+                        int range = this.biomeExtent * 16;
+                        BMNWBiomes.fillBiomeCylindrical(level,
+                                this.worldPosition.offset(0, -range/2, 0),
+                                range/2+range*2,
+                                range,
+                                BMNWBiomes.volcano_wastes(level)
+                        );
+                        if (this.biomeExtent == 3) {
+                            BMNWBiomes.fillBiome(level,
+                                    this.worldPosition.offset(-16, -16, -16),
+                                    this.worldPosition.offset(16, 64, 16),
+                                    BMNWBiomes.volcano_wastes_severe(level)
+                            );
+                        }
+                    }
+                }
             }
         }
     }
@@ -147,6 +172,8 @@ public class VolcanoCoreBlockEntity extends BlockEntity implements ITickable {
         tag.putInt("volcanoTimer", this.volcanoTimer);
         tag.putInt("updateTimer", this.updateTimer);
         tag.putInt("age", this.age);
+        tag.putInt("biomeTimer", this.biomeReplacementCountdown);
+        tag.putInt("biomeExtent", this.biomeExtent);
     }
 
     @Override
@@ -155,6 +182,8 @@ public class VolcanoCoreBlockEntity extends BlockEntity implements ITickable {
         this.volcanoTimer = tag.getInt("volcanoTimer");
         this.updateTimer = tag.getInt("updateTimer");
         this.age = tag.getInt("age");
+        this.biomeReplacementCountdown = tag.getInt("biomeTimer");
+        this.biomeExtent = tag.getInt("biomeExtent");
     }
 
     private final Set<Block> basalts = Set.of(

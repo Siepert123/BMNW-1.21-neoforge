@@ -226,6 +226,12 @@
     ],
     "subtitle": "subtitles.bmnw.boiler"
   },
+  "assembler": {
+    "sounds": [
+      "bmnw:assembler"
+    ],
+    "subtitle": "subtitles.bmnw.machinery"
+  },
   "ambient.large_generator_in_off": {
     "sounds": [
       {

@@ -1,10 +1,9 @@
 {
-	"credit": "Made with Blockbench",
 	"textures": {
-		"front": "block/front",
-		"side": "block/side",
-		"top": "block/top",
-		"bottom": "block/bottom",
+		"side": "missingno",
+		"front": "#side",
+		"top": "missingno",
+		"bottom": "missingno",
 		"particle": "#front"
 	},
 	"elements": [

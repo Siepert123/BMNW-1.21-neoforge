@@ -18,6 +18,8 @@ import net.minecraft.world.level.material.PushReaction;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import nl.melonstudios.bmnw.block.container.fluid.FluidBarrelBlock;
+import nl.melonstudios.bmnw.block.container.fluid.FluidTankProperties;
 import nl.melonstudios.bmnw.block.decoration.*;
 import nl.melonstudios.bmnw.block.defense.BarbedWireBlock;
 import nl.melonstudios.bmnw.block.defense.ChainlinkFenceBlock;
@@ -386,6 +388,10 @@ public class BMNWBlocks {
 
     public static final DeferredBlock<CreativeBatteryBlock> CREATIVE_ENERGY_STORAGE = BLOCKS.register("creative_energy_storage",
             () -> new CreativeBatteryBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)));
+
+    public static final DeferredBlock<FluidBarrelBlock> IRON_FLUID_BARREL = BLOCKS.register("iron_fluid_barrel",
+            () -> new FluidBarrelBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK),
+                    FluidTankProperties.create().setCapacity(8000)));
 
     //endregion
 

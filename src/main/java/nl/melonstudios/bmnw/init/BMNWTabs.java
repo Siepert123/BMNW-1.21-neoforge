@@ -459,6 +459,7 @@ public class BMNWTabs {
                         items.accept(getFullBattery(DURAPIXEL_CAR_BATTERY.get()));
                         items.accept(CREATIVE_CAR_BATTERY);
 
+                        createFluidIdentifiers(items);
                         items.accept(PORTABLE_FLUID_TANK);
                         fillWithAllFluids(items, PORTABLE_FLUID_TANK);
 
@@ -494,6 +495,16 @@ public class BMNWTabs {
             handler.fill(fluidStack, IFluidHandler.FluidAction.EXECUTE);
         }
         return stack;
+    }
+
+    private static void createFluidIdentifiers(CreativeModeTab.Output items) {
+        items.accept(FLUID_IDENTIFIER);
+        for (Fluid fluid : Library.wrapIterator(BuiltInRegistries.FLUID.iterator())) {
+            if (!fluid.isSource(fluid.defaultFluidState())) continue;
+            ItemStack stack = new ItemStack(FLUID_IDENTIFIER.asItem());
+            stack.set(BMNWDataComponents.FLUID_TYPE, BuiltInRegistries.FLUID.getKey(fluid).toString());
+            items.accept(stack);
+        }
     }
 
     @NoUnused

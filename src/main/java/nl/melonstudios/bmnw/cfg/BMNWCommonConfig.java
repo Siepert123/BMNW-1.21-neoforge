@@ -10,11 +10,17 @@ public class BMNWCommonConfig {
             .comment("Whether to minimize memory usage (this will increase the CPU load)")
             .comment("'MAYBE' will let the mod decide for you")
             .defineEnum("minimizeMemoryUsage", OptionalBool.MAYBE);
+    private static ModConfigSpec.BooleanValue SUPPRESS_ERRORS = BUILDER
+            .comment("Whether to suppress crashes that could just be ignored... theoretically")
+            .define("suppressErrors", false);
 
     public static final ModConfigSpec SPEC = BUILDER.build();
 
 
     public static OptionalBool minimizeMemoryUsage() {
         return MINIMIZE_MEMORY_USAGE.get();
+    }
+    public static boolean suppressErrors() {
+        return SUPPRESS_ERRORS.get();
     }
 }

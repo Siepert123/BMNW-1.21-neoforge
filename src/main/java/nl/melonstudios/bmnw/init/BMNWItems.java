@@ -239,6 +239,9 @@ public class BMNWItems {
     public static final DeferredItem<FluidContainerItem> PORTABLE_FLUID_TANK = ITEMS.register("portable_fluid_tank",
             () -> new FluidContainerItem(new Item.Properties()));
 
+    public static final DeferredItem<FluidIdentifierItem> FLUID_IDENTIFIER = ITEMS.register("fluid_identifier",
+            () -> new FluidIdentifierItem(new Item.Properties()));
+
     //endregion
 
     //region Weapons
@@ -511,6 +514,10 @@ public class BMNWItems {
 
     public static final DeferredItem<BlockItem> CREATIVE_ENERGY_STORAGE = ITEMS.register("creative_energy_storage",
             () -> new BlockItem(BMNWBlocks.CREATIVE_ENERGY_STORAGE.get(), new Item.Properties()));
+
+    public static final DeferredItem<BlockItem> IRON_FLUID_BARREL = ITEMS.register("iron_fluid_barrel",
+            () -> new BlockItem(BMNWBlocks.IRON_FLUID_BARREL.get(), new Item.Properties()));
+
     //endregion
 
     //region Doors & hatches

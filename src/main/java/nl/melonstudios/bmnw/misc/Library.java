@@ -79,6 +79,13 @@ public class Library {
     public static final Predicate<Object> ALWAYS_TRUE = (obj) -> true;
     public static final Predicate<Object> ALWAYS_FALSE = (obj) -> false;
 
+    public static boolean supplyTrue() {
+        return true;
+    }
+    public static boolean supplyFalse() {
+        return false;
+    }
+
     public static final List<Direction> SURROUND_X =
             ImmutableList.of(Direction.UP, Direction.DOWN, Direction.NORTH, Direction.SOUTH);
     public static final List<Direction> SURROUND_Y =
