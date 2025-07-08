@@ -195,6 +195,13 @@ public class BMNWTabs {
                                 METEORITE_IRON_ORE,
                                 METEORITE_FIRE_MARBLE_ORE
                         );
+
+                        addItems(items,
+                                VOLCANO_CORE,
+                                VOLCANO_CORE_EXTINGUISHES,
+                                VOLCANO_CORE_GROWS,
+                                VOLCANO_CORE_EXTINGUISHES_GROWS
+                        );
                     })
                     .build()
     );
@@ -531,6 +538,7 @@ public class BMNWTabs {
                             ResourceLocation.parse("bmnw:bombs")
                     )
                     .displayItems((parameters, items) -> {
+                        items.accept(IRON_FLUID_BARREL);
                         items.accept(ELECTRIC_WIRE_CONNECTOR);
                         items.accept(IRON_WORKBENCH);
                         items.accept(STEEL_WORKBENCH);
