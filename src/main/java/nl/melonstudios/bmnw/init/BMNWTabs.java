@@ -467,6 +467,7 @@ public class BMNWTabs {
                         items.accept(CREATIVE_CAR_BATTERY);
 
                         createFluidIdentifiers(items);
+                        items.accept(VOLCANIC_LAVA_BUCKET);
                         items.accept(PORTABLE_FLUID_TANK);
                         fillWithAllFluids(items, PORTABLE_FLUID_TANK);
 
