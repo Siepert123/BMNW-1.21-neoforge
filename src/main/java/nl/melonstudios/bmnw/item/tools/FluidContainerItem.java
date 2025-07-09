@@ -8,13 +8,15 @@ import net.minecraft.world.item.TooltipFlag;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
+import nl.melonstudios.bmnw.init.BMNWTags;
+import nl.melonstudios.bmnw.interfaces.IExtremelyHotOverride;
 
 import javax.annotation.Nullable;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class FluidContainerItem extends Item {
+public class FluidContainerItem extends Item implements IExtremelyHotOverride {
     public static String formatNicely(int mB) {
         if (mB > 10000000) {
             return Mth.quantize((mB / 1000000.0F) * 100.0F, 1) / 100.0F + "kB";
@@ -105,5 +107,10 @@ public class FluidContainerItem extends Item {
     @Override
     public int getMaxStackSize(ItemStack stack) {
         return isStackable(stack) ? super.getMaxStackSize(stack) : 1;
+    }
+
+    @Override
+    public boolean isExtremelyHot(ItemStack stack) {
+        return getContents(stack).is(BMNWTags.Fluids.HOT);
     }
 }

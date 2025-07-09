@@ -80,6 +80,7 @@ public class HazardRegistry {
         burningRegistry.remove(item);
     }
 
+    @Deprecated(since = "0.4.0") //Use tags
     public static boolean getBurningRegistry(Item item) {
         return burningRegistry.getOrDefault(item, item.getDefaultInstance().is(BMNWTags.Items.EXTREMELY_HOT));
     }

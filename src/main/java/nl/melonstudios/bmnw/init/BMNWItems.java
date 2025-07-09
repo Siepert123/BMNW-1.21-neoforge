@@ -204,19 +204,7 @@ public class BMNWItems {
     //region Batteries & tanks
 
     public static final DeferredItem<BucketItem> VOLCANIC_LAVA_BUCKET = ITEMS.register("volcanic_lava_bucket",
-            () -> new BucketItem(BMNWFluids.VOLCANIC_LAVA.get(), new Item.Properties().stacksTo(1)) {
-                @Override
-                public void inventoryTick(ItemStack stack, Level level, Entity entity, int slotId, boolean isSelected) {
-                    if (!level.isClientSide && !stack.isEmpty()) {
-                        if (entity instanceof Player player && (player.isCreative() || player.isSpectator())) return;
-                        if (RandomSource.create().nextInt(100) == 0) {
-                            stack.shrink(1);
-                            level.setBlock(entity.getBlockPosBelowThatAffectsMyMovement().above(),
-                                    BMNWBlocks.VOLCANIC_LAVA.get().defaultBlockState(), 3);
-                        }
-                    }
-                }
-            });
+            () -> new BucketItem(BMNWFluids.VOLCANIC_LAVA.get(), new Item.Properties().stacksTo(1)));
 
     public static final DeferredItem<BatteryItem> LEAD_ACID_BATTERY = ITEMS.register("lead_acid_battery",
             () -> new BatteryItem(new Item.Properties(), 10000, 25));

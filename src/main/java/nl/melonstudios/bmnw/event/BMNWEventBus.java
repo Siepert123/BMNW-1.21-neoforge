@@ -71,6 +71,7 @@ import nl.melonstudios.bmnw.hazard.HazardRegistry;
 import nl.melonstudios.bmnw.hazard.radiation.ChunkRadiationManager;
 import nl.melonstudios.bmnw.hazard.radiation.RadiationTools;
 import nl.melonstudios.bmnw.init.*;
+import nl.melonstudios.bmnw.interfaces.IExtremelyHotOverride;
 import nl.melonstudios.bmnw.interfaces.IScopeableItem;
 import nl.melonstudios.bmnw.item.client.FireMarbleColorizer;
 import nl.melonstudios.bmnw.item.client.FluidContainerColorizer;
@@ -183,50 +184,54 @@ public class BMNWEventBus {
         @SubscribeEvent
         public static void entityTickEventPost(EntityTickEvent.Post event) {
             if (event.getEntity() instanceof LivingEntity entity && !event.getEntity().level().isClientSide()) {
-                if (entity instanceof Player player && (player.isCreative() || player.isSpectator())) return;
-                CompoundTag nbt = entity.getPersistentData();
+                handleRadFx(entity);
+            }
+        }
 
-                float rads = nbt.getFloat("bmnw_RAD");
-                if (rads > 15000 || rads < 0) rads = 15000.0f;
+        private static void handleRadFx(LivingEntity entity) {
+            if (entity instanceof Player player && (player.isCreative() || player.isSpectator())) return;
+            CompoundTag nbt = entity.getPersistentData();
 
-                if (rads > 1000) {
-                    if (entity.level().getGameTime() % 20 == 0) {
-                        entity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 100, 1));
-                        entity.hurt(BMNWDamageSources.radiation(entity.level()), 8);
-                    }
+            float rads = nbt.getFloat("bmnw_RAD");
+            if (rads > 15000 || rads < 0) rads = 15000.0f;
+
+            if (rads > 1000) {
+                if (entity.level().getGameTime() % 20 == 0) {
+                    entity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 100, 1));
+                    entity.hurt(BMNWDamageSources.radiation(entity.level()), 8);
                 }
-                if (rads > 800) {
-                    if (entity.getRandom().nextInt(250) == 0) {
-                        entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100, 1));
-                        entity.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 100, 1));
-                        entity.addEffect(new MobEffectInstance(MobEffects.POISON, 100, 1));
-                        entity.addEffect(new MobEffectInstance(MobEffects.HUNGER, 100, 1));
-                    }
+            }
+            if (rads > 800) {
+                if (entity.getRandom().nextInt(250) == 0) {
+                    entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100, 1));
+                    entity.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 100, 1));
+                    entity.addEffect(new MobEffectInstance(MobEffects.POISON, 100, 1));
+                    entity.addEffect(new MobEffectInstance(MobEffects.HUNGER, 100, 1));
                 }
-                if (rads > 600) {
-                    if (entity.getRandom().nextInt(1000) == 0) {
-                        entity.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 100, 0));
-                        entity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200, 1));
-                    }
-                    if (entity.getRandom().nextInt(500) == 0) {
-                        entity.addEffect(new MobEffectInstance(MobEffects.POISON, 100, 0));
-                    }
-                    if (entity.getRandom().nextInt(500) == 0) {
-                        entity.addEffect(new MobEffectInstance(MobEffects.HUNGER, 100, 4));
-                        entity.addEffect(new MobEffectInstance(BMNWEffects.VOMITING, 20));
-                    }
+            }
+            if (rads > 600) {
+                if (entity.getRandom().nextInt(1000) == 0) {
+                    entity.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 100, 0));
+                    entity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200, 1));
                 }
-                if (rads > 200) {
-                    if (entity.getRandom().nextInt(1000) == 0) {
-                        entity.addEffect(new MobEffectInstance(MobEffects.HUNGER, 100, 2));
-                        entity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200, 1));
-                    }
+                if (entity.getRandom().nextInt(500) == 0) {
+                    entity.addEffect(new MobEffectInstance(MobEffects.POISON, 100, 0));
                 }
-                if (rads > 100) {
-                    if (entity.getRandom().nextInt(1000) == 0) {
-                        entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100));
-                        entity.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 100));
-                    }
+                if (entity.getRandom().nextInt(500) == 0) {
+                    entity.addEffect(new MobEffectInstance(MobEffects.HUNGER, 100, 4));
+                    entity.addEffect(new MobEffectInstance(BMNWEffects.VOMITING, 20));
+                }
+            }
+            if (rads > 200) {
+                if (entity.getRandom().nextInt(1000) == 0) {
+                    entity.addEffect(new MobEffectInstance(MobEffects.HUNGER, 100, 2));
+                    entity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200, 1));
+                }
+            }
+            if (rads > 100) {
+                if (entity.getRandom().nextInt(1000) == 0) {
+                    entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100));
+                    entity.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 100));
                 }
             }
         }
@@ -272,23 +277,27 @@ public class BMNWEventBus {
             MeteoriteEntity.spawnIfReady(event.getEntity());
 
             if (BMNWServerConfig.radiationSetting().item()) {
-                Player player = event.getEntity();
-                if (player.isCreative() || player.isSpectator() || player.level().isClientSide()) return;
-                for (ItemStack stack : player.getInventory().items) {
-                    Item item = stack.getItem();
-                    if (HazardRegistry.getRadRegistry(item) > 0) {
-                        RadiationTools.contaminate(player, HazardRegistry.getRadRegistry(item) / 20 * stack.getCount());
+                handlePlayerRads(event.getEntity());
+            }
+        }
+
+        private static void handlePlayerRads(Player player) {
+            if (player.isCreative() || player.isSpectator() || player.level().isClientSide()) return;
+            for (ItemStack stack : player.getInventory().items) {
+                Item item = stack.getItem();
+                if (HazardRegistry.getRadRegistry(item) > 0) {
+                    RadiationTools.contaminate(player, HazardRegistry.getRadRegistry(item) / 20 * stack.getCount());
+                }
+                if (HazardRegistry.getBlindingRegistry(item)) {
+                    player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 20, 0, false, false));
+                }
+                if (HazardRegistry.shouldSkinContact(player)) {
+                    if (stack.is(BMNWTags.Items.EXTREMELY_HOT) ||
+                            item instanceof IExtremelyHotOverride override && override.isExtremelyHot(stack)) {
+                        player.setRemainingFireTicks(20);
                     }
-                    if (HazardRegistry.getBlindingRegistry(item)) {
-                        player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 20, 0, false, false));
-                    }
-                    if (HazardRegistry.shouldSkinContact(player)) {
-                        if (HazardRegistry.getBurningRegistry(item)) {
-                            player.setRemainingFireTicks(20);
-                        }
-                        if (stack.is(BMNWTags.Items.WP)) {
-                            WPEffect.inflictWP(player, 0);
-                        }
+                    if (stack.is(BMNWTags.Items.WP)) {
+                        WPEffect.inflictWP(player, 0);
                     }
                 }
             }
@@ -336,7 +345,8 @@ public class BMNWEventBus {
                         );
                     }
                 }
-                if (HazardRegistry.getBurningRegistry(item)) {
+                if (stack.is(BMNWTags.Items.EXTREMELY_HOT) ||
+                        item instanceof IExtremelyHotOverride override && override.isExtremelyHot(stack)) {
                     event.addTooltipLines(Component.translatable("tooltip.bmnw.burning").withColor(0xFFFF00));
                 }
                 if (HazardRegistry.getBlindingRegistry(item)) {
