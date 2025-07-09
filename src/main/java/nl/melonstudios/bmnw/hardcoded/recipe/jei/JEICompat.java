@@ -46,13 +46,14 @@ public class JEICompat implements IModPlugin {
         registration.addRecipes(BMNWRecipeTypes.FLUID_CONTAINER_EXCHANGE, FluidContainerExchangeCategory.collectRecipes());
 
         registration.addItemStackInfo(
-                Arrays.asList(Ingredient.of(TagKey.create(Registries.ITEM, ResourceLocation.parse("bmnw:stamps"))).getItems()),
+                Arrays.asList(Ingredient.of(TagKey.create(Registries.ITEM, BMNW.namespace("stamps"))).getItems()),
                 Component.literal("Stamps are used to, well, stamp items into a certain shape."),
                 Component.literal("You will also need a stamping press of some sort.")
         );
 
         registration.addIngredientInfo(BMNWItems.URANIUM_SANDWICH, Component.literal("Yummy! ".repeat(100)));
 
+        /*
         registration.addItemStackInfo(
                 new ItemStack(BMNWItems.FIRE_MARBLE.get()),
                 Component.literal("Fire Marbles are found in meteors."),
@@ -86,6 +87,7 @@ public class JEICompat implements IModPlugin {
                 Component.literal("They can also be extinguished in water."),
                 Component.literal("(This is yet to be added...)")
         );
+        */
 
         RecipeManager recipeManager = Objects.requireNonNull(Minecraft.getInstance().level).getRecipeManager();
         List<RecipeHolder<HeaterFuelBonusRecipe>> heaterFuelBonusRecipes = recipeManager

@@ -15,11 +15,12 @@ import nl.melonstudios.bmnw.init.BMNWItems;
 import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public enum StampType implements StringRepresentable {
-    BLANK(tag("bmnw:molds/blank"), "empty"),
-    PLATE(tag("bmnw:molds/plate"), "plate"),
-    WIRE(tag("bmnw:molds/wire"), "wire");
+    BLANK(tag("bmnw:stamps/blank"), "empty"),
+    PLATE(tag("bmnw:stamps/plate"), "plate"),
+    WIRE(tag("bmnw:stamps/wire"), "wire");
 
     private final String name;
     private final TagKey<Item> itemTag;
@@ -42,7 +43,7 @@ public enum StampType implements StringRepresentable {
             BLANK, PLATE, WIRE
     };
     public static StampType byName(String name) {
-        for (StampType type : VALUES) if (type.name == name) return type;
+        for (StampType type : VALUES) if (Objects.equals(type.name, name)) return type;
         return StampType.BLANK;
     }
 
