@@ -79,7 +79,7 @@ public class BMNWTags {
     }
 
     public static class Fluids {
-        public static final TagKey<Fluid> HOT = fluidTag("bmnw:extremely_hot");
+        public static final TagKey<Fluid> EXTREMELY_HOT = fluidTag("bmnw:extremely_hot");
         public static final TagKey<Fluid> CORROSIVE = fluidTag("bmnw:corrosive");
     }
 

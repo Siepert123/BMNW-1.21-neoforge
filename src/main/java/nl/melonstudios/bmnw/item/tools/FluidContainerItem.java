@@ -111,6 +111,6 @@ public class FluidContainerItem extends Item implements IExtremelyHotOverride {
 
     @Override
     public boolean isExtremelyHot(ItemStack stack) {
-        return getContents(stack).is(BMNWTags.Fluids.HOT);
+        return getContents(stack).is(BMNWTags.Fluids.EXTREMELY_HOT);
     }
 }
