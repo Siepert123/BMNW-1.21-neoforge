@@ -1,6 +1,7 @@
 package nl.melonstudios.bmnw.event;
 
 import net.minecraft.client.Camera;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -87,6 +88,7 @@ import nl.melonstudios.bmnw.particle.*;
 import nl.melonstudios.bmnw.wifi.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 
 import java.util.ArrayList;
@@ -668,6 +670,7 @@ public class BMNWEventBus {
                 new IClientFluidTypeExtensions() {
                     private static final ResourceLocation TEXTURE_STILL = BMNW.namespace("block/fluid/volcanic_lava_still");
                     private static final ResourceLocation TEXTURE_FLOW = BMNW.namespace("block/fluid/volcanic_lava_flow");
+                    private static final ResourceLocation TEXTURE_OVERLAY = BMNW.namespace("textures/gui/fluid_overlay/volcanic_lava.png");
 
                     @Override
                     public ResourceLocation getStillTexture() {
@@ -682,6 +685,11 @@ public class BMNWEventBus {
                     @Override
                     public ResourceLocation getOverlayTexture() {
                         return TEXTURE_STILL;
+                    }
+
+                    @Override
+                    public ResourceLocation getRenderOverlayTexture(Minecraft mc) {
+                        return TEXTURE_OVERLAY;
                     }
 
                     @Override

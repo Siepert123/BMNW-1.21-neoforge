@@ -6,6 +6,8 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.BlockGetter;
@@ -19,6 +21,7 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.LavaFluid;
 import net.minecraft.world.level.pathfinder.PathType;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.SoundActions;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.fluids.FluidType;
@@ -31,7 +34,7 @@ public abstract class VolcanicLavaFluid extends LavaFluid {
     public static final FluidType TYPE = new FluidType(FluidType.Properties.create()
             .descriptionId("fluid.bmnw.volcanic_lava")
             .canSwim(false)
-            .canDrown(true)
+            .canDrown(false)
             .pathType(PathType.LAVA)
             .adjacentPathType(null)
             .sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL_LAVA)
@@ -41,7 +44,18 @@ public abstract class VolcanicLavaFluid extends LavaFluid {
             .viscosity(6000)
             .temperature(2600)
             .rarity(Rarity.UNCOMMON)
-    );
+    ) {
+        @Override
+        public double motionScale(Entity entity) {
+            return 0.007D;
+        }
+
+        @Override
+        public void setItemMovement(ItemEntity entity) {
+            Vec3 vec3 = entity.getDeltaMovement();
+            entity.setDeltaMovement(vec3.x * (double) 0.95F, vec3.y + (double) (vec3.y < (double) 0.06F ? 5.0E-4F : 0.0F), vec3.z * (double) 0.95F);
+        }
+    };
 
     @Override
     public Fluid getFlowing() {
