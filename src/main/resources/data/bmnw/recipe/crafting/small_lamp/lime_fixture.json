@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "tag": "c:dyes/lime"
+    },
+    "#": {
+      "item": "minecraft:redstone_lamp"
+    },
+    "N": {
+      "tag": "c:plates/iron"
+    }
+  },
+  "pattern": [
+    "C",
+    "#",
+    "N"
+  ],
+  "result": {
+    "id": "bmnw:lime_fixture",
+    "count": 4
+  }
+}

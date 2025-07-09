@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "tag": "c:dyes/cyan"
+    },
+    "#": {
+      "item": "minecraft:redstone_lamp"
+    },
+    "N": {
+      "tag": "c:plates/iron"
+    }
+  },
+  "pattern": [
+    "C",
+    "#",
+    "N"
+  ],
+  "result": {
+    "id": "bmnw:cyan_fixture",
+    "count": 4
+  }
+}

@@ -122,19 +122,6 @@ public abstract class BaseSmallLampBlock extends Block implements EntityBlock {
         builder.add(DYEABLE);
     }
 
-    public abstract BlockState applyColor(BlockState old, DyeColor color);
-
-    @Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-        if (state.getValue(DYEABLE) && stack.getItem() instanceof DyeItem dye) {
-            BlockState dyed = this.applyColor(state, dye.getDyeColor());
-            if (dyed != state) {
-                level.setBlock(pos, dyed, 3);
-                return ItemInteractionResult.sidedSuccess(level.isClientSide);
-            }
-        }
-        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-    }
 
     @OnlyIn(Dist.CLIENT)
     public boolean renderGlow(BlockState state) {

@@ -38,15 +38,6 @@ public class FixtureBlock extends BaseSmallLampBlock {
         return SHAPES;
     }
 
-    @Override
-    public BlockState applyColor(BlockState old, DyeColor color) {
-        BlockState state = this.inverted ? FIXTURES_INVERTED[color.getId()].defaultBlockState() : FIXTURES[color.getId()].defaultBlockState();
-        return state
-                .setValue(FACING, old.getValue(FACING))
-                .setValue(POWERED, old.getValue(POWERED))
-                .setValue(DYEABLE, true);
-    }
-
     @OnlyIn(Dist.CLIENT)
     @Override
     public PartialModel getLampPart() {
