@@ -1,3 +1,7 @@
 {
-  "parent": "bmnw:block/pipe_end"
+  "parent": "bmnw:block/pipe_end",
+  "textures": {
+    "pipe": "bmnw:block/iron_fluid_pipe_base",
+    "end": "bmnw:block/iron_fluid_pipe_end"
+  }
 }

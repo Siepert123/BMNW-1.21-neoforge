@@ -1,7 +1,7 @@
 {
 	"textures": {
-		"pipe": "bmnw:block/pipe_middle",
-		"end": "bmnw:block/pipe_end",
+		"pipe": "missingno",
+		"end": "missingno",
 		"particle": "#pipe"
 	},
 	"elements": [

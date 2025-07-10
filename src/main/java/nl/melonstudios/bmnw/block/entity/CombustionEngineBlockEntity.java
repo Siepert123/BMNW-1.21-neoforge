@@ -254,17 +254,17 @@ public class CombustionEngineBlockEntity extends SyncedBlockEntity implements Me
 
         @Override
         public int fill(FluidStack resource, FluidAction action) {
-            return 0;
+            return this.getFluid().fill(resource, action);
         }
 
         @Override
         public FluidStack drain(FluidStack resource, FluidAction action) {
-            return this.getFluid().drain(resource, action);
+            return FluidStack.EMPTY;
         }
 
         @Override
         public FluidStack drain(int maxDrain, FluidAction action) {
-            return this.getFluid().drain(maxDrain, action);
+            return FluidStack.EMPTY;
         }
     };
 

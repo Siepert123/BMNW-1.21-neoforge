@@ -15,7 +15,7 @@ public enum PipeConnection implements StringRepresentable {
     private final String name;
 
     PipeConnection(boolean isConnected, boolean isForcedOff, String name) {
-        if (isConnected && isForcedOff) throw new IllegalArgumentException();
+        if (isConnected && isForcedOff) throw new IllegalArgumentException("h");
         this.isConnected = isConnected;
         this.isForcedOff = isForcedOff;
         this.name = name;

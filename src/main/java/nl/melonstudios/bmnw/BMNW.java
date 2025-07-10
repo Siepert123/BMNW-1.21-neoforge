@@ -40,6 +40,7 @@ import nl.melonstudios.bmnw.hazard.radiation.ChunkRadiationHandler;
 import nl.melonstudios.bmnw.hazard.radiation.ChunkRadiationManager;
 import nl.melonstudios.bmnw.init.*;
 import nl.melonstudios.bmnw.interfaces.IOpensCatwalkRails;
+import nl.melonstudios.bmnw.logistics.LevelPipeNets;
 import nl.melonstudios.bmnw.misc.*;
 import nl.melonstudios.bmnw.screen.*;
 import org.slf4j.Logger;
@@ -268,6 +269,8 @@ public class BMNW {
                     }
                 }
                 first = false;
+
+                LevelPipeNets.get(level);
             }
             Structures.validCache = true;
             FireMarbleManager.create(Structures.seedCache);
@@ -290,6 +293,7 @@ public class BMNW {
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
+
         }
     }
 

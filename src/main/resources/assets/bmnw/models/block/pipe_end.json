@@ -1,35 +1,12 @@
 {
+	"loader": "neoforge:obj",
+	"model": "bmnw:models/block/pipe_end.obj",
+	"automatic_culling": false,
+	"shade_quads": true,
+	"flip_v": true,
 	"textures": {
-		"pipe": "bmnw:block/pipe_middle",
-		"end": "bmnw:block/pipe_end",
+		"pipe": "missingno",
+		"end": "missingno",
 		"particle": "#pipe"
-	},
-	"elements": [
-		{
-			"name": "pipe",
-			"from": [5, 1, 5],
-			"to": [11, 5, 11],
-			"rotation": {"angle": 0, "axis": "y", "origin": [5, 1, 5]},
-			"faces": {
-				"north": {"uv": [5.1, 11, 10.9, 15], "texture": "#pipe"},
-				"east": {"uv": [5.1, 11, 10.9, 15], "texture": "#pipe"},
-				"south": {"uv": [5.1, 11, 10.9, 15], "texture": "#pipe"},
-				"west": {"uv": [5.1, 11, 10.9, 15], "texture": "#pipe"}
-			}
-		},
-		{
-			"name": "end",
-			"from": [3, 0, 3],
-			"to": [13, 1, 13],
-			"rotation": {"angle": 0, "axis": "y", "origin": [3, 0, 3]},
-			"faces": {
-				"north": {"uv": [3, 15, 13, 16], "texture": "#end"},
-				"east": {"uv": [3, 15, 13, 16], "texture": "#end"},
-				"south": {"uv": [3, 15, 13, 16], "texture": "#end"},
-				"west": {"uv": [3, 15, 13, 16], "texture": "#end"},
-				"up": {"uv": [3, 3, 13, 13], "texture": "#end"},
-				"down": {"uv": [3, 3, 13, 13], "texture": "#end"}
-			}
-		}
-	]
+	}
 }

@@ -53,6 +53,14 @@ public class Library {
             Direction.EAST,
             null
     };
+    public static final Direction[] DIRECTIONS_WITHOUT_NULL = {
+            Direction.DOWN,
+            Direction.UP,
+            Direction.NORTH,
+            Direction.SOUTH,
+            Direction.WEST,
+            Direction.EAST
+    };
 
     public static void dropItem(Level level, BlockPos pos, ItemStack stack) {
         ItemEntity entity = new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, stack);

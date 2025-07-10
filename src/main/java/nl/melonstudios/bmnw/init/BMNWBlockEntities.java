@@ -7,6 +7,8 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import nl.melonstudios.bmnw.block.decoration.BaseSmallLampBlock;
 import nl.melonstudios.bmnw.block.entity.*;
+import nl.melonstudios.bmnw.block.logistics.FluidPipeBlock;
+import nl.melonstudios.bmnw.block.logistics.FluidPipeBlockEntity;
 import nl.melonstudios.bmnw.blockentity.FluidBarrelBlockEntity;
 import nl.melonstudios.bmnw.blockentity.VolcanoCoreBlockEntity;
 
@@ -23,6 +25,15 @@ public class BMNWBlockEntities {
             () -> new BlockEntityType<>(
                     DummyBlockEntity::new,
                     Set.of(BMNWBlocks.DUMMY.get()),
+                    null
+            )
+    );
+
+    public static final Supplier<BlockEntityType<FluidPipeBlockEntity>> FLUID_PIPE = BLOCK_ENTITIES.register(
+            "fluid_pipe",
+            () -> new BlockEntityType<>(
+                    FluidPipeBlockEntity::new,
+                    FluidPipeBlock.ALL_FLUID_PIPES,
                     null
             )
     );

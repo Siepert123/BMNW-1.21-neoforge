@@ -56,6 +56,8 @@ import nl.melonstudios.bmnw.BMNW;
 import nl.melonstudios.bmnw.block.container.fluid.FluidBarrelBlock;
 import nl.melonstudios.bmnw.block.entity.*;
 import nl.melonstudios.bmnw.block.entity.renderer.*;
+import nl.melonstudios.bmnw.block.logistics.FluidPipeBlock;
+import nl.melonstudios.bmnw.block.logistics.FluidPipeBlockEntity;
 import nl.melonstudios.bmnw.block.misc.DummyBlock;
 import nl.melonstudios.bmnw.blockentity.FluidBarrelBlockEntity;
 import nl.melonstudios.bmnw.cfg.BMNWClientConfig;
@@ -81,6 +83,7 @@ import nl.melonstudios.bmnw.item.client.SmallLampColorizer;
 import nl.melonstudios.bmnw.item.misc.CoreSampleItem;
 import nl.melonstudios.bmnw.item.misc.SmallLampBlockItem;
 import nl.melonstudios.bmnw.item.tools.FluidContainerItem;
+import nl.melonstudios.bmnw.logistics.PipeNet;
 import nl.melonstudios.bmnw.misc.DistrictHolder;
 import nl.melonstudios.bmnw.misc.ExcavationVein;
 import nl.melonstudios.bmnw.misc.FluidTextureData;
@@ -513,6 +516,17 @@ public class BMNWEventBus {
                     ((level, pos, state, blockEntity, context) ->
                             blockEntity instanceof ElectricWireConnectorBlockEntity connector ? connector.getEnergy(context) : null),
                     BMNWBlocks.ELECTRIC_WIRE_CONNECTOR.get()
+            );
+            event.registerBlock(
+                    Capabilities.FluidHandler.BLOCK,
+                    ((level, pos, state, be, context) -> {
+                        if (be instanceof FluidPipeBlockEntity pipe) {
+                            PipeNet pipeNet = pipe.getPipeNet();
+                            if (pipeNet == null) return null;
+                            return pipeNet.getFluidHandler();
+                        } else return null;
+                    }),
+                    FluidPipeBlock.ALL_FLUID_PIPES.toArray(Block[]::new)
             );
 
             event.registerBlock(
