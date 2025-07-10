@@ -25,7 +25,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import nl.melonstudios.bmnw.block.decoration.CatwalkRailingBlock;
 import nl.melonstudios.bmnw.block.entity.LargeShredderBlockEntity;
 import nl.melonstudios.bmnw.init.BMNWBlocks;
-import nl.melonstudios.bmnw.init.BMNWStateProperties;
+import nl.melonstudios.bmnw.block.state.BMNWStateProperties;
 import nl.melonstudios.bmnw.interfaces.ITickable;
 import nl.melonstudios.bmnw.misc.BrokenConsumer;
 import org.jetbrains.annotations.Nullable;

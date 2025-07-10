@@ -28,7 +28,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import nl.melonstudios.bmnw.block.entity.MetalSlidingDoorBlockEntity;
 import nl.melonstudios.bmnw.init.BMNWBlockEntities;
 import nl.melonstudios.bmnw.init.BMNWSounds;
-import nl.melonstudios.bmnw.init.BMNWStateProperties;
+import nl.melonstudios.bmnw.block.state.BMNWStateProperties;
 import nl.melonstudios.bmnw.interfaces.ITickable;
 import org.jetbrains.annotations.Nullable;
 

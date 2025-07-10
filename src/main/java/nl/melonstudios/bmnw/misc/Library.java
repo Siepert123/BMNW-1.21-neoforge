@@ -128,6 +128,9 @@ public class Library {
         };
     }
 
+    public static Direction determineBlockPartition3D(BlockHitResult hitResult) {
+        return determineBlockPartition3D(hitResult.getLocation().subtract(hitResult.getBlockPos().getCenter()));
+    }
     public static Direction determineBlockPartition3D(UseOnContext context) {
         return determineBlockPartition3D(context.getClickedPos(), context.getClickLocation());
     }

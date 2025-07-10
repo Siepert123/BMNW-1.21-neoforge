@@ -8,7 +8,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.neoforged.neoforge.network.PacketDistributor;
 import nl.melonstudios.bmnw.init.BMNWBlockEntities;
-import nl.melonstudios.bmnw.init.BMNWStateProperties;
+import nl.melonstudios.bmnw.block.state.BMNWStateProperties;
 import nl.melonstudios.bmnw.interfaces.IOpenDoor;
 import nl.melonstudios.bmnw.interfaces.ITickable;
 import nl.melonstudios.bmnw.misc.math.Easing;

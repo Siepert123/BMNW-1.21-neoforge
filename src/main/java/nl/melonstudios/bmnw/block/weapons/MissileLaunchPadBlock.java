@@ -22,7 +22,7 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import nl.melonstudios.bmnw.block.entity.MissileLaunchPadBlockEntity;
 import nl.melonstudios.bmnw.init.BMNWBlocks;
-import nl.melonstudios.bmnw.init.BMNWStateProperties;
+import nl.melonstudios.bmnw.block.state.BMNWStateProperties;
 import nl.melonstudios.bmnw.interfaces.IDetonatable;
 import nl.melonstudios.bmnw.interfaces.ITargetHolder;
 import org.jetbrains.annotations.Nullable;

@@ -1,4 +1,4 @@
-package nl.melonstudios.bmnw.misc;
+package nl.melonstudios.bmnw.enums;
 
 public enum DistributionType {
     SQUARE,

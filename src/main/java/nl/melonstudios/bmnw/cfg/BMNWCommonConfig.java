@@ -1,7 +1,7 @@
 package nl.melonstudios.bmnw.cfg;
 
 import net.neoforged.neoforge.common.ModConfigSpec;
-import nl.melonstudios.bmnw.misc.OptionalBool;
+import nl.melonstudios.bmnw.enums.OptionalBool;
 
 public class BMNWCommonConfig {
     private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();

@@ -539,8 +539,9 @@ public class BMNWTabs {
                             ResourceLocation.parse("bmnw:bombs")
                     )
                     .displayItems((parameters, items) -> {
-                        items.accept(IRON_FLUID_BARREL);
                         items.accept(ELECTRIC_WIRE_CONNECTOR);
+                        items.accept(IRON_FLUID_PIPE);
+                        items.accept(IRON_FLUID_BARREL);
                         items.accept(IRON_WORKBENCH);
                         items.accept(STEEL_WORKBENCH);
                         items.accept(PRESS);

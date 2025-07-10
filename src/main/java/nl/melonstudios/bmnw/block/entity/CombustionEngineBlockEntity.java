@@ -27,7 +27,7 @@ import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import nl.melonstudios.bmnw.block.machines.CombustionEngineBlock;
 import nl.melonstudios.bmnw.init.BMNWBlockEntities;
-import nl.melonstudios.bmnw.init.BMNWStateProperties;
+import nl.melonstudios.bmnw.block.state.BMNWStateProperties;
 import nl.melonstudios.bmnw.init.BMNWTags;
 import nl.melonstudios.bmnw.interfaces.IBatteryItem;
 import nl.melonstudios.bmnw.interfaces.IInfiniteFluidSupply;

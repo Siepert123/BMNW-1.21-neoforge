@@ -17,7 +17,7 @@ import net.neoforged.neoforge.client.model.data.ModelData;
 import nl.melonstudios.bmnw.block.doors.MetalSlidingDoorBlock;
 import nl.melonstudios.bmnw.block.entity.MetalSlidingDoorBlockEntity;
 import nl.melonstudios.bmnw.init.BMNWPartialModels;
-import nl.melonstudios.bmnw.init.BMNWStateProperties;
+import nl.melonstudios.bmnw.block.state.BMNWStateProperties;
 import nl.melonstudios.bmnw.misc.Library;
 import org.joml.Quaternionf;
 

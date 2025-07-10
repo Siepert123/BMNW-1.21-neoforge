@@ -29,6 +29,7 @@ import nl.melonstudios.bmnw.block.doors.MetalSlidingDoorBlock;
 import nl.melonstudios.bmnw.block.doors.SealedHatchBlock;
 import nl.melonstudios.bmnw.block.doors.SlidingBlastDoorBlock;
 import nl.melonstudios.bmnw.block.fluid.VolcanicLavaBlock;
+import nl.melonstudios.bmnw.block.logistics.FluidPipeBlock;
 import nl.melonstudios.bmnw.block.machines.*;
 import nl.melonstudios.bmnw.block.misc.*;
 import nl.melonstudios.bmnw.block.settype.BMNWBlockSetType;
@@ -388,6 +389,9 @@ public class BMNWBlocks {
 
     public static final DeferredBlock<CreativeBatteryBlock> CREATIVE_ENERGY_STORAGE = BLOCKS.register("creative_energy_storage",
             () -> new CreativeBatteryBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)));
+
+    public static final DeferredBlock<FluidPipeBlock> IRON_FLUID_PIPE = BLOCKS.register("iron_fluid_pipe",
+            () -> new FluidPipeBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)));
 
     public static final DeferredBlock<FluidBarrelBlock> IRON_FLUID_BARREL = BLOCKS.register("iron_fluid_barrel",
             () -> new FluidBarrelBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK),

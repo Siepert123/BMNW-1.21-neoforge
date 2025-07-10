@@ -1,4 +1,4 @@
-package nl.melonstudios.bmnw.misc;
+package nl.melonstudios.bmnw.enums;
 
 import java.util.function.Supplier;
 

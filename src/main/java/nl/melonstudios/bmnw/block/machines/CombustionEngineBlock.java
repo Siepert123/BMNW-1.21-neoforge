@@ -27,7 +27,7 @@ import net.neoforged.api.distmarker.OnlyIn;
 import nl.melonstudios.bmnw.audio.CombustionEngineAudio;
 import nl.melonstudios.bmnw.block.entity.CombustionEngineBlockEntity;
 import nl.melonstudios.bmnw.block.misc.TickingEntityBlock;
-import nl.melonstudios.bmnw.init.BMNWStateProperties;
+import nl.melonstudios.bmnw.block.state.BMNWStateProperties;
 import org.jetbrains.annotations.Nullable;
 
 public class CombustionEngineBlock extends TickingEntityBlock {

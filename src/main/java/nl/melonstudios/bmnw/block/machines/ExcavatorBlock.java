@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import nl.melonstudios.bmnw.block.entity.ExcavatorBlockEntity;
 import nl.melonstudios.bmnw.block.entity.ExcavatorBlockEntitySlave;
 import nl.melonstudios.bmnw.init.BMNWBlockEntities;
-import nl.melonstudios.bmnw.init.BMNWStateProperties;
+import nl.melonstudios.bmnw.block.state.BMNWStateProperties;
 import org.jetbrains.annotations.Nullable;
 
 public class ExcavatorBlock extends Block implements EntityBlock {
