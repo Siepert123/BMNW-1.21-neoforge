@@ -183,12 +183,25 @@ public final class PipeNet {
 
     private void rejoinNetworks(LevelPipeNets levelPipeNets, LongSet positions) {
         BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
+        LongSet evaluatingPositions = new LongArraySet();
+        LongSet networks = new LongArraySet();
         for (long packedPos : positions) {
             pos.set(packedPos);
             BlockState state = this.level.getBlockState(pos);
             if (state.getBlock() instanceof FluidPipeBlock block) {
                 block.onPlace(state, this.level, pos, Blocks.AIR.defaultBlockState(), false);
+                evaluatingPositions.add(packedPos);
+                if (this.level.getBlockEntity(pos) instanceof FluidPipeBlockEntity be) {
+                    if (be.getNetworkID() != null) networks.add(be.getNonnullNetworkID());
+                }
             }
+        }
+        for (long net : networks) {
+            levelPipeNets.getNetByID(net).fluidHandlerGetters.clear();
+        }
+        for (long packedPos : evaluatingPositions) {
+            pos.set(packedPos);
+            FluidPipeBlock.evaluateFluidHandlers(this.level, pos);
         }
         levelPipeNets.setDirty();
     }

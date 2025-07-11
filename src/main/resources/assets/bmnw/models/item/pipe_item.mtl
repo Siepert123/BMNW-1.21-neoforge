@@ -1,0 +1,6 @@
+# Made in Blockbench 4.12.5
+newmtl m_0f0079af-4c4c-933c-f0cc-41373f609063
+map_Kd #pipe
+newmtl m_a4a42e48-ad0b-8039-5e1d-51d199cef3bc
+map_Kd #end
+newmtl none

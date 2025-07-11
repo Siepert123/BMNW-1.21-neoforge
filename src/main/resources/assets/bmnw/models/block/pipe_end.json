@@ -1,7 +1,7 @@
 {
 	"loader": "neoforge:obj",
 	"model": "bmnw:models/block/pipe_end.obj",
-	"automatic_culling": false,
+	"automatic_culling": true,
 	"shade_quads": true,
 	"flip_v": true,
 	"textures": {
