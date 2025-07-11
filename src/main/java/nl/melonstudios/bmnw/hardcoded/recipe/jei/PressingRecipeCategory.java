@@ -44,7 +44,7 @@ public class PressingRecipeCategory implements IRecipeCategory<RecipeHolder<Pres
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<PressingRecipe> recipe, IFocusGroup focuses) {
-        builder.addSlot(RecipeIngredientRole.INPUT, 1, 1).addIngredients(recipe.value().stamp().asIngredient());
+        builder.addSlot(RecipeIngredientRole.CATALYST, 1, 1).addIngredients(recipe.value().stamp().asIngredient());
         builder.addSlot(RecipeIngredientRole.INPUT, 1, 37).addIngredients(recipe.value().input());
         builder.addSlot(RecipeIngredientRole.OUTPUT, 61, 19).addItemStack(recipe.value().result());
     }
