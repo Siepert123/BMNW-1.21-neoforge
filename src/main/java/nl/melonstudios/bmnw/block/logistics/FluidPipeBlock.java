@@ -33,9 +33,6 @@ import nl.melonstudios.bmnw.block.state.BMNWStateProperties;
 import nl.melonstudios.bmnw.block.state.PipeConnectionProperty;
 import nl.melonstudios.bmnw.enums.PipeConnection;
 import nl.melonstudios.bmnw.init.BMNWItems;
-import nl.melonstudios.bmnw.logistics.LevelPipeNets;
-import nl.melonstudios.bmnw.logistics.PipeFluidHandlerGetter;
-import nl.melonstudios.bmnw.logistics.PipeNet;
 import nl.melonstudios.bmnw.misc.Library;
 import org.jetbrains.annotations.Nullable;
 
@@ -170,7 +167,6 @@ public class FluidPipeBlock extends Block implements SimpleWaterloggedBlock, Ent
                 if (level.setBlock(pos, newState, 3)) {
                     if (!level.isClientSide && level.getBlockEntity(pos) instanceof FluidPipeBlockEntity be
                             && level instanceof ServerLevel serverLevel) {
-                        this.evaluateFluidHandlers(serverLevel, pos, newState, be);
                     }
                     return ItemInteractionResult.SUCCESS;
                 }
@@ -179,7 +175,6 @@ public class FluidPipeBlock extends Block implements SimpleWaterloggedBlock, Ent
                 if (level.setBlock(pos, newState, 3)) {
                     if (!level.isClientSide && level.getBlockEntity(pos) instanceof FluidPipeBlockEntity be
                             && level instanceof ServerLevel serverLevel) {
-                        this.evaluateFluidHandlers(serverLevel, pos, newState, be);
                     }
                     return ItemInteractionResult.SUCCESS;
                 }
@@ -194,43 +189,6 @@ public class FluidPipeBlock extends Block implements SimpleWaterloggedBlock, Ent
         level.setBlock(pos, this.processPipeStateConnections(level, pos, state), 3);
         if (!level.isClientSide && level.getBlockEntity(pos) instanceof FluidPipeBlockEntity be
                 && level instanceof ServerLevel serverLevel) {
-            this.evaluateFluidHandlers(serverLevel, pos, state, be);
-        }
-    }
-
-    private void evaluateFluidHandlers(ServerLevel level, BlockPos pos, BlockState state, FluidPipeBlockEntity be) {
-        if (be.getNetworkID() == null) return;
-
-        LevelPipeNets levelPipeNets = LevelPipeNets.get(level);
-        PipeNet pipeNet = levelPipeNets.getNetByID(be.getNonnullNetworkID());
-
-        if (pipeNet == null) return;
-
-        pipeNet.removeFluidHandlerGettersAt(pos.asLong());
-
-        BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
-        for (Direction face : Library.DIRECTIONS_WITHOUT_NULL) {
-            mutable.setWithOffset(pos, face.getOpposite());
-            PipeConnectionProperty property = getSideProperty(face.getOpposite());
-
-            if (level.getBlockState(mutable).getBlock() instanceof FluidPipeBlock) continue;
-            if (this.getPipeStateConnection(level, pos, state.getValue(property).isForcedOff(), face.getOpposite()).isConnected()) {
-                IFluidHandler handler = level.getCapability(Capabilities.FluidHandler.BLOCK, mutable,
-                        face);
-                if (handler == null) continue;
-
-                pipeNet.addFluidHandlerGetter(new PipeFluidHandlerGetter(mutable.immutable(), face, handler.getTanks()));
-            }
-        }
-
-        levelPipeNets.setDirty();
-    }
-
-    public static void evaluateFluidHandlers(ServerLevel level, BlockPos pos) {
-        BlockState state = level.getBlockState(pos);
-        if (state.getBlock() instanceof FluidPipeBlock block
-                && level.getBlockEntity(pos) instanceof FluidPipeBlockEntity be) {
-            block.evaluateFluidHandlers(level, pos, state, be);
         }
     }
 
@@ -259,62 +217,6 @@ public class FluidPipeBlock extends Block implements SimpleWaterloggedBlock, Ent
     @Override
     protected boolean propagatesSkylightDown(BlockState state, BlockGetter level, BlockPos pos) {
         return true;
-    }
-
-    @Override
-    public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
-        if (state.is(oldState.getBlock())) return;
-        if (!level.isClientSide) {
-            if (level.getBlockEntity(pos) instanceof FluidPipeBlockEntity be
-                    && level instanceof ServerLevel serverLevel) {
-                LevelPipeNets levelPipeNets = LevelPipeNets.get(serverLevel);
-                BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
-                for (Direction face : Library.DIRECTIONS_WITHOUT_NULL) {
-                    PipeConnectionProperty property = getSideProperty(face);
-                    PipeConnection connection = this.getPipeStateConnection(level, pos, state.getValue(property).isForcedOff(), face);
-                    if (connection.isConnected()) {
-                        mutable.setWithOffset(pos, face);
-                        if (level.getBlockEntity(mutable) instanceof FluidPipeBlockEntity neighbourBE) {
-                            long neighbourNet = neighbourBE.getNetworkID();
-                            if (be.getNetworkID() == null) {
-                                PipeNet net = levelPipeNets.getNetByID(neighbourNet);
-                                if (net == null) continue;
-                                net.addFluidPipeAndAllTheShenanigans(be);
-                                continue;
-                            }
-                            if (be.getNonnullNetworkID() == neighbourNet) continue;
-                            PipeNet pipeNet = levelPipeNets.getNetByID(neighbourNet);
-                            if (pipeNet == null) continue;
-                            long oldNet = be.getNonnullNetworkID();
-                            pipeNet.merge(level, levelPipeNets.getNetByID(oldNet));
-
-                            levelPipeNets.removeIfEmpty(oldNet);
-                        }
-                    }
-                }
-                if (be.getNetworkID() == null) {
-                    levelPipeNets.createNewNetworkFor(be);
-                }
-                this.evaluateFluidHandlers(serverLevel, pos, state, be);
-                levelPipeNets.setDirty();
-            }
-        }
-    }
-
-    @Override
-    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        if (state.is(newState.getBlock())) return;
-        if (!level.isClientSide && level.getBlockEntity(pos) instanceof FluidPipeBlockEntity be
-                && level instanceof ServerLevel serverLevel) {
-            if (be.getNetworkID() == null) return; //Some pipes may be broken so this will fix it
-            LevelPipeNets levelPipeNets = LevelPipeNets.get(serverLevel);
-            PipeNet pipeNet = levelPipeNets.getNetByID(be.getNonnullNetworkID());
-            if (pipeNet == null) return; //see the comment 3 lines above this one
-            pipeNet.pipeRemoved(pos);
-            levelPipeNets.setDirty();
-        }
-        level.removeBlockEntity(pos);
-        level.invalidateCapabilities(pos);
     }
 
     @Nullable
