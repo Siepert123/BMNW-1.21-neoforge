@@ -503,6 +503,8 @@ public class BMNWItems {
     public static final DeferredItem<BlockItem> CREATIVE_ENERGY_STORAGE = ITEMS.register("creative_energy_storage",
             () -> new BlockItem(BMNWBlocks.CREATIVE_ENERGY_STORAGE.get(), new Item.Properties()));
 
+    public static final DeferredItem<BlockItem> COPPER_FLUID_PIPE = ITEMS.register("copper_fluid_pipe",
+            () -> new BlockItem(BMNWBlocks.COPPER_FLUID_PIPE.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> IRON_FLUID_PIPE = ITEMS.register("iron_fluid_pipe",
             () -> new BlockItem(BMNWBlocks.IRON_FLUID_PIPE.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> IRON_FLUID_BARREL = ITEMS.register("iron_fluid_barrel",

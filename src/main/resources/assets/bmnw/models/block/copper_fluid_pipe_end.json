@@ -1,0 +1,7 @@
+{
+  "parent": "bmnw:block/pipe_end",
+  "textures": {
+    "pipe": "bmnw:block/copper_fluid_pipe_base",
+    "end": "bmnw:block/copper_fluid_pipe_end"
+  }
+}

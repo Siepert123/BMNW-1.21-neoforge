@@ -540,6 +540,7 @@ public class BMNWTabs {
                     )
                     .displayItems((parameters, items) -> {
                         items.accept(ELECTRIC_WIRE_CONNECTOR);
+                        items.accept(COPPER_FLUID_PIPE);
                         items.accept(IRON_FLUID_PIPE);
                         items.accept(IRON_FLUID_BARREL);
                         items.accept(IRON_WORKBENCH);

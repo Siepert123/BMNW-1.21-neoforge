@@ -390,6 +390,8 @@ public class BMNWBlocks {
     public static final DeferredBlock<CreativeBatteryBlock> CREATIVE_ENERGY_STORAGE = BLOCKS.register("creative_energy_storage",
             () -> new CreativeBatteryBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)));
 
+    public static final DeferredBlock<FluidPipeBlock> COPPER_FLUID_PIPE = BLOCKS.register("copper_fluid_pipe",
+            () -> new FluidPipeBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.COPPER_BLOCK)));
     public static final DeferredBlock<FluidPipeBlock> IRON_FLUID_PIPE = BLOCKS.register("iron_fluid_pipe",
             () -> new FluidPipeBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)));
 
