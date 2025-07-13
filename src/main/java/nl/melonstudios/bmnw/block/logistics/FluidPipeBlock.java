@@ -1,5 +1,6 @@
 package nl.melonstudios.bmnw.block.logistics;
 
+import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -28,18 +29,25 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.CapabilityRegistry;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import nl.melonstudios.bmnw.block.state.BMNWStateProperties;
 import nl.melonstudios.bmnw.block.state.PipeConnectionProperty;
 import nl.melonstudios.bmnw.enums.PipeConnection;
+import nl.melonstudios.bmnw.event.BMNWEventBus;
 import nl.melonstudios.bmnw.init.BMNWItems;
+import nl.melonstudios.bmnw.logistics.pipes.IPipeNetPropagator;
+import nl.melonstudios.bmnw.logistics.pipes.PipeNetManager;
 import nl.melonstudios.bmnw.misc.Library;
 import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.HashSet;
 import java.util.Set;
 
+@ParametersAreNonnullByDefault
+@MethodsReturnNonnullByDefault
 public class FluidPipeBlock extends Block implements SimpleWaterloggedBlock, EntityBlock {
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
@@ -118,8 +126,7 @@ public class FluidPipeBlock extends Block implements SimpleWaterloggedBlock, Ent
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         boolean waterlogged = context.getLevel().getFluidState(context.getClickedPos()).isSourceOfType(Fluids.WATER);
-        return this.processPipeStateConnections(context.getLevel(), context.getClickedPos(),
-                this.defaultBlockState().setValue(WATERLOGGED, waterlogged));
+        return this.defaultBlockState().setValue(WATERLOGGED, waterlogged);
     }
 
     public static PipeConnectionProperty getSideProperty(@Nonnull Direction face) {
@@ -131,16 +138,6 @@ public class FluidPipeBlock extends Block implements SimpleWaterloggedBlock, Ent
             case SOUTH -> SOUTH;
             case WEST -> WEST;
         };
-    }
-
-    public BlockState processPipeStateConnections(Level level, BlockPos pos, BlockState initialState) {
-        return initialState
-                .setValue(UP, this.getPipeStateConnection(level, pos, initialState.getValue(UP).isForcedOff(), Direction.UP))
-                .setValue(DOWN, this.getPipeStateConnection(level, pos, initialState.getValue(DOWN).isForcedOff(), Direction.DOWN))
-                .setValue(NORTH, this.getPipeStateConnection(level, pos, initialState.getValue(NORTH).isForcedOff(), Direction.NORTH))
-                .setValue(EAST, this.getPipeStateConnection(level, pos, initialState.getValue(EAST).isForcedOff(), Direction.EAST))
-                .setValue(SOUTH, this.getPipeStateConnection(level, pos, initialState.getValue(SOUTH).isForcedOff(), Direction.SOUTH))
-                .setValue(WEST, this.getPipeStateConnection(level, pos, initialState.getValue(WEST).isForcedOff(), Direction.WEST));
     }
 
     public PipeConnection getPipeStateConnection(Level level, BlockPos pos, boolean forcedOff, Direction face) {
@@ -184,15 +181,6 @@ public class FluidPipeBlock extends Block implements SimpleWaterloggedBlock, Ent
     }
 
     @Override
-    protected void neighborChanged(BlockState state, Level level, BlockPos pos,
-                                   Block neighborBlock, BlockPos neighborPos, boolean movedByPiston) {
-        level.setBlock(pos, this.processPipeStateConnections(level, pos, state), 3);
-        if (!level.isClientSide && level.getBlockEntity(pos) instanceof FluidPipeBlockEntity be
-                && level instanceof ServerLevel serverLevel) {
-        }
-    }
-
-    @Override
     protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         VoxelShape shape = SHAPE_CENTER;
         if (state.getValue(UP).isConnected()) shape = Shapes.joinUnoptimized(shape, SHAPE_UP, BooleanOp.OR);
@@ -223,5 +211,36 @@ public class FluidPipeBlock extends Block implements SimpleWaterloggedBlock, Ent
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new FluidPipeBlockEntity(pos, state);
+    }
+
+    @Override
+    protected void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
+        if (state.is(oldState.getBlock())) return;
+        if (!level.isClientSide && level instanceof ServerLevel serverLevel && level.getBlockEntity(pos) instanceof FluidPipeBlockEntity be) {
+            PipeNetManager manager = PipeNetManager.get(serverLevel);
+            manager.handlePlacedPipe(serverLevel, be, true);
+        }
+    }
+
+    @Override
+    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
+        if (state.is(newState.getBlock())) return;
+        if (!level.isClientSide && level instanceof ServerLevel serverLevel && level.getBlockEntity(pos) instanceof FluidPipeBlockEntity be) {
+            PipeNetManager manager = PipeNetManager.get(serverLevel);
+            manager.handleRemovedPipe(serverLevel, be);
+        }
+        level.removeBlockEntity(pos);
+        level.invalidateCapabilities(pos);
+    }
+
+    @Override
+    protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, BlockPos neighborPos, boolean movedByPiston) {
+        boolean flag = !level.isClientSide && level.getBlockEntity(neighborPos) instanceof IPipeNetPropagator ||
+                BMNWEventBus.ModEventBus.doesBlockHaveCapability(neighborBlock, Capabilities.FluidHandler.BLOCK);
+
+        if (flag && level.getBlockEntity(pos) instanceof FluidPipeBlockEntity be && level instanceof ServerLevel serverLevel) {
+            PipeNetManager manager = PipeNetManager.get(serverLevel);
+            manager.handleUpdatedPipe(serverLevel, be);
+        }
     }
 }

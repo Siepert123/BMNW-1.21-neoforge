@@ -29,6 +29,7 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
+import net.neoforged.neoforge.event.server.ServerStoppedEvent;
 import net.neoforged.neoforge.event.server.ServerStoppingEvent;
 import nl.melonstudios.bmnw.cfg.BMNWClientConfig;
 import nl.melonstudios.bmnw.cfg.BMNWCommonConfig;
@@ -40,6 +41,7 @@ import nl.melonstudios.bmnw.hazard.radiation.ChunkRadiationHandler;
 import nl.melonstudios.bmnw.hazard.radiation.ChunkRadiationManager;
 import nl.melonstudios.bmnw.init.*;
 import nl.melonstudios.bmnw.interfaces.IOpensCatwalkRails;
+import nl.melonstudios.bmnw.logistics.pipes.PipeNetManager;
 import nl.melonstudios.bmnw.misc.*;
 import nl.melonstudios.bmnw.screen.*;
 import org.slf4j.Logger;
@@ -268,6 +270,8 @@ public class BMNW {
                     }
                 }
                 first = false;
+
+                PipeNetManager.createIfNecessary(level);
             }
             Structures.validCache = true;
             FireMarbleManager.create(Structures.seedCache);
@@ -283,6 +287,11 @@ public class BMNW {
         for (ServerLevel level : event.getServer().getAllLevels()) {
             ChunkRadiationManager.handler.clearSystem(level);
         }
+    }
+
+    @SubscribeEvent
+    public void serverStopped(ServerStoppedEvent event) {
+        PipeNetManager.clear(event);
     }
 
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent

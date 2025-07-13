@@ -12,6 +12,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -34,6 +35,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.capabilities.BlockCapability;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.client.event.*;
@@ -83,6 +85,8 @@ import nl.melonstudios.bmnw.item.client.SmallLampColorizer;
 import nl.melonstudios.bmnw.item.misc.CoreSampleItem;
 import nl.melonstudios.bmnw.item.misc.SmallLampBlockItem;
 import nl.melonstudios.bmnw.item.tools.FluidContainerItem;
+import nl.melonstudios.bmnw.logistics.pipes.IPipeNetPropagator;
+import nl.melonstudios.bmnw.logistics.pipes.PipeNetManager;
 import nl.melonstudios.bmnw.misc.DistrictHolder;
 import nl.melonstudios.bmnw.misc.ExcavationVein;
 import nl.melonstudios.bmnw.misc.FluidTextureData;
@@ -487,8 +491,16 @@ public class BMNWEventBus {
             event.registerSpriteSet(BMNWParticleTypes.VOLCANO_SMOKE.get(), VolcanoSmokeParticle.Provider::new);
         }
 
+
+        private static RegisterCapabilitiesEvent registerCapabilitiesEvent = null;
+        public static boolean doesBlockHaveCapability(Block block, BlockCapability<?, ?> cap) {
+            if (registerCapabilitiesEvent == null) return false;
+            return registerCapabilitiesEvent.isBlockRegistered(cap, block);
+        }
+
         @SubscribeEvent
         public static void registerCapabilitiesEvent(RegisterCapabilitiesEvent event) {
+            registerCapabilitiesEvent = event;
             registerBlockCaps(event);
             registerItemCaps(event);
         }
@@ -515,6 +527,19 @@ public class BMNWEventBus {
                     ((level, pos, state, blockEntity, context) ->
                             blockEntity instanceof ElectricWireConnectorBlockEntity connector ? connector.getEnergy(context) : null),
                     BMNWBlocks.ELECTRIC_WIRE_CONNECTOR.get()
+            );
+
+            event.registerBlock(
+                    Capabilities.FluidHandler.BLOCK,
+                    ((level, pos, state, be, context) -> {
+                        if (!level.isClientSide && level instanceof ServerLevel serverLevel
+                                && be instanceof IPipeNetPropagator propagator) {
+                            PipeNetManager manager = PipeNetManager.get(serverLevel);
+                            return manager.getFluidHandler(propagator);
+                        }
+                        return null;
+                    }),
+                    FluidPipeBlock.ALL_FLUID_PIPES.toArray(Block[]::new)
             );
 
             event.registerBlock(

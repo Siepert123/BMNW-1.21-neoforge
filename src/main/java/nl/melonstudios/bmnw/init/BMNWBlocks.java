@@ -393,7 +393,7 @@ public class BMNWBlocks {
     public static final DeferredBlock<FluidPipeBlock> COPPER_FLUID_PIPE = BLOCKS.register("copper_fluid_pipe",
             () -> new FluidPipeBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.COPPER_BLOCK)));
     public static final DeferredBlock<FluidPipeBlock> IRON_FLUID_PIPE = BLOCKS.register("iron_fluid_pipe",
-            () -> new FluidPipeBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)));
+            () -> new FluidPipeBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).sound(SoundType.NETHERITE_BLOCK)));
 
     public static final DeferredBlock<FluidBarrelBlock> IRON_FLUID_BARREL = BLOCKS.register("iron_fluid_barrel",
             () -> new FluidBarrelBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK),
