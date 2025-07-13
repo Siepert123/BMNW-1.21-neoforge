@@ -1,14 +1,17 @@
 package nl.melonstudios.bmnw.logistics.pipes;
 
+import com.mojang.brigadier.context.CommandContext;
 import it.unimi.dsi.fastutil.longs.*;
 import it.unimi.dsi.fastutil.objects.ObjectArraySet;
 import net.minecraft.MethodsReturnNonnullByDefault;
+import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.saveddata.SavedData;
@@ -263,5 +266,18 @@ public final class PipeNetManager extends SavedData {
     @Nonnull
     public ServerLevel getLevel() {
         return Objects.requireNonNull(this.level, "level not yet set.");
+    }
+
+    public void dumpDebug(CommandContext<CommandSourceStack> context) {
+        StringBuilder builder = new StringBuilder("PipeNets for level " + this.getLevel().dimension().location() + ":");
+        for (PipeNet net : this.pipeNetworks.values()) {
+            builder.append("\n").append("  PipeNet#").append(net.networkID).append( " (").append(net.pipePositions.size()).append(" members)");
+        }
+        context.getSource().sendSuccess(
+                () -> Component.literal(
+                        builder.toString()
+                ),
+                false
+        );
     }
 }

@@ -24,6 +24,8 @@ import nl.melonstudios.bmnw.entity.MeteoriteEntity;
 import nl.melonstudios.bmnw.hardcoded.structure.Structures;
 import nl.melonstudios.bmnw.hazard.radiation.ChunkRadiationManager;
 import nl.melonstudios.bmnw.interfaces.IBatteryItem;
+import nl.melonstudios.bmnw.logistics.cables.CableNetManager;
+import nl.melonstudios.bmnw.logistics.pipes.PipeNetManager;
 import nl.melonstudios.bmnw.misc.Books;
 import nl.melonstudios.bmnw.misc.FireMarbleManager;
 import nl.melonstudios.bmnw.wifi.PacketSendShockwave;
@@ -252,6 +254,50 @@ public class BMNWCommands {
                                                         })
                                                 )
                                         )
+                                )
+                        ).then(Commands.literal("pipenet")
+                                .then(Commands.literal("list")
+                                        .executes(context -> {
+                                            ServerLevel level = context.getSource().getLevel();
+                                            PipeNetManager manager = PipeNetManager.get(level);
+                                            manager.dumpDebug(context);
+                                            return Command.SINGLE_SUCCESS;
+                                        })
+                                ).then(Commands.literal("optimize")
+                                        .executes(context -> {
+                                            ServerLevel level = context.getSource().getLevel();
+                                            PipeNetManager manager = PipeNetManager.get(level);
+                                            manager.cleanup();
+                                            context.getSource().sendSuccess(
+                                                    () -> Component.literal(
+                                                            "Cleaned up PipeNets"
+                                                    ).withColor(0x88FF88),
+                                                    true
+                                            );
+                                            return Command.SINGLE_SUCCESS;
+                                        })
+                                )
+                        ).then(Commands.literal("cablenet")
+                                .then(Commands.literal("list")
+                                        .executes(context -> {
+                                            ServerLevel level = context.getSource().getLevel();
+                                            CableNetManager manager = CableNetManager.get(level);
+                                            manager.dumpDebug(context);
+                                            return Command.SINGLE_SUCCESS;
+                                        })
+                                ).then(Commands.literal("optimize")
+                                        .executes(context -> {
+                                            ServerLevel level = context.getSource().getLevel();
+                                            CableNetManager manager = CableNetManager.get(level);
+                                            manager.cleanup();
+                                            context.getSource().sendSuccess(
+                                                    () -> Component.literal(
+                                                            "Cleaned up CableNets"
+                                                    ).withColor(0x88FF88),
+                                                    true
+                                            );
+                                            return Command.SINGLE_SUCCESS;
+                                        })
                                 )
                         )
                 )

@@ -6,6 +6,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import nl.melonstudios.bmnw.block.decoration.BaseSmallLampBlock;
+import nl.melonstudios.bmnw.block.energy.EnergyStorageBlockEntity;
 import nl.melonstudios.bmnw.block.entity.*;
 import nl.melonstudios.bmnw.block.logistics.CableBlockEntity;
 import nl.melonstudios.bmnw.block.logistics.FluidPipeBlock;
@@ -43,6 +44,15 @@ public class BMNWBlockEntities {
             () -> new BlockEntityType<>(
                     FluidPipeBlockEntity::new,
                     FluidPipeBlock.ALL_FLUID_PIPES,
+                    null
+            )
+    );
+
+    public static final Supplier<BlockEntityType<EnergyStorageBlockEntity>> ENERGY_STORAGE = BLOCK_ENTITIES.register(
+            "energy_storage",
+            () -> new BlockEntityType<>(
+                    EnergyStorageBlockEntity::new,
+                    Set.of(),
                     null
             )
     );
