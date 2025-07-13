@@ -11,10 +11,12 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.network.PacketDistributor;
 import nl.melonstudios.bmnw.BMNW;
 import nl.melonstudios.bmnw.init.BMNWSounds;
 import nl.melonstudios.bmnw.misc.FluidTextureData;
 import nl.melonstudios.bmnw.misc.Library;
+import nl.melonstudios.bmnw.wifi.PacketCycleFluidBarrelConfig;
 
 public class FluidBarrelScreen extends AbstractContainerScreen<FluidBarrelMenu> {
     public static final ResourceLocation GUI_TEXTURE = BMNW.namespace("textures/gui/fluid_tank_generic.png");
@@ -137,6 +139,7 @@ public class FluidBarrelScreen extends AbstractContainerScreen<FluidBarrelMenu> 
         if (mx >= 154 && my >= 25 && mx < 154+18 && my < 25+18) {
             if (checkOnly) return true;
             BMNWSounds.playClick();
+            PacketDistributor.sendToServer(new PacketCycleFluidBarrelConfig(this.menu.be.getBlockPos(), true));
             return true;
         }
         return false;
@@ -145,6 +148,7 @@ public class FluidBarrelScreen extends AbstractContainerScreen<FluidBarrelMenu> 
         if (mx >= 154 && my >= 55 && mx < 154+18 && my < 55+18) {
             if (checkOnly) return true;
             BMNWSounds.playClick();
+            PacketDistributor.sendToServer(new PacketCycleFluidBarrelConfig(this.menu.be.getBlockPos(), false));
             return true;
         }
         return false;

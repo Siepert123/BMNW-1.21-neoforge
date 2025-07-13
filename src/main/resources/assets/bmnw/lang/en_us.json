@@ -232,6 +232,7 @@
   "entity.bmnw.nuclear_charge": "Nuclear Charge Explosion",
   "fluid.bmnw.volcanic_lava": "Volcanic Lava",
   "hints.bmnw.jei": "JEI is recommended to view all the recipes",
+  "hints.bmnw.python_reference": "pip install bemenwu",
   "hints.bmnw.radiation": "Radiation poisoning is generally found to be unhealthy",
   "hints.bmnw.shredding": "Shredding ores yields more material than directly smelting",
   "hints.bmnw.workbench": "Some recipes are cheaper when using the workbench$instead of the crafting table",

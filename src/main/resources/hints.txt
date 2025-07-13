@@ -1,4 +1,5 @@
 hints.bmnw.jei
+hints.bmnw.python_reference
 hints.bmnw.radiation
 hints.bmnw.shredding
 hints.bmnw.workbench

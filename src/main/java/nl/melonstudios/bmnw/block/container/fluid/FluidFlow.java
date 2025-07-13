@@ -39,4 +39,9 @@ public enum FluidFlow implements StringRepresentable {
     public String getSerializedName() {
         return this.name;
     }
+
+    public FluidFlow next() {
+        int next = this.ordinal() + 1;
+        return VALUES[next % VALUES.length];
+    }
 }

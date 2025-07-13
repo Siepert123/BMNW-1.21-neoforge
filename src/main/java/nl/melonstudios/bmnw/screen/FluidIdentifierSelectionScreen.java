@@ -208,7 +208,7 @@ public class FluidIdentifierSelectionScreen extends Screen {
         return this.page * COLUMNS * ROWS;
     }
     private int calculatePages() {
-        return this.options.size() / COLUMNS * ROWS;
+        return this.options.size() / (COLUMNS * ROWS);
     }
 
     private boolean tryPreviousPage() {

@@ -640,6 +640,11 @@ public class BMNWEventBus {
         @SubscribeEvent
         public static void registerNetwork(RegisterPayloadHandlersEvent event) {
             final PayloadRegistrar registrar = event.registrar("1");
+            registrar.playToServer(
+                    PacketCycleFluidBarrelConfig.TYPE,
+                    PacketCycleFluidBarrelConfig.STREAM_CODEC,
+                    PacketCycleFluidBarrelConfig::handle
+            );
             registrar.playToClient(
                     PacketExtendableCatwalk.TYPE,
                     PacketExtendableCatwalk.STREAM_CODEC,
