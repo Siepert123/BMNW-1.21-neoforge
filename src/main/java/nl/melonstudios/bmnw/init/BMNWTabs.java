@@ -439,8 +439,6 @@ public class BMNWTabs {
 
                         items.accept(TUNGSTEN_REACHERS);
                         items.accept(SCREWDRIVER);
-                        items.accept(WIRE_SPOOL);
-                        items.accept(REDSTONE_WIRE_SPOOL);
 
                         addItems(items,
                                 BLANK_IRON_STAMP,
@@ -539,7 +537,6 @@ public class BMNWTabs {
                             ResourceLocation.parse("bmnw:bombs")
                     )
                     .displayItems((parameters, items) -> {
-                        items.accept(ELECTRIC_WIRE_CONNECTOR);
                         items.accept(CONDUCTIVE_COPPER_CABLE);
                         items.accept(COPPER_FLUID_PIPE);
                         items.accept(IRON_FLUID_PIPE);
