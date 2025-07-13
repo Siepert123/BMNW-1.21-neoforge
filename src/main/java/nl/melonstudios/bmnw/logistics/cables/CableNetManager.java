@@ -1,6 +1,8 @@
-package nl.melonstudios.bmnw.logistics.pipes;
+package nl.melonstudios.bmnw.logistics.cables;
 
-import it.unimi.dsi.fastutil.longs.*;
+import it.unimi.dsi.fastutil.longs.Long2ObjectArrayMap;
+import it.unimi.dsi.fastutil.longs.LongArrayList;
+import it.unimi.dsi.fastutil.longs.LongList;
 import it.unimi.dsi.fastutil.objects.ObjectArraySet;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
@@ -28,36 +30,36 @@ import java.util.Set;
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 @SuppressWarnings("unchecked")
-public final class PipeNetManager extends SavedData {
-    private static final Logger LOGGER = LogManager.getLogger("PipeNetManager");
-    private static final Factory<PipeNetManager> FACTORY = new Factory<>(
-            PipeNetManager::new, PipeNetManager::read
+public final class CableNetManager extends SavedData {
+    private static final Logger LOGGER = LogManager.getLogger("CableNetManager");
+    private static final Factory<CableNetManager> FACTORY = new Factory<>(
+            CableNetManager::new, CableNetManager::read
     );
-    private static final String FILE_NAME = "BMNW_pipe_networks";
+    private static final String FILE_NAME = "BMNW_cable_networks";
     public static void createIfNecessary(ServerLevel level) {
-        PipeNetManager manager = level.getDataStorage().computeIfAbsent(FACTORY, FILE_NAME);
+        CableNetManager manager = level.getDataStorage().computeIfAbsent(FACTORY, FILE_NAME);
         manager.level = level;
-        for (PipeNet pipeNet : manager.pipeNetworks.values()) {
-            pipeNet.setLevel(level);
+        for (CableNet cableNet : manager.cableNetworks.values()) {
+            cableNet.setLevel(level);
         }
         MANAGER_CACHE.put(level, manager);
     }
-    public static PipeNetManager get(ServerLevel level) {
+    public static CableNetManager get(ServerLevel level) {
         return Objects.requireNonNull(MANAGER_CACHE.get(level), "unavailable :(");
     }
 
-    public static PipeNetManager read(CompoundTag tag, HolderLookup.Provider registries) {
-        PipeNetManager manager = new PipeNetManager();
+    public static CableNetManager read(CompoundTag tag, HolderLookup.Provider registries) {
+        CableNetManager manager = new CableNetManager();
         manager.nextNetworkID = tag.getLong("nextNetworkID");
-        ListTag list = tag.getList("PipeNets", Tag.TAG_COMPOUND);
+        ListTag list = tag.getList("CableNets", Tag.TAG_COMPOUND);
         if (list.isEmpty()) return manager;
         for (int i = 0; i < list.size(); i++) {
             CompoundTag net = list.getCompound(i);
             try {
-                PipeNet pipeNet = new PipeNet(net);
-                manager.pipeNetworks.put(pipeNet.networkID, pipeNet);
-            } catch (PipeNetException e) {
-                LOGGER.error("Could not load PipeNet\n" + net, e);
+                CableNet cableNet = new CableNet(net);
+                manager.cableNetworks.put(cableNet.networkID, cableNet);
+            } catch (CableNetException e) {
+                LOGGER.error("Could not load CableNet\n" + net, e);
                 manager.setDirty();
             }
         }
@@ -70,17 +72,17 @@ public final class PipeNetManager extends SavedData {
 
     private CompoundTag write(CompoundTag nbt) {
         nbt.putLong("nextNetworkID", this.nextNetworkID);
-        if (!this.pipeNetworks.isEmpty()) {
+        if (!this.cableNetworks.isEmpty()) {
             ListTag list = new ListTag();
-            for (PipeNet pipeNet : this.pipeNetworks.values()) {
-                list.add(pipeNet.serialize(new CompoundTag()));
+            for (CableNet cableNet : this.cableNetworks.values()) {
+                list.add(cableNet.serialize(new CompoundTag()));
             }
-            nbt.put("PipeNets", list);
+            nbt.put("CableNets", list);
         }
         return nbt;
     }
 
-    private static final IdentityHashMap<ServerLevel, PipeNetManager> MANAGER_CACHE = new IdentityHashMap<>();
+    private static final IdentityHashMap<ServerLevel, CableNetManager> MANAGER_CACHE = new IdentityHashMap<>();
     public static void clear(ServerStoppedEvent event) {
         if (!event.getServer().isStopped()) {
             LOGGER.error("but...");
@@ -89,50 +91,43 @@ public final class PipeNetManager extends SavedData {
     }
 
     private ServerLevel level;
-    private PipeNetManager() {}
+    private CableNetManager() {}
 
-    private final Long2ObjectArrayMap<PipeNet> pipeNetworks = new Long2ObjectArrayMap<>();
+    private final Long2ObjectArrayMap<CableNet> cableNetworks = new Long2ObjectArrayMap<>();
     private long nextNetworkID = 0L;
 
     private long createNewUniqueNetworkID() {
         this.setDirty();
-        return ++nextNetworkID;
+        return ++this.nextNetworkID;
     }
-    private PipeNet getOrCreateNetwork(long id) {
+    private CableNet getOrCreateNetwork(long id) {
         this.setDirty();
-        return this.pipeNetworks.computeIfAbsent(id, (k) -> {
-            PipeNet pipeNet = new PipeNet(k);
-            pipeNet.level = this.level;
-            return pipeNet;
+        return this.cableNetworks.computeIfAbsent(id, (k) -> {
+            CableNet cableNet = new CableNet(k);
+            cableNet.level = this.level;
+            return cableNet;
         });
     }
 
-    /**
-     * Handles a new pipe block being placed.
-     * ("Pipe block" is a term used for any block that propagates the pipe network)
-     * @param level The server level
-     * @param be The pipe block entity to add
-     * @param updateNetwork Whether to update the network (false if mass placing pipes)
-     */
-    public <T extends BlockEntity & IPipeNetPropagator> void handlePlacedPipe(ServerLevel level, T be, boolean updateNetwork) {
+    public <T extends BlockEntity & ICableNetPropagator> void handlePlacedCable(ServerLevel level, T be, boolean updateNetwork) {
         if (be.getLevel() != level) throw new IllegalArgumentException("BlockEntity level does not match target level");
         be.ensureCorrectState();
         BlockPos pos = be.getBlockPos();
         BlockPos.MutableBlockPos mutablePos = new BlockPos.MutableBlockPos();
-        Set<PipeNet> mergeQueue = new ObjectArraySet<>();
+        Set<CableNet> mergeQueue = new ObjectArraySet<>();
         for (Direction face : Library.DIRECTIONS_WITHOUT_NULL) {
             if (be.connectsToFace(face)) {
                 mutablePos.setWithOffset(pos, face);
-                if (level.getBlockEntity(mutablePos) instanceof IPipeNetPropagator neighbour) {
+                if (level.getBlockEntity(mutablePos) instanceof ICableNetPropagator neighbour) {
                     if (neighbour.getNetworkID() == null) continue;
                     if (neighbour.connectsToFace(face.getOpposite())) {
                         long neighbourID = neighbour.getNonNullNetworkID();
                         if (be.getNetworkID() == null) {
                             be.setNetworkID(neighbourID);
-                        } else if (be.getNonNullNetworkID() != neighbourID) {
-                            PipeNet pipeNet = this.pipeNetworks.get(neighbourID);
-                            if (pipeNet == null || pipeNet.pipePositions.isEmpty()) continue;
-                            mergeQueue.add(pipeNet);
+                        } else if (neighbour.getNonNullNetworkID() != neighbourID) {
+                            CableNet cableNet = this.cableNetworks.get(neighbourID);
+                            if (cableNet == null || cableNet.cablePositions.isEmpty()) continue;
+                            mergeQueue.add(cableNet);
                         }
                     }
                 }
@@ -142,11 +137,11 @@ public final class PipeNetManager extends SavedData {
             be.setNetworkID(this.createNewUniqueNetworkID());
         }
         long id = be.getNonNullNetworkID();
-        PipeNet net = this.getOrCreateNetwork(id);
-        if (net.addNewPipe(be) & updateNetwork) {
+        CableNet net = this.getOrCreateNetwork(id);
+        if (net.addNewCable(be) & updateNetwork) {
             net.forceUpdate(level);
         }
-        for (PipeNet merge : mergeQueue) {
+        for (CableNet merge : mergeQueue) {
             net.merge(level, merge, false);
         }
         if (!mergeQueue.isEmpty() & updateNetwork) {
@@ -155,84 +150,84 @@ public final class PipeNetManager extends SavedData {
         this.setDirty();
     }
 
-    public <T extends BlockEntity & IPipeNetPropagator> void handleUpdatedPipe(ServerLevel level, T be) {
+    public <T extends BlockEntity & ICableNetPropagator> void handleUpdatedCable(ServerLevel level, T be) {
         if (be.getLevel() != level) throw new IllegalArgumentException("BlockEntity level does not match target level");
         be.ensureCorrectState();
         BlockPos pos = be.getBlockPos();
         BlockPos.MutableBlockPos mutablePos = new BlockPos.MutableBlockPos();
-        Set<PipeNet> mergeQueue = new ObjectArraySet<>();
+        Set<CableNet> mergeQueue = new ObjectArraySet<>();
         for (Direction face : Library.DIRECTIONS_WITHOUT_NULL) {
             if (be.connectsToFace(face)) {
                 mutablePos.setWithOffset(pos, face);
-                if (level.getBlockEntity(mutablePos) instanceof IPipeNetPropagator neighbour) {
+                if (level.getBlockEntity(mutablePos) instanceof ICableNetPropagator neighbour) {
                     if (neighbour.getNetworkID() == null) continue;
                     if (neighbour.connectsToFace(face.getOpposite())) {
                         long neighbourID = neighbour.getNonNullNetworkID();
                         if (be.getNetworkID() == null) {
                             be.setNetworkID(neighbourID);
                         } else if (be.getNonNullNetworkID() != neighbourID) {
-                            PipeNet pipeNet = this.pipeNetworks.get(neighbourID);
-                            if (pipeNet == null || pipeNet.pipePositions.isEmpty()) continue;
-                            mergeQueue.add(pipeNet);
+                            CableNet cableNet = this.cableNetworks.get(neighbourID);
+                            if (cableNet == null || cableNet.cablePositions.isEmpty()) continue;
+                            mergeQueue.add(cableNet);
                         }
                     }
                 }
             }
         }
         long id = be.getNonNullNetworkID();
-        PipeNet pipeNet = this.getOrCreateNetwork(id);
+        CableNet cableNet = this.getOrCreateNetwork(id);
 
-        for (PipeNet merge : mergeQueue) {
-            pipeNet.merge(level, merge, false);
+        for (CableNet merge : mergeQueue) {
+            cableNet.merge(level, merge, false);
         }
 
-        pipeNet.forceUpdate(level);
+        cableNet.forceUpdate(level);
         this.setDirty();
     }
 
-    public <T extends BlockEntity & IPipeNetPropagator> void handleRemovedPipe(ServerLevel level, T be) {
+    public <T extends BlockEntity & ICableNetPropagator> void handleRemovedCable(ServerLevel level, T be) {
         if (be.getNetworkID() == null) {
-            LOGGER.warn("Ignored removed pipe with no network ID");
+            LOGGER.warn("Ignored removed cable with no network ID");
             return;
         }
         if (be.getLevel() != level) throw new IllegalArgumentException("BlockEntity level does not match target level");
         long id = be.getNonNullNetworkID();
-        PipeNet net = this.pipeNetworks.get(id);
+        CableNet net = this.cableNetworks.get(id);
         if (net == null) {
-            LOGGER.warn("Ignored removed pipe with invalid network ID");
+            LOGGER.warn("Ignored removed cable with invalid network ID");
             return;
         }
 
-        net.pipePositions.remove(be.getBlockPos());
-        Set<BlockPos> positions = new HashSet<>(net.pipePositions);
+        net.cablePositions.remove(be.getBlockPos());
+        Set<BlockPos> positions = new HashSet<>(net.cablePositions);
         for (BlockPos pos : positions) {
             BlockEntity temp = level.getBlockEntity(pos);
-            if (temp instanceof IPipeNetPropagator) {
+            if (temp instanceof ICableNetPropagator) {
                 T member = (T) temp;
                 member.removeNetworkID();
             }
         }
-        net.pipePositions.clear();
-        net.fluidHandlerLocations.clear();
+        net.cablePositions.clear();
+        net.energyStorageLocations.clear();
 
-        this.reconnectPipes(level, positions);
+        this.reconnectCables(level, positions);
 
         this.cleanup();
         this.setDirty();
     }
 
-    public <T extends BlockEntity & IPipeNetPropagator> void reconnectPipes(ServerLevel level, Set<BlockPos> positions) {
-        Set<PipeNet> updatablePipeNets = new ObjectArraySet<>();
+    public <T extends BlockEntity & ICableNetPropagator> void reconnectCables(ServerLevel level, Set<BlockPos> positions) {
+        Set<CableNet> updatableCableNets = new ObjectArraySet<>();
         for (BlockPos pos : positions) {
             BlockEntity temp = level.getBlockEntity(pos);
-            if (temp instanceof IPipeNetPropagator) {
+            if (temp instanceof ICableNetPropagator) {
                 T be = (T) temp;
-                this.handlePlacedPipe(level, be, false);
+                this.handlePlacedCable(level, be, false);
                 long networkID = be.getNonNullNetworkID();
-                updatablePipeNets.add(this.pipeNetworks.get(networkID));
+                updatableCableNets.add(this.cableNetworks.get(networkID));
             }
         }
-        updatablePipeNets.forEach(pipeNet -> pipeNet.forceUpdate(this.level));
+        updatableCableNets.forEach(cableNet -> cableNet.forceUpdate(this.level));
 
         this.cleanup();
         this.setDirty();
@@ -240,24 +235,24 @@ public final class PipeNetManager extends SavedData {
 
     public void cleanup() {
         LongList bin = new LongArrayList();
-        for (PipeNet net : this.pipeNetworks.values()) {
-            if (net.pipePositions.isEmpty()) bin.add(net.networkID);
+        for (CableNet net : this.cableNetworks.values()) {
+            if (net.cablePositions.isEmpty()) bin.add(net.networkID);
         }
         for (long delete : bin) {
-            this.pipeNetworks.remove(delete);
+            this.cableNetworks.remove(delete);
         }
         if (!bin.isEmpty()) {
-            LOGGER.debug("Removed {} empty pipe nets", bin.size());
+            LOGGER.debug("Removed {} empty cable networks", bin.size());
             this.setDirty();
         }
     }
 
     @Nullable
-    public PipeNetFluidHandler getFluidHandler(IPipeNetPropagator be) {
+    public CableNetEnergyStorage getEnergyStorage(ICableNetPropagator be) {
         Long network = be.getNetworkID();
         if (network == null) return null;
-        PipeNet net = this.pipeNetworks.get(network.longValue());
-        return net != null ? net.fluidHandler : null;
+        CableNet net = this.cableNetworks.get(network.longValue());
+        return net != null ? net.energyStorage : null;
     }
 
     @Nonnull

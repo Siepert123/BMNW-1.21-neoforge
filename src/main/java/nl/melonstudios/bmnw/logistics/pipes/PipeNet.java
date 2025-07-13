@@ -15,6 +15,7 @@ import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -47,7 +48,8 @@ public final class PipeNet {
             throw new PipeNetException("PipeNet NBT missing network ID");
         }
         this.networkID = nbt.getLong("networkID");
-        LOGGER.debug("Loading PipeNet (ID:{})\n{}", Long.toHexString(this.networkID), new SnbtPrinterTagVisitor().visit(nbt));
+        LOGGER.debug("Loading PipeNet (ID:{})\n{}", Long.toHexString(this.networkID),
+                new SnbtPrinterTagVisitor("  ", 0, new ArrayList<>()).visit(nbt));
 
         if (nbt.contains("PipePositions", Tag.TAG_LIST)) {
             ListTag list = nbt.getList("PipePositions", Tag.TAG_LONG);
@@ -94,7 +96,8 @@ public final class PipeNet {
             nbt.put("FluidHandlerLocations", list);
         }
 
-        LOGGER.debug("Serialized PipeNet (ID:{})\n{}", Long.toHexString(this.networkID), new SnbtPrinterTagVisitor().visit(nbt));
+        LOGGER.debug("Serialized PipeNet (ID:{})\n{}", Long.toHexString(this.networkID),
+                new SnbtPrinterTagVisitor("  ", 0, new ArrayList<>()).visit(nbt));
         return nbt;
     }
 
@@ -110,7 +113,6 @@ public final class PipeNet {
     /**
      * Forces an update to the network.
      */
-    @Contract(pure = true)
     public <T extends BlockEntity & IPipeNetPropagator> void forceUpdate(ServerLevel level) {
         this.fluidHandlerLocations.clear();
         BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();

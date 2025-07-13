@@ -62,7 +62,7 @@ public class PipeNetFluidHandler implements IFluidHandler {
             if (l.pos() == r.pos()) return 0;
             int height = Integer.compare(l.pos().getY(), r.pos().getY());
             if (height != 0) return height;
-            random.setSeed(seed ^ l.pos().hashCode() | Integer.toUnsignedLong(r.pos().hashCode()) << 32);
+            random.setSeed(seed ^ (l.pos().hashCode() | Integer.toUnsignedLong(r.pos().hashCode()) << 32));
             return random.nextBoolean() ? -1 : 1;
         });
         for (FluidHandlerLocation location : sortedLocations) {

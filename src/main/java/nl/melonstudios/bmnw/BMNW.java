@@ -41,6 +41,7 @@ import nl.melonstudios.bmnw.hazard.radiation.ChunkRadiationHandler;
 import nl.melonstudios.bmnw.hazard.radiation.ChunkRadiationManager;
 import nl.melonstudios.bmnw.init.*;
 import nl.melonstudios.bmnw.interfaces.IOpensCatwalkRails;
+import nl.melonstudios.bmnw.logistics.cables.CableNetManager;
 import nl.melonstudios.bmnw.logistics.pipes.PipeNetManager;
 import nl.melonstudios.bmnw.misc.*;
 import nl.melonstudios.bmnw.screen.*;
@@ -272,6 +273,7 @@ public class BMNW {
                 first = false;
 
                 PipeNetManager.createIfNecessary(level);
+                CableNetManager.createIfNecessary(level);
             }
             Structures.validCache = true;
             FireMarbleManager.create(Structures.seedCache);
@@ -292,6 +294,7 @@ public class BMNW {
     @SubscribeEvent
     public void serverStopped(ServerStoppedEvent event) {
         PipeNetManager.clear(event);
+        CableNetManager.clear(event);
     }
 
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
