@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "M": {
+      "tag": "c:ingots/iron"
+    },
+    "#": {
+      "tag": "c:plates/iron"
+    }
+  },
+  "pattern": [
+    "#M#",
+    "# #",
+    "#M#"
+  ],
+  "result": {
+    "id": "bmnw:iron_fluid_barrel"
+  }
+}

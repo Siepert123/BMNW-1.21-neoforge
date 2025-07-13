@@ -80,7 +80,11 @@
     "bmnw:industrial_heater",
     "bmnw:radio_antenna_controller",
     "bmnw:dummy",
-    "bmnw:combustion_engine"
+    "bmnw:combustion_engine",
+    "bmnw:conductive_copper_cable",
+    "bmnw:copper_fluid_pipe",
+    "bmnw:iron_fluid_pipe",
+    "bmnw:iron_fluid_barrel"
   ],
   "replace": false
 }
