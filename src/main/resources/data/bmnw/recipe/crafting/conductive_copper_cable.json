@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "tag": "c:wires/conductive_copper"
+    },
+    "I": {
+      "item": "bmnw:insulator"
+    }
+  },
+  "pattern": [
+    "I#I",
+    "###",
+    "I#I"
+  ],
+  "result": {
+    "count": 16,
+    "id": "bmnw:conductive_copper_cable"
+  }
+}
