@@ -218,7 +218,7 @@ public class CombustionEngineBlockEntity extends SyncedBlockEntity implements Me
 
         @Override
         public boolean canExtract() {
-            return this.getEnergy().canExtract();
+            return true;
         }
 
         @Override
@@ -420,7 +420,7 @@ public class CombustionEngineBlockEntity extends SyncedBlockEntity implements Me
                         if (external != null && external.canReceive()) {
                             int allowance = external.receiveEnergy(this.energy.getEnergyStored(), true);
                             int spending = this.energy.extractEnergy(allowance, true);
-                            external.receiveEnergy(spending, false);
+                            this.energy.extractEnergy(external.receiveEnergy(spending, false), false);
                         }
                     }
                     this.setChanged();

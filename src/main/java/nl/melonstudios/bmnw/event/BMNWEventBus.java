@@ -59,7 +59,6 @@ import nl.melonstudios.bmnw.block.container.fluid.FluidBarrelBlock;
 import nl.melonstudios.bmnw.block.entity.*;
 import nl.melonstudios.bmnw.block.entity.renderer.*;
 import nl.melonstudios.bmnw.block.logistics.FluidPipeBlock;
-import nl.melonstudios.bmnw.block.logistics.FluidPipeBlockEntity;
 import nl.melonstudios.bmnw.block.misc.DummyBlock;
 import nl.melonstudios.bmnw.blockentity.FluidBarrelBlockEntity;
 import nl.melonstudios.bmnw.cfg.BMNWClientConfig;
@@ -85,6 +84,8 @@ import nl.melonstudios.bmnw.item.client.SmallLampColorizer;
 import nl.melonstudios.bmnw.item.misc.CoreSampleItem;
 import nl.melonstudios.bmnw.item.misc.SmallLampBlockItem;
 import nl.melonstudios.bmnw.item.tools.FluidContainerItem;
+import nl.melonstudios.bmnw.logistics.cables.CableNetManager;
+import nl.melonstudios.bmnw.logistics.cables.ICableNetPropagator;
 import nl.melonstudios.bmnw.logistics.pipes.IPipeNetPropagator;
 import nl.melonstudios.bmnw.logistics.pipes.PipeNetManager;
 import nl.melonstudios.bmnw.misc.DistrictHolder;
@@ -94,7 +95,6 @@ import nl.melonstudios.bmnw.particle.*;
 import nl.melonstudios.bmnw.wifi.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 
 import java.util.ArrayList;
@@ -529,6 +529,18 @@ public class BMNWEventBus {
                     BMNWBlocks.ELECTRIC_WIRE_CONNECTOR.get()
             );
 
+            event.registerBlock(
+                    Capabilities.EnergyStorage.BLOCK,
+                    ((level, pos, state, be, context) -> {
+                        if (!level.isClientSide && level instanceof ServerLevel serverLevel
+                                && be instanceof ICableNetPropagator propagator) {
+                            CableNetManager manager = CableNetManager.get(serverLevel);
+                            return manager.getEnergyStorage(propagator);
+                        }
+                        return null;
+                    }),
+                    BMNWBlocks.CONDUCTIVE_COPPER_CABLE.get()
+            );
             event.registerBlock(
                     Capabilities.FluidHandler.BLOCK,
                     ((level, pos, state, be, context) -> {

@@ -246,7 +246,6 @@ public class FluidPipeBlock extends Block implements SimpleWaterloggedBlock, Ent
         boolean flag2 = !level.isClientSide && (BMNWEventBus.ModEventBus.doesBlockHaveCapability(neighborBlock, Capabilities.FluidHandler.BLOCK));
 
         if ((flag || flag2) && level.getBlockEntity(pos) instanceof FluidPipeBlockEntity be && level instanceof ServerLevel serverLevel) {
-            System.out.println("Flag reached");
             PipeNetManager manager = PipeNetManager.get(serverLevel);
             manager.handleUpdatedPipe(serverLevel, be);
         }

@@ -29,6 +29,7 @@ import nl.melonstudios.bmnw.block.doors.MetalSlidingDoorBlock;
 import nl.melonstudios.bmnw.block.doors.SealedHatchBlock;
 import nl.melonstudios.bmnw.block.doors.SlidingBlastDoorBlock;
 import nl.melonstudios.bmnw.block.fluid.VolcanicLavaBlock;
+import nl.melonstudios.bmnw.block.logistics.CableBlock;
 import nl.melonstudios.bmnw.block.logistics.FluidPipeBlock;
 import nl.melonstudios.bmnw.block.machines.*;
 import nl.melonstudios.bmnw.block.misc.*;
@@ -386,6 +387,9 @@ public class BMNWBlocks {
 
     public static final DeferredBlock<ElectricWireConnectorBlock> ELECTRIC_WIRE_CONNECTOR = BLOCKS.register("electric_wire_connector",
             () -> new ElectricWireConnectorBlock(BlockBehaviour.Properties.ofFullCopy(CONDUCTIVE_COPPER_BLOCK.get())));
+
+    public static final DeferredBlock<CableBlock> CONDUCTIVE_COPPER_CABLE = BLOCKS.register("conductive_copper_cable",
+            () -> new CableBlock(BlockBehaviour.Properties.ofFullCopy(CONDUCTIVE_COPPER_BLOCK.get())));
 
     public static final DeferredBlock<CreativeBatteryBlock> CREATIVE_ENERGY_STORAGE = BLOCKS.register("creative_energy_storage",
             () -> new CreativeBatteryBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)));

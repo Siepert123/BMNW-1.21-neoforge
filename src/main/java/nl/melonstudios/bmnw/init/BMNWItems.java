@@ -1,13 +1,9 @@
 package nl.melonstudios.bmnw.init;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
-import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -499,6 +495,9 @@ public class BMNWItems {
 
     public static final DeferredItem<BlockItem> ELECTRIC_WIRE_CONNECTOR = ITEMS.register("electric_wire_connector",
             () -> new BlockItem(BMNWBlocks.ELECTRIC_WIRE_CONNECTOR.get(), new Item.Properties()));
+
+    public static final DeferredItem<BlockItem> CONDUCTIVE_COPPER_CABLE = ITEMS.register("conductive_copper_cable",
+            () -> new BlockItem(BMNWBlocks.CONDUCTIVE_COPPER_CABLE.get(), new Item.Properties()));
 
     public static final DeferredItem<BlockItem> CREATIVE_ENERGY_STORAGE = ITEMS.register("creative_energy_storage",
             () -> new BlockItem(BMNWBlocks.CREATIVE_ENERGY_STORAGE.get(), new Item.Properties()));

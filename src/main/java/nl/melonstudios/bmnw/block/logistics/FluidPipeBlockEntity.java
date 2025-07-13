@@ -16,6 +16,7 @@ import nl.melonstudios.bmnw.interfaces.IAsBlock;
 import nl.melonstudios.bmnw.logistics.pipes.IPipeNetPropagator;
 import nl.melonstudios.bmnw.misc.Library;
 
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
@@ -30,6 +31,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements IPipeNetPropaga
         return (FluidPipeBlock) this.getBlockState().getBlock();
     }
 
+    @Nullable
     private Long networkID;
 
     @Override
@@ -53,6 +55,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements IPipeNetPropaga
         this.networkID = null;
     }
     @Override
+    @Nullable
     public Long getNetworkID() {
         return this.networkID;
     }

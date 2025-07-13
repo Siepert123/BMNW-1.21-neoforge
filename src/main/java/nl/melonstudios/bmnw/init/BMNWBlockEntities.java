@@ -7,6 +7,7 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import nl.melonstudios.bmnw.block.decoration.BaseSmallLampBlock;
 import nl.melonstudios.bmnw.block.entity.*;
+import nl.melonstudios.bmnw.block.logistics.CableBlockEntity;
 import nl.melonstudios.bmnw.block.logistics.FluidPipeBlock;
 import nl.melonstudios.bmnw.block.logistics.FluidPipeBlockEntity;
 import nl.melonstudios.bmnw.blockentity.FluidBarrelBlockEntity;
@@ -29,6 +30,14 @@ public class BMNWBlockEntities {
             )
     );
 
+    public static final Supplier<BlockEntityType<CableBlockEntity>> CABLE = BLOCK_ENTITIES.register(
+            "cable",
+            () -> new BlockEntityType<>(
+                    CableBlockEntity::new,
+                    Set.of(BMNWBlocks.CONDUCTIVE_COPPER_CABLE.get()),
+                    null
+            )
+    );
     public static final Supplier<BlockEntityType<FluidPipeBlockEntity>> FLUID_PIPE = BLOCK_ENTITIES.register(
             "fluid_pipe",
             () -> new BlockEntityType<>(
