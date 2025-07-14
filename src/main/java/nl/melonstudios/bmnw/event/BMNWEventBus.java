@@ -56,6 +56,8 @@ import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import nl.melonstudios.bmnw.BMNW;
 import nl.melonstudios.bmnw.block.container.fluid.FluidBarrelBlock;
+import nl.melonstudios.bmnw.block.energy.EnergyStorageBlock;
+import nl.melonstudios.bmnw.block.energy.EnergyStorageBlockEntity;
 import nl.melonstudios.bmnw.block.entity.*;
 import nl.melonstudios.bmnw.block.entity.renderer.*;
 import nl.melonstudios.bmnw.block.logistics.FluidPipeBlock;
@@ -601,6 +603,12 @@ public class BMNWEventBus {
                     BMNWBlocks.MISSILE_LAUNCH_PAD.get()
             );
 
+            event.registerBlock(
+                    Capabilities.EnergyStorage.BLOCK,
+                    (level, pos, state, be, context) -> be instanceof EnergyStorageBlockEntity storage ?
+                            storage.getEnergyInterface(context) : null,
+                    EnergyStorageBlock.ALL_ENERGY_STORAGE_BLOCKS.toArray(Block[]::new)
+            );
             event.registerBlock(
                     Capabilities.FluidHandler.BLOCK,
                     (level, pos, state, be, context) -> be instanceof FluidBarrelBlockEntity barrel ?

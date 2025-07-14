@@ -499,6 +499,8 @@ public class BMNWItems {
     public static final DeferredItem<BlockItem> CONDUCTIVE_COPPER_CABLE = ITEMS.register("conductive_copper_cable",
             () -> new BlockItem(BMNWBlocks.CONDUCTIVE_COPPER_CABLE.get(), new Item.Properties()));
 
+    public static final DeferredItem<BlockItem> LEAD_ACID_ENERGY_STORAGE = ITEMS.register("lead_acid_energy_storage",
+            () -> new BlockItem(BMNWBlocks.LEAD_ACID_ENERGY_STORAGE.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> CREATIVE_ENERGY_STORAGE = ITEMS.register("creative_energy_storage",
             () -> new BlockItem(BMNWBlocks.CREATIVE_ENERGY_STORAGE.get(), new Item.Properties()));
 

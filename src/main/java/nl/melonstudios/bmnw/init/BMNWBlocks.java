@@ -28,6 +28,7 @@ import nl.melonstudios.bmnw.block.doors.MetalLockableDoorBlock;
 import nl.melonstudios.bmnw.block.doors.MetalSlidingDoorBlock;
 import nl.melonstudios.bmnw.block.doors.SealedHatchBlock;
 import nl.melonstudios.bmnw.block.doors.SlidingBlastDoorBlock;
+import nl.melonstudios.bmnw.block.energy.EnergyStorageBlock;
 import nl.melonstudios.bmnw.block.fluid.VolcanicLavaBlock;
 import nl.melonstudios.bmnw.block.logistics.CableBlock;
 import nl.melonstudios.bmnw.block.logistics.FluidPipeBlock;
@@ -391,6 +392,8 @@ public class BMNWBlocks {
     public static final DeferredBlock<CableBlock> CONDUCTIVE_COPPER_CABLE = BLOCKS.register("conductive_copper_cable",
             () -> new CableBlock(BlockBehaviour.Properties.ofFullCopy(CONDUCTIVE_COPPER_BLOCK.get())));
 
+    public static final DeferredBlock<EnergyStorageBlock> LEAD_ACID_ENERGY_STORAGE = BLOCKS.register("lead_acid_energy_storage",
+            () -> new EnergyStorageBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK), 200_000));
     public static final DeferredBlock<CreativeBatteryBlock> CREATIVE_ENERGY_STORAGE = BLOCKS.register("creative_energy_storage",
             () -> new CreativeBatteryBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)));
 

@@ -55,12 +55,42 @@ public class CableNetEnergyStorage implements IEnergyStorage {
 
     @Override
     public int extractEnergy(int toExtract, boolean simulate) {
-        return 0;
+        if (toExtract <= 0) return 0;
+
+        ServerLevel level = this.cableNet.level;
+        List<IEnergyStorage> candidates = MUTABLE_STORAGE_LIST.get();
+        candidates.clear();
+        List<EnergyStorageLocation> sortedLocations = MUTABLE_LOCATION_LIST.get();
+        sortedLocations.clear();
+        sortedLocations.addAll(this.cableNet.energyStorageLocations);
+        Random random = MUTABLE_RANDOM.get();
+        long seed = System.nanoTime();
+        sortedLocations.sort((l, r) -> {
+            if (l.pos() == r.pos()) return 0;
+            random.setSeed(seed ^ (l.pos().hashCode() | Integer.toUnsignedLong(r.pos().hashCode()) << 32));
+            return random.nextBoolean() ? -1 : 1;
+        });
+        for (EnergyStorageLocation location : sortedLocations) {
+            IEnergyStorage storage = location.getEnergyStorageAt(level);
+            if (storage != null && storage.canExtract() && storage.extractEnergy(toExtract, true) > 0) candidates.add(storage);
+        }
+
+        int remaining = toExtract;
+        int drained = 0;
+
+        for (IEnergyStorage storage : candidates) {
+            if (remaining <= 0) break;
+            int amount = storage.extractEnergy(remaining, simulate);
+            remaining -= amount;
+            drained += amount;
+        }
+
+        return drained;
     }
 
     @Override
     public int getEnergyStored() {
-        return 0;
+        return Integer.MAX_VALUE / 2;
     }
 
     @Override
@@ -70,7 +100,7 @@ public class CableNetEnergyStorage implements IEnergyStorage {
 
     @Override
     public boolean canExtract() {
-        return false;
+        return true;
     }
 
     @Override
