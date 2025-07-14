@@ -1,9 +1,13 @@
 package nl.melonstudios.bmnw.block.container.fluid;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -18,9 +22,11 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import nl.melonstudios.bmnw.block.misc.TickingEntityBlock;
 import nl.melonstudios.bmnw.blockentity.FluidBarrelBlockEntity;
+import nl.melonstudios.bmnw.misc.Library;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class FluidBarrelBlock extends TickingEntityBlock implements FluidTankProperties.ICopyable {
     private static final ArrayList<FluidBarrelBlock> ALL_FLUID_BARRELS = new ArrayList<>();
@@ -97,5 +103,11 @@ public class FluidBarrelBlock extends TickingEntityBlock implements FluidTankPro
     @Override
     protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return SHAPE;
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+        tooltipComponents.add(Component.translatable("text.bmnw.capacity",
+                Library.formatMilliBuckets(this.properties.capacity)).withColor(0x888888));
     }
 }

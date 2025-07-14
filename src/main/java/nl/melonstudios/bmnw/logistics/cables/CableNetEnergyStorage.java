@@ -3,6 +3,7 @@ package nl.melonstudios.bmnw.logistics.cables;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.server.level.ServerLevel;
 import net.neoforged.neoforge.energy.IEnergyStorage;
+import nl.melonstudios.bmnw.interfaces.IPrioritizedEnergyStorage;
 
 import java.util.List;
 import java.util.Random;
@@ -30,15 +31,19 @@ public class CableNetEnergyStorage implements IEnergyStorage {
         sortedLocations.addAll(this.cableNet.energyStorageLocations);
         Random random = MUTABLE_RANDOM.get();
         long seed = System.nanoTime();
-        sortedLocations.sort((l, r) -> {
-            if (l.pos() == r.pos()) return 0;
-            random.setSeed(seed ^ (l.pos().hashCode() | Integer.toUnsignedLong(r.pos().hashCode()) << 32));
-            return random.nextBoolean() ? -1 : 1;
-        });
         for (EnergyStorageLocation location : sortedLocations) {
             IEnergyStorage storage = location.getEnergyStorageAt(level);
             if (storage != null && storage.canReceive() && storage.receiveEnergy(toReceive, true) > 0) candidates.add(storage);
         }
+        candidates.sort((l, r) -> {
+            if (l == r) return 0;
+            int lPriority = IPrioritizedEnergyStorage.getPriority(l);
+            int rPriority = IPrioritizedEnergyStorage.getPriority(r);
+            int priorityComparison = Integer.compare(rPriority, lPriority);
+            if (priorityComparison != 0) return priorityComparison;
+            random.setSeed(seed ^ (System.identityHashCode(lPriority) | Integer.toUnsignedLong(System.identityHashCode(rPriority)) << 32));
+            return random.nextBoolean() ? -1 : 1;
+        });
 
         int remaining = toReceive;
         int filled = 0;
@@ -65,15 +70,19 @@ public class CableNetEnergyStorage implements IEnergyStorage {
         sortedLocations.addAll(this.cableNet.energyStorageLocations);
         Random random = MUTABLE_RANDOM.get();
         long seed = System.nanoTime();
-        sortedLocations.sort((l, r) -> {
-            if (l.pos() == r.pos()) return 0;
-            random.setSeed(seed ^ (l.pos().hashCode() | Integer.toUnsignedLong(r.pos().hashCode()) << 32));
-            return random.nextBoolean() ? -1 : 1;
-        });
         for (EnergyStorageLocation location : sortedLocations) {
             IEnergyStorage storage = location.getEnergyStorageAt(level);
             if (storage != null && storage.canExtract() && storage.extractEnergy(toExtract, true) > 0) candidates.add(storage);
         }
+        candidates.sort((l, r) -> {
+            if (l == r) return 0;
+            int lPriority = IPrioritizedEnergyStorage.getPriority(l);
+            int rPriority = IPrioritizedEnergyStorage.getPriority(r);
+            int priorityComparison = Integer.compare(rPriority, lPriority);
+            if (priorityComparison != 0) return priorityComparison;
+            random.setSeed(seed ^ (System.identityHashCode(lPriority) | Integer.toUnsignedLong(System.identityHashCode(rPriority)) << 32));
+            return random.nextBoolean() ? -1 : 1;
+        });
 
         int remaining = toExtract;
         int drained = 0;

@@ -2,9 +2,13 @@ package nl.melonstudios.bmnw.block.energy;
 
 import it.unimi.dsi.fastutil.objects.ObjectArraySet;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
@@ -15,8 +19,10 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import nl.melonstudios.bmnw.block.misc.TickingEntityBlock;
+import nl.melonstudios.bmnw.misc.Library;
 
 import javax.annotation.Nullable;
+import java.util.List;
 
 public class EnergyStorageBlock extends TickingEntityBlock {
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
@@ -65,5 +71,10 @@ public class EnergyStorageBlock extends TickingEntityBlock {
             return InteractionResult.SUCCESS;
         }
         return InteractionResult.PASS;
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+        tooltipComponents.add(Component.translatable("text.bmnw.capacity", Library.formatRedstoneFlux(this.capacity)).withColor(0x888888));
     }
 }

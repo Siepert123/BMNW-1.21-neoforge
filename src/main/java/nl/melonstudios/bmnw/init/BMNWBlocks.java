@@ -393,7 +393,7 @@ public class BMNWBlocks {
             () -> new CableBlock(BlockBehaviour.Properties.ofFullCopy(CONDUCTIVE_COPPER_BLOCK.get())));
 
     public static final DeferredBlock<EnergyStorageBlock> LEAD_ACID_ENERGY_STORAGE = BLOCKS.register("lead_acid_energy_storage",
-            () -> new EnergyStorageBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK), 200_000));
+            () -> new EnergyStorageBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK), 50_000));
     public static final DeferredBlock<CreativeBatteryBlock> CREATIVE_ENERGY_STORAGE = BLOCKS.register("creative_energy_storage",
             () -> new CreativeBatteryBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)));
 

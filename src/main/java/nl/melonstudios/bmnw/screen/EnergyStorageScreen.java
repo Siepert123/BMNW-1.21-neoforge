@@ -42,10 +42,10 @@ public class EnergyStorageScreen extends AbstractContainerScreen<EnergyStorageMe
         boolean cycle = (System.currentTimeMillis() / 1000 & 1) == 0;
 
         if (batteryIn.isEmpty()) {
-            graphics.blit(GUI_TEXTURE, x + 35, y + 17, 176 + (cycle ? 16 : 0), 0, 16, 16);
+            graphics.blit(GUI_TEXTURE, x + 35, y + 17, 176, 0, 16, 16);
         }
         if (batteryOut.isEmpty()) {
-            graphics.blit(GUI_TEXTURE, x + 35, y + 65, 176 + (cycle ? 0 : 16), 0, 16, 16);
+            graphics.blit(GUI_TEXTURE, x + 35, y + 65, 176, 0, 16, 16);
         }
 
         if (this.menu.energyTracker.get() > 0) {

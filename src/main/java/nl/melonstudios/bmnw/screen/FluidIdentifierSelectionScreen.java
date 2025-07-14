@@ -98,6 +98,11 @@ public class FluidIdentifierSelectionScreen extends Screen {
             graphics.blit(x+5+(i%COLUMNS)*18, y+13+(i/COLUMNS)*18, 0, 16, 16,
                     data.material().sprite(), r, g, b, a);
         }
+
+        if (this.selection >= this.getStartIdx() && this.selection < Math.min(this.options.size(), this.getStartIdx() + COLUMNS*ROWS)) {
+            graphics.blit(GUI_TEXTURE, x+3+(this.selection%COLUMNS)*18, y+11+(this.selection/COLUMNS)*18,
+                    0, 226, 20, 20);
+        }
     }
 
     @Override
