@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "#": {
-      "tag": "c:plates/steel"
+      "tag": "c:ingots/steel"
     },
     "C": {
       "tag": "c:wires/conductive_copper"
