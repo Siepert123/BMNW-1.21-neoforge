@@ -34,6 +34,7 @@ public final class DummyBlockEntity extends SyncedBlockEntity implements MenuPro
         return this.level.getBlockEntity(this.core);
     }
     @Nullable
+    @SuppressWarnings("unchecked")
     public <T> T getCoreBE(Class<T> cast) {
         BlockEntity be = this.getCoreBE();
         if (cast.isInstance(be)) return (T) be;

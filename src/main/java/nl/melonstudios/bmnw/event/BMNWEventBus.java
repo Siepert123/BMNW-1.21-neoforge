@@ -1,10 +1,9 @@
 package nl.melonstudios.bmnw.event;
 
-import com.mojang.blaze3d.shaders.FogShape;
+import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.renderer.FogRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.core.BlockPos;
@@ -101,6 +100,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.joml.Vector3f;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -116,7 +116,6 @@ public class BMNWEventBus {
 
     @EventBusSubscriber(modid = "bmnw", bus = EventBusSubscriber.Bus.GAME)
     public static class GameEventBus {
-        private static final Logger LOGGER = LogManager.getLogger();
         //region Server tick events
         /**
          * Irradiates chunks based on source radioactivity (calculated seperately).
@@ -141,6 +140,7 @@ public class BMNWEventBus {
          * Handles custom structures
          */
         @SubscribeEvent
+        @SuppressWarnings("all")
         public static void serverTickEventPost(ServerTickEvent.Post event) {
             while (!DELEGATE_STRUCTURES.isEmpty()) {
                 try {
@@ -170,8 +170,6 @@ public class BMNWEventBus {
             if (BMNWServerConfig.radiationSetting().chunk() && !event.getEntity().level().isClientSide()) {
                 if (event.getEntity() instanceof LivingEntity entity) {
                     if (entity instanceof Player player && (player.isCreative() || player.isSpectator())) return;
-                    CompoundTag nbt = entity.getPersistentData();
-
                     RadiationTools.handleRads(entity);
                 }
                 if (!event.getEntity().isInWaterOrBubble() && event.getEntity() instanceof ItemEntity entity) {
@@ -331,6 +329,7 @@ public class BMNWEventBus {
         //endregion
 
         @SubscribeEvent
+        @SuppressWarnings("deprecation")
         public static void addAttributeTooltipsEvent(AddAttributeTooltipsEvent event) {
             ItemStack stack = event.getStack();
             if (DiscardList.toDiscard.contains(stack.getItem())) {
@@ -719,6 +718,8 @@ public class BMNWEventBus {
 
         @SubscribeEvent
         @OnlyIn(Dist.CLIENT)
+        @ParametersAreNonnullByDefault
+        @MethodsReturnNonnullByDefault
         public static void registerClientExtensions(RegisterClientExtensionsEvent event) {
             event.registerFluidType(
                 new IClientFluidTypeExtensions() {
