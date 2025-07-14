@@ -8,7 +8,7 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import nl.melonstudios.bmnw.BMNW;
-import nl.melonstudios.bmnw.blockentity.FluidBarrelBlockEntity;
+import nl.melonstudios.bmnw.interfaces.IFlowCfg;
 
 public record PacketCycleFluidBarrelConfig(BlockPos pos, boolean redstone) implements CustomPacketPayload {
     public static final Type<PacketCycleFluidBarrelConfig> TYPE = new Type<>(BMNW.namespace("cycle_fluid_barrel_cfg"));
@@ -28,13 +28,8 @@ public record PacketCycleFluidBarrelConfig(BlockPos pos, boolean redstone) imple
     public void handle(IPayloadContext context) {
         context.enqueueWork(() -> {
             Level level = context.player().level();
-            if (level.getBlockEntity(this.pos) instanceof FluidBarrelBlockEntity be) {
-                if (this.redstone) {
-                    be.flowRedstoneOn = be.flowRedstoneOn.next();
-                } else {
-                    be.flowRedstoneOff = be.flowRedstoneOff.next();
-                }
-                be.notifyChange();
+            if (level.getBlockEntity(this.pos) instanceof IFlowCfg be) {
+                be.cycle(this.redstone);
             }
         });
     }

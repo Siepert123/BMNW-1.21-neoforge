@@ -22,16 +22,17 @@ import nl.melonstudios.bmnw.block.entity.SyncedBlockEntity;
 import nl.melonstudios.bmnw.init.BMNWBlockEntities;
 import nl.melonstudios.bmnw.interfaces.IAsBlock;
 import nl.melonstudios.bmnw.interfaces.IBatteryItem;
+import nl.melonstudios.bmnw.interfaces.IFlowCfg;
 import nl.melonstudios.bmnw.interfaces.ITickable;
 import nl.melonstudios.bmnw.misc.ExtendedEnergyStorage;
-import nl.melonstudios.bmnw.misc.Library;
+import nl.melonstudios.bmnw.screen.EnergyStorageMenu;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class EnergyStorageBlockEntity extends SyncedBlockEntity implements ITickable, IAsBlock<EnergyStorageBlock>, MenuProvider {
+public class EnergyStorageBlockEntity extends SyncedBlockEntity implements ITickable, IAsBlock<EnergyStorageBlock>, MenuProvider, IFlowCfg {
     public static final int SLOT_BATTERY_IN = 0;
     public static final int SLOT_BATTERY_OUT = 1;
 
@@ -56,7 +57,7 @@ public class EnergyStorageBlockEntity extends SyncedBlockEntity implements ITick
     }
 
     private final ExtendedEnergyStorage energyStorage;
-    private final ItemStackHandler inventory = new ItemStackHandler(2) {
+    public final ItemStackHandler inventory = new ItemStackHandler(2) {
         @Override
         protected void onContentsChanged(int slot) {
             EnergyStorageBlockEntity.this.notifyChange();
@@ -153,7 +154,7 @@ public class EnergyStorageBlockEntity extends SyncedBlockEntity implements ITick
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int containerId, Inventory playerInventory, Player player) {
-        return null;
+        return new EnergyStorageMenu(containerId, playerInventory, this, this.energyTracker);
     }
 
     @Override
@@ -165,6 +166,7 @@ public class EnergyStorageBlockEntity extends SyncedBlockEntity implements ITick
             int cap = Math.min(this.energyStorage.getMaxEnergyStored() - this.energyStorage.getEnergyStored(), transfer);
             int max = battery.tryRemoveEnergy(batteryIn, cap);
             battery.removeStoredEnergy(batteryIn, this.energyStorage.receiveEnergy(max, false));
+            this.notifyChange();
         }
 
         ItemStack batteryOut = this.inventory.getStackInSlot(SLOT_BATTERY_OUT);
@@ -174,6 +176,17 @@ public class EnergyStorageBlockEntity extends SyncedBlockEntity implements ITick
             int cap = Math.min(this.energyStorage.getEnergyStored(), transfer);
             int max = battery.tryInsertEnergy(batteryOut, cap);
             battery.addStoredEnergy(batteryOut, this.energyStorage.extractEnergy(max, false));
+            this.notifyChange();
         }
+    }
+
+    @Override
+    public void cycle(boolean redstone) {
+        if (redstone) {
+            this.flowRedstoneOn = this.flowRedstoneOn.next();
+        } else {
+            this.flowRedstoneOff = this.flowRedstoneOff.next();
+        }
+        this.notifyChange();
     }
 }

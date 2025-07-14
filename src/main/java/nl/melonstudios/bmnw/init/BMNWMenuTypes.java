@@ -40,6 +40,10 @@ public class BMNWMenuTypes {
             () -> IMenuTypeExtension.create(IndustrialHeaterMenu::new)
     );
 
+    public static final DeferredHolder<MenuType<?>, MenuType<EnergyStorageMenu>> ENERGY_STORAGE = MENU_TYPES.register(
+            "energy_storage",
+            () -> IMenuTypeExtension.create(EnergyStorageMenu::new)
+    );
     public static final DeferredHolder<MenuType<?>, MenuType<FluidBarrelMenu>> FLUID_BARREL = MENU_TYPES.register(
             "fluid_barrel",
             () -> IMenuTypeExtension.create(FluidBarrelMenu::new)

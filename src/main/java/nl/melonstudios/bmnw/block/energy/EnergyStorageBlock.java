@@ -3,6 +3,7 @@ package nl.melonstudios.bmnw.block.energy;
 import it.unimi.dsi.fastutil.objects.ObjectArraySet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -13,10 +14,11 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
+import nl.melonstudios.bmnw.block.misc.TickingEntityBlock;
 
 import javax.annotation.Nullable;
 
-public class EnergyStorageBlock extends Block implements EntityBlock {
+public class EnergyStorageBlock extends TickingEntityBlock {
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
 
     public final int capacity;
@@ -57,6 +59,9 @@ public class EnergyStorageBlock extends Block implements EntityBlock {
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         if (player.isShiftKeyDown()) return InteractionResult.PASS;
         if (level.getBlockEntity(pos) instanceof EnergyStorageBlockEntity be) {
+            if (!level.isClientSide) {
+                player.openMenu(new SimpleMenuProvider(be, be.getDisplayName()), pos);
+            }
             return InteractionResult.SUCCESS;
         }
         return InteractionResult.PASS;

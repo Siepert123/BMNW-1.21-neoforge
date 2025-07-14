@@ -73,4 +73,14 @@ public class InfiniteBatteryItem extends Item implements IBatteryItem {
     public boolean isLarge() {
         return this.large;
     }
+
+    @Override
+    public int tryInsertEnergy(ItemStack stack, int amount) {
+        return amount;
+    }
+
+    @Override
+    public int tryRemoveEnergy(ItemStack stack, int amount) {
+        return amount;
+    }
 }

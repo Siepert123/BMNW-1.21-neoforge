@@ -6,21 +6,18 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.FastColor;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.material.Fluids;
-import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.network.PacketDistributor;
 import nl.melonstudios.bmnw.BMNW;
+import nl.melonstudios.bmnw.block.energy.EnergyStorageBlockEntity;
 import nl.melonstudios.bmnw.init.BMNWSounds;
-import nl.melonstudios.bmnw.misc.FluidTextureData;
 import nl.melonstudios.bmnw.misc.Library;
 import nl.melonstudios.bmnw.wifi.PacketCycleFluidBarrelConfig;
 
-public class FluidBarrelScreen extends AbstractContainerScreen<FluidBarrelMenu> {
-    public static final ResourceLocation GUI_TEXTURE = BMNW.namespace("textures/gui/fluid_tank_generic.png");
-    public FluidBarrelScreen(FluidBarrelMenu menu, Inventory playerInventory, Component title) {
+public class EnergyStorageScreen extends AbstractContainerScreen<EnergyStorageMenu> {
+    public static final ResourceLocation GUI_TEXTURE = BMNW.namespace("textures/gui/energy_storage_generic.png");
+    public EnergyStorageScreen(EnergyStorageMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
         this.imageHeight = 178;
         this.imageWidth = 176;
@@ -38,58 +35,43 @@ public class FluidBarrelScreen extends AbstractContainerScreen<FluidBarrelMenu> 
 
         graphics.blit(GUI_TEXTURE, x, y, 0, 0, this.imageWidth, this.imageHeight);
 
-        ItemStack fillIn = this.menu.be.inventory.getStackInSlot(0);
-        ItemStack fillOut = this.menu.be.inventory.getStackInSlot(1);
-        ItemStack drainIn = this.menu.be.inventory.getStackInSlot(2);
-        ItemStack drainOut = this.menu.be.inventory.getStackInSlot(3);
+        EnergyStorageBlockEntity be = this.menu.be;
+        ItemStack batteryIn = be.inventory.getStackInSlot(0);
+        ItemStack batteryOut = be.inventory.getStackInSlot(1);
 
-        if (fillIn.isEmpty()) {
-            graphics.blit(GUI_TEXTURE, x+35, y+17, 176, 0, 16, 16);
+        boolean cycle = (System.currentTimeMillis() / 1000 & 1) == 0;
+
+        if (batteryIn.isEmpty()) {
+            graphics.blit(GUI_TEXTURE, x + 35, y + 17, 176 + (cycle ? 16 : 0), 0, 16, 16);
         }
-        if (fillOut.isEmpty()) {
-            graphics.blit(GUI_TEXTURE, x+35, y+65, 192, 0, 16, 16);
-        }
-        if (drainIn.isEmpty()) {
-            graphics.blit(GUI_TEXTURE, x+125, y+17, 192, 0, 16, 16);
-        }
-        if (drainOut.isEmpty()) {
-            graphics.blit(GUI_TEXTURE, x+125, y+65, 176, 0, 16, 16);
+        if (batteryOut.isEmpty()) {
+            graphics.blit(GUI_TEXTURE, x + 35, y + 65, 176 + (cycle ? 0 : 16), 0, 16, 16);
         }
 
-        if (!this.menu.be.fluidType.isSame(Fluids.EMPTY)) {
-            int max = this.menu.be.tank.getCapacity();
-            int fill = this.menu.be.tank.getFluidAmount() * 64 / max;
+        if (this.menu.energyTracker.get() > 0) {
+            int max = this.menu.block.capacity;
+            int fill = this.menu.energyTracker.get() * 64 / max;
             if (fill > 0) {
                 int reverse = 64 - fill;
-                FluidStack stack = this.menu.be.tank.getFluid();
-                FluidTextureData data = FluidTextureData.getStillTexture(stack.getFluid());
-                int color = data.extensions().getTintColor(stack);
-                graphics.blit(x + 62, y + 17 + reverse, 0, 52, 64 - reverse, data.material().sprite(),
-                        FastColor.ARGB32.red(color) / 255.0F,
-                        FastColor.ARGB32.green(color) / 255.0F,
-                        FastColor.ARGB32.blue(color) / 255.0F,
-                        FastColor.ARGB32.alpha(color) / 255.0F
-                );
+                graphics.blit(GUI_TEXTURE, x+62, y+17+reverse, 176, 16+reverse, 52, fill);
             }
         }
 
-        graphics.blit(GUI_TEXTURE, x+62, y+17, 176, 16, 52, 64);
-
         graphics.blit(GUI_TEXTURE, x+155, y+26,
-                this.getOffset(176, this.menu.be.flowRedstoneOn.in),
-                this.getOffset(80, this.menu.be.flowRedstoneOn.out),
+                this.getOffset(176, be.flowRedstoneOn.in),
+                this.getOffset(80, be.flowRedstoneOn.out),
                 16, 16);
         graphics.blit(GUI_TEXTURE, x+155, y+56,
-                this.getOffset(176, this.menu.be.flowRedstoneOff.in),
-                this.getOffset(80, this.menu.be.flowRedstoneOff.out),
+                this.getOffset(176, be.flowRedstoneOff.in),
+                this.getOffset(80, be.flowRedstoneOff.out),
                 16, 16);
     }
 
     @Override
-    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
-        super.render(guiGraphics, mouseX, mouseY, partialTick);
+    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+        super.render(graphics, mouseX, mouseY, partialTick);
 
-        this.renderTooltip(guiGraphics, mouseX, mouseY);
+        this.renderTooltip(graphics, mouseX, mouseY);
         int x = (this.width - this.imageWidth) / 2;
         int y = (this.height - this.imageHeight) / 2;
 
@@ -97,21 +79,21 @@ public class FluidBarrelScreen extends AbstractContainerScreen<FluidBarrelMenu> 
         int my = mouseY-y;
         if (this.menu.getCarried().isEmpty()) {
             if (mx >= 61 && my >= 16 && mx < 61+54 && my < 16+66) {
-                guiGraphics.renderTooltip(this.font,
-                        this.menu.be.fluidType.getFluidType().getDescription().plainCopy()
-                                .append(": " + Library.formatMilliBuckets(this.menu.be.tank.getFluidAmount())
-                                        + "/" + Library.formatMilliBuckets(this.menu.be.tank.getCapacity())),
+                graphics.renderTooltip(this.font,
+                        Component.literal(Library.formatRedstoneFlux(this.menu.energyTracker.get())
+                                + "/" +
+                                Library.formatRedstoneFlux(this.menu.block.capacity)),
                         mouseX, mouseY);
                 return;
             }
             if (this.tryClickFlowRedstoneOn(mx, my, true)) {
-                guiGraphics.renderTooltip(this.font,
+                graphics.renderTooltip(this.font,
                         Component.literal("Flow type: " + this.menu.be.flowRedstoneOn.name()),
                         mouseX, mouseY);
                 return;
             }
             if (this.tryClickFlowRedstoneOff(mx, my, true)) {
-                guiGraphics.renderTooltip(this.font,
+                graphics.renderTooltip(this.font,
                         Component.literal("Flow type: " + this.menu.be.flowRedstoneOff.name()),
                         mouseX, mouseY);
             }

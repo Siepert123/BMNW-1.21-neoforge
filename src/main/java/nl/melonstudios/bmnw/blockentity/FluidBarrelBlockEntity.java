@@ -30,6 +30,7 @@ import nl.melonstudios.bmnw.block.entity.SyncedBlockEntity;
 import nl.melonstudios.bmnw.init.BMNWBlockEntities;
 import nl.melonstudios.bmnw.init.BMNWDataComponents;
 import nl.melonstudios.bmnw.init.BMNWItems;
+import nl.melonstudios.bmnw.interfaces.IFlowCfg;
 import nl.melonstudios.bmnw.interfaces.IInfiniteFluidSupply;
 import nl.melonstudios.bmnw.interfaces.ITickable;
 import nl.melonstudios.bmnw.item.tools.FluidContainerItem;
@@ -37,7 +38,7 @@ import nl.melonstudios.bmnw.misc.Library;
 import nl.melonstudios.bmnw.screen.FluidBarrelMenu;
 import org.jetbrains.annotations.Nullable;
 
-public class FluidBarrelBlockEntity extends SyncedBlockEntity implements ITickable, MenuProvider {
+public class FluidBarrelBlockEntity extends SyncedBlockEntity implements ITickable, MenuProvider, IFlowCfg {
     public static final int SLOT_IN_FULL = 0;
     public static final int SLOT_IN_EMPTY = 1;
     public static final int SLOT_OUT_EMPTY = 2;
@@ -263,5 +264,15 @@ public class FluidBarrelBlockEntity extends SyncedBlockEntity implements ITickab
     @Override
     public AbstractContainerMenu createMenu(int containerId, Inventory playerInventory, Player player) {
         return new FluidBarrelMenu(containerId, playerInventory, this);
+    }
+
+    @Override
+    public void cycle(boolean redstone) {
+        if (redstone) {
+            this.flowRedstoneOn = this.flowRedstoneOn.next();
+        } else {
+            this.flowRedstoneOff = this.flowRedstoneOff.next();
+        }
+        this.notifyChange();
     }
 }

@@ -250,6 +250,7 @@ public class BMNW {
         event.register(BMNWMenuTypes.COMBUSTION_ENGINE.get(), CombustionEngineScreen::new);
         event.register(BMNWMenuTypes.INDUSTRIAL_HEATER.get(), IndustrialHeaterScreen::new);
 
+        event.register(BMNWMenuTypes.ENERGY_STORAGE.get(), EnergyStorageScreen::new);
         event.register(BMNWMenuTypes.FLUID_BARREL.get(), FluidBarrelScreen::new);
     }
 
