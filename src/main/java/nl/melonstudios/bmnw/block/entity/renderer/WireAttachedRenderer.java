@@ -7,6 +7,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import nl.melonstudios.bmnw.block.entity.WireAttachedBlockEntity;
 import nl.melonstudios.bmnw.cfg.BMNWClientConfig;
 import nl.melonstudios.bmnw.misc.Library;
@@ -15,6 +17,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collection;
 
 @ParametersAreNonnullByDefault
+@OnlyIn(Dist.CLIENT)
 public class WireAttachedRenderer<T extends WireAttachedBlockEntity> extends OptimizedBlockEntityRenderer<T> {
     public WireAttachedRenderer(BlockEntityRendererProvider.Context context) {
         super(context);

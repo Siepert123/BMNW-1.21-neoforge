@@ -13,6 +13,8 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.client.model.data.ModelData;
 import nl.melonstudios.bmnw.block.doors.MetalSlidingDoorBlock;
 import nl.melonstudios.bmnw.block.entity.MetalSlidingDoorBlockEntity;
@@ -23,6 +25,7 @@ import org.joml.Quaternionf;
 
 import java.util.List;
 
+@OnlyIn(Dist.CLIENT)
 public class MetalSlidingDoorRenderer implements BlockEntityRenderer<MetalSlidingDoorBlockEntity> {
     public MetalSlidingDoorRenderer(BlockEntityRendererProvider.Context context) {
 

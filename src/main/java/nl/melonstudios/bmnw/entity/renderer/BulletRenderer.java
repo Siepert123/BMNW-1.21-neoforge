@@ -7,8 +7,11 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import nl.melonstudios.bmnw.entity.AbstractBulletEntity;
 
+@OnlyIn(Dist.CLIENT)
 public abstract class BulletRenderer<T extends AbstractBulletEntity> extends EntityRenderer<T> {
     protected BulletRenderer(EntityRendererProvider.Context context) {
         super(context);

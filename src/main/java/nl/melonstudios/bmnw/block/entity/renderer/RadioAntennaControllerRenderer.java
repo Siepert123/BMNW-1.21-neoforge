@@ -11,11 +11,14 @@ import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.client.model.data.ModelData;
 import nl.melonstudios.bmnw.block.entity.RadioAntennaControllerBlockEntity;
 import nl.melonstudios.bmnw.init.BMNWPartialModels;
 import nl.melonstudios.bmnw.misc.Library;
 
+@OnlyIn(Dist.CLIENT)
 public class RadioAntennaControllerRenderer extends OptimizedBlockEntityRenderer<RadioAntennaControllerBlockEntity> {
     public RadioAntennaControllerRenderer(BlockEntityRendererProvider.Context context) {
         super(context);

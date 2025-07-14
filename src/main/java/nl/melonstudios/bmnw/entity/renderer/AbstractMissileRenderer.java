@@ -4,8 +4,11 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import nl.melonstudios.bmnw.entity.missile.AbstractMissileEntity;
 
+@OnlyIn(Dist.CLIENT)
 public abstract class AbstractMissileRenderer<T extends AbstractMissileEntity> extends EntityRenderer<T> {
     protected AbstractMissileRenderer(EntityRendererProvider.Context context) {
         super(context);
