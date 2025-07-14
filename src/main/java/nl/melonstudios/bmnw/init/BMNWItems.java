@@ -191,6 +191,8 @@ public class BMNWItems {
 
     public static final DeferredItem<Item> INSULATOR = item("insulator");
 
+    public static final DeferredItem<Item> TUNGSTEN_HEATING_ROD = ITEMS.register("tungsten_heating_rod",
+            () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> STEEL_TANK = ITEMS.register("steel_tank",
             () -> new Item(new Item.Properties()));
 

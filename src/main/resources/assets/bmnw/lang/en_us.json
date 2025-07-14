@@ -365,6 +365,7 @@
   "item.bmnw.titanium_wire_stamp": "Titanium Wire Stamp",
   "item.bmnw.tungsten_core_sample": "Tungsten Core Sample",
   "item.bmnw.tungsten_dust": "Tungsten Dust",
+  "item.bmnw.tungsten_heating_rod": "Tungsten Heating Rod",
   "item.bmnw.tungsten_ingot": "Tungsten Ingot",
   "item.bmnw.tungsten_nugget": "Tungsten Nugget",
   "item.bmnw.tungsten_plate": "Tungsten Plate",
@@ -421,6 +422,7 @@
   "subtitles.bmnw.locked": "Something is locked",
   "subtitles.bmnw.machinery": "Machinery",
   "subtitles.bmnw.small_explosion": "Explosion",
+  "text.bmnw.capacity": "Capacity: %s",
   "text.bmnw.data_set": "Data set!",
   "text.bmnw.detonate_fail": "Detonation failed...",
   "text.bmnw.detonate_success": "Detonation successful!",
@@ -457,6 +459,5 @@
   "tooltip.bmnw.radioactive": "[Radioactive]",
   "tooltip.bmnw.radius": "Radius: ~%s",
   "tooltip.bmnw.workbench": "Tier %s workbench",
-  "tooltip.bmnw.wp": "[White Phosphorus]",
-  "text.bmnw.capacity": "Capacity: %s"
+  "tooltip.bmnw.wp": "[White Phosphorus]"
 }

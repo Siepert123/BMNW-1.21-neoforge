@@ -274,5 +274,6 @@ public class FluidBarrelBlockEntity extends SyncedBlockEntity implements ITickab
             this.flowRedstoneOff = this.flowRedstoneOff.next();
         }
         this.notifyChange();
+        this.level.invalidateCapabilities(this.worldPosition);
     }
 }

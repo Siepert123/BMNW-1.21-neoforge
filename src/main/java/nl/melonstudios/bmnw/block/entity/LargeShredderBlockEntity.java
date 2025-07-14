@@ -25,6 +25,8 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.AABB;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import nl.melonstudios.bmnw.audio.LargeShredderLoopSoundInstance;
 import nl.melonstudios.bmnw.block.state.BMNWStateProperties;
@@ -249,6 +251,13 @@ public class LargeShredderBlockEntity extends BlockEntity implements ITickable {
         }
 
         if (this.level instanceof ServerLevel level) {
+            BlockPos energyExtractPos = this.worldPosition.relative(this.getFacing().getCounterClockWise());
+            IEnergyStorage storage = level.getCapability(Capabilities.EnergyStorage.BLOCK, energyExtractPos, this.getFacing().getClockWise());
+            if (storage != null && storage.canExtract()) {
+                int max = this.energy.getMaxEnergyStored() - this.energy.getEnergyStored();
+                int cap = storage.extractEnergy(max, true);
+                this.energy.receiveEnergy(storage.extractEnergy(cap, false), false);
+            }
             ItemStack out = this.inventory.getStackInSlot(1);
             if (!out.isEmpty()) {
                 BlockPos outPos = this.worldPosition.relative(this.getFacing().getClockWise()).below();

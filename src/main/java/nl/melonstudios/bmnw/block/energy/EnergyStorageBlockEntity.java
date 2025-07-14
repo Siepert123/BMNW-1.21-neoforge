@@ -188,5 +188,6 @@ public class EnergyStorageBlockEntity extends SyncedBlockEntity implements ITick
             this.flowRedstoneOff = this.flowRedstoneOff.next();
         }
         this.notifyChange();
+        this.level.invalidateCapabilities(this.worldPosition);
     }
 }

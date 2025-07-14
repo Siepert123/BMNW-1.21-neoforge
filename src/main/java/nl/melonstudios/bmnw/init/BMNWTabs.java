@@ -353,6 +353,7 @@ public class BMNWTabs {
                         //region Parts
                         items.accept(INSULATOR);
 
+                        items.accept(TUNGSTEN_HEATING_ROD);
                         items.accept(STEEL_TANK);
 
                         items.accept(BASIC_CIRCUIT);
