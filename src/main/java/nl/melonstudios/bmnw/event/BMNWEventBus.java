@@ -1,8 +1,10 @@
 package nl.melonstudios.bmnw.event;
 
+import com.mojang.blaze3d.shaders.FogShape;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.renderer.FogRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.core.BlockPos;

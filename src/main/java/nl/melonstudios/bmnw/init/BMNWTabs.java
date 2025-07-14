@@ -202,6 +202,9 @@ public class BMNWTabs {
                                 VOLCANO_CORE_GROWS,
                                 VOLCANO_CORE_EXTINGUISHES_GROWS
                         );
+
+                        items.accept(BASALT_IRON_ORE);
+                        items.accept(BASALT_BAUXITE_ORE);
                     })
                     .build()
     );
@@ -349,6 +352,8 @@ public class BMNWTabs {
 
                         //region Parts
                         items.accept(INSULATOR);
+
+                        items.accept(STEEL_TANK);
 
                         items.accept(BASIC_CIRCUIT);
                         items.accept(ENHANCED_CIRCUIT);
