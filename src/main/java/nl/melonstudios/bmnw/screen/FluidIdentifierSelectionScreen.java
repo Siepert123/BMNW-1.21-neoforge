@@ -58,6 +58,11 @@ public class FluidIdentifierSelectionScreen extends Screen {
         this.gatherFluids(Library.ALWAYS_TRUE);
     }
 
+    @Override
+    public Component getTitle() {
+        return Component.translatable("screen.bmnw.fluid_identifier").append(" (" + (this.page+1) + "/" + (this.calculatePages()+1) + ")");
+    }
+
     private void gatherFluids(Predicate<? super Fluid> filter) {
         this.options.clear();
         for (Fluid fluid : Library.wrapIterator(BuiltInRegistries.FLUID.iterator())) {
@@ -85,7 +90,7 @@ public class FluidIdentifierSelectionScreen extends Screen {
 
         graphics.blit(GUI_TEXTURE, x, y, 0, 0, 109, 226);
 
-        graphics.drawCenteredString(this.font, this.title, x+49, y+2, 0xFFFFFFFF);
+        graphics.drawCenteredString(this.font, this.getTitle(), x+49, y+2, 0xFFFFFFFF);
         graphics.drawCenteredString(this.font, Component.literal(this.googleSearch), x+49, y+216, 0xFFFFFFFF);
 
         for (int i = this.getStartIdx(); i < Math.min(this.options.size(), this.getStartIdx() + COLUMNS*ROWS); i++) {
