@@ -58,11 +58,6 @@ public class FluidIdentifierSelectionScreen extends Screen {
         this.gatherFluids(Library.ALWAYS_TRUE);
     }
 
-    @Override
-    public Component getTitle() {
-        return Component.translatable("screen.bmnw.fluid_identifier").append(" (" + (this.page+1) + "/" + (this.calculatePages()+1) + ")");
-    }
-
     private void gatherFluids(Predicate<? super Fluid> filter) {
         this.options.clear();
         for (Fluid fluid : Library.wrapIterator(BuiltInRegistries.FLUID.iterator())) {
