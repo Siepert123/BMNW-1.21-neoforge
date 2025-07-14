@@ -191,6 +191,9 @@ public class BMNWItems {
 
     public static final DeferredItem<Item> INSULATOR = item("insulator");
 
+    public static final DeferredItem<Item> STEEL_TANK = ITEMS.register("steel_tank",
+            () -> new Item(new Item.Properties()));
+
     public static final DeferredItem<Item> BASIC_CIRCUIT = item("basic_circuit");
     public static final DeferredItem<Item> ENHANCED_CIRCUIT = item("enhanced_circuit");
     public static final DeferredItem<Item> ADVANCED_CIRCUIT = item("advanced_circuit");

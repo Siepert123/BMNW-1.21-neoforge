@@ -1,7 +1,7 @@
 {
   "values": [
-    "#bmnw:molds/blank",
-    "#bmnw:molds/plate",
-    "#bmnw:molds/wire"
+    "#bmnw:stamps/blank",
+    "#bmnw:stamps/plate",
+    "#bmnw:stamps/wire"
   ]
 }

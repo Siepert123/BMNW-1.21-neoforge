@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "side": "bmnw:block/lead_acid_energy_storage_side",
+    "end": "bmnw:block/lead_acid_energy_storage_top"
+  }
+}
