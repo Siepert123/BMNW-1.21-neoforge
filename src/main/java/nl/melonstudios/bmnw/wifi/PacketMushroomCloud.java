@@ -49,19 +49,20 @@ public record PacketMushroomCloud(boolean soul, double x, double y, double z, fl
         double vx, vy, vz;
         double yaw = 0;
         double pitch = 0;
-        double stem = packet.size * 0.2;
+        double stem = packet.size * 0.5;
         for (float i = 0; i < 30; i++) {
+            double delta = 1.0 - (i / 30.0);
             level.addParticle(optionsParticle, x, y, z, 0, i*packet.size * 0.15, 0);
-            level.addParticle(optionsParticle, x, y, z, stem, i*packet.size * 0.15, 0);
-            level.addParticle(optionsParticle, x, y, z, -stem, i*packet.size * 0.15, 0);
-            level.addParticle(optionsParticle, x, y, z, 0, i*packet.size * 0.15, stem);
-            level.addParticle(optionsParticle, x, y, z, 0, i*packet.size * 0.15, -stem);
+            level.addParticle(optionsParticle, x, y, z, stem*delta, i*packet.size * 0.15, 0);
+            level.addParticle(optionsParticle, x, y, z, -stem*delta, i*packet.size * 0.15, 0);
+            level.addParticle(optionsParticle, x, y, z, 0, i*packet.size * 0.15, stem*delta);
+            level.addParticle(optionsParticle, x, y, z, 0, i*packet.size * 0.15, -stem*delta);
         }
 
         double aThirdSize = (packet.size / 3) * 5;
         double aTwelfthSize = (packet.size / 12) * 5;
-        while (yaw <= 360) {
-            while (pitch <= 180) {
+        while (yaw < 360) {
+            while (pitch < 180) {
                 vx = relativeX(yaw, pitch, aThirdSize);
                 vz = relativeZ(yaw, pitch, aThirdSize);
                 vy = relativeY(yaw, pitch, aTwelfthSize);
@@ -74,11 +75,20 @@ public record PacketMushroomCloud(boolean soul, double x, double y, double z, fl
 
         double ringPos = packet.size*3.5;
         yaw = 0;
-        while (yaw <= 360) {
+        while (yaw < 360) {
             vx = relativeX(yaw, 90, packet.size*1.5);
             vz = relativeZ(yaw, 90, packet.size*1.5);
             level.addParticle(optionsSmoke, x, y, z, vx, ringPos, vz);
             yaw += degreePerPart * 5;
+        }
+
+        ringPos = packet.size * 5.5;
+        yaw = 0;
+        while (yaw < 360) {
+            vx = relativeX(yaw, 90, packet.size*3);
+            vz = relativeZ(yaw, 90, packet.size*3);
+            level.addParticle(optionsSmoke, x, y, z, vx, ringPos, vz);
+            yaw += degreePerPart;
         }
     }
 

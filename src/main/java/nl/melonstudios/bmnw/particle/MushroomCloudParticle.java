@@ -20,6 +20,10 @@ public class MushroomCloudParticle extends TextureSheetParticle {
     private static final int GROWTH_TICKS = 100;
     private static final int EXTINGUISH_TICKS = 250;
     private static final float ALPHA_EXCHANGE = 1.0F / (LIFETIME-EXTINGUISH_TICKS);
+
+    private final int myGrowthTicks, myExtinguishTicks;
+    private final float myAlphaExchange;
+
     protected MushroomCloudParticle(
             ClientLevel level, double x, double y, double z, double vX, double vY, double vZ, float size
     ) {
@@ -32,7 +36,10 @@ public class MushroomCloudParticle extends TextureSheetParticle {
         this.startY = y;
         this.startZ = z;
         this.quadSize = (1.8f + (level.random.nextFloat() * 0.4f)) * this.size;
-        this.lifetime = LIFETIME;
+        this.lifetime = Mth.ceil(LIFETIME * this.size);
+        this.myGrowthTicks = Mth.ceil(GROWTH_TICKS * this.size);
+        this.myExtinguishTicks = Mth.ceil(EXTINGUISH_TICKS * this.size);
+        this.myAlphaExchange = 1.0F / (this.lifetime-this.myExtinguishTicks);
         this.hasPhysics = false;
         this.gravity = 0;
         this.speedUpWhenYMotionIsBlocked = false;
@@ -64,28 +71,28 @@ public class MushroomCloudParticle extends TextureSheetParticle {
         this.xo = this.x;
         this.yo = this.y;
         this.zo = this.z;
-        if (this.age < GROWTH_TICKS) {
-            float d = (float)this.age / GROWTH_TICKS;
+        if (this.age < this.myGrowthTicks) {
+            float d = (float)this.age / this.myGrowthTicks;
             this.x = EASING_FUNC.clampedEasedLerp((float) this.startX, (float) this.xd, d);
             this.y = EASING_FUNC.clampedEasedLerp((float) this.startY, (float) this.yd, d);
             this.z = EASING_FUNC.clampedEasedLerp((float) this.startZ, (float) this.zd, d);
         }
-        if (this.age < EXTINGUISH_TICKS) {
-            float d = (float)this.age / EXTINGUISH_TICKS;
+        if (this.age < this.myExtinguishTicks) {
+            float d = (float)this.age / this.myExtinguishTicks;
             this.setColor(
                     Mth.lerp(d, 1.0F, this.darkness),
                     Mth.lerp(d, this.yellowness, this.darkness),
                     Mth.lerp(d, 0.1F, this.darkness)
             );
+
+            this.quadSize += (0.01F * this.size);
         } else {
-            this.alpha = Mth.clamp(this.alpha - ALPHA_EXCHANGE, 0, 1);
+            this.alpha = Mth.clamp(this.alpha - this.myAlphaExchange, 0, 1);
         }
 
         if (this.age++ >= this.lifetime) {
             this.remove();
         }
-
-        this.quadSize += (0.01F * this.size);
     }
 
     public static class Provider implements ParticleProvider<ResizableParticleOptions> {
