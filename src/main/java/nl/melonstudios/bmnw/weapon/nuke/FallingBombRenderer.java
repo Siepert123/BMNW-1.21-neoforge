@@ -64,13 +64,7 @@ public class FallingBombRenderer extends EntityRenderer<FallingBombEntity> {
 
     private void renderBakedModel(VertexConsumer consumer, PoseStack.Pose last, BakedModel model,
                                   RandomSource rnd, int packedLight) {
-        for (Direction d : Library.DIRECTIONS_WITH_NULL) {
-            List<BakedQuad> quads = model.getQuads(null, d, rnd, ModelData.EMPTY, RenderType.CUTOUT);
-            for (BakedQuad quad : quads) {
-                float b = Library.brightnessByDirection(quad.getDirection());
-                consumer.putBulkData(last, quad, b, b, b, 1.0F, packedLight, OverlayTexture.NO_OVERLAY);
-            }
-        }
+        Library.renderBakedModel(consumer, last, model, RenderType.CUTOUT, rnd, packedLight, OverlayTexture.NO_OVERLAY);
     }
 
     @Override

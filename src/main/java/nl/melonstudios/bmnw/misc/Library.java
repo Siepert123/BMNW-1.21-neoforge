@@ -9,11 +9,15 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.block.model.BakedQuad;
+import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FastColor;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
@@ -26,6 +30,9 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.client.ClientHooks;
+import net.neoforged.neoforge.client.model.IQuadTransformer;
+import net.neoforged.neoforge.client.model.data.ModelData;
 import nl.melonstudios.bmnw.cfg.BMNWClientConfig;
 import nl.melonstudios.bmnw.item.battery.BatteryItem;
 import nl.melonstudios.bmnw.item.tools.FluidContainerItem;
@@ -471,5 +478,17 @@ public class Library {
             return Mth.quantize((Tu / 1000.0F) * 100.0F, 1) / 100.0F + "kTu";
         }
         return Tu + "Tu";
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public static void renderBakedModel(VertexConsumer consumer, PoseStack.Pose last, BakedModel model,
+                                        RenderType renderType, RandomSource rnd, int packedLight, int packedOverlay) {
+        for (Direction d : Library.DIRECTIONS_WITH_NULL) {
+            List<BakedQuad> quads = model.getQuads(null, d, rnd, ModelData.EMPTY, renderType);
+            for (BakedQuad quad : quads) {
+                float b = Library.brightnessByDirection(quad.getDirection());
+                consumer.putBulkData(last, quad, b, b, b, 1.0F, packedLight, packedOverlay);
+            }
+        }
     }
 }
