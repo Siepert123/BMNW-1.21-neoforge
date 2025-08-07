@@ -232,6 +232,14 @@
     ],
     "subtitle": "subtitles.bmnw.machinery"
   },
+  "nuclear_boom": {
+    "sounds": [
+      {
+        "name": "bmnw:nuclear_boom",
+        "stream": true
+      }
+    ]
+  },
   "ambient.large_generator_in_off": {
     "sounds": [
       {

@@ -7,18 +7,43 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import nl.melonstudios.bmnw.entity.*;
-import nl.melonstudios.bmnw.nuke.TestNukeEntity;
+import nl.melonstudios.bmnw.weapon.RadiationLingerEntity;
+import nl.melonstudios.bmnw.weapon.explosion.ExplosionHelperEntity;
+import nl.melonstudios.bmnw.weapon.missile.entity.CustomizableMissileEntity;
+import nl.melonstudios.bmnw.weapon.nuke.FallingBombEntity;
+import nl.melonstudios.bmnw.weapon.torpedo.TorpedoEntity;
 
 public class BMNWEntityTypes {
     private static final DeferredRegister<EntityType<?>> ENTITY_TYPES =
             DeferredRegister.create(BuiltInRegistries.ENTITY_TYPE, "bmnw");
 
-    public static final DeferredHolder<EntityType<?>, EntityType<TestNukeEntity>> TEST_NUKE = ENTITY_TYPES.register(
-            "test_nuke",
-            () -> EntityType.Builder.<TestNukeEntity>of(TestNukeEntity::new, MobCategory.MISC)
-                    .clientTrackingRange(128)
+    public static final DeferredHolder<EntityType<?>, EntityType<ExplosionHelperEntity>> EXPLOSION_HELPER = ENTITY_TYPES.register(
+            "explosion_helper",
+            () -> EntityType.Builder.<ExplosionHelperEntity>of(ExplosionHelperEntity::new, MobCategory.MISC)
+                    .clientTrackingRange(2048)
                     .sized(1.0F, 1.0F)
-                    .build("bmnw:test_nuke")
+                    .noSummon()
+                    .noSave()
+                    .setShouldReceiveVelocityUpdates(false)
+                    .build("bmnw:explosion_helper")
+    );
+    public static final DeferredHolder<EntityType<?>, EntityType<RadiationLingerEntity>> RADIATION_LINGER = ENTITY_TYPES.register(
+            "radiation_linger",
+            () -> EntityType.Builder.<RadiationLingerEntity>of(RadiationLingerEntity::new, MobCategory.MISC)
+                    .clientTrackingRange(16)
+                    .sized(1.0F, 1.0F)
+                    .setShouldReceiveVelocityUpdates(false)
+                    .build("bmnw:radiation_linger")
+    );
+
+    public static final DeferredHolder<EntityType<?>, EntityType<FallingBombEntity>> FALLING_BOMB = ENTITY_TYPES.register(
+            "falling_bomb",
+            () -> EntityType.Builder.<FallingBombEntity>of(FallingBombEntity::new, MobCategory.MISC)
+                    .clientTrackingRange(1024)
+                    .sized(1.0F, 1.0F)
+                    .noSummon()
+                    .setShouldReceiveVelocityUpdates(false)
+                    .build("bmnw:falling_bomb")
     );
 
     public static final DeferredHolder<EntityType<?>, EntityType<BlockDebrisEntity>> BLOCK_DEBRIS = ENTITY_TYPES.register(
@@ -66,6 +91,23 @@ public class BMNWEntityTypes {
                     .sized(0.125f, 0.125f)
                     .noSummon()
                     .build("bmnw:simple_bullet")
+    );
+
+    public static final DeferredHolder<EntityType<?>, EntityType<TorpedoEntity>> TORPEDO = ENTITY_TYPES.register(
+            "torpedo",
+            () -> EntityType.Builder.<TorpedoEntity>of(TorpedoEntity::new, MobCategory.MISC)
+                    .sized(1.0F, 1.0F)
+                    .noSummon()
+                    .build("bmnw:torpedo")
+    );
+    public static final DeferredHolder<EntityType<?>, EntityType<CustomizableMissileEntity>> CUSTOMIZABLE_MISSILE = ENTITY_TYPES.register(
+            "customizable_missile",
+            () -> EntityType.Builder.<CustomizableMissileEntity>of(CustomizableMissileEntity::new, MobCategory.MISC)
+                    .sized(1.0F, 1.0F)
+                    .eyeHeight(0.5F)
+                    .noSummon()
+                    .clientTrackingRange(2048)
+                    .build("bmnw:customizable_missile")
     );
 
     public static void register(IEventBus eventBus) {

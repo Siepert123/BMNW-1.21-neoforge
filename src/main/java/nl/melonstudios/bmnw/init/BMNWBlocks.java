@@ -38,6 +38,8 @@ import nl.melonstudios.bmnw.block.settype.BMNWBlockSetType;
 import nl.melonstudios.bmnw.block.weapons.MissileLaunchPadBlock;
 import nl.melonstudios.bmnw.effect.WPEffect;
 import nl.melonstudios.bmnw.entity.LavaEjectionEntity;
+import nl.melonstudios.bmnw.weapon.nuke.block.CaseohNukeBlock;
+import nl.melonstudios.bmnw.weapon.nuke.block.LittleBoyNukeBlock;
 import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -160,101 +162,6 @@ public class BMNWBlocks {
             () -> new SimpleRadioactiveBlock(BlockBehaviour.Properties.ofFullCopy(PLUTONIUM_BLOCK.get()), 42.5f));
     //endregion
 
-    //region Nuclear after effect blocks
-    public static final DeferredBlock<Block> SLAKED_NUCLEAR_REMAINS = BLOCKS.register("slaked_nuclear_remains",
-            () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE)));
-    public static final DeferredBlock<NuclearRemainsBlock> NUCLEAR_REMAINS = BLOCKS.register("nuclear_remains",
-            () -> new NuclearRemainsBlock(BlockBehaviour.Properties.ofFullCopy(SLAKED_NUCLEAR_REMAINS.get()).randomTicks(),
-                    5, SLAKED_NUCLEAR_REMAINS.get().defaultBlockState()));
-    public static final DeferredBlock<NuclearRemainsBlock> BLAZING_NUCLEAR_REMAINS = BLOCKS.register("blazing_nuclear_remains",
-            () -> new NuclearRemainsBlock(BlockBehaviour.Properties.ofFullCopy(SLAKED_NUCLEAR_REMAINS.get()).randomTicks(),
-                    10, NUCLEAR_REMAINS.get().defaultBlockState()));
-    
-    public static final DeferredBlock<RotatedPillarBlock> CHARRED_LOG = BLOCKS.register("charred_log",
-            () -> new RotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LOG)));
-    public static final DeferredBlock<Block> CHARRED_PLANKS = BLOCKS.register("charred_planks",
-            () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PLANKS)));
-    public static final DeferredBlock<IrradiatedGrassBlock> IRRADIATED_GRASS_BLOCK = BLOCKS.register("irradiated_grass_block",
-            () -> new IrradiatedGrassBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.GRASS_BLOCK)));
-    public static final DeferredBlock<IrradiatedLeavesBlock> IRRADIATED_LEAVES = BLOCKS.register("irradiated_leaves",
-            () -> new IrradiatedLeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES)));
-    public static final DeferredBlock<IrradiatedLeafPileBlock> IRRADIATED_LEAF_PILE = BLOCKS.register("irradiated_leaf_pile",
-            () -> new IrradiatedLeafPileBlock(BlockBehaviour.Properties.ofFullCopy(IRRADIATED_LEAVES.get())));
-    public static final DeferredBlock<IrradiatedPlantBlock> IRRADIATED_PLANT = BLOCKS.register("irradiated_plant",
-            () -> new IrradiatedPlantBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SHORT_GRASS)));
-    //endregion
-
-    //region Barrels
-    
-    public static final DeferredBlock<NuclearWasteBarrelBlock> NUCLEAR_WASTE_BARREL = BLOCKS.register("nuclear_waste_barrel",
-            () -> new NuclearWasteBarrelBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).noOcclusion(), 50));
-
-    //endregion
-
-    //region Bombs & Missiles
-    public static final DeferredBlock<MissileLaunchPadBlock> MISSILE_LAUNCH_PAD = BLOCKS.register("missile_launch_pad",
-            () -> new MissileLaunchPadBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)));
-    //endregion
-
-    //region Basic machines
-
-    // Early game
-    public static final DeferredBlock<WorkbenchBlock> TEST_WORKBENCH = BLOCKS.register("test_workbench",
-            () -> new WorkbenchBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CRAFTING_TABLE), 69420, "workbench"));
-    public static final DeferredBlock<WorkbenchBlock> IRON_WORKBENCH = BLOCKS.register("iron_workbench",
-            () -> new WorkbenchBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CRAFTING_TABLE), 0, "iron_workbench"));
-    public static final DeferredBlock<WorkbenchBlock> STEEL_WORKBENCH = BLOCKS.register("steel_workbench",
-            () -> new WorkbenchBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CRAFTING_TABLE), 1, "steel_workbench"));
-    public static final DeferredBlock<PressBlock> PRESS = BLOCKS.register("press",
-            () -> new PressBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).noOcclusion()));
-    public static final DeferredBlock<AlloyBlastFurnaceBlock> ALLOY_BLAST_FURNACE = BLOCKS.register("alloy_blast_furnace",
-            () -> new AlloyBlastFurnaceBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.NETHER_BRICKS)));
-    public static final DeferredBlock<BuildersFurnaceBlock> BUILDERS_FURNACE = BLOCKS.register("builders_furnace",
-            () -> new BuildersFurnaceBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.FURNACE)));
-
-    // Generators
-    public static final DeferredBlock<CombustionEngineBlock> COMBUSTION_ENGINE = BLOCKS.register("combustion_engine",
-            () -> new CombustionEngineBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get())));
-
-    // Consumers
-    public static final DeferredBlock<DecontaminatorBlock> DECONTAMINATOR = BLOCKS.register("decontaminator",
-            () -> new DecontaminatorBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)));
-
-    public static final DeferredBlock<TestExcavatorBlock> TEST_EXCAVATOR = BLOCKS.register("test_excavator",
-            () -> new TestExcavatorBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get())));
-
-    public static final DeferredBlock<LargeShredderBlock> LARGE_SHREDDER = BLOCKS.register("large_shredder",
-            () -> new LargeShredderBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get())));
-
-    public static final DeferredBlock<RadioAntennaControllerBlock> RADIO_ANTENNA_CONTROLLER = BLOCKS.register("radio_antenna_controller",
-            () -> new RadioAntennaControllerBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get())));
-
-    public static final DeferredBlock<IndustrialHeaterBlock> INDUSTRIAL_HEATER = BLOCKS.register("industrial_heater",
-            () -> new IndustrialHeaterBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get())));
-    public static final DeferredBlock<ChemplantBlock> CHEMPLANT = BLOCKS.register("chemplant",
-            () -> new ChemplantBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get())));
-
-    public static final DeferredBlock<MachineScrapBlock> MACHINE_SCRAP = BLOCKS.register("machine_scrap",
-            () -> new MachineScrapBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_DECO_BLOCK.get()).noOcclusion().noLootTable()));
-    //endregion
-
-    //region meteorite
-    public static final DeferredBlock<Block> METEORITE_COBBLESTONE = BLOCKS.register("meteorite_cobblestone",
-            () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.COBBLESTONE)));
-    public static final DeferredBlock<HotMeteoriteBlock> HOT_METEORITE_COBBLESTONE = BLOCKS.register("hot_meteorite_cobblestone",
-            () -> new HotMeteoriteBlock(BlockBehaviour.Properties.ofFullCopy(METEORITE_COBBLESTONE.get()).noLootTable()));
-    public static final DeferredBlock<Block> METEORITE_IRON_ORE = BLOCKS.register("meteorite_iron_ore",
-            () -> new Block(BlockBehaviour.Properties.ofFullCopy(METEORITE_COBBLESTONE.get())));
-    public static final DeferredBlock<Block> METEORITE_FIRE_MARBLE_ORE = BLOCKS.register("meteorite_fire_marble_ore",
-            () -> new Block(BlockBehaviour.Properties.ofFullCopy(METEORITE_COBBLESTONE.get())) {
-                @Override
-                @ParametersAreNonnullByDefault
-                public int getExpDrop(BlockState state, LevelAccessor level, BlockPos pos, @Nullable BlockEntity blockEntity, @Nullable Entity breaker, ItemStack tool) {
-                    return 10;
-                }
-            });
-    //endregion
-
     //region Concrete & similar
     public static final DeferredBlock<Block> LIGHT_BRICKS = BLOCKS.register("light_bricks",
             () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.BRICKS)
@@ -336,6 +243,106 @@ public class BMNWBlocks {
     public static final DeferredBlock<ExtendableCatwalkDummyBlock> EXTENDABLE_CATWALK_DUMMY = BLOCKS.register("extendable_catwalk_dummy",
             ExtendableCatwalkDummyBlock::new);
 
+    //endregion
+
+    //region Nuclear after effect blocks
+    public static final DeferredBlock<Block> SLAKED_NUCLEAR_REMAINS = BLOCKS.register("slaked_nuclear_remains",
+            () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE)));
+    public static final DeferredBlock<NuclearRemainsBlock> NUCLEAR_REMAINS = BLOCKS.register("nuclear_remains",
+            () -> new NuclearRemainsBlock(BlockBehaviour.Properties.ofFullCopy(SLAKED_NUCLEAR_REMAINS.get()).randomTicks(),
+                    5, SLAKED_NUCLEAR_REMAINS.get().defaultBlockState()));
+    public static final DeferredBlock<NuclearRemainsBlock> BLAZING_NUCLEAR_REMAINS = BLOCKS.register("blazing_nuclear_remains",
+            () -> new NuclearRemainsBlock(BlockBehaviour.Properties.ofFullCopy(SLAKED_NUCLEAR_REMAINS.get()).randomTicks(),
+                    10, NUCLEAR_REMAINS.get().defaultBlockState()));
+    
+    public static final DeferredBlock<RotatedPillarBlock> CHARRED_LOG = BLOCKS.register("charred_log",
+            () -> new RotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LOG)));
+    public static final DeferredBlock<Block> CHARRED_PLANKS = BLOCKS.register("charred_planks",
+            () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PLANKS)));
+    public static final DeferredBlock<IrradiatedGrassBlock> IRRADIATED_GRASS_BLOCK = BLOCKS.register("irradiated_grass_block",
+            () -> new IrradiatedGrassBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.GRASS_BLOCK)));
+    public static final DeferredBlock<IrradiatedLeavesBlock> IRRADIATED_LEAVES = BLOCKS.register("irradiated_leaves",
+            () -> new IrradiatedLeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES)));
+    public static final DeferredBlock<IrradiatedLeafPileBlock> IRRADIATED_LEAF_PILE = BLOCKS.register("irradiated_leaf_pile",
+            () -> new IrradiatedLeafPileBlock(BlockBehaviour.Properties.ofFullCopy(IRRADIATED_LEAVES.get())));
+    public static final DeferredBlock<IrradiatedPlantBlock> IRRADIATED_PLANT = BLOCKS.register("irradiated_plant",
+            () -> new IrradiatedPlantBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SHORT_GRASS)));
+    //endregion
+
+    //region Barrels
+    
+    public static final DeferredBlock<NuclearWasteBarrelBlock> NUCLEAR_WASTE_BARREL = BLOCKS.register("nuclear_waste_barrel",
+            () -> new NuclearWasteBarrelBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).noOcclusion(), 50));
+
+    //endregion
+
+    //region Bombs & Missiles
+    public static final DeferredBlock<LittleBoyNukeBlock> LITTLE_BOY = BLOCKS.register("little_boy",
+            () -> new LittleBoyNukeBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get())));
+    public static final DeferredBlock<CaseohNukeBlock> CASEOH = BLOCKS.register("caseoh",
+            () -> new CaseohNukeBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get())));
+
+    public static final DeferredBlock<MissileLaunchPadBlock> MISSILE_LAUNCH_PAD = BLOCKS.register("missile_launch_pad",
+            () -> new MissileLaunchPadBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)));
+    //endregion
+
+    //region Basic machines
+
+    // Early game
+    public static final DeferredBlock<WorkbenchBlock> TEST_WORKBENCH = BLOCKS.register("test_workbench",
+            () -> new WorkbenchBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CRAFTING_TABLE), 69420, "workbench"));
+    public static final DeferredBlock<WorkbenchBlock> IRON_WORKBENCH = BLOCKS.register("iron_workbench",
+            () -> new WorkbenchBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CRAFTING_TABLE), 0, "iron_workbench"));
+    public static final DeferredBlock<WorkbenchBlock> STEEL_WORKBENCH = BLOCKS.register("steel_workbench",
+            () -> new WorkbenchBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CRAFTING_TABLE), 1, "steel_workbench"));
+    public static final DeferredBlock<PressBlock> PRESS = BLOCKS.register("press",
+            () -> new PressBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).noOcclusion()));
+    public static final DeferredBlock<AlloyBlastFurnaceBlock> ALLOY_BLAST_FURNACE = BLOCKS.register("alloy_blast_furnace",
+            () -> new AlloyBlastFurnaceBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.NETHER_BRICKS)));
+    public static final DeferredBlock<BuildersFurnaceBlock> BUILDERS_FURNACE = BLOCKS.register("builders_furnace",
+            () -> new BuildersFurnaceBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.FURNACE)));
+
+    // Generators
+    public static final DeferredBlock<CombustionEngineBlock> COMBUSTION_ENGINE = BLOCKS.register("combustion_engine",
+            () -> new CombustionEngineBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get())));
+
+    // Consumers
+    public static final DeferredBlock<DecontaminatorBlock> DECONTAMINATOR = BLOCKS.register("decontaminator",
+            () -> new DecontaminatorBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)));
+
+    public static final DeferredBlock<TestExcavatorBlock> TEST_EXCAVATOR = BLOCKS.register("test_excavator",
+            () -> new TestExcavatorBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get())));
+
+    public static final DeferredBlock<LargeShredderBlock> LARGE_SHREDDER = BLOCKS.register("large_shredder",
+            () -> new LargeShredderBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get())));
+
+    public static final DeferredBlock<RadioAntennaControllerBlock> RADIO_ANTENNA_CONTROLLER = BLOCKS.register("radio_antenna_controller",
+            () -> new RadioAntennaControllerBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get())));
+
+    public static final DeferredBlock<IndustrialHeaterBlock> INDUSTRIAL_HEATER = BLOCKS.register("industrial_heater",
+            () -> new IndustrialHeaterBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get())));
+    public static final DeferredBlock<ChemplantBlock> CHEMPLANT = BLOCKS.register("chemplant",
+            () -> new ChemplantBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get())));
+
+    public static final DeferredBlock<MachineScrapBlock> MACHINE_SCRAP = BLOCKS.register("machine_scrap",
+            () -> new MachineScrapBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_DECO_BLOCK.get()).noOcclusion().noLootTable()));
+    //endregion
+
+    //region meteorite
+    public static final DeferredBlock<Block> METEORITE_COBBLESTONE = BLOCKS.register("meteorite_cobblestone",
+            () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.COBBLESTONE)));
+    public static final DeferredBlock<HotMeteoriteBlock> HOT_METEORITE_COBBLESTONE = BLOCKS.register("hot_meteorite_cobblestone",
+            () -> new HotMeteoriteBlock(BlockBehaviour.Properties.ofFullCopy(METEORITE_COBBLESTONE.get()).noLootTable()));
+    public static final DeferredBlock<Block> METEORITE_IRON_ORE = BLOCKS.register("meteorite_iron_ore",
+            () -> new Block(BlockBehaviour.Properties.ofFullCopy(METEORITE_COBBLESTONE.get())));
+    public static final DeferredBlock<Block> METEORITE_FIRE_MARBLE_ORE = BLOCKS.register("meteorite_fire_marble_ore",
+            () -> new Block(BlockBehaviour.Properties.ofFullCopy(METEORITE_COBBLESTONE.get())) {
+                @Override
+                @ParametersAreNonnullByDefault
+                public int getExpDrop(BlockState state, LevelAccessor level, BlockPos pos, @Nullable BlockEntity blockEntity, @Nullable Entity breaker, ItemStack tool) {
+                    return 10;
+                }
+            });
     //endregion
 
     //region Basic defense

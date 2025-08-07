@@ -81,6 +81,8 @@ public class BMNWTags {
     public static class Fluids {
         public static final TagKey<Fluid> EXTREMELY_HOT = fluidTag("bmnw:extremely_hot");
         public static final TagKey<Fluid> CORROSIVE = fluidTag("bmnw:corrosive");
+        public static final TagKey<Fluid> LIQUID_KEROSENE = fluidTag("bmnw:liquid/kerosene");
+        public static final TagKey<Fluid> LIQUID_OXYGEN = fluidTag("bmnw:liquid/oxygen");
     }
 
     public static class NeoForge {

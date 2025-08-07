@@ -18,6 +18,7 @@ import nl.melonstudios.bmnw.item.weapons.LaserTargetDesignatorItem;
 import nl.melonstudios.bmnw.item.weapons.SniperItem;
 import nl.melonstudios.bmnw.item.weapons.TargetDesignatorItem;
 import nl.melonstudios.bmnw.misc.ExcavationVein;
+import nl.melonstudios.bmnw.weapon.RemoteActivatorItem;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
@@ -345,69 +346,6 @@ public class BMNWItems {
     //endregion
 
 
-    public static final DeferredItem<GeigerCounterItem> GEIGER_COUNTER = ITEMS.register("geiger_counter",
-            () -> new GeigerCounterItem(new Item.Properties().stacksTo(1)));
-    public static final DeferredItem<Item> PRESSING_PART = ITEMS.register("pressing_part",
-            () -> new Item(new Item.Properties()));
-
-    //region machines
-    // Early game
-    public static final DeferredItem<BlockItem> IRON_WORKBENCH = ITEMS.register("iron_workbench",
-            () -> new BlockItem(BMNWBlocks.IRON_WORKBENCH.get(), new Item.Properties()));
-    public static final DeferredItem<BlockItem> STEEL_WORKBENCH = ITEMS.register("steel_workbench",
-            () -> new BlockItem(BMNWBlocks.STEEL_WORKBENCH.get(), new Item.Properties()));
-    public static final DeferredItem<BlockItem> PRESS = ITEMS.register("press",
-            () -> new BlockItem(BMNWBlocks.PRESS.get(), new Item.Properties()));
-    public static final DeferredItem<BlockItem> ALLOY_BLAST_FURNACE = ITEMS.register("alloy_blast_furnace",
-            () -> new BlockItem(BMNWBlocks.ALLOY_BLAST_FURNACE.get(), new Item.Properties()));
-    public static final DeferredItem<BlockItem> BUILDERS_FURNACE = ITEMS.register("builders_furnace",
-            () -> new BlockItem(BMNWBlocks.BUILDERS_FURNACE.get(), new Item.Properties()));
-
-    // Generators
-
-    public static final DeferredItem<BlockItem> COMBUSTION_ENGINE = ITEMS.register("combustion_engine",
-            () -> new BlockItem(BMNWBlocks.COMBUSTION_ENGINE.get(), new Item.Properties()));
-
-    // Consumers
-    public static final DeferredItem<BlockItem> DECONTAMINATOR = ITEMS.register("decontaminator",
-            () -> new BlockItem(BMNWBlocks.DECONTAMINATOR.get(), new Item.Properties()));
-    public static final DeferredItem<ExcavationVeinDetectorItem> EXCAVATION_VEIN_DETECTOR = ITEMS.register("excavation_vein_detector",
-            () -> new ExcavationVeinDetectorItem(new Item.Properties().stacksTo(1)));
-    public static final DeferredItem<BlockItem> TEST_EXCAVATOR = ITEMS.register("test_excavator",
-            () -> new BlockItem(BMNWBlocks.TEST_EXCAVATOR.get(), new Item.Properties()));
-    public static final DeferredItem<LargeShredderBlockItem> LARGE_SHREDDER = ITEMS.register("large_shredder",
-            () -> new LargeShredderBlockItem(BMNWBlocks.LARGE_SHREDDER.get(), new Item.Properties()));
-    public static final DeferredItem<BlockItem> RADIO_ANTENNA_CONTROLLER = ITEMS.register("radio_antenna_controller",
-            () -> new BlockItem(BMNWBlocks.RADIO_ANTENNA_CONTROLLER.get(), new Item.Properties()));
-    public static final DeferredItem<IndustrialHeaterBlockItem> INDUSTRIAL_HEATER = ITEMS.register("industrial_heater",
-            () -> new IndustrialHeaterBlockItem(BMNWBlocks.INDUSTRIAL_HEATER.get(), new Item.Properties()));
-    public static final DeferredItem<ChemplantBlockItem> CHEMPLANT = ITEMS.register("chemplant",
-            () -> new ChemplantBlockItem(BMNWBlocks.CHEMPLANT.get(), new Item.Properties()));
-    public static final DeferredItem<BlockItem> MACHINE_SCRAP = ITEMS.register("machine_scrap",
-            () -> new BlockItem(BMNWBlocks.MACHINE_SCRAP.get(), new Item.Properties()));
-    //endregion
-
-    public static final DeferredItem<BlockItem> METEORITE_COBBLESTONE = ITEMS.register("meteorite_cobblestone",
-            () -> new BlockItem(BMNWBlocks.METEORITE_COBBLESTONE.get(), new Item.Properties()));
-    public static final DeferredItem<BlockItem> HOT_METEORITE_COBBLESTONE = ITEMS.register("hot_meteorite_cobblestone",
-            () -> new BlockItem(BMNWBlocks.HOT_METEORITE_COBBLESTONE.get(), new Item.Properties()));
-    public static final DeferredItem<BlockItem> METEORITE_IRON_ORE = ITEMS.register("meteorite_iron_ore",
-            () -> new BlockItem(BMNWBlocks.METEORITE_IRON_ORE.get(), new Item.Properties()));
-    public static final DeferredItem<BlockItem> METEORITE_FIRE_MARBLE_ORE = ITEMS.register("meteorite_fire_marble_ore",
-            () -> new BlockItem(BMNWBlocks.METEORITE_FIRE_MARBLE_ORE.get(), new Item.Properties().rarity(Rarity.UNCOMMON)));
-
-    //region Bombs & Missiles
-    public static final DeferredItem<DetonatorItem> DETONATOR = ITEMS.register("detonator",
-            () -> new DetonatorItem(new Item.Properties()));
-
-    public static final DeferredItem<MultiBlockItem> MISSILE_LAUNCH_PAD = ITEMS.register("missile_launch_pad",
-            () -> new MultiBlockItem(BMNWBlocks.MISSILE_LAUNCH_PAD.get(), new Item.Properties(),
-                    -1, 0, -1, 1, 0, 1));
-    public static final DeferredItem<TargetDesignatorItem> TARGET_DESIGNATOR = ITEMS.register("target_designator",
-            () -> new TargetDesignatorItem(new Item.Properties()));
-    public static final DeferredItem<LaserTargetDesignatorItem> LASER_TARGET_DESIGNATOR = ITEMS.register("laser_target_designator",
-            () -> new LaserTargetDesignatorItem(new Item.Properties()));
-    //endregion
 
     //region Concrete & similar
     public static final DeferredItem<BlockItem> LIGHT_BRICKS = ITEMS.register("light_bricks",
@@ -479,6 +417,80 @@ public class BMNWItems {
     public static final DeferredItem<BlockItem> EXTENDABLE_CATWALK = ITEMS.register("extendable_catwalk",
             () -> new BlockItem(BMNWBlocks.EXTENDABLE_CATWALK.get(), new Item.Properties()));
 
+    //endregion
+
+
+    public static final DeferredItem<GeigerCounterItem> GEIGER_COUNTER = ITEMS.register("geiger_counter",
+            () -> new GeigerCounterItem(new Item.Properties().stacksTo(1)));
+    public static final DeferredItem<Item> PRESSING_PART = ITEMS.register("pressing_part",
+            () -> new Item(new Item.Properties()));
+
+    //region machines
+    // Early game
+    public static final DeferredItem<BlockItem> IRON_WORKBENCH = ITEMS.register("iron_workbench",
+            () -> new BlockItem(BMNWBlocks.IRON_WORKBENCH.get(), new Item.Properties()));
+    public static final DeferredItem<BlockItem> STEEL_WORKBENCH = ITEMS.register("steel_workbench",
+            () -> new BlockItem(BMNWBlocks.STEEL_WORKBENCH.get(), new Item.Properties()));
+    public static final DeferredItem<BlockItem> PRESS = ITEMS.register("press",
+            () -> new BlockItem(BMNWBlocks.PRESS.get(), new Item.Properties()));
+    public static final DeferredItem<BlockItem> ALLOY_BLAST_FURNACE = ITEMS.register("alloy_blast_furnace",
+            () -> new BlockItem(BMNWBlocks.ALLOY_BLAST_FURNACE.get(), new Item.Properties()));
+    public static final DeferredItem<BlockItem> BUILDERS_FURNACE = ITEMS.register("builders_furnace",
+            () -> new BlockItem(BMNWBlocks.BUILDERS_FURNACE.get(), new Item.Properties()));
+
+    // Generators
+
+    public static final DeferredItem<BlockItem> COMBUSTION_ENGINE = ITEMS.register("combustion_engine",
+            () -> new BlockItem(BMNWBlocks.COMBUSTION_ENGINE.get(), new Item.Properties()));
+
+    // Consumers
+    public static final DeferredItem<BlockItem> DECONTAMINATOR = ITEMS.register("decontaminator",
+            () -> new BlockItem(BMNWBlocks.DECONTAMINATOR.get(), new Item.Properties()));
+    public static final DeferredItem<ExcavationVeinDetectorItem> EXCAVATION_VEIN_DETECTOR = ITEMS.register("excavation_vein_detector",
+            () -> new ExcavationVeinDetectorItem(new Item.Properties().stacksTo(1)));
+    public static final DeferredItem<BlockItem> TEST_EXCAVATOR = ITEMS.register("test_excavator",
+            () -> new BlockItem(BMNWBlocks.TEST_EXCAVATOR.get(), new Item.Properties()));
+    public static final DeferredItem<LargeShredderBlockItem> LARGE_SHREDDER = ITEMS.register("large_shredder",
+            () -> new LargeShredderBlockItem(BMNWBlocks.LARGE_SHREDDER.get(), new Item.Properties()));
+    public static final DeferredItem<BlockItem> RADIO_ANTENNA_CONTROLLER = ITEMS.register("radio_antenna_controller",
+            () -> new BlockItem(BMNWBlocks.RADIO_ANTENNA_CONTROLLER.get(), new Item.Properties()));
+    public static final DeferredItem<IndustrialHeaterBlockItem> INDUSTRIAL_HEATER = ITEMS.register("industrial_heater",
+            () -> new IndustrialHeaterBlockItem(BMNWBlocks.INDUSTRIAL_HEATER.get(), new Item.Properties()));
+    public static final DeferredItem<ChemplantBlockItem> CHEMPLANT = ITEMS.register("chemplant",
+            () -> new ChemplantBlockItem(BMNWBlocks.CHEMPLANT.get(), new Item.Properties()));
+    public static final DeferredItem<BlockItem> MACHINE_SCRAP = ITEMS.register("machine_scrap",
+            () -> new BlockItem(BMNWBlocks.MACHINE_SCRAP.get(), new Item.Properties()));
+    //endregion
+
+    public static final DeferredItem<BlockItem> METEORITE_COBBLESTONE = ITEMS.register("meteorite_cobblestone",
+            () -> new BlockItem(BMNWBlocks.METEORITE_COBBLESTONE.get(), new Item.Properties()));
+    public static final DeferredItem<BlockItem> HOT_METEORITE_COBBLESTONE = ITEMS.register("hot_meteorite_cobblestone",
+            () -> new BlockItem(BMNWBlocks.HOT_METEORITE_COBBLESTONE.get(), new Item.Properties()));
+    public static final DeferredItem<BlockItem> METEORITE_IRON_ORE = ITEMS.register("meteorite_iron_ore",
+            () -> new BlockItem(BMNWBlocks.METEORITE_IRON_ORE.get(), new Item.Properties()));
+    public static final DeferredItem<BlockItem> METEORITE_FIRE_MARBLE_ORE = ITEMS.register("meteorite_fire_marble_ore",
+            () -> new BlockItem(BMNWBlocks.METEORITE_FIRE_MARBLE_ORE.get(), new Item.Properties().rarity(Rarity.UNCOMMON)));
+
+    //region Bombs & Missiles
+    @Deprecated
+    public static final DeferredItem<DetonatorItem> DETONATOR = ITEMS.register("detonator",
+            () -> new DetonatorItem(new Item.Properties()));
+
+    public static final DeferredItem<RemoteActivatorItem> REMOTE_ACTIVATOR = ITEMS.register("remote_activator",
+            () -> new RemoteActivatorItem(new Item.Properties().stacksTo(1)));
+
+    public static final DeferredItem<BlockItem> LITTLE_BOY = ITEMS.register("little_boy",
+            () -> new BlockItem(BMNWBlocks.LITTLE_BOY.get(), new Item.Properties().stacksTo(1)));
+    public static final DeferredItem<BlockItem> CASEOH = ITEMS.register("caseoh",
+            () -> new BlockItem(BMNWBlocks.CASEOH.get(), new Item.Properties().stacksTo(1)));
+
+    public static final DeferredItem<MultiBlockItem> MISSILE_LAUNCH_PAD = ITEMS.register("missile_launch_pad",
+            () -> new MultiBlockItem(BMNWBlocks.MISSILE_LAUNCH_PAD.get(), new Item.Properties(),
+                    -1, 0, -1, 1, 0, 1));
+    public static final DeferredItem<TargetDesignatorItem> TARGET_DESIGNATOR = ITEMS.register("target_designator",
+            () -> new TargetDesignatorItem(new Item.Properties()));
+    public static final DeferredItem<LaserTargetDesignatorItem> LASER_TARGET_DESIGNATOR = ITEMS.register("laser_target_designator",
+            () -> new LaserTargetDesignatorItem(new Item.Properties()));
     //endregion
 
     //region Basic defense

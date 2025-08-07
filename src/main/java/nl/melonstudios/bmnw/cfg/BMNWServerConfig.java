@@ -1,6 +1,7 @@
 package nl.melonstudios.bmnw.cfg;
 
 import net.neoforged.neoforge.common.ModConfigSpec;
+import nl.melonstudios.bmnw.weapon.explosion.ExplosionAlgorithm;
 
 public class BMNWServerConfig {
     private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
@@ -56,12 +57,14 @@ public class BMNWServerConfig {
     private static final ModConfigSpec.BooleanValue FORCE_LOAD_VOLCANO_CHUNKS = BUILDER
             .comment("Force load chunks near volcanoes? Ensures that volcanoes will still tick even if no one is nearby")
             .define("forceLoadVolcanoChunks", false);
-    private static final ModConfigSpec.BooleanValue MORE_DESTRUCTIVE_VOLCANIC_LAVA = BUILDER
-            .comment("Whether volcanic lava can dig through weak blocks like dirt")
-            .define("moreDestructiveVolcanicLava", true);
     static {
         BUILDER.pop();
     }
+
+    private static final ModConfigSpec.IntValue EXPLOSION_CALCULATION_FACTOR = BUILDER
+            .comment("This controls the amount of calculations per tick when calculating explosion damage")
+            .comment("Some explosions auto decide based on remaining ticks however")
+            .defineInRange("explosionCalculationFactor", 500, 10, 32000);
 
     public static final ModConfigSpec SPEC = BUILDER.build();
 
@@ -95,7 +98,7 @@ public class BMNWServerConfig {
     public static boolean forceLoadVolcanoChunks() {
         return FORCE_LOAD_VOLCANO_CHUNKS.get();
     }
-    public static boolean moreDestructiveVolcanicLava() {
-        return MORE_DESTRUCTIVE_VOLCANIC_LAVA.get();
+    public static int explosionCalculationFactor() {
+        return EXPLOSION_CALCULATION_FACTOR.get();
     }
 }

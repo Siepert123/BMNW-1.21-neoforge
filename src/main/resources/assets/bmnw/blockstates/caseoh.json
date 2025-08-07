@@ -1,7 +1,19 @@
 {
   "variants": {
-    "": {
-      "model": "bmnw:block/caseoh"
+    "facing=north": {
+      "model": "bmnw:block/nuke/caseoh"
+    },
+    "facing=east": {
+      "model": "bmnw:block/nuke/caseoh",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "bmnw:block/nuke/caseoh",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "bmnw:block/nuke/caseoh",
+      "y": 270
     }
   }
 }

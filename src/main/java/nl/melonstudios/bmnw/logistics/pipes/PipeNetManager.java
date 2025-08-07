@@ -182,6 +182,10 @@ public final class PipeNetManager extends SavedData {
                 }
             }
         }
+        if (be.getNetworkID() == null) {
+            LOGGER.error("Network ID is null for an unknown reason; skipping reconnect");
+            return;
+        }
         long id = be.getNonNullNetworkID();
         PipeNet pipeNet = this.getOrCreateNetwork(id);
 

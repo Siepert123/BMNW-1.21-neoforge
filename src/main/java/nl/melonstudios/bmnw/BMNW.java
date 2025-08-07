@@ -44,7 +44,13 @@ import nl.melonstudios.bmnw.interfaces.IOpensCatwalkRails;
 import nl.melonstudios.bmnw.logistics.cables.CableNetManager;
 import nl.melonstudios.bmnw.logistics.pipes.PipeNetManager;
 import nl.melonstudios.bmnw.misc.*;
+import nl.melonstudios.bmnw.registries.BMNWResourceKeys;
 import nl.melonstudios.bmnw.screen.*;
+import nl.melonstudios.bmnw.weapon.explosion.Exploder;
+import nl.melonstudios.bmnw.weapon.explosion.PlagiarizedExplosionHandlerParallelized;
+import nl.melonstudios.bmnw.weapon.explosion.ThreadedExplosionHandler;
+import nl.melonstudios.bmnw.weapon.missile.registry.BMNWMissileParts;
+import nl.melonstudios.bmnw.weapon.nuke.BMNWNukeTypes;
 import org.slf4j.Logger;
 
 import javax.annotation.Nonnull;
@@ -142,6 +148,9 @@ public class BMNW {
         BMNWMenuTypes.register(modEventBus);
         BMNWRecipes.register(modEventBus);
 
+        BMNWNukeTypes.register(modEventBus);
+        BMNWMissileParts.register(modEventBus);
+
         DistrictHolder.clientOnly(() -> BMNW::clientInit);
 
         modEventBus.addListener(this::addCreative);
@@ -155,8 +164,12 @@ public class BMNW {
         NeoForge.EVENT_BUS.addListener(ChunkRadiationManager::onChunkUnload);
         NeoForge.EVENT_BUS.addListener(ChunkRadiationManager::updateSystem);
 
-        modEventBus.addListener(BMNW::onBakingComplete);
-        modEventBus.addListener(BMNW::registerAdditionalModels);
+        modEventBus.addListener(BMNWResourceKeys::registerRegistries);
+        modEventBus.addListener(BMNWResourceKeys::registerDataPackRegistries);
+
+        if (dist.isClient()) {
+            clientModEventBusPassthrough(modEventBus);
+        }
 
         if (dist.isClient()) {
             modEventBus.addListener(this::registerMenuScreens);
@@ -183,6 +196,16 @@ public class BMNW {
 
     private static void clientInit() {
         BMNWPartialModels.init();
+    }
+
+    private static void clientModEventBusPassthrough(IEventBus modEventBus) {
+        clientMEB(modEventBus);
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    private static void clientMEB(IEventBus modEventBus) {
+        modEventBus.addListener(BMNW::onBakingComplete);
+        modEventBus.addListener(BMNW::registerAdditionalModels);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
@@ -290,16 +313,18 @@ public class BMNW {
         for (ServerLevel level : event.getServer().getAllLevels()) {
             ChunkRadiationManager.handler.clearSystem(level);
         }
+        Exploder.ALL.forEach(Exploder::cancel);
     }
 
     @SubscribeEvent
     public void serverStopped(ServerStoppedEvent event) {
         PipeNetManager.clear(event);
         CableNetManager.clear(event);
+        Exploder.ALL.clear();
     }
 
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
-    @EventBusSubscriber(modid = MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+    @EventBusSubscriber(modid = MODID, value = Dist.CLIENT)
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {

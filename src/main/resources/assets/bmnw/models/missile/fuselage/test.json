@@ -1,0 +1,11 @@
+{
+	"loader": "neoforge:obj",
+	"model": "bmnw:models/missile/fuselage/test.obj",
+	"automatic_culling": false,
+	"shade_quads": true,
+	"flip_v": true,
+	"textures": {
+		"particle": "bmnw:block/missile/basic_plating",
+		"texture": "bmnw:block/missile/basic_plating"
+	}
+}

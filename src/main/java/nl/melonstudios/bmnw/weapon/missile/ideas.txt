@@ -1,0 +1,5 @@
+Missile fuel types:
+
+solid fuel -> aluminium perchlorate and hydroxyl-terminated polybutadiene (idk what that is)
+
+liquid fuel -> kerosene and liquid oxygen

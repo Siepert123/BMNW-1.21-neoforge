@@ -1,0 +1,12 @@
+{
+  "render_type": "cutout",
+  "loader": "neoforge:obj",
+  "model": "bmnw:models/block/nuke/little_boy.obj",
+  "automatic_culling": false,
+  "shade_quads": true,
+  "flip_v": true,
+  "textures": {
+    "particle": "bmnw:block/steel_block",
+    "texture": "bmnw:block/nuke/little_boy"
+  }
+}

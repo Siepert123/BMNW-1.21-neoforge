@@ -146,12 +146,12 @@ public class StructureMissileSilo extends Structure {
                 boolean detonator = false;
                 for (int i = 0; i < chest.getContainerSize(); i++) {
                     if (i == chest.getContainerSize() - 5 && !detonator) {
-                        ItemStack stack = new ItemStack(BMNWItems.DETONATOR.get());
+                        ItemStack stack = new ItemStack(BMNWItems.REMOTE_ACTIVATOR.get());
                         stack.set(BMNWDataComponents.TARGET, origin);
                         chest.setItem(i, stack);
                     } else {
                         if (!detonator && random.nextFloat() < 0.1f) {
-                            ItemStack stack = new ItemStack(BMNWItems.DETONATOR.get());
+                            ItemStack stack = new ItemStack(BMNWItems.REMOTE_ACTIVATOR.get());
                             stack.set(BMNWDataComponents.TARGET, origin);
                             chest.setItem(i, stack);
                             detonator = true;

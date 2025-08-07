@@ -19,6 +19,6 @@ public class VomitParticleProvider implements ParticleProvider<SimpleParticleTyp
     @Nullable
     @Override
     public Particle createParticle(SimpleParticleType type, ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
-        return new VomitParticle(level, x, y, z, xSpeed, ySpeed, zSpeed, spriteSet);
+        return new VomitParticle(level, x, y, z, xSpeed, ySpeed, zSpeed, this.spriteSet);
     }
 }

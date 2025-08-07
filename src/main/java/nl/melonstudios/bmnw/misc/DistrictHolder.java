@@ -2,6 +2,8 @@ package nl.melonstudios.bmnw.misc;
 
 import net.neoforged.api.distmarker.Dist;
 
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class DistrictHolder {
@@ -20,5 +22,11 @@ public class DistrictHolder {
 
     public static void clientOnly(Supplier<Runnable> func) {
         if (isClient()) func.get().run();
+    }
+    public static <T1> void clientOnly(Supplier<Consumer<T1>> func, T1 param1) {
+        if (isClient()) func.get().accept(param1);
+    }
+    public static <T1, T2> void clientOnly(Supplier<BiConsumer<T1, T2>> func, T1 param1, T2 param2) {
+        if (isClient()) func.get().accept(param1, param2);
     }
 }

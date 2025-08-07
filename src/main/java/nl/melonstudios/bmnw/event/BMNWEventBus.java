@@ -95,9 +95,11 @@ import nl.melonstudios.bmnw.misc.DistrictHolder;
 import nl.melonstudios.bmnw.misc.ExcavationVein;
 import nl.melonstudios.bmnw.misc.FluidTextureData;
 import nl.melonstudios.bmnw.particle.*;
+import nl.melonstudios.bmnw.weapon.explosion.Exploder;
+import nl.melonstudios.bmnw.weapon.explosion.PlagiarizedExplosionHandlerParallelized;
+import nl.melonstudios.bmnw.weapon.missile.entity.CustomizableMissileRenderer;
+import nl.melonstudios.bmnw.weapon.nuke.FallingBombRenderer;
 import nl.melonstudios.bmnw.wifi.*;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.joml.Vector3f;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -112,616 +114,626 @@ import java.util.function.Supplier;
  * BMNWs event bus.
  */
 
+@EventBusSubscriber(modid = "bmnw")
 public class BMNWEventBus {
+    //region Server tick events
 
-    @EventBusSubscriber(modid = "bmnw", bus = EventBusSubscriber.Bus.GAME)
-    public static class GameEventBus {
-        //region Server tick events
-        /**
-         * Irradiates chunks based on source radioactivity (calculated seperately).
-         * Could break at any moment, really.
-         */
-        @SubscribeEvent
-        public static void serverTickEventPre(ServerTickEvent.Pre event) {
-
-        }
-
-        @SubscribeEvent
-        @OnlyIn(Dist.CLIENT)
-        public static void clientTick(ClientTickEvent.Post event) {
-            try {
-                BMNWClient.tick();
-            } catch (Throwable throwable) {
-                throw new RuntimeException("Error in BMNW client tick", throwable);
-            }
-        }
-
-        /**
-         * Handles custom structures
-         */
-        @SubscribeEvent
-        @SuppressWarnings("all")
-        public static void serverTickEventPost(ServerTickEvent.Post event) {
-            while (!DELEGATE_STRUCTURES.isEmpty()) {
-                try {
-                    if (DELEGATE_STRUCTURES.keySet().size() > 0) {
-                        Object[] array = DELEGATE_STRUCTURES.keySet().toArray();
-                        if (array.length != 0) {
-                            LevelAccessor level = (LevelAccessor) array[0];
-                            List<ChunkPos> list = DELEGATE_STRUCTURES.remove(level);
-                            for (ChunkPos pos : list) {
-                                Structures.tryGenerate(level, pos, Structures.seedCache);
-                            }
-                        }
-                    }
-                } catch (ArrayIndexOutOfBoundsException e) {
-
-                }
-            }
-        }
-        //endregion
-
-        //region Entity tick events
-        /**
-         * Handles contamination and decontamination of entities.
-         */
-        @SubscribeEvent
-        public static void entityTickEventPre(EntityTickEvent.Pre event) {
-            if (BMNWServerConfig.radiationSetting().chunk() && !event.getEntity().level().isClientSide()) {
-                if (event.getEntity() instanceof LivingEntity entity) {
-                    if (entity instanceof Player player && (player.isCreative() || player.isSpectator())) return;
-                    RadiationTools.handleRads(entity);
-                }
-                if (!event.getEntity().isInWaterOrBubble() && event.getEntity() instanceof ItemEntity entity) {
-                    ItemStack stack = entity.getItem();
-                    float rads = HazardRegistry.getRadRegistry(stack.getItem());
-                    if (rads > 0) {
-                        float calculated = rads * stack.getCount() / 20;
-                        BlockPos pos = new BlockPos(
-                                (int) entity.getX(),
-                                (int) entity.getY(),
-                                (int) entity.getZ()
-                        );
-                        ChunkRadiationManager.handler.increaseRadiation(entity.level(), pos, calculated);
-                    }
-                }
-            }
-        }
-
-        /**
-         * Handles the negative side effects of radiation on entities.
-         */
-        @SubscribeEvent
-        public static void entityTickEventPost(EntityTickEvent.Post event) {
-            if (event.getEntity() instanceof LivingEntity entity && !event.getEntity().level().isClientSide()) {
-                handleRadFx(entity);
-            }
-        }
-
-        private static void handleRadFx(LivingEntity entity) {
-            if (entity instanceof Player player && (player.isCreative() || player.isSpectator())) return;
-            CompoundTag nbt = entity.getPersistentData();
-
-            float rads = nbt.getFloat("bmnw_RAD");
-            if (rads > 15000 || rads < 0) rads = 15000.0f;
-
-            if (rads > 1000) {
-                if (entity.level().getGameTime() % 20 == 0) {
-                    entity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 100, 1));
-                    entity.hurt(BMNWDamageSources.radiation(entity.level()), 8);
-                }
-            }
-            if (rads > 800) {
-                if (entity.getRandom().nextInt(250) == 0) {
-                    entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100, 1));
-                    entity.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 100, 1));
-                    entity.addEffect(new MobEffectInstance(MobEffects.POISON, 100, 1));
-                    entity.addEffect(new MobEffectInstance(MobEffects.HUNGER, 100, 1));
-                }
-            }
-            if (rads > 600) {
-                if (entity.getRandom().nextInt(1000) == 0) {
-                    entity.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 100, 0));
-                    entity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200, 1));
-                }
-                if (entity.getRandom().nextInt(500) == 0) {
-                    entity.addEffect(new MobEffectInstance(MobEffects.POISON, 100, 0));
-                }
-                if (entity.getRandom().nextInt(500) == 0) {
-                    entity.addEffect(new MobEffectInstance(MobEffects.HUNGER, 100, 4));
-                    entity.addEffect(new MobEffectInstance(BMNWEffects.VOMITING, 20));
-                }
-            }
-            if (rads > 200) {
-                if (entity.getRandom().nextInt(1000) == 0) {
-                    entity.addEffect(new MobEffectInstance(MobEffects.HUNGER, 100, 2));
-                    entity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200, 1));
-                }
-            }
-            if (rads > 100) {
-                if (entity.getRandom().nextInt(1000) == 0) {
-                    entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100));
-                    entity.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 100));
-                }
-            }
-        }
-
-        //endregion
-
-        /**
-         * Calculates source radioactivity of a chunk when it's generated.
-         */
-        @SubscribeEvent
-        public static void chunkEventLoad(ChunkEvent.Load event) {
-            if (!DELEGATE_STRUCTURES.containsKey(event.getLevel())) {
-                DELEGATE_STRUCTURES.put(event.getLevel(), new ArrayList<>());
-            }
-            if (event.isNewChunk()) {
-                DELEGATE_STRUCTURES.get(event.getLevel()).add(event.getChunk().getPos());
-            }
-        }
-
-        @SubscribeEvent
-        public static void getFOVModifier(ComputeFovModifierEvent event) {
-            Player player = event.getPlayer();
-            if (player.isScoping()) {
-                ItemStack mainStack = player.getItemInHand(InteractionHand.MAIN_HAND);
-                if (mainStack.getItem() instanceof IScopeableItem scope) {
-                    event.setNewFovModifier(scope.getFOVModifier(player, mainStack, InteractionHand.MAIN_HAND));
-                    return;
-                }
-                ItemStack offhandStack = player.getItemInHand(InteractionHand.OFF_HAND);
-                if (offhandStack.getItem() instanceof IScopeableItem scope) {
-                    event.setNewFovModifier(scope.getFOVModifier(player, offhandStack, InteractionHand.OFF_HAND));
-                }
-            }
-        }
-
-        private static final Map<LevelAccessor, List<ChunkPos>> DELEGATE_STRUCTURES = new HashMap<>();
-
-        /**
-         * Handles evil item effects.
-         */
-        @SubscribeEvent
-        public static void playerTickEventPre(PlayerTickEvent.Pre event) {
-            MeteoriteEntity.spawnIfReady(event.getEntity());
-
-            if (BMNWServerConfig.radiationSetting().item()) {
-                handlePlayerRads(event.getEntity());
-            }
-        }
-
-        private static void handlePlayerRads(Player player) {
-            if (player.isCreative() || player.isSpectator() || player.level().isClientSide()) return;
-            for (ItemStack stack : player.getInventory().items) {
-                Item item = stack.getItem();
-                if (HazardRegistry.getRadRegistry(item) > 0) {
-                    RadiationTools.contaminate(player, HazardRegistry.getRadRegistry(item) / 20 * stack.getCount());
-                }
-                if (HazardRegistry.getBlindingRegistry(item)) {
-                    player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 20, 0, false, false));
-                }
-                if (HazardRegistry.shouldSkinContact(player)) {
-                    if (stack.is(BMNWTags.Items.EXTREMELY_HOT) ||
-                            item instanceof IExtremelyHotOverride override && override.isExtremelyHot(stack)) {
-                        player.setRemainingFireTicks(20);
-                    }
-                    if (stack.is(BMNWTags.Items.WP)) {
-                        WPEffect.inflictWP(player, 0);
-                    }
-                }
-            }
-        }
-        //endregion
-
-
-
-        //region Block events
-        @SubscribeEvent
-        public static void blockEventPlace(BlockEvent.EntityPlaceEvent event) {
-            if (!event.getLevel().isClientSide()) ChunkRadiationManager.handler.notifyBlockChange((Level)event.getLevel(), event.getPos());
-        }
-        @SuppressWarnings("all")
-        @SubscribeEvent
-        public static void blockEventBreak(BlockEvent.BreakEvent event) {
-            if (!event.getLevel().isClientSide()) ChunkRadiationManager.handler.notifyBlockChange((Level)event.getLevel(), event.getPos());
-        }
-        //endregion
-
-        @SubscribeEvent
-        @SuppressWarnings("deprecation")
-        public static void addAttributeTooltipsEvent(AddAttributeTooltipsEvent event) {
-            ItemStack stack = event.getStack();
-            if (DiscardList.toDiscard.contains(stack.getItem())) {
-                event.addTooltipLines(Component.literal("[DEPRECATED]").withColor(0xFF0000));
-            }
-            if (BMNWClientConfig.hazardInfoLevel().id() > 0) {
-                Item item = stack.getItem();
-                float itemRads = HazardRegistry.getRadRegistry(item);
-                if (itemRads > 0) {
-                    if (BMNWClientConfig.hazardInfoLevel().id() == 2) {
-                        event.addTooltipLines(Component.translatable("tooltip.bmnw.radioactive")
-                                .append(" - ").append(String.valueOf(itemRads)).append("RAD/s").withColor(0x00FF00));
-                    } else {
-                        event.addTooltipLines(Component.translatable("tooltip.bmnw.radioactive").withColor(0x00FF00));
-                    }
-                }
-                float armorProtect = HazardRegistry.getArmorRadResRegistry(item);
-                if (armorProtect > 0) {
-                    if (BMNWClientConfig.hazardInfoLevel().id() == 2) {
-                        event.addTooltipLines(
-                                Component.translatable("tooltip.bmnw.armor_rad_resistance", Math.round((armorProtect)*100))
-                                        .append("%")
-                                        .withColor(0xff00ff)
-                        );
-                    }
-                }
-                if (stack.is(BMNWTags.Items.EXTREMELY_HOT) ||
-                        item instanceof IExtremelyHotOverride override && override.isExtremelyHot(stack)) {
-                    event.addTooltipLines(Component.translatable("tooltip.bmnw.burning").withColor(0xFFFF00));
-                }
-                if (HazardRegistry.getBlindingRegistry(item)) {
-                    event.addTooltipLines(Component.translatable("tooltip.bmnw.blinding").withColor(0x7777FF));
-                }
-                if (HazardRegistry.isWP(stack)) {
-                    event.addTooltipLines(Component.translatable("tooltip.bmnw.wp").withColor(0xFFF2B2));
-                }
-            }
-            if (stack.getItem() instanceof BlockItem) {
-                Block block = ((BlockItem) stack.getItem()).getBlock();
-                if (block.builtInRegistryHolder().is(BMNWTags.Blocks.CLEAN_FLOOR)) {
-                    event.addTooltipLines(
-                            Component.literal("[")
-                                    .append(Component.translatable("tooltip.bmnw.clean_floor"))
-                                    .append("]").withColor(0x8888FF)
-                    );
-                }
-                if (HazardRegistry.enableResistanceDisplay(block) && event.getContext().flag().isAdvanced()) {
-                    event.addTooltipLines(
-                            Component.translatable("tooltip.bmnw.blast_resistance")
-                                    .append(": ")
-                                    .append(String.valueOf(block.getExplosionResistance()))
-                                    .withColor(0x888888),
-                            Component.translatable("tooltip.bmnw.hardness")
-                                    .append(": ")
-                                    .append(String.valueOf(block.defaultDestroyTime()))
-                                    .withColor(0x888888)
-                    );
-                }
-            }
-            if (stack.getItem() instanceof CoreSampleItem) {
-                if (stack.is(BMNWItems.EMPTY_CORE_SAMPLE)) event.addTooltipLines(
-                        Component.translatable("tooltip.bmnw.coreSample.empty").withColor(0x888888)
-                );
-                else {
-                    final ExcavationVein vein = ((CoreSampleItem) stack.getItem()).getVein();
-
-                    final Map<Item, Integer> itemMap = vein.getItemToIntMap();
-
-                    for (Map.Entry<Item, Integer> entry : itemMap.entrySet()) {
-                        event.addTooltipLines(entry.getKey().getName(new ItemStack(entry.getKey())).copy()
-                                .append(": " + vein.percent(entry.getValue()) + "%").withColor(0x888888));
-                    }
-                }
-            }
-        }
-
-        @SubscribeEvent
-        public static void registerReloadListeners(AddReloadListenerEvent event) {
-
-        }
-
-        @SubscribeEvent
-        public static void getBurnTime(FurnaceFuelBurnTimeEvent event) {
-            if (event.getItemStack().is(BMNWItems.DUST)) event.setBurnTime(1);
+    @SubscribeEvent
+    @OnlyIn(Dist.CLIENT)
+    public static void clientTick(ClientTickEvent.Post event) {
+        try {
+            BMNWClient.tick();
+        } catch (Throwable throwable) {
+            throw new RuntimeException("Error in BMNW client tick", throwable);
         }
     }
 
-    @EventBusSubscriber(modid = "bmnw", bus = EventBusSubscriber.Bus.MOD)
-    public static class ModEventBus {
-        private static final Logger LOGGER = LogManager.getLogger();
+    private static long tickTracker;
 
-        @OnlyIn(Dist.CLIENT)
-        private static <T extends Entity, V extends T> void registerEntityRenderingHandler(EntityRenderersEvent.RegisterRenderers event,
-                                                                                           Supplier<EntityType<V>> type,
-                                                                                           EntityRendererProvider<T> renderer) {
-            event.registerEntityRenderer(type.get(), renderer);
-        }
-        @OnlyIn(Dist.CLIENT)
-        private static <T extends BlockEntity, V extends T> void registerBlockEntityRenderingHandler(EntityRenderersEvent.RegisterRenderers event,
-                                                                                                     Supplier<BlockEntityType<V>> type,
-                                                                                                     BlockEntityRendererProvider<T> renderer) {
-            event.registerBlockEntityRenderer(type.get(), renderer);
-        }
+    @SubscribeEvent
+    public static void serverTickEvenPre(ServerTickEvent.Pre event) {
+        tickTracker = System.currentTimeMillis();
+    }
 
-        @OnlyIn(Dist.CLIENT)
-        private static void registerBlockEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
-            registerBlockEntityRenderingHandler(event, BMNWBlockEntities.SMALL_LAMP, SmallLampRenderer::new);
-            registerBlockEntityRenderingHandler(event, BMNWBlockEntities.HATCH, HatchRenderer::new);
-            registerBlockEntityRenderingHandler(event, BMNWBlockEntities.SLIDING_BLAST_DOOR, SlidingBlastDoorRenderer::new);
-            registerBlockEntityRenderingHandler(event, BMNWBlockEntities.SEALED_HATCH, SealedHatchRenderer::new);
-            registerBlockEntityRenderingHandler(event, BMNWBlockEntities.METAL_LOCKABLE_DOOR, MetalLockableDoorRenderer::new);
-            registerBlockEntityRenderingHandler(event, BMNWBlockEntities.METAL_SLIDING_DOOR, MetalSlidingDoorRenderer::new);
-            registerBlockEntityRenderingHandler(event, BMNWBlockEntities.PRESS, PressRenderer::new);
-            registerBlockEntityRenderingHandler(event, BMNWBlockEntities.LARGE_SHREDDER, LargeShredderRenderer::new);
-            registerBlockEntityRenderingHandler(event, BMNWBlockEntities.EXTENDABLE_CATWALK, ExtendableCatwalkRenderer::new);
-            registerBlockEntityRenderingHandler(event, BMNWBlockEntities.TEST_EXCAVATOR, WireAttachedRenderer::new);
-            registerBlockEntityRenderingHandler(event, BMNWBlockEntities.ELECTRIC_WIRE_CONNECTOR, WireAttachedRenderer::new);
-            registerBlockEntityRenderingHandler(event, BMNWBlockEntities.RADIO_ANTENNA_CONTROLLER, RadioAntennaControllerRenderer::new);
-        }
+    @SubscribeEvent
+    @SuppressWarnings("all")
+    public static void serverTickEventPost(ServerTickEvent.Post event) {
+        while (!DELEGATE_STRUCTURES.isEmpty()) {
+            try {
+                if (DELEGATE_STRUCTURES.keySet().size() > 0) {
+                    Object[] array = DELEGATE_STRUCTURES.keySet().toArray();
+                    if (array.length != 0) {
+                        LevelAccessor level = (LevelAccessor) array[0];
+                        List<ChunkPos> list = DELEGATE_STRUCTURES.remove(level);
+                        for (ChunkPos pos : list) {
+                            Structures.tryGenerate(level, pos, Structures.seedCache);
+                        }
+                    }
+                }
+            } catch (Throwable e) {
 
-        @OnlyIn(Dist.CLIENT)
-        private static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
-            registerEntityRenderingHandler(event, BMNWEntityTypes.TEST_NUKE, EmptyEntityRenderer::new);
-            registerEntityRenderingHandler(event, BMNWEntityTypes.BLOCK_DEBRIS, BlockDebrisRenderer::new);
-            registerEntityRenderingHandler(event, BMNWEntityTypes.MULTIBLOCK_DEBRIS, MultiblockDebrisRenderer::new);
-            registerEntityRenderingHandler(event, BMNWEntityTypes.RUBBLE, RubbleRenderer::new);
-
-            registerEntityRenderingHandler(event, BMNWEntityTypes.METEORITE, MeteoriteRenderer::new);
-
-            registerEntityRenderingHandler(event, BMNWEntityTypes.LAVA_EJECTION, LavaEjectionRenderer::new);
-
-            registerEntityRenderingHandler(event, BMNWEntityTypes.SIMPLE_BULLET, SimpleBulletRenderer::new);
-        }
-
-        /**
-         * Registers entity renderers.
-         */
-        @OnlyIn(Dist.CLIENT)
-        @SubscribeEvent
-        public static void entityRenderersEventRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
-            if (DistrictHolder.getDistrict().isClient()) {
-                registerBlockEntityRenderers(event);
-                registerEntityRenderers(event);
             }
         }
-
-        /**
-         * Registers particle providers.
-         */
-        @OnlyIn(Dist.CLIENT)
-        @SubscribeEvent
-        public static void registerParticleProvidersEvent(RegisterParticleProvidersEvent event) {
-            event.registerSpriteSet(BMNWParticleTypes.VOMIT.get(), VomitParticleProvider::new);
-            event.registerSpriteSet(BMNWParticleTypes.EVIL_FOG.get(), EvilFogParticleProvider::new);
-            event.registerSpriteSet(BMNWParticleTypes.FIRE_SMOKE.get(), FireSmokeParticleProvider::new);
-            event.registerSpriteSet(BMNWParticleTypes.SMOKE_HD.get(), SmokeHDParticleProvider::new);
-            event.registerSpriteSet(BMNWParticleTypes.LARGE_MISSILE_SMOKE.get(), LargeMissileSmokeParticle.Provider::new);
-            event.registerSpriteSet(BMNWParticleTypes.DUSTY_FIRE.get(), DustyFireParticle.Provider::new);
-            event.registerSpriteSet(BMNWParticleTypes.FIRE_TRAIL.get(), FireTrailParticle.Provider::new);
-            event.registerSpriteSet(BMNWParticleTypes.DUST_TRAIL.get(), DustTrailParticle.Provider::new);
-            event.registerSpriteSet(BMNWParticleTypes.MUSHROOM_CLOUD.get(), MushroomCloudParticle.Provider::new);
-            event.registerSpriteSet(BMNWParticleTypes.VOLCANO_SMOKE.get(), VolcanoSmokeParticle.Provider::new);
+        int msBudget;
+        if (!Exploder.ALL.isEmpty()) {
+            msBudget = (int)(45 - (System.currentTimeMillis() - tickTracker));
+            if (msBudget > 0) {
+                Exploder.ALL.getFirst().cacheChunksTick(msBudget);
+            }
+            msBudget = (int)(45 - (System.currentTimeMillis() - tickTracker));
+            if (msBudget > 0) {
+                Exploder.ALL.getFirst().destructionTick(msBudget);
+            }
+            Exploder.ALL.removeIf(Exploder::isComplete);
         }
+    }
+    //endregion
 
-
-        private static RegisterCapabilitiesEvent registerCapabilitiesEvent = null;
-        public static boolean doesBlockHaveCapability(Block block, BlockCapability<?, ?> cap) {
-            if (registerCapabilitiesEvent == null) return false;
-            return registerCapabilitiesEvent.isBlockRegistered(cap, block);
+    //region Entity tick events
+    /**
+     * Handles contamination and decontamination of entities.
+     */
+    @SubscribeEvent
+    public static void entityTickEventPre(EntityTickEvent.Pre event) {
+        if (BMNWServerConfig.radiationSetting().chunk() && !event.getEntity().level().isClientSide()) {
+            if (event.getEntity() instanceof LivingEntity entity) {
+                if (entity instanceof Player player && (player.isCreative() || player.isSpectator())) return;
+                RadiationTools.handleRads(entity);
+            }
+            if (event.getEntity() instanceof ItemEntity entity && !event.getEntity().isInWaterOrBubble()) {
+                ItemStack stack = entity.getItem();
+                float rads = HazardRegistry.getRadRegistry(stack.getItem());
+                if (rads > 0) {
+                    float calculated = rads * stack.getCount() / 20;
+                    BlockPos pos = new BlockPos(
+                            (int) entity.getX(),
+                            (int) entity.getY(),
+                            (int) entity.getZ()
+                    );
+                    ChunkRadiationManager.handler.increaseRadiation(entity.level(), pos, calculated);
+                }
+            }
         }
+    }
 
-        @SubscribeEvent
-        public static void registerCapabilitiesEvent(RegisterCapabilitiesEvent event) {
-            registerCapabilitiesEvent = event;
-            registerBlockCaps(event);
-            registerItemCaps(event);
+    /**
+     * Handles the negative side effects of radiation on entities.
+     */
+    @SubscribeEvent
+    public static void entityTickEventPost(EntityTickEvent.Post event) {
+        if (event.getEntity() instanceof LivingEntity entity && !event.getEntity().level().isClientSide()) {
+            handleRadFx(entity);
         }
+    }
 
-        private static void registerBlockCaps(RegisterCapabilitiesEvent event) {
-            event.registerBlock(
-                    Capabilities.ItemHandler.BLOCK,
-                    DummyBlock::getItemHandler,
-                    BMNWBlocks.DUMMY.get()
-            );
-            event.registerBlock(
-                    Capabilities.FluidHandler.BLOCK,
-                    DummyBlock::getFluidHandler,
-                    BMNWBlocks.DUMMY.get()
-            );
-            event.registerBlock(
-                    Capabilities.EnergyStorage.BLOCK,
-                    DummyBlock::getEnergyStorage,
-                    BMNWBlocks.DUMMY.get()
-            );
+    private static void handleRadFx(LivingEntity entity) {
+        if (entity instanceof Player player && (player.isCreative() || player.isSpectator())) return;
+        CompoundTag nbt = entity.getPersistentData();
 
-            event.registerBlock(
-                    Capabilities.EnergyStorage.BLOCK,
-                    ((level, pos, state, blockEntity, context) ->
-                            blockEntity instanceof ElectricWireConnectorBlockEntity connector ? connector.getEnergy(context) : null),
-                    BMNWBlocks.ELECTRIC_WIRE_CONNECTOR.get()
-            );
+        float rads = nbt.getFloat("bmnw_RAD");
+        if (rads > 15000 || rads < 0) rads = 15000.0f;
 
-            event.registerBlock(
-                    Capabilities.EnergyStorage.BLOCK,
-                    ((level, pos, state, be, context) -> {
-                        if (!level.isClientSide && level instanceof ServerLevel serverLevel
-                                && be instanceof ICableNetPropagator propagator) {
-                            CableNetManager manager = CableNetManager.get(serverLevel);
-                            return manager.getEnergyStorage(propagator);
-                        }
-                        return null;
-                    }),
-                    BMNWBlocks.CONDUCTIVE_COPPER_CABLE.get()
-            );
-            event.registerBlock(
-                    Capabilities.FluidHandler.BLOCK,
-                    ((level, pos, state, be, context) -> {
-                        if (!level.isClientSide && level instanceof ServerLevel serverLevel
-                                && be instanceof IPipeNetPropagator propagator) {
-                            PipeNetManager manager = PipeNetManager.get(serverLevel);
-                            return manager.getFluidHandler(propagator);
-                        }
-                        return null;
-                    }),
-                    FluidPipeBlock.ALL_FLUID_PIPES.toArray(Block[]::new)
-            );
-
-            event.registerBlock(
-                    Capabilities.ItemHandler.BLOCK,
-                    ((level, pos, state, be, context) ->
-                            be instanceof PressBlockEntity press ? press.getItems(context) : null),
-                    BMNWBlocks.PRESS.get()
-            );
-
-            event.registerBlock(
-                    Capabilities.ItemHandler.BLOCK,
-                    ((level, pos, state, be, context) -> be instanceof BuildersFurnaceBlockEntity furnace ? furnace.getItemHandler(context) : null),
-                    BMNWBlocks.BUILDERS_FURNACE.get()
-            );
-
-            event.registerBlock(
-                    Capabilities.ItemHandler.BLOCK,
-                    ((level, pos, state, be, context) -> be instanceof CombustionEngineBlockEntity engine ? engine.getItems(context) : null),
-                    BMNWBlocks.COMBUSTION_ENGINE.get()
-            );
-            event.registerBlock(
-                    Capabilities.EnergyStorage.BLOCK,
-                    ((level, pos, state, be, context) -> be instanceof CombustionEngineBlockEntity engine ? engine.getEnergy(context) : null),
-                    BMNWBlocks.COMBUSTION_ENGINE.get()
-            );
-            event.registerBlock(
-                    Capabilities.FluidHandler.BLOCK,
-                    ((level, pos, state, be, context) -> be instanceof CombustionEngineBlockEntity engine ? engine.getFluid(context) : null),
-                    BMNWBlocks.COMBUSTION_ENGINE.get()
-            );
-
-            event.registerBlock(
-                    Capabilities.EnergyStorage.BLOCK,
-                    (level, pos, state, be, context) -> be != null ? ((LargeShredderBlockEntity)be).getEnergy(context) : null,
-                    BMNWBlocks.LARGE_SHREDDER.get()
-            );
-            event.registerBlock(
-                    Capabilities.EnergyStorage.BLOCK,
-                    ((level, pos, state, blockEntity, context) -> blockEntity instanceof RadioAntennaControllerBlockEntity controller ? controller.energy : null),
-                    BMNWBlocks.RADIO_ANTENNA_CONTROLLER.get()
-            );
-
-            event.registerBlock(
-                    Capabilities.EnergyStorage.BLOCK,
-                    (level, pos, state, blockEntity, context) -> blockEntity != null ?
-                            ((MissileLaunchPadBlockEntity) blockEntity).getIEnergy() : null,
-                    BMNWBlocks.MISSILE_LAUNCH_PAD.get()
-            );
-
-            event.registerBlock(
-                    Capabilities.EnergyStorage.BLOCK,
-                    (level, pos, state, be, context) -> be instanceof EnergyStorageBlockEntity storage ?
-                            storage.getEnergyInterface(context) : null,
-                    EnergyStorageBlock.ALL_ENERGY_STORAGE_BLOCKS.toArray(Block[]::new)
-            );
-            event.registerBlock(
-                    Capabilities.FluidHandler.BLOCK,
-                    (level, pos, state, be, context) -> be instanceof FluidBarrelBlockEntity barrel ?
-                            barrel.getFluidInterface(context) : null,
-                    FluidBarrelBlock.getAllFluidBarrels().toArray(FluidBarrelBlock[]::new)
-            );
+        if (rads > 1000) {
+            if (entity.level().getGameTime() % 20 == 0) {
+                entity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 100, 1));
+                entity.hurt(BMNWDamageSources.radiation(entity.level()), 8);
+            }
         }
-        private static void registerItemCaps(RegisterCapabilitiesEvent event) {
-            for (FluidContainerItem item : FluidContainerItem.getAllFluidContainers()) {
-                event.registerItem(
-                        Capabilities.FluidHandler.ITEM,
-                        (stack, ctx) -> new FluidHandlerItemStack(BMNWDataComponents.STORED_FLUID, stack, 2000),
-                        item
+        if (rads > 800) {
+            if (entity.getRandom().nextInt(250) == 0) {
+                entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100, 1));
+                entity.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 100, 1));
+                entity.addEffect(new MobEffectInstance(MobEffects.POISON, 100, 1));
+                entity.addEffect(new MobEffectInstance(MobEffects.HUNGER, 100, 1));
+            }
+        }
+        if (rads > 600) {
+            if (entity.getRandom().nextInt(1000) == 0) {
+                entity.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 100, 0));
+                entity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200, 1));
+            }
+            if (entity.getRandom().nextInt(500) == 0) {
+                entity.addEffect(new MobEffectInstance(MobEffects.POISON, 100, 0));
+            }
+            if (entity.getRandom().nextInt(500) == 0) {
+                entity.addEffect(new MobEffectInstance(MobEffects.HUNGER, 100, 4));
+                entity.addEffect(new MobEffectInstance(BMNWEffects.VOMITING, 20));
+            }
+        }
+        if (rads > 200) {
+            if (entity.getRandom().nextInt(1000) == 0) {
+                entity.addEffect(new MobEffectInstance(MobEffects.HUNGER, 100, 2));
+                entity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200, 1));
+            }
+        }
+        if (rads > 100) {
+            if (entity.getRandom().nextInt(1000) == 0) {
+                entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100));
+                entity.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 100));
+            }
+        }
+    }
+
+    //endregion
+
+    /**
+     * Calculates source radioactivity of a chunk when it's generated.
+     */
+    @SubscribeEvent
+    public static void chunkEventLoad(ChunkEvent.Load event) {
+        if (!DELEGATE_STRUCTURES.containsKey(event.getLevel())) {
+            DELEGATE_STRUCTURES.put(event.getLevel(), new ArrayList<>());
+        }
+        if (event.isNewChunk()) {
+            DELEGATE_STRUCTURES.get(event.getLevel()).add(event.getChunk().getPos());
+        }
+    }
+
+    @SubscribeEvent
+    public static void getFOVModifier(ComputeFovModifierEvent event) {
+        Player player = event.getPlayer();
+        if (player.isScoping()) {
+            ItemStack mainStack = player.getItemInHand(InteractionHand.MAIN_HAND);
+            if (mainStack.getItem() instanceof IScopeableItem scope) {
+                event.setNewFovModifier(scope.getFOVModifier(player, mainStack, InteractionHand.MAIN_HAND));
+                return;
+            }
+            ItemStack offhandStack = player.getItemInHand(InteractionHand.OFF_HAND);
+            if (offhandStack.getItem() instanceof IScopeableItem scope) {
+                event.setNewFovModifier(scope.getFOVModifier(player, offhandStack, InteractionHand.OFF_HAND));
+            }
+        }
+    }
+
+    private static final Map<LevelAccessor, List<ChunkPos>> DELEGATE_STRUCTURES = new HashMap<>();
+
+    /**
+     * Handles evil item effects.
+     */
+    @SubscribeEvent
+    public static void playerTickEventPre(PlayerTickEvent.Pre event) {
+        MeteoriteEntity.spawnIfReady(event.getEntity());
+
+        if (BMNWServerConfig.radiationSetting().item()) {
+            handlePlayerRads(event.getEntity());
+        }
+    }
+
+    private static void handlePlayerRads(Player player) {
+        if (player.isCreative() || player.isSpectator() || player.level().isClientSide()) return;
+        for (ItemStack stack : player.getInventory().items) {
+            Item item = stack.getItem();
+            if (HazardRegistry.getRadRegistry(item) > 0) {
+                RadiationTools.contaminate(player, HazardRegistry.getRadRegistry(item) / 20 * stack.getCount());
+            }
+            if (stack.is(BMNWTags.Items.BLINDING)) {
+                player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 20, 0, false, false));
+            }
+            if (HazardRegistry.shouldSkinContact(player)) {
+                if (stack.is(BMNWTags.Items.EXTREMELY_HOT) ||
+                        item instanceof IExtremelyHotOverride override && override.isExtremelyHot(stack)) {
+                    player.setRemainingFireTicks(20);
+                }
+                if (stack.is(BMNWTags.Items.WP)) {
+                    WPEffect.inflictWP(player, 0);
+                }
+            }
+        }
+    }
+
+
+
+    //region Block events
+    @SubscribeEvent
+    public static void blockEventPlace(BlockEvent.EntityPlaceEvent event) {
+        if (!event.getLevel().isClientSide()) ChunkRadiationManager.handler.notifyBlockChange((Level)event.getLevel(), event.getPos());
+    }
+    @SuppressWarnings("all")
+    @SubscribeEvent
+    public static void blockEventBreak(BlockEvent.BreakEvent event) {
+        if (!event.getLevel().isClientSide()) ChunkRadiationManager.handler.notifyBlockChange((Level)event.getLevel(), event.getPos());
+    }
+    //endregion
+
+    @SubscribeEvent
+    @SuppressWarnings("deprecation")
+    public static void addAttributeTooltipsEvent(AddAttributeTooltipsEvent event) {
+        ItemStack stack = event.getStack();
+        if (DiscardList.toDiscard.contains(stack.getItem())) {
+            event.addTooltipLines(Component.literal("[DEPRECATED]").withColor(0xFF0000));
+        }
+        if (BMNWClientConfig.hazardInfoLevel().id() > 0) {
+            Item item = stack.getItem();
+            float itemRads = HazardRegistry.getRadRegistry(item);
+            if (itemRads > 0) {
+                if (BMNWClientConfig.hazardInfoLevel().id() == 2) {
+                    event.addTooltipLines(Component.translatable("tooltip.bmnw.radioactive")
+                            .append(" - ").append(String.valueOf(itemRads)).append("RAD/s").withColor(0x00FF00));
+                } else {
+                    event.addTooltipLines(Component.translatable("tooltip.bmnw.radioactive").withColor(0x00FF00));
+                }
+            }
+            float armorProtect = HazardRegistry.getArmorRadResRegistry(item);
+            if (armorProtect > 0) {
+                if (BMNWClientConfig.hazardInfoLevel().id() == 2) {
+                    event.addTooltipLines(
+                            Component.translatable("tooltip.bmnw.armor_rad_resistance", Math.round((armorProtect)*100))
+                                    .append("%")
+                                    .withColor(0xff00ff)
+                    );
+                }
+            }
+            if (stack.is(BMNWTags.Items.EXTREMELY_HOT) ||
+                    item instanceof IExtremelyHotOverride override && override.isExtremelyHot(stack)) {
+                event.addTooltipLines(Component.translatable("tooltip.bmnw.burning").withColor(0xFFFF00));
+            }
+            if (HazardRegistry.getBlindingRegistry(item)) {
+                event.addTooltipLines(Component.translatable("tooltip.bmnw.blinding").withColor(0x7777FF));
+            }
+            if (HazardRegistry.isWP(stack)) {
+                event.addTooltipLines(Component.translatable("tooltip.bmnw.wp").withColor(0xFFF2B2));
+            }
+        }
+        if (stack.getItem() instanceof BlockItem) {
+            Block block = ((BlockItem) stack.getItem()).getBlock();
+            if (block.builtInRegistryHolder().is(BMNWTags.Blocks.CLEAN_FLOOR)) {
+                event.addTooltipLines(
+                        Component.literal("[")
+                                .append(Component.translatable("tooltip.bmnw.clean_floor"))
+                                .append("]").withColor(0x8888FF)
+                );
+            }
+            if (HazardRegistry.enableResistanceDisplay(block) && event.getContext().flag().isAdvanced()) {
+                event.addTooltipLines(
+                        Component.translatable("tooltip.bmnw.blast_resistance")
+                                .append(": ")
+                                .append(String.valueOf(block.getExplosionResistance()))
+                                .withColor(0x888888),
+                        Component.translatable("tooltip.bmnw.hardness")
+                                .append(": ")
+                                .append(String.valueOf(block.defaultDestroyTime()))
+                                .withColor(0x888888)
                 );
             }
         }
+        if (stack.getItem() instanceof CoreSampleItem) {
+            if (stack.is(BMNWItems.EMPTY_CORE_SAMPLE)) event.addTooltipLines(
+                    Component.translatable("tooltip.bmnw.coreSample.empty").withColor(0x888888)
+            );
+            else {
+                final ExcavationVein vein = ((CoreSampleItem) stack.getItem()).getVein();
 
-        /**
-         * datagen (ew)
-         */
-        @SubscribeEvent
-        public static void gatherDataEvent(GatherDataEvent event) {
-            DataGenerator generator = event.getGenerator();
-            PackOutput output = generator.getPackOutput();
-            CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
-            ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
+                final Map<Item, Integer> itemMap = vein.getItemToIntMap();
 
-            generator.addProvider(
-                    event.includeServer(),
-                    new AdvancementProvider(
-                            output, lookupProvider, existingFileHelper,
-                            List.of(new BMNWAdvancementGenerator())
-                    )
+                for (Map.Entry<Item, Integer> entry : itemMap.entrySet()) {
+                    event.addTooltipLines(entry.getKey().getName(new ItemStack(entry.getKey())).copy()
+                            .append(": " + vein.percent(entry.getValue()) + "%").withColor(0x888888));
+                }
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void registerReloadListeners(AddReloadListenerEvent event) {
+
+    }
+
+    @SubscribeEvent
+    public static void getBurnTime(FurnaceFuelBurnTimeEvent event) {
+        if (event.getItemStack().is(BMNWItems.DUST)) event.setBurnTime(1);
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    private static <T extends Entity, V extends T> void registerEntityRenderingHandler(EntityRenderersEvent.RegisterRenderers event,
+                                                                                       Supplier<EntityType<V>> type,
+                                                                                       EntityRendererProvider<T> renderer) {
+        event.registerEntityRenderer(type.get(), renderer);
+    }
+    @OnlyIn(Dist.CLIENT)
+    private static <T extends BlockEntity, V extends T> void registerBlockEntityRenderingHandler(EntityRenderersEvent.RegisterRenderers event,
+                                                                                                 Supplier<BlockEntityType<V>> type,
+                                                                                                 BlockEntityRendererProvider<T> renderer) {
+        event.registerBlockEntityRenderer(type.get(), renderer);
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    private static void registerBlockEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
+        registerBlockEntityRenderingHandler(event, BMNWBlockEntities.SMALL_LAMP, SmallLampRenderer::new);
+        registerBlockEntityRenderingHandler(event, BMNWBlockEntities.HATCH, HatchRenderer::new);
+        registerBlockEntityRenderingHandler(event, BMNWBlockEntities.SLIDING_BLAST_DOOR, SlidingBlastDoorRenderer::new);
+        registerBlockEntityRenderingHandler(event, BMNWBlockEntities.SEALED_HATCH, SealedHatchRenderer::new);
+        registerBlockEntityRenderingHandler(event, BMNWBlockEntities.METAL_LOCKABLE_DOOR, MetalLockableDoorRenderer::new);
+        registerBlockEntityRenderingHandler(event, BMNWBlockEntities.METAL_SLIDING_DOOR, MetalSlidingDoorRenderer::new);
+        registerBlockEntityRenderingHandler(event, BMNWBlockEntities.PRESS, PressRenderer::new);
+        registerBlockEntityRenderingHandler(event, BMNWBlockEntities.LARGE_SHREDDER, LargeShredderRenderer::new);
+        registerBlockEntityRenderingHandler(event, BMNWBlockEntities.EXTENDABLE_CATWALK, ExtendableCatwalkRenderer::new);
+        registerBlockEntityRenderingHandler(event, BMNWBlockEntities.TEST_EXCAVATOR, WireAttachedRenderer::new);
+        registerBlockEntityRenderingHandler(event, BMNWBlockEntities.ELECTRIC_WIRE_CONNECTOR, WireAttachedRenderer::new);
+        registerBlockEntityRenderingHandler(event, BMNWBlockEntities.RADIO_ANTENNA_CONTROLLER, RadioAntennaControllerRenderer::new);
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    private static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
+        registerEntityRenderingHandler(event, BMNWEntityTypes.EXPLOSION_HELPER, EmptyEntityRenderer::new);
+        registerEntityRenderingHandler(event, BMNWEntityTypes.RADIATION_LINGER, EmptyEntityRenderer::new);
+        registerEntityRenderingHandler(event, BMNWEntityTypes.FALLING_BOMB, FallingBombRenderer::new);
+        registerEntityRenderingHandler(event, BMNWEntityTypes.BLOCK_DEBRIS, BlockDebrisRenderer::new);
+        registerEntityRenderingHandler(event, BMNWEntityTypes.MULTIBLOCK_DEBRIS, MultiblockDebrisRenderer::new);
+        registerEntityRenderingHandler(event, BMNWEntityTypes.RUBBLE, RubbleRenderer::new);
+
+        registerEntityRenderingHandler(event, BMNWEntityTypes.METEORITE, MeteoriteRenderer::new);
+
+        registerEntityRenderingHandler(event, BMNWEntityTypes.LAVA_EJECTION, LavaEjectionRenderer::new);
+
+        registerEntityRenderingHandler(event, BMNWEntityTypes.SIMPLE_BULLET, SimpleBulletRenderer::new);
+
+        registerEntityRenderingHandler(event, BMNWEntityTypes.CUSTOMIZABLE_MISSILE, CustomizableMissileRenderer::new);
+    }
+
+    /**
+     * Registers entity renderers.
+     */
+    @OnlyIn(Dist.CLIENT)
+    @SubscribeEvent
+    public static void entityRenderersEventRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
+        if (DistrictHolder.getDistrict().isClient()) {
+            registerBlockEntityRenderers(event);
+            registerEntityRenderers(event);
+        }
+    }
+
+    /**
+     * Registers particle providers.
+     */
+    @OnlyIn(Dist.CLIENT)
+    @SubscribeEvent
+    public static void registerParticleProvidersEvent(RegisterParticleProvidersEvent event) {
+        event.registerSpriteSet(BMNWParticleTypes.VOMIT.get(), VomitParticleProvider::new);
+        event.registerSpriteSet(BMNWParticleTypes.EVIL_FOG.get(), EvilFogParticleProvider::new);
+        event.registerSpriteSet(BMNWParticleTypes.FIRE_SMOKE.get(), FireSmokeParticleProvider::new);
+        event.registerSpriteSet(BMNWParticleTypes.SMOKE_HD.get(), SmokeHDParticleProvider::new);
+        event.registerSpriteSet(BMNWParticleTypes.LARGE_MISSILE_SMOKE.get(), LargeMissileSmokeParticle.Provider::new);
+        event.registerSpriteSet(BMNWParticleTypes.DUSTY_FIRE.get(), DustyFireParticle.Provider::new);
+        event.registerSpriteSet(BMNWParticleTypes.FIRE_TRAIL.get(), FireTrailParticle.Provider::new);
+        event.registerSpriteSet(BMNWParticleTypes.DUST_TRAIL.get(), DustTrailParticle.Provider::new);
+        event.registerSpriteSet(BMNWParticleTypes.MUSHROOM_CLOUD.get(), MushroomCloudParticle.Provider::new);
+        event.registerSpriteSet(BMNWParticleTypes.MUSHROOM_SMOKE.get(), MushroomSmokeParticle.Provider::new);
+        event.registerSpriteSet(BMNWParticleTypes.VOLCANO_SMOKE.get(), VolcanoSmokeParticle.Provider::new);
+        event.registerSpriteSet(BMNWParticleTypes.FLUID_VAPOR.get(), FluidVaporParticle.Provider::new);
+    }
+
+
+    private static RegisterCapabilitiesEvent registerCapabilitiesEvent = null;
+    public static boolean doesBlockHaveCapability(Block block, BlockCapability<?, ?> cap) {
+        if (registerCapabilitiesEvent == null) return false;
+        return registerCapabilitiesEvent.isBlockRegistered(cap, block);
+    }
+
+    @SubscribeEvent
+    public static void registerCapabilitiesEvent(RegisterCapabilitiesEvent event) {
+        registerCapabilitiesEvent = event;
+        registerBlockCaps(event);
+        registerItemCaps(event);
+    }
+
+    private static void registerBlockCaps(RegisterCapabilitiesEvent event) {
+        event.registerBlock(
+                Capabilities.ItemHandler.BLOCK,
+                DummyBlock::getItemHandler,
+                BMNWBlocks.DUMMY.get()
+        );
+        event.registerBlock(
+                Capabilities.FluidHandler.BLOCK,
+                DummyBlock::getFluidHandler,
+                BMNWBlocks.DUMMY.get()
+        );
+        event.registerBlock(
+                Capabilities.EnergyStorage.BLOCK,
+                DummyBlock::getEnergyStorage,
+                BMNWBlocks.DUMMY.get()
+        );
+
+        event.registerBlock(
+                Capabilities.EnergyStorage.BLOCK,
+                ((level, pos, state, blockEntity, context) ->
+                        blockEntity instanceof ElectricWireConnectorBlockEntity connector ? connector.getEnergy(context) : null),
+                BMNWBlocks.ELECTRIC_WIRE_CONNECTOR.get()
+        );
+
+        event.registerBlock(
+                Capabilities.EnergyStorage.BLOCK,
+                ((level, pos, state, be, context) -> {
+                    if (!level.isClientSide && level instanceof ServerLevel serverLevel
+                            && be instanceof ICableNetPropagator propagator) {
+                        CableNetManager manager = CableNetManager.get(serverLevel);
+                        return manager.getEnergyStorage(propagator);
+                    }
+                    return null;
+                }),
+                BMNWBlocks.CONDUCTIVE_COPPER_CABLE.get()
+        );
+        event.registerBlock(
+                Capabilities.FluidHandler.BLOCK,
+                ((level, pos, state, be, context) -> {
+                    if (!level.isClientSide && level instanceof ServerLevel serverLevel
+                            && be instanceof IPipeNetPropagator propagator) {
+                        PipeNetManager manager = PipeNetManager.get(serverLevel);
+                        return manager.getFluidHandler(propagator);
+                    }
+                    return null;
+                }),
+                FluidPipeBlock.ALL_FLUID_PIPES.toArray(Block[]::new)
+        );
+
+        event.registerBlock(
+                Capabilities.ItemHandler.BLOCK,
+                ((level, pos, state, be, context) ->
+                        be instanceof PressBlockEntity press ? press.getItems(context) : null),
+                BMNWBlocks.PRESS.get()
+        );
+
+        event.registerBlock(
+                Capabilities.ItemHandler.BLOCK,
+                ((level, pos, state, be, context) -> be instanceof BuildersFurnaceBlockEntity furnace ? furnace.getItemHandler(context) : null),
+                BMNWBlocks.BUILDERS_FURNACE.get()
+        );
+
+        event.registerBlock(
+                Capabilities.ItemHandler.BLOCK,
+                ((level, pos, state, be, context) -> be instanceof CombustionEngineBlockEntity engine ? engine.getItems(context) : null),
+                BMNWBlocks.COMBUSTION_ENGINE.get()
+        );
+        event.registerBlock(
+                Capabilities.EnergyStorage.BLOCK,
+                ((level, pos, state, be, context) -> be instanceof CombustionEngineBlockEntity engine ? engine.getEnergy(context) : null),
+                BMNWBlocks.COMBUSTION_ENGINE.get()
+        );
+        event.registerBlock(
+                Capabilities.FluidHandler.BLOCK,
+                ((level, pos, state, be, context) -> be instanceof CombustionEngineBlockEntity engine ? engine.getFluid(context) : null),
+                BMNWBlocks.COMBUSTION_ENGINE.get()
+        );
+
+        event.registerBlock(
+                Capabilities.EnergyStorage.BLOCK,
+                (level, pos, state, be, context) -> be != null ? ((LargeShredderBlockEntity)be).getEnergy(context) : null,
+                BMNWBlocks.LARGE_SHREDDER.get()
+        );
+        event.registerBlock(
+                Capabilities.EnergyStorage.BLOCK,
+                ((level, pos, state, blockEntity, context) -> blockEntity instanceof RadioAntennaControllerBlockEntity controller ? controller.energy : null),
+                BMNWBlocks.RADIO_ANTENNA_CONTROLLER.get()
+        );
+
+        event.registerBlock(
+                Capabilities.EnergyStorage.BLOCK,
+                (level, pos, state, blockEntity, context) -> blockEntity != null ?
+                        ((MissileLaunchPadBlockEntity) blockEntity).getIEnergy() : null,
+                BMNWBlocks.MISSILE_LAUNCH_PAD.get()
+        );
+
+        event.registerBlock(
+                Capabilities.EnergyStorage.BLOCK,
+                (level, pos, state, be, context) -> be instanceof EnergyStorageBlockEntity storage ?
+                        storage.getEnergyInterface(context) : null,
+                EnergyStorageBlock.ALL_ENERGY_STORAGE_BLOCKS.toArray(Block[]::new)
+        );
+        event.registerBlock(
+                Capabilities.FluidHandler.BLOCK,
+                (level, pos, state, be, context) -> be instanceof FluidBarrelBlockEntity barrel ?
+                        barrel.getFluidInterface(context) : null,
+                FluidBarrelBlock.getAllFluidBarrels().toArray(FluidBarrelBlock[]::new)
+        );
+    }
+    private static void registerItemCaps(RegisterCapabilitiesEvent event) {
+        for (FluidContainerItem item : FluidContainerItem.getAllFluidContainers()) {
+            event.registerItem(
+                    Capabilities.FluidHandler.ITEM,
+                    (stack, ctx) -> new FluidHandlerItemStack(BMNWDataComponents.STORED_FLUID, stack, 2000),
+                    item
             );
         }
+    }
 
-        @SubscribeEvent
-        public static void registerNetwork(RegisterPayloadHandlersEvent event) {
-            final PayloadRegistrar registrar = event.registrar("1");
-            registrar.playToServer(
-                    PacketCycleFluidBarrelConfig.TYPE,
-                    PacketCycleFluidBarrelConfig.STREAM_CODEC,
-                    PacketCycleFluidBarrelConfig::handle
-            );
-            registrar.playToClient(
-                    PacketExtendableCatwalk.TYPE,
-                    PacketExtendableCatwalk.STREAM_CODEC,
-                    PacketExtendableCatwalk::handle
-            );
-            registrar.playToServer(
-                    PacketFluidIdentifier.TYPE,
-                    PacketFluidIdentifier.STREAM_CODEC,
-                    PacketFluidIdentifier::handle
-            );
-            registrar.playToClient(
-                    PacketMetalLockableDoor.TYPE,
-                    PacketMetalLockableDoor.STREAM_CODEC,
-                    PacketMetalLockableDoor::handle
-            );
-            registrar.playToClient(
-                    PacketMushroomCloud.TYPE,
-                    PacketMushroomCloud.STREAM_CODEC,
-                    PacketMushroomCloud::handle
-            );
-            registrar.playToClient(
-                    PacketSealedHatch.TYPE,
-                    PacketSealedHatch.STREAM_CODEC,
-                    PacketSealedHatch::handle
-            );
-            registrar.playToClient(
-                    PacketSendShockwave.TYPE,
-                    PacketSendShockwave.STREAM_CODEC,
-                    PacketSendShockwave::handle
-            );
-            registrar.playToClient(
-                    PacketSetOpenDoor.TYPE,
-                    PacketSetOpenDoor.STREAM_CODEC,
-                    PacketSetOpenDoor::handle
-            );
-            registrar.playToClient(
-                    PacketSlidingBlastDoor.TYPE,
-                    PacketSlidingBlastDoor.STREAM_CODEC,
-                    PacketSlidingBlastDoor::handle
-            );
-            registrar.playToClient(
-                    PacketUpdatePressState.TYPE,
-                    PacketUpdatePressState.STREAM_CODEC,
-                    PacketUpdatePressState::handle
-            );
-            registrar.playToServer(
-                    PacketWorkbenchCraft.TYPE,
-                    PacketWorkbenchCraft.STREAM_CODEC,
-                    PacketWorkbenchCraft::handle
-            );
-        }
+    /**
+     * datagen (ew)
+     */
+    @SubscribeEvent
+    public static void gatherDataEvent(GatherDataEvent event) {
+        DataGenerator generator = event.getGenerator();
+        PackOutput output = generator.getPackOutput();
+        CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
+        ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
 
-        @SubscribeEvent
-        @OnlyIn(Dist.CLIENT)
-        public static void registerColorHandlersItem(RegisterColorHandlersEvent.Item event) {
-            event.register(new FireMarbleColorizer(), BMNWItems.FIRE_MARBLE);
-            event.register(new FluidContainerColorizer(), BMNWItems.PORTABLE_FLUID_TANK);
-            event.register(new FluidIdentifierColorizer(), BMNWItems.FLUID_IDENTIFIER);
-            event.register(new SmallLampColorizer(), SmallLampBlockItem.ALL.toArray(ItemLike[]::new));
-            LOGGER.debug("Registered {} small lamp colorizers", SmallLampBlockItem.ALL.size());
-        }
+        generator.addProvider(
+                event.includeServer(),
+                new AdvancementProvider(
+                        output, lookupProvider, existingFileHelper,
+                        List.of(new BMNWAdvancementGenerator())
+                )
+        );
+    }
 
-        @SubscribeEvent
-        @OnlyIn(Dist.CLIENT)
-        @ParametersAreNonnullByDefault
-        @MethodsReturnNonnullByDefault
-        public static void registerClientExtensions(RegisterClientExtensionsEvent event) {
-            event.registerFluidType(
+    @SubscribeEvent
+    public static void registerNetwork(RegisterPayloadHandlersEvent event) {
+        final PayloadRegistrar registrar = event.registrar("1");
+        registrar.playToServer(
+                PacketCycleFluidBarrelConfig.TYPE,
+                PacketCycleFluidBarrelConfig.STREAM_CODEC,
+                PacketCycleFluidBarrelConfig::handle
+        );
+        registrar.playToClient(
+                PacketExtendableCatwalk.TYPE,
+                PacketExtendableCatwalk.STREAM_CODEC,
+                PacketExtendableCatwalk::handle
+        );
+        registrar.playToServer(
+                PacketFluidIdentifier.TYPE,
+                PacketFluidIdentifier.STREAM_CODEC,
+                PacketFluidIdentifier::handle
+        );
+        registrar.playToClient(
+                PacketMetalLockableDoor.TYPE,
+                PacketMetalLockableDoor.STREAM_CODEC,
+                PacketMetalLockableDoor::handle
+        );
+        registrar.playToClient(
+                PacketMushroomCloud.TYPE,
+                PacketMushroomCloud.STREAM_CODEC,
+                PacketMushroomCloud::handle
+        );
+        registrar.playToClient(
+                PacketSealedHatch.TYPE,
+                PacketSealedHatch.STREAM_CODEC,
+                PacketSealedHatch::handle
+        );
+        registrar.playToClient(
+                PacketSendNuclearSound.TYPE,
+                PacketSendNuclearSound.STREAM_CODEC,
+                PacketSendNuclearSound::handle
+        );
+        registrar.playToClient(
+                PacketSendShockwave.TYPE,
+                PacketSendShockwave.STREAM_CODEC,
+                PacketSendShockwave::handle
+        );
+        registrar.playToClient(
+                PacketSetOpenDoor.TYPE,
+                PacketSetOpenDoor.STREAM_CODEC,
+                PacketSetOpenDoor::handle
+        );
+        registrar.playToClient(
+                PacketSlidingBlastDoor.TYPE,
+                PacketSlidingBlastDoor.STREAM_CODEC,
+                PacketSlidingBlastDoor::handle
+        );
+        registrar.playToClient(
+                PacketUpdatePressState.TYPE,
+                PacketUpdatePressState.STREAM_CODEC,
+                PacketUpdatePressState::handle
+        );
+        registrar.playToServer(
+                PacketWorkbenchCraft.TYPE,
+                PacketWorkbenchCraft.STREAM_CODEC,
+                PacketWorkbenchCraft::handle
+        );
+    }
+
+    @SubscribeEvent
+    @OnlyIn(Dist.CLIENT)
+    public static void registerColorHandlersItem(RegisterColorHandlersEvent.Item event) {
+        event.register(new FireMarbleColorizer(), BMNWItems.FIRE_MARBLE);
+        event.register(new FluidContainerColorizer(), BMNWItems.PORTABLE_FLUID_TANK);
+        event.register(new FluidIdentifierColorizer(), BMNWItems.FLUID_IDENTIFIER);
+        event.register(new SmallLampColorizer(), SmallLampBlockItem.ALL.toArray(ItemLike[]::new));
+    }
+
+    @SubscribeEvent
+    @OnlyIn(Dist.CLIENT)
+    @ParametersAreNonnullByDefault
+    @MethodsReturnNonnullByDefault
+    public static void registerClientExtensions(RegisterClientExtensionsEvent event) {
+        event.registerFluidType(
                 new IClientFluidTypeExtensions() {
                     private static final ResourceLocation TEXTURE_STILL = BMNW.namespace("block/fluid/volcanic_lava_still");
                     private static final ResourceLocation TEXTURE_FLOW = BMNW.namespace("block/fluid/volcanic_lava_flow");
@@ -753,13 +765,12 @@ public class BMNWEventBus {
                     }
                 },
                 VolcanicLavaFluid.TYPE
-            );
-        }
+        );
+    }
 
-        @SubscribeEvent
-        @OnlyIn(Dist.CLIENT)
-        public static void registerClientReloadListeners(RegisterClientReloadListenersEvent event) {
-            event.registerReloadListener(FluidTextureData.getListener());
-        }
+    @SubscribeEvent
+    @OnlyIn(Dist.CLIENT)
+    public static void registerClientReloadListeners(RegisterClientReloadListenersEvent event) {
+        event.registerReloadListener(FluidTextureData.getListener());
     }
 }

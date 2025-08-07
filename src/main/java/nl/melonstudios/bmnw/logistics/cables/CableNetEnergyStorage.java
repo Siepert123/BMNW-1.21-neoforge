@@ -1,14 +1,18 @@
 package nl.melonstudios.bmnw.logistics.cables;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectArraySet;
 import net.minecraft.server.level.ServerLevel;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 import nl.melonstudios.bmnw.interfaces.IPrioritizedEnergyStorage;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
+import java.util.Set;
 
 public class CableNetEnergyStorage implements IEnergyStorage {
+    private static final ThreadLocal<Set<Object>> MUTABLE_SET = ThreadLocal.withInitial(ObjectArraySet::new);
     private static final ThreadLocal<List<IEnergyStorage>> MUTABLE_STORAGE_LIST = ThreadLocal.withInitial(ObjectArrayList::new);
     private static final ThreadLocal<List<EnergyStorageLocation>> MUTABLE_LOCATION_LIST = ThreadLocal.withInitial(ObjectArrayList::new);
     private static final ThreadLocal<Random> MUTABLE_RANDOM = ThreadLocal.withInitial(Random::new);
@@ -34,6 +38,13 @@ public class CableNetEnergyStorage implements IEnergyStorage {
         for (EnergyStorageLocation location : sortedLocations) {
             IEnergyStorage storage = location.getEnergyStorageAt(level);
             if (storage != null && storage.canReceive() && storage.receiveEnergy(toReceive, true) > 0) candidates.add(storage);
+        }
+        {
+            Set<IEnergyStorage> set = new ObjectArraySet<>();
+            set.addAll(candidates);
+            candidates.clear();
+            candidates.addAll(set);
+            set.clear();
         }
         candidates.sort((l, r) -> {
             if (l == r) return 0;
@@ -72,7 +83,15 @@ public class CableNetEnergyStorage implements IEnergyStorage {
         long seed = System.nanoTime();
         for (EnergyStorageLocation location : sortedLocations) {
             IEnergyStorage storage = location.getEnergyStorageAt(level);
-            if (storage != null && storage.canExtract() && storage.extractEnergy(toExtract, true) > 0) candidates.add(storage);
+            if (storage != null && storage.canExtract() && storage.extractEnergy(toExtract, true) > 0)
+                candidates.add(storage);
+        }
+        {
+            Set<IEnergyStorage> set = new ObjectArraySet<>();
+            set.addAll(candidates);
+            candidates.clear();
+            candidates.addAll(set);
+            set.clear();
         }
         candidates.sort((l, r) -> {
             if (l == r) return 0;

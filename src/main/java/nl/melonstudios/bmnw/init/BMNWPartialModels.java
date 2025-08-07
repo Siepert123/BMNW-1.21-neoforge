@@ -34,6 +34,9 @@ public class BMNWPartialModels {
     public static final PartialModel VERTICAL_CABLE_BLACK = block("vertical_cable_black");
     public static final PartialModel VERTICAL_CABLE_REDSTONE = block("vertical_cable_redstone");
 
+    public static final PartialModel NUKE_LITTLE_BOY = block("nuke/little_boy");
+    public static final PartialModel NUKE_CASEOH = block("nuke/caseoh");
+
     private static PartialModel block(String path) {
         return PartialModel.of(ModelResourceLocation.standalone(BMNW.namespace("block/" + path)));
     }

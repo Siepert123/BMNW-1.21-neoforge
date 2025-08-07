@@ -242,8 +242,8 @@ public class FluidPipeBlock extends Block implements SimpleWaterloggedBlock, Ent
     protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, BlockPos neighborPos, boolean movedByPiston) {
         Block newNeighbourBlock = level.getBlockState(neighborPos).getBlock();
         boolean flag = !level.isClientSide && (level.getBlockEntity(neighborPos) instanceof IPipeNetPropagator ||
-                BMNWEventBus.ModEventBus.doesBlockHaveCapability(newNeighbourBlock, Capabilities.FluidHandler.BLOCK));
-        boolean flag2 = !level.isClientSide && (BMNWEventBus.ModEventBus.doesBlockHaveCapability(neighborBlock, Capabilities.FluidHandler.BLOCK));
+                BMNWEventBus.doesBlockHaveCapability(newNeighbourBlock, Capabilities.FluidHandler.BLOCK));
+        boolean flag2 = !level.isClientSide && (BMNWEventBus.doesBlockHaveCapability(neighborBlock, Capabilities.FluidHandler.BLOCK));
 
         if ((flag || flag2) && level.getBlockEntity(pos) instanceof FluidPipeBlockEntity be && level instanceof ServerLevel serverLevel) {
             PipeNetManager manager = PipeNetManager.get(serverLevel);

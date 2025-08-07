@@ -92,9 +92,9 @@ public class CableBlock extends PipeBlock implements EntityBlock {
     protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, BlockPos neighborPos, boolean movedByPiston) {
         Block newNeighborBlock = level.getBlockState(neighborPos).getBlock();
         boolean flag = !level.isClientSide && (level.getBlockEntity(neighborPos) instanceof ICableNetPropagator ||
-                BMNWEventBus.ModEventBus.doesBlockHaveCapability(newNeighborBlock, Capabilities.EnergyStorage.BLOCK));
+                BMNWEventBus.doesBlockHaveCapability(newNeighborBlock, Capabilities.EnergyStorage.BLOCK));
         boolean flag2 = !level.isClientSide &&
-                (BMNWEventBus.ModEventBus.doesBlockHaveCapability(neighborBlock, Capabilities.EnergyStorage.BLOCK));
+                (BMNWEventBus.doesBlockHaveCapability(neighborBlock, Capabilities.EnergyStorage.BLOCK));
 
         if ((flag || flag2) && level.getBlockEntity(pos) instanceof CableBlockEntity be && level instanceof ServerLevel serverLevel) {
             CableNetManager manager = CableNetManager.get(serverLevel);

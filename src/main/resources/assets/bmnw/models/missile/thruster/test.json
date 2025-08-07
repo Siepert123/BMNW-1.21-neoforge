@@ -1,0 +1,36 @@
+{
+	"format_version": "1.9.0",
+	"credit": "Made with Blockbench",
+	"texture_size": [32, 32],
+	"textures": {
+		"0": "bmnw:block/missile/basic_plating",
+		"1": "bmnw:block/fluid/volcanic_lava_still",
+		"particle": "bmnw:block/missile/basic_plating"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 0],
+			"to": [16, 30, 16],
+			"faces": {
+				"north": {"uv": [4, 0, 12, 15], "texture": "#1"},
+				"east": {"uv": [4, 0, 12, 15], "texture": "#1"},
+				"south": {"uv": [4, 0, 12, 15], "texture": "#1"},
+				"west": {"uv": [4, 0, 12, 15], "texture": "#1"},
+				"down": {"uv": [4, 4, 12, 12], "texture": "#1"}
+			}
+		},
+		{
+			"from": [-4, 30, -4],
+			"to": [20, 32, 20],
+			"rotation": {"angle": 0, "axis": "y", "origin": [-4, 30, -4]},
+			"faces": {
+				"north": {"uv": [4, 14, 16, 15], "texture": "#0"},
+				"east": {"uv": [4, 14, 16, 15], "texture": "#0"},
+				"south": {"uv": [4, 14, 16, 15], "texture": "#0"},
+				"west": {"uv": [4, 14, 16, 15], "texture": "#0"},
+				"up": {"uv": [2, 2, 14, 14], "texture": "#0"},
+				"down": {"uv": [2, 2, 14, 14], "texture": "#0"}
+			}
+		}
+	]
+}

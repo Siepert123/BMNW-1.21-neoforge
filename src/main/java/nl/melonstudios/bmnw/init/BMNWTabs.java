@@ -430,7 +430,7 @@ public class BMNWTabs {
                     )
                     .displayItems((parameters, items) -> {
                         items.accept(GEIGER_COUNTER);
-                        items.accept(DETONATOR);
+                        items.accept(REMOTE_ACTIVATOR);
                         items.accept(TARGET_DESIGNATOR);
                         items.accept(LASER_TARGET_DESIGNATOR);
                         items.accept(EXCAVATION_VEIN_DETECTOR);
@@ -571,7 +571,7 @@ public class BMNWTabs {
     public static final Supplier<CreativeModeTab> BOMBS = CREATIVE_TABS.register("bombs",
             () -> CreativeModeTab.builder()
                     .title(Component.translatable("itemGroup.bmnw.bombs"))
-                    .icon(() -> new ItemStack(DETONATOR.get()))
+                    .icon(() -> new ItemStack(REMOTE_ACTIVATOR.get()))
                     .withTabsBefore(
                             CreativeModeTabs.BUILDING_BLOCKS.location(),
                             CreativeModeTabs.COLORED_BLOCKS.location(),
@@ -589,7 +589,10 @@ public class BMNWTabs {
                             ResourceLocation.parse("bmnw:machines")
                     )
                     .displayItems((parameters, items) -> {
-                        items.accept(DETONATOR);
+                        items.accept(REMOTE_ACTIVATOR);
+
+                        items.accept(LITTLE_BOY);
+                        items.accept(CASEOH);
 
                         items.accept(MISSILE_LAUNCH_PAD);
                         items.accept(TARGET_DESIGNATOR);

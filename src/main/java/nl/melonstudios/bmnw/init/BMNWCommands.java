@@ -1,8 +1,14 @@
 package nl.melonstudios.bmnw.init;
 
 import com.mojang.brigadier.Command;
+import com.mojang.brigadier.Message;
+import com.mojang.brigadier.arguments.BoolArgumentType;
+import com.mojang.brigadier.arguments.DoubleArgumentType;
 import com.mojang.brigadier.arguments.FloatArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
+import com.mojang.brigadier.context.CommandContext;
+import com.mojang.brigadier.exceptions.CommandExceptionType;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
@@ -12,14 +18,18 @@ import net.minecraft.commands.arguments.ResourceLocationArgument;
 import net.minecraft.commands.arguments.coordinates.BlockPosArgument;
 import net.minecraft.commands.arguments.coordinates.WorldCoordinates;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Registry;
 import net.minecraft.network.chat.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.network.PacketDistributor;
+import nl.melonstudios.bmnw.cfg.BMNWServerConfig;
 import nl.melonstudios.bmnw.entity.MeteoriteEntity;
 import nl.melonstudios.bmnw.hardcoded.structure.Structures;
 import nl.melonstudios.bmnw.hazard.radiation.ChunkRadiationManager;
@@ -28,6 +38,17 @@ import nl.melonstudios.bmnw.logistics.cables.CableNetManager;
 import nl.melonstudios.bmnw.logistics.pipes.PipeNetManager;
 import nl.melonstudios.bmnw.misc.Books;
 import nl.melonstudios.bmnw.misc.FireMarbleManager;
+import nl.melonstudios.bmnw.registries.BMNWResourceKeys;
+import nl.melonstudios.bmnw.weapon.explosion.*;
+import nl.melonstudios.bmnw.weapon.missile.MissileBlueprint;
+import nl.melonstudios.bmnw.weapon.missile.MissileSystem;
+import nl.melonstudios.bmnw.weapon.missile.entity.CustomizableMissileEntity;
+import nl.melonstudios.bmnw.weapon.missile.registry.MissileFins;
+import nl.melonstudios.bmnw.weapon.missile.registry.MissileFuselage;
+import nl.melonstudios.bmnw.weapon.missile.registry.MissileThruster;
+import nl.melonstudios.bmnw.weapon.missile.registry.MissileWarhead;
+import nl.melonstudios.bmnw.weapon.nuke.NukeType;
+import nl.melonstudios.bmnw.wifi.PacketMushroomCloud;
 import nl.melonstudios.bmnw.wifi.PacketSendShockwave;
 
 import java.util.ArrayList;
@@ -39,6 +60,9 @@ public class BMNWCommands {
             = (i, j) -> SharedSuggestionProvider.suggestResource(Books.getAllIDsAsResourceLocations(), j);
     private static final SuggestionProvider<CommandSourceStack> SUGGEST_STRUCTURES
             = (i, j) -> SharedSuggestionProvider.suggestResource(Structures.getAllStructureResourceLocations(), j);
+    private static SuggestionProvider<CommandSourceStack> suggestRegistry(Registry<?> registry) {
+        return (c, b) -> SharedSuggestionProvider.suggestResource(registry.keySet(), b);
+    }
     public static void register(Commands commands) {
         commands.getDispatcher().register(Commands.literal("bmnw")
                 .then(Commands.literal("radiation")
@@ -299,8 +323,176 @@ public class BMNWCommands {
                                             return Command.SINGLE_SUCCESS;
                                         })
                                 )
+                        ).then(Commands.literal("missile")
+                                .then(Commands.argument("thruster", ResourceLocationArgument.id())
+                                        .suggests(suggestRegistry(MissileSystem.registry_MissileThruster()))
+                                        .then(Commands.argument("fins", ResourceLocationArgument.id())
+                                                .suggests(suggestRegistry(MissileSystem.registry_MissileFins()))
+                                                .then(Commands.argument("fuselage", ResourceLocationArgument.id())
+                                                        .suggests(suggestRegistry(MissileSystem.registry_MissileFuselage()))
+                                                        .then(Commands.argument("warhead", ResourceLocationArgument.id())
+                                                                .suggests(suggestRegistry(MissileSystem.registry_MissileWarhead()))
+                                                                .executes(BMNWCommands::missileCommand)
+                                                        )
+                                                )
+                                        )
+                                )
+                        ).then(Commands.literal("explode")
+                                .then(Commands.argument("str", DoubleArgumentType.doubleArg(2.0))
+                                    .then(Commands.argument("nr", FloatArgumentType.floatArg(0.0F))
+                                            .then(Commands.argument("ct", FloatArgumentType.floatArg(0.0F))
+                                                    .then(Commands.argument("if", FloatArgumentType.floatArg(0.0F))
+                                                            .then(Commands.argument("e", FloatArgumentType.floatArg(0.0F))
+                                                                    .executes(BMNWCommands::explodeCommand)
+                                                            )
+                                                    )
+                                            )
+                                    )
+                                )
+                        ).then(Commands.literal("cloud")
+                                .then(Commands.argument("soul", BoolArgumentType.bool())
+                                        .then(Commands.argument("pos", BlockPosArgument.blockPos())
+                                                .then(Commands.argument("size", FloatArgumentType.floatArg(Math.nextUp(0.0F)))
+                                                        .executes(BMNWCommands::cloudCommand)
+                                                )
+                                        )
+                                )
+                        ).then(Commands.literal("exhelper")
+                                .then(Commands.argument("nuke_type", ResourceLocationArgument.id())
+                                        .suggests(suggestRegistry(BMNWResourceKeys.NUKE_TYPE_REGISTRY))
+                                        .executes(BMNWCommands::exhelperCommand)
+                                )
                         )
                 )
         );
+    }
+
+    private static int missileCommand(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
+        ResourceLocation thrusterID = ResourceLocationArgument.getId(context, "thruster");
+        ResourceLocation finsID = ResourceLocationArgument.getId(context, "fins");
+        ResourceLocation fuselageID = ResourceLocationArgument.getId(context, "fuselage");
+        ResourceLocation warheadID = ResourceLocationArgument.getId(context, "warhead");
+
+        MissileThruster thruster = MissileSystem.registry_MissileThruster().get(thrusterID);
+        if (thruster == null) {
+            throw new CommandSyntaxException(
+                    CommandSyntaxException.BUILT_IN_EXCEPTIONS.dispatcherParseException(),
+                    () -> "Invalid thruster ID: " + thrusterID
+            );
+        }
+        MissileFins fins = MissileSystem.registry_MissileFins().get(finsID);
+        if (fins == null) {
+            throw new CommandSyntaxException(
+                    CommandSyntaxException.BUILT_IN_EXCEPTIONS.dispatcherParseException(),
+                    () -> "Invalid fins ID: " + finsID
+            );
+        }
+        MissileFuselage fuselage = MissileSystem.registry_MissileFuselage().get(fuselageID);
+        if (fuselage == null) {
+            throw new CommandSyntaxException(
+                    CommandSyntaxException.BUILT_IN_EXCEPTIONS.dispatcherParseException(),
+                    () -> "Invalid fuselage ID: " + fuselageID
+            );
+        }
+        MissileWarhead warhead = MissileSystem.registry_MissileWarhead().get(warheadID);
+        if (warhead == null) {
+            throw new CommandSyntaxException(
+                    CommandSyntaxException.BUILT_IN_EXCEPTIONS.dispatcherParseException(),
+                    () -> "Invalid warhead ID: " + warheadID
+            );
+        }
+
+        ServerLevel level = context.getSource().getLevel();
+        ServerPlayer player = context.getSource().getPlayerOrException();
+
+        MissileBlueprint blueprint = MissileBlueprint.fromProperties(
+                thruster, fins, fuselage, warhead
+        );
+
+        if (blueprint.isValidStructure()) {
+            CustomizableMissileEntity entity = new CustomizableMissileEntity(level, player.position(), blueprint);
+            entity.setXRot(90);
+            entity.setYRot(RandomSource.create().nextInt(-180, 180));
+            level.addFreshEntity(entity);
+
+            context.getSource().sendSuccess(
+                    () -> Component.literal("Successfully spawned customized missile").withColor(0x88FF88),
+                    false
+            );
+            Component data = Component.literal("Thruster: ").append(thruster.getName()).append("\n")
+                    .append("Fins: ").append(fins.getName()).append("\n")
+                    .append("Fuselage: ").append(fuselage.getName()).append("\n")
+                    .append("Warhead: ").append(warhead.getName()).withColor(0xFFFFA500);
+            context.getSource().sendSuccess(
+                    () -> data, false
+            );
+        } else {
+            context.getSource().sendFailure(
+                    Component.literal("That missile is not structurally sound").withColor(0x880000)
+            );
+        }
+
+        return Command.SINGLE_SUCCESS;
+    }
+
+    private static int explodeCommand(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
+        ExplosionProps params = new ExplosionProps.Builder()
+                .setNuclearRemains(FloatArgumentType.getFloat(context, "nr"))
+                .setCharredTrees(FloatArgumentType.getFloat(context, "ct"))
+                .setIrradiatedFoliage(FloatArgumentType.getFloat(context, "if"))
+                .setEvaporation(FloatArgumentType.getFloat(context, "e"))
+                .build();
+
+        Vec3 pos = context.getSource().getPosition();
+        Exploder.ALL.add(
+                new PlagiarizedExplosionHandlerBatched(
+                        context.getSource().getLevel(),
+                        (int)pos.x,
+                        (int)pos.y,
+                        (int)pos.z,
+                        (int)DoubleArgumentType.getDouble(context, "str"),
+                        BMNWServerConfig.explosionCalculationFactor(),
+                        (int)(DoubleArgumentType.getDouble(context, "str") / 2)
+                )
+        );
+        context.getSource().sendSuccess(() -> Component.literal("summoned the thing, active = " + Exploder.ALL.size()),
+                false);
+
+        return Command.SINGLE_SUCCESS;
+    }
+
+    private static int cloudCommand(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
+        boolean soul = BoolArgumentType.getBool(context, "soul");
+        Vec3 pos = BlockPosArgument.getBlockPos(context, "pos").getBottomCenter();
+        float size = FloatArgumentType.getFloat(context, "size");
+
+        PacketDistributor.sendToPlayersInDimension(
+                context.getSource().getLevel(),
+                new PacketMushroomCloud(soul, pos.x, pos.y, pos.z, size)
+        );
+
+        return Command.SINGLE_SUCCESS;
+    }
+
+    private static int exhelperCommand(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
+        ResourceLocation nuke = ResourceLocationArgument.getId(context, "nuke_type");
+
+        NukeType type = BMNWResourceKeys.NUKE_TYPE_REGISTRY.get(nuke);
+
+        if (type == null) {
+            context.getSource().sendFailure(Component.literal("Invalid nuke type: " + nuke));
+        } else {
+            context.getSource().getLevel().addFreshEntity(
+                    new ExplosionHelperEntity(
+                            context.getSource().getLevel(),
+                            context.getSource().getPosition(),
+                            type
+                    )
+            );
+
+            context.getSource().sendSuccess(() -> Component.literal("spawned explosion helper with nuke type " + nuke), true);
+        }
+
+        return Command.SINGLE_SUCCESS;
     }
 }

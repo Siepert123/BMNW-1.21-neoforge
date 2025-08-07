@@ -16,7 +16,7 @@ public class VomitParticle extends TextureSheetParticle {
         this.gravity = 1;
         this.lifetime = 200;
         this.quadSize /= 2;
-        this.setSpriteFromAge(spriteSet);
+        this.pickSprite(spriteSet);
     }
 
     @Override

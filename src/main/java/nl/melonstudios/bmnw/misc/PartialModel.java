@@ -52,4 +52,9 @@ public final class PartialModel implements Supplier<BakedModel> {
     public ModelResourceLocation modelLocation() {
         return this.modelLocation;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof PartialModel model && this.modelLocation == model.modelLocation;
+    }
 }

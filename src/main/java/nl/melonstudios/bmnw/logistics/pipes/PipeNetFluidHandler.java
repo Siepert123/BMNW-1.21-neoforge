@@ -1,16 +1,20 @@
 package nl.melonstudios.bmnw.logistics.pipes;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectArraySet;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.server.level.ServerLevel;
 import net.neoforged.neoforge.common.NeoForgeMod;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
@@ -68,6 +72,12 @@ public class PipeNetFluidHandler implements IFluidHandler {
         for (FluidHandlerLocation location : sortedLocations) {
             IFluidHandler handler = location.getFluidHandlerAt(level);
             if (handler != null && handler.fill(resource, FluidAction.SIMULATE) > 0) candidates.add(handler);
+        }
+        {
+            Set<IFluidHandler> set = new LinkedHashSet<>(candidates);
+            candidates.clear();
+            candidates.addAll(set);
+            set.clear();
         }
 
         int remaining = resource.getAmount();

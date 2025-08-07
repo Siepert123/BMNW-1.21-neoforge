@@ -1,7 +1,19 @@
 {
   "variants": {
-    "": {
-      "model": "bmnw:block/little_boy"
+    "facing=north": {
+      "model": "bmnw:block/nuke/little_boy"
+    },
+    "facing=east": {
+      "model": "bmnw:block/nuke/little_boy",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "bmnw:block/nuke/little_boy",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "bmnw:block/nuke/little_boy",
+      "y": 270
     }
   }
 }
