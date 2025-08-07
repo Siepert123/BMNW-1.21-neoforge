@@ -20,7 +20,7 @@ public class BMNWEntityTypes {
     public static final DeferredHolder<EntityType<?>, EntityType<ExplosionHelperEntity>> EXPLOSION_HELPER = ENTITY_TYPES.register(
             "explosion_helper",
             () -> EntityType.Builder.<ExplosionHelperEntity>of(ExplosionHelperEntity::new, MobCategory.MISC)
-                    .clientTrackingRange(2048)
+                    .clientTrackingRange(16)
                     .sized(1.0F, 1.0F)
                     .noSummon()
                     .noSave()
@@ -39,10 +39,9 @@ public class BMNWEntityTypes {
     public static final DeferredHolder<EntityType<?>, EntityType<FallingBombEntity>> FALLING_BOMB = ENTITY_TYPES.register(
             "falling_bomb",
             () -> EntityType.Builder.<FallingBombEntity>of(FallingBombEntity::new, MobCategory.MISC)
-                    .clientTrackingRange(1024)
+                    .clientTrackingRange(2048)
                     .sized(1.0F, 1.0F)
                     .noSummon()
-                    .setShouldReceiveVelocityUpdates(false)
                     .build("bmnw:falling_bomb")
     );
 
