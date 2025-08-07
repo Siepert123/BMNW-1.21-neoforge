@@ -5,10 +5,12 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.Vec3;
@@ -97,11 +99,114 @@ public class ExplosionHelperEntity extends Entity {
             return;
         }
         if (!this.leavesDestroyed) {
-            this.leavesDestroyed = true;
+            if (this.orderedChunks == null) {
+                int c = (this.nukeType.getDestroyedLeavesRadius()+15) >> 4;
+                this.affectedMinCX = this.chunkPosition().x - c;
+                this.affectedMaxCX = this.chunkPosition().x + c;
+                this.affectedMinCZ = this.chunkPosition().z - c;
+                this.affectedMaxCZ = this.chunkPosition().z + c;
+                this.orderedChunks = new ArrayList<>();
+                for (int x = this.affectedMinCX; x <= this.affectedMaxCX; x++) {
+                    for (int z = this.affectedMinCZ; z <= this.affectedMaxCZ; z++) {
+                        this.orderedChunks.add(new ChunkPos(x, z));
+                    }
+                }
+
+                this.orderedChunks.sort((cp1, cp2) -> {
+                    int d1 = this.chunkPosition().getChessboardDistance(cp1);
+                    int d2 = this.chunkPosition().getChessboardDistance(cp2);
+
+                    return d1 - d2;
+                });
+                return;
+            }
+            if (this.orderedChunks.isEmpty()) {
+                this.orderedChunks = null;
+                this.leavesDestroyed = true;
+            } else {
+                int max = Math.max(BMNWServerConfig.explosionCalculationFactor() / 50, 1);
+                for (int i = 0; (i < max && !this.orderedChunks.isEmpty()); i++) {
+                    ChunkPos pos = this.orderedChunks.removeFirst();
+                    BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
+                    int y;
+                    int d2 = this.nukeType.getDestroyedLeavesRadius() * this.nukeType.getDestroyedLeavesRadius();
+                    for (int x = 0; x < 16; x++) {
+                        for (int z = 0; z < 16; z++) {
+                            {
+                                int x1 = (x + pos.getMinBlockX() - this.getBlockX());
+                                int z1 = (z + pos.getMinBlockZ() - this.getBlockZ());
+                                int sqr = x1 * x1 + z1 * z1;
+                                if (sqr > d2) continue;
+                                if (sqr == d2 && this.random.nextBoolean()) continue;
+                            }
+                            for (y = level.getSeaLevel(); y < level.getMaxBuildHeight(); y++) {
+                                mutable.set(pos.getBlockX(x), y, pos.getBlockZ(z));
+                                if (level.getBlockState(mutable).is(BlockTags.LEAVES)) {
+                                    level.setBlock(mutable, Blocks.AIR.defaultBlockState(), 2 | 16 | 32);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
             return;
         }
         if (!this.treesCharred) {
-            this.treesCharred = true;
+            if (this.orderedChunks == null) {
+                int c = (this.nukeType.getCharredTreesRadius()+15) >> 4;
+                this.affectedMinCX = this.chunkPosition().x - c;
+                this.affectedMaxCX = this.chunkPosition().x + c;
+                this.affectedMinCZ = this.chunkPosition().z - c;
+                this.affectedMaxCZ = this.chunkPosition().z + c;
+                this.orderedChunks = new ArrayList<>();
+                for (int x = this.affectedMinCX; x <= this.affectedMaxCX; x++) {
+                    for (int z = this.affectedMinCZ; z <= this.affectedMaxCZ; z++) {
+                        this.orderedChunks.add(new ChunkPos(x, z));
+                    }
+                }
+
+                this.orderedChunks.sort((cp1, cp2) -> {
+                    int d1 = this.chunkPosition().getChessboardDistance(cp1);
+                    int d2 = this.chunkPosition().getChessboardDistance(cp2);
+
+                    return d1 - d2;
+                });
+                return;
+            }
+            if (this.orderedChunks.isEmpty()) {
+                this.orderedChunks = null;
+                this.treesCharred = true;
+            } else {
+                int max = Math.max(BMNWServerConfig.explosionCalculationFactor() / 50, 1);
+                for (int i = 0; (i < max && !this.orderedChunks.isEmpty()); i++) {
+                    ChunkPos pos = this.orderedChunks.removeFirst();
+                    BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
+                    int y;
+                    int d2 = this.nukeType.getCharredTreesRadius() * this.nukeType.getCharredTreesRadius();
+                    for (int x = 0; x < 16; x++) {
+                        for (int z = 0; z < 16; z++) {
+                            {
+                                int x1 = (x + pos.getMinBlockX() - this.getBlockX());
+                                int z1 = (z + pos.getMinBlockZ() - this.getBlockZ());
+                                int sqr = x1 * x1 + z1 * z1;
+                                if (sqr > d2) continue;
+                                if (sqr == d2 && this.random.nextBoolean()) continue;
+                            }
+                            for (y = level.getSeaLevel(); y < level.getMaxBuildHeight(); y++) {
+                                mutable.set(pos.getBlockX(x), y, pos.getBlockZ(z));
+                                BlockState state = level.getBlockState(mutable);
+                                if (state.is(BlockTags.LOGS_THAT_BURN)) {
+                                    level.setBlock(mutable, BMNWBlocks.CHARRED_LOG.get().defaultBlockState(), 2 | 16 | 32);
+                                } else if (state.is(BlockTags.PLANKS)) {
+                                    if (!state.is(Blocks.CRIMSON_PLANKS) && !state.is(Blocks.WARPED_PLANKS)) {
+                                        level.setBlock(mutable, BMNWBlocks.CHARRED_PLANKS.get().defaultBlockState(), 2 | 16 | 32);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
             return;
         }
         if (!this.nuclearRemainsPlaced) {
@@ -130,30 +235,33 @@ public class ExplosionHelperEntity extends Entity {
                 this.orderedChunks = null;
                 this.nuclearRemainsPlaced = true;
             } else {
-                ChunkPos pos = this.orderedChunks.removeFirst();
-                BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
-                int y;
-                int d2 = this.nukeType.getNuclearRemainsRadius()*this.nukeType.getNuclearRemainsRadius();
-                for (int x = 0; x < 16; x++) {
-                    for (int z = 0; z < 16; z++) {
-                        {
-                            int x1 = (x+pos.getMinBlockX()-this.getBlockX());
-                            int z1 = (z+pos.getMinBlockZ()-this.getBlockZ());
-                            int sqr = x1 * x1 + z1 * z1;
-                            if (sqr > d2) continue;
-                            if (sqr == d2 && this.random.nextBoolean()) continue;
-                        }
-                        y = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x+pos.getMinBlockX(), z+pos.getMinBlockZ())-1;
-                        mutable.set(x+pos.getMinBlockX(), y, z+pos.getMinBlockZ());
-                        if (!level.isInWorldBounds(mutable)) continue;
-                        if (validNuclearRemainsState(level.getBlockState(mutable), 250.0F)) {
-                            level.setBlock(mutable, BMNWBlocks.SLAKED_NUCLEAR_REMAINS.get().defaultBlockState(), 3);
-                            mutable.move(0, -1, 0);
-                            if (validNuclearRemainsState(level.getBlockState(mutable), 150.0F)) {
+                int max = Math.max(BMNWServerConfig.explosionCalculationFactor() / 20, 1);
+                for (int i = 0; (i < max && !this.orderedChunks.isEmpty()); i++) {
+                    ChunkPos pos = this.orderedChunks.removeFirst();
+                    BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
+                    int y;
+                    int d2 = this.nukeType.getNuclearRemainsRadius() * this.nukeType.getNuclearRemainsRadius();
+                    for (int x = 0; x < 16; x++) {
+                        for (int z = 0; z < 16; z++) {
+                            {
+                                int x1 = (x + pos.getMinBlockX() - this.getBlockX());
+                                int z1 = (z + pos.getMinBlockZ() - this.getBlockZ());
+                                int sqr = x1 * x1 + z1 * z1;
+                                if (sqr > d2) continue;
+                                if (sqr == d2 && this.random.nextBoolean()) continue;
+                            }
+                            y = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x + pos.getMinBlockX(), z + pos.getMinBlockZ()) - 1;
+                            mutable.set(x + pos.getMinBlockX(), y, z + pos.getMinBlockZ());
+                            if (!level.isInWorldBounds(mutable)) continue;
+                            if (validNuclearRemainsState(level.getBlockState(mutable), 250.0F)) {
                                 level.setBlock(mutable, BMNWBlocks.SLAKED_NUCLEAR_REMAINS.get().defaultBlockState(), 3);
                                 mutable.move(0, -1, 0);
-                                if (validNuclearRemainsState(level.getBlockState(mutable), 50.0F)) {
+                                if (validNuclearRemainsState(level.getBlockState(mutable), 150.0F)) {
                                     level.setBlock(mutable, BMNWBlocks.SLAKED_NUCLEAR_REMAINS.get().defaultBlockState(), 3);
+                                    mutable.move(0, -1, 0);
+                                    if (validNuclearRemainsState(level.getBlockState(mutable), 50.0F)) {
+                                        level.setBlock(mutable, BMNWBlocks.SLAKED_NUCLEAR_REMAINS.get().defaultBlockState(), 3);
+                                    }
                                 }
                             }
                         }
