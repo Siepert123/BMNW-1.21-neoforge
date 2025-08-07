@@ -11,7 +11,6 @@ import nl.melonstudios.bmnw.weapon.RadiationLingerEntity;
 import nl.melonstudios.bmnw.weapon.explosion.ExplosionHelperEntity;
 import nl.melonstudios.bmnw.weapon.missile.entity.CustomizableMissileEntity;
 import nl.melonstudios.bmnw.weapon.nuke.FallingBombEntity;
-import nl.melonstudios.bmnw.weapon.torpedo.TorpedoEntity;
 
 public class BMNWEntityTypes {
     private static final DeferredRegister<EntityType<?>> ENTITY_TYPES =
@@ -92,13 +91,6 @@ public class BMNWEntityTypes {
                     .build("bmnw:simple_bullet")
     );
 
-    public static final DeferredHolder<EntityType<?>, EntityType<TorpedoEntity>> TORPEDO = ENTITY_TYPES.register(
-            "torpedo",
-            () -> EntityType.Builder.<TorpedoEntity>of(TorpedoEntity::new, MobCategory.MISC)
-                    .sized(1.0F, 1.0F)
-                    .noSummon()
-                    .build("bmnw:torpedo")
-    );
     public static final DeferredHolder<EntityType<?>, EntityType<CustomizableMissileEntity>> CUSTOMIZABLE_MISSILE = ENTITY_TYPES.register(
             "customizable_missile",
             () -> EntityType.Builder.<CustomizableMissileEntity>of(CustomizableMissileEntity::new, MobCategory.MISC)
