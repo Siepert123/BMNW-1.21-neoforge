@@ -1,6 +1,5 @@
 package nl.melonstudios.bmnw.weapon.missile;
 
-import com.google.common.collect.MapMaker;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.Registry;

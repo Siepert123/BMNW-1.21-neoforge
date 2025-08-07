@@ -96,7 +96,6 @@ import nl.melonstudios.bmnw.misc.ExcavationVein;
 import nl.melonstudios.bmnw.misc.FluidTextureData;
 import nl.melonstudios.bmnw.particle.*;
 import nl.melonstudios.bmnw.weapon.explosion.Exploder;
-import nl.melonstudios.bmnw.weapon.explosion.PlagiarizedExplosionHandlerParallelized;
 import nl.melonstudios.bmnw.weapon.missile.entity.CustomizableMissileRenderer;
 import nl.melonstudios.bmnw.weapon.nuke.FallingBombRenderer;
 import nl.melonstudios.bmnw.wifi.*;

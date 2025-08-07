@@ -7,7 +7,6 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
-import org.jetbrains.annotations.Contract;
 
 import javax.annotation.Nullable;
 

@@ -19,7 +19,6 @@ import net.minecraft.world.inventory.InventoryMenu;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.client.model.data.ModelData;
-import nl.melonstudios.bmnw.init.BMNWPartialModels;
 import nl.melonstudios.bmnw.misc.Library;
 import nl.melonstudios.bmnw.weapon.missile.MissileBlueprint;
 import nl.melonstudios.bmnw.weapon.missile.MissileSystem;

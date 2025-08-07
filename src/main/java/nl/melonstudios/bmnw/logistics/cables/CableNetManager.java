@@ -18,7 +18,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.saveddata.SavedData;
 import net.neoforged.neoforge.event.server.ServerStoppedEvent;
-import nl.melonstudios.bmnw.logistics.pipes.PipeNet;
 import nl.melonstudios.bmnw.misc.Library;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

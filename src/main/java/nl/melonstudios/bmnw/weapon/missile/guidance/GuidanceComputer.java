@@ -6,10 +6,9 @@ import io.netty.buffer.ByteBufOutputStream;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtAccounter;
 import net.minecraft.nbt.NbtIo;
-import nl.melonstudios.bmnw.weapon.missile.entity.CustomizableMissileEntity;
 import nl.melonstudios.bmnw.computer.internals.ByteArray;
+import nl.melonstudios.bmnw.weapon.missile.entity.CustomizableMissileEntity;
 
-import java.io.DataInputStream;
 import java.io.IOException;
 
 public class GuidanceComputer {

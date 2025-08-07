@@ -7,7 +7,6 @@ import net.neoforged.neoforge.energy.IEnergyStorage;
 import nl.melonstudios.bmnw.interfaces.IPrioritizedEnergyStorage;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Random;
 import java.util.Set;
 

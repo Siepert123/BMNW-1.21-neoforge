@@ -4,8 +4,6 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.util.Mth;
-import net.minecraft.world.phys.Vec3;
-import nl.melonstudios.bmnw.init.BMNWParticleTypes;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;

@@ -1,7 +1,6 @@
 package nl.melonstudios.bmnw.cfg;
 
 import net.neoforged.neoforge.common.ModConfigSpec;
-import nl.melonstudios.bmnw.weapon.explosion.ExplosionAlgorithm;
 
 public class BMNWServerConfig {
     private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();

@@ -7,8 +7,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
-import nl.melonstudios.bmnw.interfaces.tagvisitor.ICompoundTagVisitor;
-import nl.melonstudios.bmnw.interfaces.tagvisitor.ILongTagVisitor;
 import nl.melonstudios.bmnw.misc.Library;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

@@ -1,6 +1,5 @@
 package nl.melonstudios.bmnw.weapon.missile.registry;
 
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;

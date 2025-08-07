@@ -1,10 +1,5 @@
 package nl.melonstudios.bmnw.block.container.fluid;
 
-import net.neoforged.neoforge.fluids.FluidStack;
-import nl.melonstudios.bmnw.init.BMNWTags;
-
-import java.util.function.Predicate;
-
 public class FluidTankProperties {
     public interface ICopyable {
         default int getCapacity() {

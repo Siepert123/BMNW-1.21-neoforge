@@ -20,7 +20,6 @@ import nl.melonstudios.bmnw.hardcoded.recipe.jei.subtype.FluidContainerSubtype;
 import nl.melonstudios.bmnw.hardcoded.recipe.jei.subtype.FluidIdentifierSubtype;
 import nl.melonstudios.bmnw.init.BMNWItems;
 import nl.melonstudios.bmnw.init.BMNWRecipes;
-import nl.melonstudios.bmnw.init.BMNWTabs;
 import nl.melonstudios.bmnw.item.tools.FluidContainerItem;
 import nl.melonstudios.bmnw.screen.*;
 import nl.melonstudios.bmnw.softcoded.recipe.*;

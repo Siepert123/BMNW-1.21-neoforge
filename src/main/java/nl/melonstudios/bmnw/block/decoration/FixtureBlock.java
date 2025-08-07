@@ -1,7 +1,6 @@
 package nl.melonstudios.bmnw.block.decoration;
 
 import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;

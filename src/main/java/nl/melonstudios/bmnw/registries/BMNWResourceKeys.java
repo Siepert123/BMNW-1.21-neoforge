@@ -8,7 +8,10 @@ import net.neoforged.neoforge.registries.RegistryBuilder;
 import nl.melonstudios.bmnw.BMNW;
 import nl.melonstudios.bmnw.misc.DistrictHolder;
 import nl.melonstudios.bmnw.weapon.missile.MissileSystem;
-import nl.melonstudios.bmnw.weapon.missile.registry.*;
+import nl.melonstudios.bmnw.weapon.missile.registry.MissileFins;
+import nl.melonstudios.bmnw.weapon.missile.registry.MissileFuselage;
+import nl.melonstudios.bmnw.weapon.missile.registry.MissileThruster;
+import nl.melonstudios.bmnw.weapon.missile.registry.MissileWarhead;
 import nl.melonstudios.bmnw.weapon.nuke.NukeType;
 
 public class BMNWResourceKeys {
