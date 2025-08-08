@@ -21,7 +21,7 @@ public class PlagiarizedExplosionHandlerBatched implements Exploder {
     private final int posZ;
     private final Level level;
 
-    private final int strength;
+    private final float strength;
     private final int length;
     private final int speed;
     private final int gspNumMax;
@@ -38,7 +38,7 @@ public class PlagiarizedExplosionHandlerBatched implements Exploder {
         return this;
     }
 
-    public PlagiarizedExplosionHandlerBatched(Level level, int x, int y, int z, int strength, int speed, int length) {
+    public PlagiarizedExplosionHandlerBatched(Level level, int x, int y, int z, float strength, int speed, int length) {
         this.level = level;
         this.posX = x;
         this.posY = y;
@@ -87,7 +87,7 @@ public class PlagiarizedExplosionHandlerBatched implements Exploder {
             // Get Cartesian coordinates for spherical coordinates
             Vec3 vec = this.getSpherical2cartesian();
 
-            int length = this.strength;
+            float length = this.strength;
             float res = this.strength;
 
             Vector3f lastPos = null;

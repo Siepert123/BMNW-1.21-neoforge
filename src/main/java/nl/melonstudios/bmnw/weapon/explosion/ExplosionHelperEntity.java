@@ -208,7 +208,7 @@ public class ExplosionHelperEntity extends Entity {
                             this.getBlockX(),
                             this.getBlockY(),
                             this.getBlockZ(),
-                            this.nukeType.getBlastRadius()*2,
+                            this.nukeType.getBlastStrength(),
                             BMNWServerConfig.explosionCalculationFactor(),
                             this.nukeType.getBlastRadius()
                     ).setOnFinish(
@@ -474,17 +474,17 @@ public class ExplosionHelperEntity extends Entity {
         if (this.level() instanceof ServerLevel level) {
             int min = this.nukeType.getMinimalBiomeRadius();
             if (min > 1) {
-                BMNWBiomes.fillBiomeCylindrical(level, this.blockPosition().below(-(min/2)), min,
+                BMNWBiomes.fillBiomeCylindrical(level, this.blockPosition().below(min), min*2,
                         min, BMNWBiomes.nuclear_wastes_minimal(level));
             }
             int nor = this.nukeType.getNormalBiomeRadius();
             if (nor > 1) {
-                BMNWBiomes.fillBiomeCylindrical(level, this.blockPosition().below(-(nor/2)), nor,
+                BMNWBiomes.fillBiomeCylindrical(level, this.blockPosition().below(nor), nor*2,
                         nor, BMNWBiomes.nuclear_wastes(level));
             }
             int sev = this.nukeType.getSevereBiomeRadius();
             if (sev > 1) {
-                BMNWBiomes.fillBiomeCylindrical(level, this.blockPosition().below(-(sev/2)), sev,
+                BMNWBiomes.fillBiomeCylindrical(level, this.blockPosition().below(sev), sev*2,
                         sev, BMNWBiomes.nuclear_wastes_severe(level));
             }
         }

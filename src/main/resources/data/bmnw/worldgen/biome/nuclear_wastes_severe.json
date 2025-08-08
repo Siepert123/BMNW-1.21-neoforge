@@ -2,16 +2,18 @@
   "carvers": {},
   "downfall": 0.0,
   "effects": {
-    "fog_color": 3355443,
+    "fog_color": 2236962,
     "particle": {
       "options": {
         "type": "minecraft:ash"
       },
-      "probability": 0.118093334
+      "probability": 0.05
     },
-    "sky_color": 3355443,
+    "sky_color": 2236962,
     "water_color": 0,
-    "water_fog_color": 0
+    "water_fog_color": 0,
+    "grass_color": 0,
+    "foliage_color": 0
   },
   "features": [
     [],

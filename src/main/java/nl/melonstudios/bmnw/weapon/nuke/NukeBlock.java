@@ -72,6 +72,7 @@ public abstract class NukeBlock extends Block implements RemoteActivateable {
             NukeType type = this.getNukeType();
             tooltipComponents.add(Component.literal("Radius: " + type.getBlastRadius()));
             if (tooltipFlag.isAdvanced()) {
+                tooltipComponents.add(Component.literal("Blast strength: " + type.getBlastStrength()));
                 tooltipComponents.add(Component.literal("Nuclear remains radius: " + type.getNuclearRemainsRadius()));
                 tooltipComponents.add(Component.literal("Charred trees radius: " + type.getCharredTreesRadius()));
                 tooltipComponents.add(Component.literal("Destroyed leaves radius: " + type.getDestroyedLeavesRadius()));
@@ -84,6 +85,14 @@ public abstract class NukeBlock extends Block implements RemoteActivateable {
                 tooltipComponents.add(Component.literal("Is soul type: " + type.isSoulType()));
                 tooltipComponents.add(Component.literal("Mushroom cloud size: " + type.getMushroomCloudSize()));
                 tooltipComponents.add(Component.literal("Sound distance: " + type.getSoundDistance()));
+                tooltipComponents.add(Component.literal("Entity blow distance: " + type.getSoundDistance()));
+                tooltipComponents.add(Component.literal("Entity fire ticks: " + type.getEntityFireTicks()));
+                tooltipComponents.add(Component.literal("Entity damage multiplier: " + type.entityDamageMultiplier()));
+                tooltipComponents.add(Component.literal("Has impact override: " + (type.impactOverride() != null)));
+                tooltipComponents.add(Component.literal("Explosion sound: " + type.getExplosionSound().getLocation()));
+                tooltipComponents.add(Component.literal("Radius nuclear_waste_minimal biome: " + type.getMinimalBiomeRadius()));
+                tooltipComponents.add(Component.literal("Radius nuclear_waste biome: " + type.getNormalBiomeRadius()));
+                tooltipComponents.add(Component.literal("Radius nuclear_waste_severe biome: " + type.getSevereBiomeRadius()));
             }
         } else {
             tooltipComponents.add(Component.literal("Hold [ALT] for advanced nuke info"));

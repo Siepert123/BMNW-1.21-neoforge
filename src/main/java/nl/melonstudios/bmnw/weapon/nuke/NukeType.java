@@ -10,6 +10,9 @@ import java.util.function.Consumer;
 
 public abstract class NukeType {
     public abstract int getBlastRadius();
+    public float getBlastStrength() {
+        return this.getBlastRadius() * 2;
+    }
     public int getNuclearRemainsRadius() {
         return this.getBlastRadius();
     }
