@@ -6,14 +6,14 @@ import nl.melonstudios.bmnw.weapon.nuke.BMNWNukeTypes;
 import nl.melonstudios.bmnw.weapon.nuke.NukeBlock;
 import nl.melonstudios.bmnw.weapon.nuke.NukeType;
 
-public class LittleBoyNukeBlock extends NukeBlock {
-    public LittleBoyNukeBlock(Properties properties) {
+public class NuclearChargeNukeBlock extends NukeBlock {
+    public NuclearChargeNukeBlock(Properties properties) {
         super(properties);
     }
 
     @Override
     public NukeType getNukeType() {
-        return BMNWNukeTypes.LITTLE_BOY.get();
+        return BMNWNukeTypes.NUCLEAR_CHARGE.get();
     }
 
     @Override
@@ -21,4 +21,8 @@ public class LittleBoyNukeBlock extends NukeBlock {
         return true;
     }
 
+    @Override
+    public boolean fancyDrop() {
+        return false;
+    }
 }

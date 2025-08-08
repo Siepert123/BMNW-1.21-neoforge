@@ -1,57 +1,59 @@
 package nl.melonstudios.bmnw.weapon.nuke.type;
 
+import net.minecraft.sounds.SoundEvent;
+import nl.melonstudios.bmnw.init.BMNWSounds;
 import nl.melonstudios.bmnw.misc.math.Easing;
 import nl.melonstudios.bmnw.weapon.nuke.NukeType;
 
-public class CaseohNukeType extends NukeType {
+public class NuclearChargeNukeType extends NukeType {
     @Override
     public int getBlastRadius() {
-        return 256;
+        return 64;
     }
 
     @Override
     public int getNuclearRemainsRadius() {
-        return 256;
+        return 32;
     }
 
     @Override
     public int getCharredTreesRadius() {
-        return 320;
+        return 0;
     }
 
     @Override
     public int getDestroyedLeavesRadius() {
-        return 460;
+        return 0;
     }
 
     @Override
     public float getReleasedRadiation() {
-        return 1_000_000F;
+        return 100F;
     }
 
     @Override
     public int getReleasedRadiationLingerTicks() {
-        return 12800;
+        return 200;
     }
 
     @Override
     public Easing getReleasedRadiationDropOff() {
-        return Easing.OUT_SINE;
+        return Easing.OUT_CUBIC;
     }
 
     @Override
     public int getFalloutRadius() {
-        return 640;
+        return 0;
     }
 
     @Override
     public boolean hasDarkenedNuclearRemains() {
-        return true;
+        return false;
     }
 
     @Override
     public boolean hasShockwave() {
-        return true;
+        return false;
     }
 
     @Override
@@ -61,15 +63,35 @@ public class CaseohNukeType extends NukeType {
 
     @Override
     public float getMushroomCloudSize() {
-        return 25.0F;
+        return 5;
     }
 
     @Override
     public int getSoundDistance() {
-        return 2048;
+        return 512;
     }
 
-    public CaseohNukeType() {
+    @Override
+    public int getMinimalBiomeRadius() {
+        return 0;
+    }
+
+    @Override
+    public int getNormalBiomeRadius() {
+        return 0;
+    }
+
+    @Override
+    public int getSevereBiomeRadius() {
+        return 0;
+    }
+
+    @Override
+    public SoundEvent getExplosionSound() {
+        return BMNWSounds.LARGE_EXPLOSION.get();
+    }
+
+    public NuclearChargeNukeType() {
 
     }
 }

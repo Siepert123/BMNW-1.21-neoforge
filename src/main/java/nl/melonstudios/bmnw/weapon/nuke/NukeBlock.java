@@ -14,10 +14,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.phys.Vec3;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
-import nl.melonstudios.bmnw.misc.PartialModel;
 import nl.melonstudios.bmnw.weapon.RemoteActivateable;
 import org.jetbrains.annotations.Nullable;
 
@@ -94,13 +90,8 @@ public abstract class NukeBlock extends Block implements RemoteActivateable {
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
-    public abstract PartialModel getDroppedModel();
-
     public abstract NukeType getNukeType();
     public abstract boolean isReady(Level level, BlockPos pos);
-
-    public abstract void playDetonationSound(Level level, Vec3 pos);
 
     public boolean fancyDrop() {
         return true;

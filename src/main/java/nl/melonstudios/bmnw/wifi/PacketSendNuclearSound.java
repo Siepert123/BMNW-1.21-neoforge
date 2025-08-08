@@ -48,7 +48,7 @@ public record PacketSendNuclearSound(Vec3 source, NukeType nukeType) implements 
                 double inv = dist - playerDist;
                 double volume = Math.min(1.0F, inv*2 / dist);
                 double pitch = inv / dist;
-                player.playSound(BMNWSounds.NUCLEAR_BOOM.get(), (float) volume, (float) pitch);
+                player.playSound(this.nukeType.getExplosionSound(), (float) volume, (float) pitch);
             }
         });
     }

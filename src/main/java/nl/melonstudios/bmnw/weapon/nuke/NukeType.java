@@ -1,5 +1,8 @@
 package nl.melonstudios.bmnw.weapon.nuke;
 
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.util.Mth;
+import nl.melonstudios.bmnw.init.BMNWSounds;
 import nl.melonstudios.bmnw.misc.math.Easing;
 
 import javax.annotation.Nullable;
@@ -7,7 +10,9 @@ import java.util.function.Consumer;
 
 public abstract class NukeType {
     public abstract int getBlastRadius();
-    public abstract int getNuclearRemainsRadius();
+    public int getNuclearRemainsRadius() {
+        return this.getBlastRadius();
+    }
     public abstract int getCharredTreesRadius();
     public abstract int getDestroyedLeavesRadius();
     public abstract float getReleasedRadiation();
@@ -31,5 +36,19 @@ public abstract class NukeType {
 
     public @Nullable Consumer<FallingBombEntity> impactOverride() {
         return null;
+    }
+
+    public SoundEvent getExplosionSound() {
+        return BMNWSounds.NUCLEAR_BOOM.get();
+    }
+
+    public int getMinimalBiomeRadius() {
+        return Mth.ceil(this.getBlastRadius() * 1.5F);
+    }
+    public int getNormalBiomeRadius() {
+        return this.getBlastRadius();
+    }
+    public int getSevereBiomeRadius() {
+        return Mth.ceil(this.getBlastRadius() * 0.5F);
     }
 }

@@ -40,6 +40,7 @@ import nl.melonstudios.bmnw.effect.WPEffect;
 import nl.melonstudios.bmnw.entity.LavaEjectionEntity;
 import nl.melonstudios.bmnw.weapon.nuke.block.CaseohNukeBlock;
 import nl.melonstudios.bmnw.weapon.nuke.block.LittleBoyNukeBlock;
+import nl.melonstudios.bmnw.weapon.nuke.block.NuclearChargeNukeBlock;
 import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -277,6 +278,8 @@ public class BMNWBlocks {
     //endregion
 
     //region Bombs & Missiles
+    public static final DeferredBlock<NuclearChargeNukeBlock> NUCLEAR_CHARGE = BLOCKS.register("nuclear_charge",
+            () -> new NuclearChargeNukeBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get())));
     public static final DeferredBlock<LittleBoyNukeBlock> LITTLE_BOY = BLOCKS.register("little_boy",
             () -> new LittleBoyNukeBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get())));
     public static final DeferredBlock<CaseohNukeBlock> CASEOH = BLOCKS.register("caseoh",
