@@ -59,6 +59,8 @@ public class BMNWTags {
 
         public static final TagKey<Block> CLEAN_FLOOR = tag("clean_floor");
 
+        public static final TagKey<Block> PLANT = tag("plant");
+
         private static TagKey<Block> tag(@Nonnull String name) {
             return TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath("bmnw", name));
         }

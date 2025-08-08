@@ -1,0 +1,9 @@
+{
+  "values": [
+    "#minecraft:leaves",
+    "#minecraft:replaceable_by_trees",
+    "minecraft:lily_pad",
+    "minecraft:bamboo",
+    "minecraft:sugar_cane"
+  ]
+}

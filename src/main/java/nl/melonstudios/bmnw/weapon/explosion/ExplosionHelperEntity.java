@@ -8,22 +8,18 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.Tags;
@@ -33,7 +29,6 @@ import nl.melonstudios.bmnw.init.BMNWBlocks;
 import nl.melonstudios.bmnw.init.BMNWDamageSources;
 import nl.melonstudios.bmnw.init.BMNWEntityTypes;
 import nl.melonstudios.bmnw.init.BMNWTags;
-import nl.melonstudios.bmnw.misc.Library;
 import nl.melonstudios.bmnw.registries.BMNWResourceKeys;
 import nl.melonstudios.bmnw.weapon.RadiationLingerEntity;
 import nl.melonstudios.bmnw.weapon.nuke.NukeType;
@@ -53,12 +48,9 @@ public class ExplosionHelperEntity extends Entity {
         super(entityType, level);
 
         this.mutable1 = new BlockPos.MutableBlockPos();
-        this.leaves = new HashSet<>();
-        for (Holder<Block> b : BuiltInRegistries.BLOCK.getTagOrEmpty(BlockTags.LEAVES)) {
-            leaves.add(b.value());
-        }
-        for (Holder<Block> b : BuiltInRegistries.BLOCK.getTagOrEmpty(BlockTags.REPLACEABLE_BY_TREES)) {
-            leaves.add(b.value());
+        this.plant = new HashSet<>();
+        for (Holder<Block> b : BuiltInRegistries.BLOCK.getTagOrEmpty(BMNWTags.Blocks.PLANT)) {
+            plant.add(b.value());
         }
         this.logs = new HashSet<>();
         for (Holder<Block> b : BuiltInRegistries.BLOCK.getTagOrEmpty(BlockTags.LOGS_THAT_BURN)) {
@@ -67,6 +59,10 @@ public class ExplosionHelperEntity extends Entity {
         this.planks = new HashSet<>();
         for (Holder<Block> b : BuiltInRegistries.BLOCK.getTagOrEmpty(BlockTags.PLANKS)) {
             if (b.value() != Blocks.CRIMSON_PLANKS && b.value() != Blocks.WARPED_PLANKS) planks.add(b.value());
+        }
+        this.coals = new HashSet<>();
+        for (Holder<Block> b : BuiltInRegistries.BLOCK.getTagOrEmpty(Tags.Blocks.ORES_COAL)) {
+            coals.add(b.value());
         }
     }
 
@@ -109,7 +105,7 @@ public class ExplosionHelperEntity extends Entity {
     private boolean nuclearRemainsPlaced = false;
     private boolean waterRefilled = false;
 
-    private final HashSet<Block> leaves, logs, planks;
+    private final HashSet<Block> plant, logs, planks, coals;
     private AABB entitySearch;
 
     private int age;
@@ -279,7 +275,7 @@ public class ExplosionHelperEntity extends Entity {
                             }
                             for (y = level.getSeaLevel(); y < level.getMaxBuildHeight(); y++) {
                                 mutable.set(pos.getBlockX(x), y, pos.getBlockZ(z));
-                                if (this.leaves.contains(level.getBlockState(mutable).getBlock())) {
+                                if (this.plant.contains(level.getBlockState(mutable).getBlock())) {
                                     level.setBlock(mutable, Blocks.AIR.defaultBlockState(), 2 | 16 | 32);
                                 }
                             }
@@ -391,14 +387,39 @@ public class ExplosionHelperEntity extends Entity {
                             y = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x + pos.getMinBlockX(), z + pos.getMinBlockZ()) - 1;
                             mutable.set(x + pos.getMinBlockX(), y, z + pos.getMinBlockZ());
                             if (!level.isInWorldBounds(mutable)) continue;
-                            if (validNuclearRemainsState(level.getBlockState(mutable), 250.0F)) {
-                                level.setBlock(mutable, BMNWBlocks.SLAKED_NUCLEAR_REMAINS.get().defaultBlockState(), 3);
-                                mutable.move(0, -1, 0);
-                                if (validNuclearRemainsState(level.getBlockState(mutable), 150.0F)) {
+                            BlockState state;
+                            if (this.validNuclearRemainsState(state = level.getBlockState(mutable), 250.0F)) {
+                                if (this.coals.contains(state.getBlock())) {
+                                    level.setBlock(mutable,
+                                            this.random.nextFloat() < 0.05F ?
+                                                    Blocks.EMERALD_ORE.defaultBlockState() :
+                                                    Blocks.DIAMOND_ORE.defaultBlockState(), 3
+                                    );
+                                } else {
                                     level.setBlock(mutable, BMNWBlocks.SLAKED_NUCLEAR_REMAINS.get().defaultBlockState(), 3);
-                                    mutable.move(0, -1, 0);
-                                    if (validNuclearRemainsState(level.getBlockState(mutable), 50.0F)) {
+                                }
+                                mutable.move(0, -1, 0);
+                                if (this.validNuclearRemainsState(state = level.getBlockState(mutable), 150.0F)) {
+                                    if (this.coals.contains(state.getBlock())) {
+                                        level.setBlock(mutable,
+                                                this.random.nextFloat() < 0.05F ?
+                                                        Blocks.EMERALD_ORE.defaultBlockState() :
+                                                        Blocks.DIAMOND_ORE.defaultBlockState(), 3
+                                        );
+                                    } else {
                                         level.setBlock(mutable, BMNWBlocks.SLAKED_NUCLEAR_REMAINS.get().defaultBlockState(), 3);
+                                    }
+                                    mutable.move(0, -1, 0);
+                                    if (this.validNuclearRemainsState(state = level.getBlockState(mutable), 50.0F)) {
+                                        if (this.coals.contains(state.getBlock())) {
+                                            level.setBlock(mutable,
+                                                    this.random.nextFloat() < 0.05F ?
+                                                            Blocks.EMERALD_ORE.defaultBlockState() :
+                                                            Blocks.DIAMOND_ORE.defaultBlockState(), 3
+                                            );
+                                        } else {
+                                            level.setBlock(mutable, BMNWBlocks.SLAKED_NUCLEAR_REMAINS.get().defaultBlockState(), 3);
+                                        }
                                     }
                                 }
                             }
@@ -457,10 +478,11 @@ public class ExplosionHelperEntity extends Entity {
                 || level.getFluidState(this.mutable1.setWithOffset(pos, 0, 0, 1)).is(Tags.Fluids.WATER);
     }
 
-    private static boolean validNuclearRemainsState(BlockState state, float resistance) {
+    private boolean validNuclearRemainsState(BlockState state, float resistance) {
         if (state.getBlock().getExplosionResistance() >= resistance) return false;
         if (state.canBeReplaced()) return false;
         if (!state.getFluidState().isEmpty()) return false;
+        if (this.coals.contains(state.getBlock())) return true;
         return !state.is(BMNWTags.Blocks.NUCLEAR_REMAINS_BLACKLIST);
     }
 
