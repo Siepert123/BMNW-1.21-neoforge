@@ -2,16 +2,31 @@
   "variants": {
     "": [
       {
-        "model": "bmnw:block/slaked_nuclear_remains"
+        "model": "bmnw:block/nuclear_remains_new0"
       },
       {
-        "model": "bmnw:block/slaked_nuclear_remains"
+        "model": "bmnw:block/nuclear_remains_new1"
       },
       {
-        "model": "bmnw:block/slaked_bland_nuclear_remains"
+        "model": "bmnw:block/nuclear_remains_new2"
       },
       {
-        "model": "bmnw:block/slaked_stretched_nuclear_remains"
+        "model": "bmnw:block/nuclear_remains_new3"
+      },
+      {
+        "model": "bmnw:block/nuclear_remains_new4"
+      },
+      {
+        "model": "bmnw:block/nuclear_remains_new5"
+      },
+      {
+        "model": "bmnw:block/nuclear_remains_new6"
+      },
+      {
+        "model": "bmnw:block/nuclear_remains_new7"
+      },
+      {
+        "model": "bmnw:block/nuclear_remains_new8"
       }
     ]
   }
