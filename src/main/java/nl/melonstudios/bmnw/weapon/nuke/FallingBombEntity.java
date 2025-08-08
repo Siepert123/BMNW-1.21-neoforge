@@ -19,6 +19,8 @@ import nl.melonstudios.bmnw.init.BMNWEntityTypes;
 import nl.melonstudios.bmnw.weapon.explosion.ExplosionHelperEntity;
 import nl.melonstudios.bmnw.wifi.PacketSendNuclearSound;
 
+import java.util.function.Consumer;
+
 public class FallingBombEntity extends Entity implements IEntityWithComplexSpawn {
     public FallingBombEntity(EntityType<?> entityType, Level level) {
         super(entityType, level);
@@ -56,17 +58,22 @@ public class FallingBombEntity extends Entity implements IEntityWithComplexSpawn
     }
 
     private void detonate() {
-        if (this.level() instanceof ServerLevel level) {
-            if (this.getNukeBlock().getNukeType().getSoundDistance() > 0) {
-                PacketDistributor.sendToPlayersInDimension(level,
-                        new PacketSendNuclearSound(this.position(), this.getNukeBlock().getNukeType())
+        Consumer<FallingBombEntity> override = this.getNukeBlock().getNukeType().impactOverride();
+        if (override != null) {
+            override.accept(this);
+        } else {
+            if (this.level() instanceof ServerLevel level) {
+                if (this.getNukeBlock().getNukeType().getSoundDistance() > 0) {
+                    PacketDistributor.sendToPlayersInDimension(level,
+                            new PacketSendNuclearSound(this.position(), this.getNukeBlock().getNukeType())
+                    );
+                }
+                level.addFreshEntity(
+                        new ExplosionHelperEntity(
+                                this.level(), this.position(), this.getNukeBlock().getNukeType()
+                        )
                 );
             }
-            level.addFreshEntity(
-                    new ExplosionHelperEntity(
-                            this.level(), this.position(), this.getNukeBlock().getNukeType()
-                    )
-            );
         }
     }
 
