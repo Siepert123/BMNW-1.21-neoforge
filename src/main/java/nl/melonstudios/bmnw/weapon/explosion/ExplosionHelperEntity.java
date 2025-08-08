@@ -345,7 +345,7 @@ public class ExplosionHelperEntity extends Entity {
         if (!this.nuclearRemainsPlaced) {
             if (this.orderedChunks == null) {
                 LOGGER.debug("[{}] starting nuclear remains", this.getId());
-                int c = (this.nukeType.getNuclearRemainsRadius()+15) >> 4;
+                int c = (this.nukeType.getNuclearRemainsRadius()+31) >> 4;
                 this.affectedMinCX = this.chunkPosition().x - c;
                 this.affectedMaxCX = this.chunkPosition().x + c;
                 this.affectedMinCZ = this.chunkPosition().z - c;
@@ -374,15 +374,17 @@ public class ExplosionHelperEntity extends Entity {
                     ChunkPos pos = this.orderedChunks.removeFirst();
                     BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
                     int y;
-                    int d2 = this.nukeType.getNuclearRemainsRadius() * this.nukeType.getNuclearRemainsRadius();
+                    int d = this.nukeType.getNuclearRemainsRadius();
+                    int d2 = d*d;
+                    int d3 = (d+16)*(d+16);
                     for (int x = 0; x < 16; x++) {
                         for (int z = 0; z < 16; z++) {
                             {
                                 int x1 = (x + pos.getMinBlockX() - this.getBlockX());
                                 int z1 = (z + pos.getMinBlockZ() - this.getBlockZ());
                                 int sqr = x1 * x1 + z1 * z1;
-                                if (sqr > d2) continue;
-                                if (sqr == d2 && this.random.nextBoolean()) continue;
+                                if (sqr > d3) continue;
+                                if (sqr > d2 && this.random.nextBoolean()) continue;
                             }
                             y = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x + pos.getMinBlockX(), z + pos.getMinBlockZ()) - 1;
                             mutable.set(x + pos.getMinBlockX(), y, z + pos.getMinBlockZ());
