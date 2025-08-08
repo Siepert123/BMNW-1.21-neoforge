@@ -25,6 +25,9 @@ public abstract class NukeType {
     public int getEntityFireTicks() {
         return 200;
     }
+    public float entityDamageMultiplier() {
+        return 1.0F;
+    }
 
     public @Nullable Consumer<FallingBombEntity> impactOverride() {
         return null;

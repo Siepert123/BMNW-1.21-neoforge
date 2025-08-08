@@ -30,6 +30,7 @@ import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.network.PacketDistributor;
 import nl.melonstudios.bmnw.cfg.BMNWServerConfig;
 import nl.melonstudios.bmnw.init.BMNWBlocks;
+import nl.melonstudios.bmnw.init.BMNWDamageSources;
 import nl.melonstudios.bmnw.init.BMNWEntityTypes;
 import nl.melonstudios.bmnw.init.BMNWTags;
 import nl.melonstudios.bmnw.misc.Library;
@@ -56,6 +57,9 @@ public class ExplosionHelperEntity extends Entity {
         for (Holder<Block> b : BuiltInRegistries.BLOCK.getTagOrEmpty(BlockTags.LEAVES)) {
             leaves.add(b.value());
         }
+        for (Holder<Block> b : BuiltInRegistries.BLOCK.getTagOrEmpty(BlockTags.REPLACEABLE_BY_TREES)) {
+            leaves.add(b.value());
+        }
         this.logs = new HashSet<>();
         for (Holder<Block> b : BuiltInRegistries.BLOCK.getTagOrEmpty(BlockTags.LOGS_THAT_BURN)) {
             logs.add(b.value());
@@ -75,6 +79,8 @@ public class ExplosionHelperEntity extends Entity {
 
         int r = this.nukeType.getEntityBlowRadius();
         this.entitySearch = new AABB(this.position().add(-r, -r, -r), this.position().add(r, r, r));
+
+        this.waterRefilled = BMNWServerConfig.experimentalWaterRefill();
 
         LOGGER.debug("New explosion created with ID {}", this.getId());
         this.start = System.currentTimeMillis();
@@ -129,7 +135,7 @@ public class ExplosionHelperEntity extends Entity {
                 boolean flag = entity.getY() >= level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, entity.getBlockX(), entity.getBlockZ())
                         || level.clip(
                                 new ClipContext(
-                                        this.position(), entity.position(),
+                                        entity.position(), this.position(),
                                         ClipContext.Block.COLLIDER, ClipContext.Fluid.WATER,
                                         this
                                 )
@@ -138,11 +144,13 @@ public class ExplosionHelperEntity extends Entity {
                 if (flag) {
                     entity.addDeltaMovement(velocity);
                     entity.setRemainingFireTicks(Mth.ceil(inv*this.nukeType.getEntityFireTicks()));
+                    entity.hurt(BMNWDamageSources.nuclear_blast(level), (float)inv*this.nukeType.entityDamageMultiplier());
                 }
             }
         }
 
         if (!this.hasSpawnedCloud) {
+            LOGGER.debug("[{}] starting cloud", this.getId());
             PacketDistributor.sendToPlayersInDimension((ServerLevel) level,
                     new PacketMushroomCloud(
                             false,
@@ -155,6 +163,7 @@ public class ExplosionHelperEntity extends Entity {
         }
         if (!this.waterEvaporated) {
             if (this.orderedChunks == null) {
+                LOGGER.debug("[{}] starting evaporation", this.getId());
                 int c = (this.nukeType.getBlastRadius()+15) >> 4;
                 this.affectedMinCX = this.chunkPosition().x - c;
                 this.affectedMaxCX = this.chunkPosition().x + c;
@@ -199,6 +208,7 @@ public class ExplosionHelperEntity extends Entity {
             return;
         }
         if (!this.explosionStarted) {
+            LOGGER.debug("[{}] starting explosion", this.getId());
             Exploder.ALL.add(
                     new PlagiarizedExplosionHandlerBatched(
                             level,
@@ -227,6 +237,7 @@ public class ExplosionHelperEntity extends Entity {
         }
         if (!this.leavesDestroyed) {
             if (this.orderedChunks == null) {
+                LOGGER.debug("[{}] starting leave destruction", this.getId());
                 int c = (this.nukeType.getDestroyedLeavesRadius()+15) >> 4;
                 this.affectedMinCX = this.chunkPosition().x - c;
                 this.affectedMaxCX = this.chunkPosition().x + c;
@@ -280,6 +291,7 @@ public class ExplosionHelperEntity extends Entity {
         }
         if (!this.treesCharred) {
             if (this.orderedChunks == null) {
+                LOGGER.debug("[{}] starting charred trees", this.getId());
                 int c = (this.nukeType.getCharredTreesRadius()+15) >> 4;
                 this.affectedMinCX = this.chunkPosition().x - c;
                 this.affectedMaxCX = this.chunkPosition().x + c;
@@ -336,6 +348,7 @@ public class ExplosionHelperEntity extends Entity {
         }
         if (!this.nuclearRemainsPlaced) {
             if (this.orderedChunks == null) {
+                LOGGER.debug("[{}] starting nuclear remains", this.getId());
                 int c = (this.nukeType.getNuclearRemainsRadius()+15) >> 4;
                 this.affectedMinCX = this.chunkPosition().x - c;
                 this.affectedMaxCX = this.chunkPosition().x + c;
@@ -395,17 +408,19 @@ public class ExplosionHelperEntity extends Entity {
             }
             return;
         }
-        if (!this.waterRefilled) {if (this.orderedChunks == null) {
-            int c = (this.nukeType.getBlastRadius()+15) >> 4;
-            this.affectedMinCX = this.chunkPosition().x - c;
-            this.affectedMaxCX = this.chunkPosition().x + c;
-            this.affectedMinCZ = this.chunkPosition().z - c;
-            this.affectedMaxCZ = this.chunkPosition().z + c;
-            this.orderedChunks = new ArrayList<>();
-            ChunkPos.rangeClosed(new ChunkPos(this.affectedMinCX, this.affectedMinCZ), new ChunkPos(this.affectedMaxCX, this.affectedMaxCZ))
-                    .forEach(this.orderedChunks::add);
-            return;
-        }
+        if (!this.waterRefilled) {
+            if (this.orderedChunks == null) {
+                LOGGER.debug("[{}] starting refill", this.getId());
+                int c = (this.nukeType.getBlastRadius()+15) >> 4;
+                this.affectedMinCX = this.chunkPosition().x - c;
+                this.affectedMaxCX = this.chunkPosition().x + c;
+                this.affectedMinCZ = this.chunkPosition().z - c;
+                this.affectedMaxCZ = this.chunkPosition().z + c;
+                this.orderedChunks = new ArrayList<>();
+                ChunkPos.rangeClosed(new ChunkPos(this.affectedMinCX, this.affectedMinCZ), new ChunkPos(this.affectedMaxCX, this.affectedMaxCZ))
+                        .forEach(this.orderedChunks::add);
+                return;
+            }
             if (this.orderedChunks.isEmpty()) {
                 this.orderedChunks = null;
                 this.waterRefilled = true;
@@ -426,7 +441,6 @@ public class ExplosionHelperEntity extends Entity {
                         }
                     }
                 }
-
             }
             return;
         }

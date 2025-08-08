@@ -64,6 +64,10 @@ public class BMNWServerConfig {
             .comment("This controls the amount of calculations per tick when calculating explosion damage")
             .comment("Some explosions auto decide based on remaining ticks however")
             .defineInRange("explosionCalculationFactor", 500, 10, 32000);
+    private static final ModConfigSpec.BooleanValue EXPERIMENTAL_WATER_REFILL = BUILDER
+            .comment("Whether large explosions should refill their craters with water if it's near a large body of water")
+            .comment("This does not work very well right now!!")
+            .define("experimentalWaterRefill", true);
 
     public static final ModConfigSpec SPEC = BUILDER.build();
 
@@ -99,5 +103,8 @@ public class BMNWServerConfig {
     }
     public static int explosionCalculationFactor() {
         return EXPLOSION_CALCULATION_FACTOR.get();
+    }
+    public static boolean experimentalWaterRefill() {
+        return EXPERIMENTAL_WATER_REFILL.get();
     }
 }
