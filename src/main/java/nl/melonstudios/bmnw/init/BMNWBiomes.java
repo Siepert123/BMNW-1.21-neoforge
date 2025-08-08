@@ -20,6 +20,7 @@ public class BMNWBiomes {
         return level.registryAccess().registryOrThrow(Registries.BIOME);
     }
 
+
     public static final ResourceKey<Biome> VOLCANO_WASTES = ResourceKey.create(
             Registries.BIOME, BMNW.namespace("volcano_wastes")
     );
@@ -32,6 +33,28 @@ public class BMNWBiomes {
     );
     public static Holder<Biome> volcano_wastes_severe(Level level) {
         return biomeRegistry(level).getHolder(VOLCANO_WASTES_SEVERE).orElseThrow();
+    }
+
+
+    public static final ResourceKey<Biome> NUCLEAR_WASTES_MINIMAL = ResourceKey.create(
+            Registries.BIOME, BMNW.namespace("nuclear_wastes_minimal")
+    );
+    public static Holder<Biome> nuclear_wastes_minimal(Level level) {
+        return biomeRegistry(level).getHolder(NUCLEAR_WASTES_MINIMAL).orElseThrow();
+    }
+
+    public static final ResourceKey<Biome> NUCLEAR_WASTES = ResourceKey.create(
+            Registries.BIOME, BMNW.namespace("nuclear_wastes")
+    );
+    public static Holder<Biome> nuclear_wastes(Level level) {
+        return biomeRegistry(level).getHolder(NUCLEAR_WASTES).orElseThrow();
+    }
+
+    public static final ResourceKey<Biome> NUCLEAR_WASTES_SEVERE = ResourceKey.create(
+            Registries.BIOME, BMNW.namespace("nuclear_wastes_severe")
+    );
+    public static Holder<Biome> nuclear_wastes_severe(Level level) {
+        return biomeRegistry(level).getHolder(NUCLEAR_WASTES_SEVERE).orElseThrow();
     }
 
     public static void fillBiome(ServerLevel level, BlockPos start, BlockPos end, Holder<Biome> biome) {

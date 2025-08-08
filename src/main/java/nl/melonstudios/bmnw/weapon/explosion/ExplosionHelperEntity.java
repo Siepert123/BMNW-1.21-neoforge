@@ -25,10 +25,7 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.network.PacketDistributor;
 import nl.melonstudios.bmnw.cfg.BMNWServerConfig;
-import nl.melonstudios.bmnw.init.BMNWBlocks;
-import nl.melonstudios.bmnw.init.BMNWDamageSources;
-import nl.melonstudios.bmnw.init.BMNWEntityTypes;
-import nl.melonstudios.bmnw.init.BMNWTags;
+import nl.melonstudios.bmnw.init.*;
 import nl.melonstudios.bmnw.registries.BMNWResourceKeys;
 import nl.melonstudios.bmnw.weapon.RadiationLingerEntity;
 import nl.melonstudios.bmnw.weapon.nuke.NukeType;
@@ -228,6 +225,7 @@ public class ExplosionHelperEntity extends Entity {
             if (this.nukeType.getReleasedRadiation() > 0.0F) {
                 level.addFreshEntity(new RadiationLingerEntity(level, this.position(), this.nukeType));
             }
+            this.setBiome();
             this.radiationReleased = true;
             return;
         }
@@ -470,6 +468,17 @@ public class ExplosionHelperEntity extends Entity {
 
         LOGGER.debug("Explosion with ID {} finished in {}ms", this.getId(), System.currentTimeMillis() - this.start);
         this.discard();
+    }
+
+    private void setBiome() {
+        if (this.level() instanceof ServerLevel level) {
+            BMNWBiomes.fillBiomeCylindrical(level, this.blockPosition().atY(level.getMinBuildHeight()), level.getMaxBuildHeight(),
+                    Mth.ceil(this.nukeType.getBlastRadius() * 1.5F), BMNWBiomes.nuclear_wastes_minimal(level));
+            BMNWBiomes.fillBiomeCylindrical(level, this.blockPosition().atY(level.getMinBuildHeight()), level.getMaxBuildHeight(),
+                    this.nukeType.getBlastRadius(), BMNWBiomes.nuclear_wastes(level));
+            BMNWBiomes.fillBiomeCylindrical(level, this.blockPosition().atY(level.getMinBuildHeight()), level.getMaxBuildHeight(),
+                    Mth.ceil(this.nukeType.getBlastRadius() * 1.5F), BMNWBiomes.nuclear_wastes_severe(level));
+        }
     }
 
     private boolean checkWater(Level level, BlockPos pos) {
