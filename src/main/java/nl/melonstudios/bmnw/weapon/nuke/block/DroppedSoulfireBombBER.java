@@ -5,6 +5,7 @@ import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import nl.melonstudios.bmnw.block.entity.renderer.OptimizedBlockEntityRenderer;
@@ -36,5 +37,10 @@ public class DroppedSoulfireBombBER extends OptimizedBlockEntityRenderer<Dropped
                 poseStack, bufferSource, packedOverlay);
 
         poseStack.popPose();
+    }
+
+    @Override
+    public boolean shouldRender(DroppedSoulfireBombBE be, Vec3 cameraPos) {
+        return true;
     }
 }
