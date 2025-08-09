@@ -7,7 +7,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import nl.melonstudios.bmnw.BMNW;
-import nl.melonstudios.bmnw.init.BMNWSounds;
 import nl.melonstudios.bmnw.registries.BMNWResourceKeys;
 import nl.melonstudios.bmnw.weapon.nuke.NukeType;
 
