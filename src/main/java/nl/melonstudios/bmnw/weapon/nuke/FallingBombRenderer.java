@@ -58,26 +58,8 @@ public class FallingBombRenderer extends EntityRenderer<FallingBombEntity> {
         poseStack.translate(-0.5F, 0.0F, -0.5F);
 
         BlockState blockstate = p_entity.getNukeBlock().defaultBlockState();
-        BakedModel model = this.blockRenderDispatcher.getBlockModel(blockstate);
-
-        for (var renderType : model.getRenderTypes(blockstate, RandomSource.create(blockstate.getSeed(BlockPos.ZERO)), ModelData.EMPTY))
-            this.blockRenderDispatcher
-                    .getModelRenderer()
-                    .tesselateBlock(
-                            p_entity.level(),
-                            this.blockRenderDispatcher.getBlockModel(blockstate),
-                            blockstate,
-                            p_entity.blockPosition(),
-                            poseStack,
-                            bufferSource.getBuffer(RenderTypeHelper.getMovingBlockRenderType(renderType)),
-                            false,
-                            RandomSource.create(),
-                            blockstate.getSeed(BlockPos.ZERO),
-                            OverlayTexture.NO_OVERLAY,
-                            ModelData.EMPTY,
-                            renderType
-                    );
-
+        Library.renderBlockThing(this.blockRenderDispatcher, blockstate, p_entity.blockPosition(), p_entity.level(),
+                poseStack, bufferSource, OverlayTexture.NO_OVERLAY);
         poseStack.popPose();
     }
 

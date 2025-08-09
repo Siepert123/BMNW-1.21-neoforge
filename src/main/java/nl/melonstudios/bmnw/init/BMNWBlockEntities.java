@@ -14,6 +14,7 @@ import nl.melonstudios.bmnw.block.logistics.FluidPipeBlock;
 import nl.melonstudios.bmnw.block.logistics.FluidPipeBlockEntity;
 import nl.melonstudios.bmnw.blockentity.FluidBarrelBlockEntity;
 import nl.melonstudios.bmnw.blockentity.VolcanoCoreBlockEntity;
+import nl.melonstudios.bmnw.weapon.nuke.block.DroppedSoulfireBombBE;
 
 import java.util.Set;
 import java.util.function.Supplier;
@@ -58,6 +59,17 @@ public class BMNWBlockEntities {
             )
     );
 
+    // region nuke BE
+
+    public static final Supplier<BlockEntityType<DroppedSoulfireBombBE>> DROPPED_SOULFIRE_BOMB = BLOCK_ENTITIES.register(
+            "dropped_soulfire_bomb",
+            () -> BlockEntityType.Builder.of(
+                    DroppedSoulfireBombBE::new,
+                    BMNWBlocks.DROPPED_SOULFIRE_BOMB.get()
+            ).build(null)
+    );
+
+    // endregion
     public static final Supplier<BlockEntityType<SmallLampBlockEntity>> SMALL_LAMP = BLOCK_ENTITIES.register(
             "small_lamp",
             () -> new BlockEntityType<>(

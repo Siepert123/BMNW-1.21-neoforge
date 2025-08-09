@@ -14,6 +14,7 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredBlock;
@@ -39,6 +40,7 @@ import nl.melonstudios.bmnw.block.weapons.MissileLaunchPadBlock;
 import nl.melonstudios.bmnw.effect.WPEffect;
 import nl.melonstudios.bmnw.entity.LavaEjectionEntity;
 import nl.melonstudios.bmnw.weapon.nuke.block.CaseohNukeBlock;
+import nl.melonstudios.bmnw.weapon.nuke.block.DroppedSoulfireBombNukeBlock;
 import nl.melonstudios.bmnw.weapon.nuke.block.LittleBoyNukeBlock;
 import nl.melonstudios.bmnw.weapon.nuke.block.NuclearChargeNukeBlock;
 import org.jetbrains.annotations.Nullable;
@@ -248,12 +250,14 @@ public class BMNWBlocks {
 
     //region Nuclear after effect blocks
     public static final DeferredBlock<Block> SLAKED_NUCLEAR_REMAINS = BLOCKS.register("slaked_nuclear_remains",
-            () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE)));
+            () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).mapColor(MapColor.COLOR_GRAY)));
     public static final DeferredBlock<NuclearRemainsBlock> NUCLEAR_REMAINS = BLOCKS.register("nuclear_remains",
-            () -> new NuclearRemainsBlock(BlockBehaviour.Properties.ofFullCopy(SLAKED_NUCLEAR_REMAINS.get()).randomTicks(),
+            () -> new NuclearRemainsBlock(BlockBehaviour.Properties.ofFullCopy(SLAKED_NUCLEAR_REMAINS.get()).randomTicks()
+                    .mapColor(MapColor.COLOR_GREEN),
                     5, SLAKED_NUCLEAR_REMAINS.get().defaultBlockState()));
     public static final DeferredBlock<NuclearRemainsBlock> BLAZING_NUCLEAR_REMAINS = BLOCKS.register("blazing_nuclear_remains",
-            () -> new NuclearRemainsBlock(BlockBehaviour.Properties.ofFullCopy(SLAKED_NUCLEAR_REMAINS.get()).randomTicks(),
+            () -> new NuclearRemainsBlock(BlockBehaviour.Properties.ofFullCopy(SLAKED_NUCLEAR_REMAINS.get()).randomTicks()
+                    .mapColor(MapColor.COLOR_LIGHT_GREEN),
                     10, NUCLEAR_REMAINS.get().defaultBlockState()));
     
     public static final DeferredBlock<RotatedPillarBlock> CHARRED_LOG = BLOCKS.register("charred_log",
@@ -278,6 +282,8 @@ public class BMNWBlocks {
     //endregion
 
     //region Bombs & Missiles
+    public static final DeferredBlock<DroppedSoulfireBombNukeBlock> DROPPED_SOULFIRE_BOMB = BLOCKS.register("dud",
+            () -> new DroppedSoulfireBombNukeBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BEDROCK).sound(SoundType.METAL).noLootTable()));
     public static final DeferredBlock<NuclearChargeNukeBlock> NUCLEAR_CHARGE = BLOCKS.register("nuclear_charge",
             () -> new NuclearChargeNukeBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get())));
     public static final DeferredBlock<LittleBoyNukeBlock> LITTLE_BOY = BLOCKS.register("little_boy",

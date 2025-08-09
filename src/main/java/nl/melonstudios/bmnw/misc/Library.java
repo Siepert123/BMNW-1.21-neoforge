@@ -9,6 +9,7 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.model.BakedModel;
@@ -24,6 +25,7 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
@@ -31,6 +33,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.client.ClientHooks;
+import net.neoforged.neoforge.client.RenderTypeHelper;
 import net.neoforged.neoforge.client.model.IQuadTransformer;
 import net.neoforged.neoforge.client.model.data.ModelData;
 import nl.melonstudios.bmnw.cfg.BMNWClientConfig;
@@ -489,6 +492,29 @@ public class Library {
                 float b = Library.brightnessByDirection(quad.getDirection());
                 consumer.putBulkData(last, quad, b, b, b, 1.0F, packedLight, packedOverlay);
             }
+        }
+    }
+
+    public static void renderBlockThing(BlockRenderDispatcher dispatcher, BlockState state, BlockPos pos, Level level, PoseStack poseStack, MultiBufferSource bufferSource,
+                                        int overlayTexture) {
+        BakedModel model = dispatcher.getBlockModel(state);
+        long seed = state.getSeed(BlockPos.ZERO);
+
+        for (var renderType : model.getRenderTypes(state, RandomSource.create(seed), ModelData.EMPTY)) {
+            dispatcher.getModelRenderer().tesselateBlock(
+                    level,
+                    model,
+                    state,
+                    pos,
+                    poseStack,
+                    bufferSource.getBuffer(RenderTypeHelper.getMovingBlockRenderType(renderType)),
+                    false,
+                    RandomSource.create(),
+                    seed,
+                    overlayTexture,
+                    ModelData.EMPTY,
+                    renderType
+            );
         }
     }
 }

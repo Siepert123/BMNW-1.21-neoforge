@@ -591,6 +591,7 @@ public class BMNWTabs {
                     .displayItems((parameters, items) -> {
                         items.accept(REMOTE_ACTIVATOR);
 
+                        items.accept(DROPPED_SOULFIRE_BOMB);
                         items.accept(NUCLEAR_CHARGE);
                         items.accept(LITTLE_BOY);
                         items.accept(CASEOH);

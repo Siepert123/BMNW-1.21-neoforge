@@ -146,7 +146,7 @@ public class ExplosionHelperEntity extends Entity {
             LOGGER.debug("[{}] starting cloud", this.getId());
             PacketDistributor.sendToPlayersInDimension((ServerLevel) level,
                     new PacketMushroomCloud(
-                            false,
+                            this.nukeType.isSoulType(),
                             this.getX(), this.getY(), this.getZ(),
                             this.nukeType.getMushroomCloudSize()
                     )
@@ -342,6 +342,10 @@ public class ExplosionHelperEntity extends Entity {
         }
         if (!this.nuclearRemainsPlaced) {
             if (this.orderedChunks == null) {
+                if (this.nukeType.getNuclearRemainsRadius() <= 0) {
+                    this.nuclearRemainsPlaced = true;
+                    return;
+                }
                 LOGGER.debug("[{}] starting nuclear remains", this.getId());
                 int c = (this.nukeType.getNuclearRemainsRadius()+31) >> 4;
                 this.affectedMinCX = this.chunkPosition().x - c;

@@ -1,6 +1,7 @@
 package nl.melonstudios.bmnw.init;
 
 import com.mojang.serialization.MapCodec;
+import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -10,8 +11,11 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import nl.melonstudios.bmnw.particle.type.ResizableParticleOptions;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.function.Supplier;
 
+@ParametersAreNonnullByDefault
+@MethodsReturnNonnullByDefault
 public class BMNWParticleTypes {
     private static final DeferredRegister<ParticleType<?>> PARTICLE_TYPES =
             DeferredRegister.create(BuiltInRegistries.PARTICLE_TYPE, "bmnw");
@@ -52,6 +56,20 @@ public class BMNWParticleTypes {
     );
     public static final Supplier<ParticleType<ResizableParticleOptions>> MUSHROOM_CLOUD = PARTICLE_TYPES.register(
             "mushroom_cloud",
+            () -> new ParticleType<ResizableParticleOptions>(true) {
+                @Override
+                public MapCodec<ResizableParticleOptions> codec() {
+                    return ResizableParticleOptions.codec(this);
+                }
+
+                @Override
+                public StreamCodec<? super RegistryFriendlyByteBuf, ResizableParticleOptions> streamCodec() {
+                    return ResizableParticleOptions.streamCodec(this);
+                }
+            }
+    );
+    public static final Supplier<ParticleType<ResizableParticleOptions>> SOUL_MUSHROOM_CLOUD = PARTICLE_TYPES.register(
+            "soul_mushroom_cloud",
             () -> new ParticleType<ResizableParticleOptions>(true) {
                 @Override
                 public MapCodec<ResizableParticleOptions> codec() {

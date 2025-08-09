@@ -479,6 +479,8 @@ public class BMNWItems {
     public static final DeferredItem<RemoteActivatorItem> REMOTE_ACTIVATOR = ITEMS.register("remote_activator",
             () -> new RemoteActivatorItem(new Item.Properties().stacksTo(1)));
 
+    public static final DeferredItem<BlockItem> DROPPED_SOULFIRE_BOMB = ITEMS.register("dud",
+            () -> new BlockItem(BMNWBlocks.DROPPED_SOULFIRE_BOMB.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> NUCLEAR_CHARGE = ITEMS.register("nuclear_charge",
             () -> new BlockItem(BMNWBlocks.NUCLEAR_CHARGE.get(), new Item.Properties()));
     public static final DeferredItem<BlockItem> LITTLE_BOY = ITEMS.register("little_boy",

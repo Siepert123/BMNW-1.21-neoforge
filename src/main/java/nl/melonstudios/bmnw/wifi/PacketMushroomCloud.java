@@ -37,7 +37,9 @@ public record PacketMushroomCloud(boolean soul, double x, double y, double z, fl
 
     public static void handle(PacketMushroomCloud packet, IPayloadContext context) {
         Level level = context.player().level();
-        ParticleType<ResizableParticleOptions> particle = BMNWParticleTypes.MUSHROOM_CLOUD.get();
+        ParticleType<ResizableParticleOptions> particle = packet.soul ?
+                BMNWParticleTypes.SOUL_MUSHROOM_CLOUD.get() :
+                BMNWParticleTypes.MUSHROOM_CLOUD.get();
         ResizableParticleOptions optionsParticle = new ResizableParticleOptions(particle, packet.size * 0.1F);
         ParticleType<ResizableParticleOptions> smoke = BMNWParticleTypes.MUSHROOM_SMOKE.get();
         ResizableParticleOptions optionsSmoke = new ResizableParticleOptions(smoke, packet.size * 0.1F);

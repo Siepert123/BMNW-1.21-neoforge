@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "bmnw:block/dud"
+      "model": "bmnw:block/nuke/dropped_soulfire_bomb"
     }
   }
 }

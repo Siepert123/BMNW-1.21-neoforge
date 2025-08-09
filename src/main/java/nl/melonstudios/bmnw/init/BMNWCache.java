@@ -19,7 +19,7 @@ public class BMNWCache {
     private static Quaternionf createDudRotation(BlockPos pos) {
         Random rnd = new Random(pos.asLong() ^ pos.hashCode());
         return new Quaternionf()
-                .rotateX((float)Math.toRadians(rnd.nextFloat(45.0F)))
+                .rotateX((float)Math.toRadians(rnd.nextFloat(30.0F)))
                 .rotateY((float)Math.toRadians(rnd.nextFloat(360.0F)));
     }
 }

@@ -98,6 +98,7 @@ import nl.melonstudios.bmnw.particle.*;
 import nl.melonstudios.bmnw.weapon.explosion.Exploder;
 import nl.melonstudios.bmnw.weapon.missile.entity.CustomizableMissileRenderer;
 import nl.melonstudios.bmnw.weapon.nuke.FallingBombRenderer;
+import nl.melonstudios.bmnw.weapon.nuke.block.DroppedSoulfireBombBER;
 import nl.melonstudios.bmnw.wifi.*;
 import org.joml.Vector3f;
 
@@ -437,6 +438,7 @@ public class BMNWEventBus {
 
     @OnlyIn(Dist.CLIENT)
     private static void registerBlockEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
+        registerBlockEntityRenderingHandler(event, BMNWBlockEntities.DROPPED_SOULFIRE_BOMB, DroppedSoulfireBombBER::new);
         registerBlockEntityRenderingHandler(event, BMNWBlockEntities.SMALL_LAMP, SmallLampRenderer::new);
         registerBlockEntityRenderingHandler(event, BMNWBlockEntities.HATCH, HatchRenderer::new);
         registerBlockEntityRenderingHandler(event, BMNWBlockEntities.SLIDING_BLAST_DOOR, SlidingBlastDoorRenderer::new);
@@ -496,6 +498,7 @@ public class BMNWEventBus {
         event.registerSpriteSet(BMNWParticleTypes.FIRE_TRAIL.get(), FireTrailParticle.Provider::new);
         event.registerSpriteSet(BMNWParticleTypes.DUST_TRAIL.get(), DustTrailParticle.Provider::new);
         event.registerSpriteSet(BMNWParticleTypes.MUSHROOM_CLOUD.get(), MushroomCloudParticle.Provider::new);
+        event.registerSpriteSet(BMNWParticleTypes.SOUL_MUSHROOM_CLOUD.get(), SoulMushroomCloudParticle.Provider::new);
         event.registerSpriteSet(BMNWParticleTypes.MUSHROOM_SMOKE.get(), MushroomSmokeParticle.Provider::new);
         event.registerSpriteSet(BMNWParticleTypes.VOLCANO_SMOKE.get(), VolcanoSmokeParticle.Provider::new);
         event.registerSpriteSet(BMNWParticleTypes.FLUID_VAPOR.get(), FluidVaporParticle.Provider::new);
