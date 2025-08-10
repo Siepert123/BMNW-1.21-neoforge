@@ -4,10 +4,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import nl.melonstudios.bmnw.registries.BMNWResourceKeys;
-import nl.melonstudios.bmnw.weapon.nuke.type.CaseohNukeType;
-import nl.melonstudios.bmnw.weapon.nuke.type.DroppedSoulfireBombNukeType;
-import nl.melonstudios.bmnw.weapon.nuke.type.LittleBoyNukeType;
-import nl.melonstudios.bmnw.weapon.nuke.type.NuclearChargeNukeType;
+import nl.melonstudios.bmnw.weapon.nuke.type.*;
 
 public class BMNWNukeTypes {
     private static final DeferredRegister<NukeType> NUKES =
@@ -24,6 +21,9 @@ public class BMNWNukeTypes {
     );
     public static final DeferredHolder<NukeType, CaseohNukeType> CASEOH = NUKES.register(
             "caseoh", CaseohNukeType::new
+    );
+    public static final DeferredHolder<NukeType, TsarBombaNukeType> TSAR_BOMBA = NUKES.register(
+            "tsar_bomba", TsarBombaNukeType::new
     );
 
     public static void register(IEventBus eventBus) {

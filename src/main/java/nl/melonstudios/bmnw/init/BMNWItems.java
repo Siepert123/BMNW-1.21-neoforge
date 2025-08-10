@@ -487,6 +487,8 @@ public class BMNWItems {
             () -> new BlockItem(BMNWBlocks.LITTLE_BOY.get(), new Item.Properties().stacksTo(1)));
     public static final DeferredItem<BlockItem> CASEOH = ITEMS.register("caseoh",
             () -> new BlockItem(BMNWBlocks.CASEOH.get(), new Item.Properties().stacksTo(1)));
+    public static final DeferredItem<BlockItem> TSAR_BOMBA = ITEMS.register("tsar_bomba",
+            () -> new BlockItem(BMNWBlocks.TSAR_BOMBA.get(), new Item.Properties().stacksTo(1)));
 
     public static final DeferredItem<MultiBlockItem> MISSILE_LAUNCH_PAD = ITEMS.register("missile_launch_pad",
             () -> new MultiBlockItem(BMNWBlocks.MISSILE_LAUNCH_PAD.get(), new Item.Properties(),

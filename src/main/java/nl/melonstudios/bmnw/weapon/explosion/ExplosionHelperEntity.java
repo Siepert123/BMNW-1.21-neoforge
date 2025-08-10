@@ -4,9 +4,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.LongTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -26,6 +25,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.entity.IEntityWithComplexSpawn;
 import net.neoforged.neoforge.network.PacketDistributor;
 import nl.melonstudios.bmnw.cfg.BMNWServerConfig;
 import nl.melonstudios.bmnw.init.*;
@@ -41,7 +41,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 
-public class ExplosionHelperEntity extends Entity implements ExploderParent {
+public class ExplosionHelperEntity extends Entity implements ExploderParent, IEntityWithComplexSpawn {
     private static final Logger LOGGER = LogManager.getLogger("ExplosionHelperEntity");
 
     public ExplosionHelperEntity(EntityType<?> entityType, Level level) {
@@ -163,7 +163,7 @@ public class ExplosionHelperEntity extends Entity implements ExploderParent {
         this.entitySearch = new AABB(this.position().add(-r, -r, -r), this.position().add(r, r, r));
     }
 
-    private NukeType nukeType;
+    public NukeType nukeType;
 
     private final BlockPos.MutableBlockPos mutable1;
 
@@ -189,14 +189,19 @@ public class ExplosionHelperEntity extends Entity implements ExploderParent {
     private final HashSet<Block> plant, logs, planks, coals;
     private AABB entitySearch;
 
-    private int age;
+    public int age;
 
     @Override
     public void tick() {
-        if (this.nukeType == null || this.level().isClientSide) return;
+        this.age++;
+        if (this.nukeType == null) return;
+        if (this.level().isClientSide) {
+            if (this.nukeType.brightensSky()) this.level().setSkyFlashTime(20);
+            return;
+        }
 
         if (this.level() instanceof ServerLevel level) {
-            if (this.age++ == 10) {
+            if (this.age >= 10) {
                 this.age = 0;
                 int r = this.nukeType.getEntityBlowRadius();
                 int r2 = r * r;
@@ -603,5 +608,17 @@ public class ExplosionHelperEntity extends Entity implements ExploderParent {
     public void notifyExplosionFinished() {
         System.out.println("hi");
         this.explosionFinished = true;
+    }
+
+    @Override
+    public void writeSpawnData(RegistryFriendlyByteBuf buffer) {
+        buffer.writeInt(this.age);
+        buffer.writeByte(BMNWResourceKeys.NUKE_TYPE_REGISTRY.getId(this.nukeType));
+    }
+
+    @Override
+    public void readSpawnData(RegistryFriendlyByteBuf additionalData) {
+        this.age = additionalData.readInt();
+        this.nukeType = BMNWResourceKeys.NUKE_TYPE_REGISTRY.byId(additionalData.readUnsignedByte());
     }
 }

@@ -91,6 +91,11 @@ public class DroppedSoulfireBombNukeType extends NukeType {
         return BMNWSounds.LARGE_EXPLOSION.get();
     }
 
+    @Override
+    public boolean brightensSky() {
+        return false;
+    }
+
     public DroppedSoulfireBombNukeType() {
 
     }

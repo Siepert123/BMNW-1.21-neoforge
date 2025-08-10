@@ -1,59 +1,52 @@
 package nl.melonstudios.bmnw.weapon.nuke.type;
 
-import net.minecraft.sounds.SoundEvent;
-import nl.melonstudios.bmnw.init.BMNWSounds;
 import nl.melonstudios.bmnw.misc.math.Easing;
 import nl.melonstudios.bmnw.weapon.nuke.NukeType;
 
-public class NuclearChargeNukeType extends NukeType {
+public class TsarBombaNukeType extends NukeType {
     @Override
     public int getBlastRadius() {
-        return 64;
-    }
-
-    @Override
-    public int getNuclearRemainsRadius() {
-        return 32;
+        return 512;
     }
 
     @Override
     public int getCharredTreesRadius() {
-        return 0;
+        return 640;
     }
 
     @Override
     public int getDestroyedLeavesRadius() {
-        return 0;
+        return 800;
     }
 
     @Override
     public float getReleasedRadiation() {
-        return 100F;
+        return 2_000_000F;
     }
 
     @Override
     public int getReleasedRadiationLingerTicks() {
-        return 200;
+        return 25600;
     }
 
     @Override
     public Easing getReleasedRadiationDropOff() {
-        return Easing.OUT_CUBIC;
+        return Easing.OUT_SINE;
     }
 
     @Override
     public int getFalloutRadius() {
-        return 0;
+        return 1280;
     }
 
     @Override
     public boolean hasDarkenedNuclearRemains() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean hasShockwave() {
-        return false;
+        return true;
     }
 
     @Override
@@ -63,40 +56,15 @@ public class NuclearChargeNukeType extends NukeType {
 
     @Override
     public float getMushroomCloudSize() {
-        return 5;
+        return 45.0F;
     }
 
     @Override
     public int getSoundDistance() {
-        return 512;
+        return 4096;
     }
 
-    @Override
-    public int getMinimalBiomeRadius() {
-        return 0;
-    }
-
-    @Override
-    public int getNormalBiomeRadius() {
-        return 0;
-    }
-
-    @Override
-    public int getSevereBiomeRadius() {
-        return 0;
-    }
-
-    @Override
-    public SoundEvent getExplosionSound() {
-        return BMNWSounds.LARGE_EXPLOSION.get();
-    }
-
-    @Override
-    public boolean brightensSky() {
-        return false;
-    }
-
-    public NuclearChargeNukeType() {
+    public TsarBombaNukeType() {
 
     }
 }

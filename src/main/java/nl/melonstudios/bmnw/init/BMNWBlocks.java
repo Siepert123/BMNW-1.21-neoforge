@@ -39,10 +39,7 @@ import nl.melonstudios.bmnw.block.settype.BMNWBlockSetType;
 import nl.melonstudios.bmnw.block.weapons.MissileLaunchPadBlock;
 import nl.melonstudios.bmnw.effect.WPEffect;
 import nl.melonstudios.bmnw.entity.LavaEjectionEntity;
-import nl.melonstudios.bmnw.weapon.nuke.block.CaseohNukeBlock;
-import nl.melonstudios.bmnw.weapon.nuke.block.DroppedSoulfireBombNukeBlock;
-import nl.melonstudios.bmnw.weapon.nuke.block.LittleBoyNukeBlock;
-import nl.melonstudios.bmnw.weapon.nuke.block.NuclearChargeNukeBlock;
+import nl.melonstudios.bmnw.weapon.nuke.block.*;
 import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -290,6 +287,8 @@ public class BMNWBlocks {
             () -> new LittleBoyNukeBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get())));
     public static final DeferredBlock<CaseohNukeBlock> CASEOH = BLOCKS.register("caseoh",
             () -> new CaseohNukeBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get())));
+    public static final DeferredBlock<TsarBombaNukeBlock> TSAR_BOMBA = BLOCKS.register("tsar_bomba",
+            () -> new TsarBombaNukeBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get())));
 
     public static final DeferredBlock<MissileLaunchPadBlock> MISSILE_LAUNCH_PAD = BLOCKS.register("missile_launch_pad",
             () -> new MissileLaunchPadBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)));

@@ -54,4 +54,10 @@ public abstract class NukeType {
     public int getSevereBiomeRadius() {
         return Mth.ceil(this.getBlastRadius() * 0.5F);
     }
+    public boolean brightensSky() {
+        return true;
+    }
+    public double lightBeamMultiplier() {
+        return this.getBlastRadius();
+    }
 }

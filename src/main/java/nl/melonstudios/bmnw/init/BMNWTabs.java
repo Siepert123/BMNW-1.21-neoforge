@@ -595,6 +595,7 @@ public class BMNWTabs {
                         items.accept(NUCLEAR_CHARGE);
                         items.accept(LITTLE_BOY);
                         items.accept(CASEOH);
+                        items.accept(TSAR_BOMBA);
 
                         items.accept(MISSILE_LAUNCH_PAD);
                         items.accept(TARGET_DESIGNATOR);

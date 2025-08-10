@@ -46,7 +46,6 @@ import nl.melonstudios.bmnw.logistics.pipes.PipeNetManager;
 import nl.melonstudios.bmnw.misc.*;
 import nl.melonstudios.bmnw.registries.BMNWResourceKeys;
 import nl.melonstudios.bmnw.screen.*;
-import nl.melonstudios.bmnw.weapon.explosion.Exploder;
 import nl.melonstudios.bmnw.weapon.explosion.LevelActiveExplosions;
 import nl.melonstudios.bmnw.weapon.missile.registry.BMNWMissileParts;
 import nl.melonstudios.bmnw.weapon.nuke.BMNWNukeTypes;
