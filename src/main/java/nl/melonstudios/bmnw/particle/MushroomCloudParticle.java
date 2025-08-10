@@ -23,8 +23,10 @@ public class MushroomCloudParticle extends TextureSheetParticle {
     private final int myGrowthTicks, myExtinguishTicks;
     private final float myAlphaExchange;
 
+    private final SpriteSet spriteSet;
+
     protected MushroomCloudParticle(
-            ClientLevel level, double x, double y, double z, double vX, double vY, double vZ, float size
+            ClientLevel level, double x, double y, double z, double vX, double vY, double vZ, float size, SpriteSet spriteSet
     ) {
         super(level, x, y, z, vX, vY, vZ);
         this.size = size;
@@ -47,6 +49,7 @@ public class MushroomCloudParticle extends TextureSheetParticle {
         this.yellowness = rnd.nextFloat() * 0.2F + 0.8F;
         this.oRoll = this.roll = rnd.nextInt(-180, 180)*Mth.DEG_TO_RAD;
         this.setColor(1.0F, this.yellowness, 0.1F);
+        this.spriteSet = spriteSet;
     }
 
     private final double startX, startY, startZ;
@@ -57,7 +60,7 @@ public class MushroomCloudParticle extends TextureSheetParticle {
 
     @Override
     public ParticleRenderType getRenderType() {
-        return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
+        return ParticleRenderType.PARTICLE_SHEET_OPAQUE;
     }
 
     @Override
@@ -85,13 +88,28 @@ public class MushroomCloudParticle extends TextureSheetParticle {
             );
 
             this.quadSize += (0.01F * this.size);
-        } else {
-            this.alpha = Mth.clamp(this.alpha - this.myAlphaExchange, 0, 1);
         }
+
+        this.setSpriteFromAge(this.spriteSet);
 
         if (this.age++ >= this.lifetime) {
             this.remove();
         }
+    }
+
+    @Override
+    public void setSpriteFromAge(SpriteSet sprite) {
+        if (!this.removed) {
+            this.setSprite(sprite.get(this.getFakeAge(), 6));
+        }
+    }
+
+    private int getFakeAge() {
+        if (this.age < this.myExtinguishTicks) return 0;
+        int diff = this.lifetime - this.myExtinguishTicks;
+        int thing = this.age - this.myExtinguishTicks;
+        float delta = (float) thing / diff;
+        return Mth.floor(delta * 6);
     }
 
     public static class Provider implements ParticleProvider<ResizableParticleOptions> {
@@ -104,8 +122,8 @@ public class MushroomCloudParticle extends TextureSheetParticle {
         @Nullable
         @Override
         public Particle createParticle(ResizableParticleOptions type, ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
-            MushroomCloudParticle particle = new MushroomCloudParticle(level, x, y, z, xSpeed, ySpeed, zSpeed, type.getSize());
-            particle.pickSprite(this.spriteSet);
+            MushroomCloudParticle particle = new MushroomCloudParticle(level, x, y, z, xSpeed, ySpeed, zSpeed, type.getSize(), this.spriteSet);
+            particle.setSpriteFromAge(this.spriteSet);
             return particle;
         }
     }

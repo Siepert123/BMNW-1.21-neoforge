@@ -22,7 +22,9 @@ public class MushroomSmokeParticle extends TextureSheetParticle {
     private final int myGrowthTicks, myExtinguishTicks;
     private final float myAlphaExchange;
 
-    protected MushroomSmokeParticle(ClientLevel level, double x, double y, double z, double vX, double vY, double vZ, float size) {
+    private final SpriteSet spriteSet;
+
+    protected MushroomSmokeParticle(ClientLevel level, double x, double y, double z, double vX, double vY, double vZ, float size, SpriteSet spriteSet) {
         super(level, x, y, z, vX, vY, vZ);
         this.size = size;
         this.xd = x+vX;
@@ -43,6 +45,7 @@ public class MushroomSmokeParticle extends TextureSheetParticle {
         this.darkness = rnd.nextFloat() * 0.2F;
         this.oRoll = this.roll = rnd.nextInt(-180, 180)* Mth.DEG_TO_RAD;
         this.setColor(0.8F, 0.8F, 0.8F);
+        this.spriteSet = spriteSet;
     }
 
     private final double startX, startY, startZ;
@@ -75,13 +78,28 @@ public class MushroomSmokeParticle extends TextureSheetParticle {
             );
 
             this.quadSize += (0.005F * this.size);
-        } else {
-            this.alpha = Mth.clamp(this.alpha - this.myAlphaExchange, 0, 1);
         }
+
+        this.setSpriteFromAge(this.spriteSet);
 
         if (this.age++ >= this.lifetime) {
             this.remove();
         }
+    }
+
+    @Override
+    public void setSpriteFromAge(SpriteSet sprite) {
+        if (!this.removed) {
+            this.setSprite(sprite.get(this.getFakeAge(), 6));
+        }
+    }
+
+    private int getFakeAge() {
+        if (this.age < this.myExtinguishTicks) return 0;
+        int diff = this.lifetime - this.myExtinguishTicks;
+        int thing = this.age - this.myExtinguishTicks;
+        float delta = (float) thing / diff;
+        return Mth.floor(delta * 6);
     }
 
     public static class Provider implements ParticleProvider<ResizableParticleOptions> {
@@ -94,8 +112,8 @@ public class MushroomSmokeParticle extends TextureSheetParticle {
         @Nullable
         @Override
         public Particle createParticle(ResizableParticleOptions type, ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
-            MushroomSmokeParticle particle = new MushroomSmokeParticle(level, x, y, z, xSpeed, ySpeed, zSpeed, type.getSize());
-            particle.pickSprite(this.spriteSet);
+            MushroomSmokeParticle particle = new MushroomSmokeParticle(level, x, y, z, xSpeed, ySpeed, zSpeed, type.getSize(), this.spriteSet);
+            particle.setSpriteFromAge(this.spriteSet);
             return particle;
         }
     }
