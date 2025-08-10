@@ -22,7 +22,6 @@ public class BMNWEntityTypes {
                     .clientTrackingRange(16)
                     .sized(1.0F, 1.0F)
                     .noSummon()
-                    .noSave()
                     .setShouldReceiveVelocityUpdates(false)
                     .build("bmnw:explosion_helper")
     );

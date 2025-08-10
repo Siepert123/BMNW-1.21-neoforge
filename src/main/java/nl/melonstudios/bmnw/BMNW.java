@@ -47,6 +47,7 @@ import nl.melonstudios.bmnw.misc.*;
 import nl.melonstudios.bmnw.registries.BMNWResourceKeys;
 import nl.melonstudios.bmnw.screen.*;
 import nl.melonstudios.bmnw.weapon.explosion.Exploder;
+import nl.melonstudios.bmnw.weapon.explosion.LevelActiveExplosions;
 import nl.melonstudios.bmnw.weapon.missile.registry.BMNWMissileParts;
 import nl.melonstudios.bmnw.weapon.nuke.BMNWNukeTypes;
 import org.slf4j.Logger;
@@ -294,12 +295,15 @@ public class BMNW {
                 }
                 first = false;
 
+                LevelActiveExplosions.createIfNecessary(level);
                 PipeNetManager.createIfNecessary(level);
                 CableNetManager.createIfNecessary(level);
             }
             Structures.validCache = true;
             FireMarbleManager.create(Structures.seedCache);
         }
+
+        event.getServer().addTickable(LevelActiveExplosions::tick);
 
         Commands commands = event.getServer().getCommands();
         BMNWCommands.register(commands);
@@ -311,14 +315,13 @@ public class BMNW {
         for (ServerLevel level : event.getServer().getAllLevels()) {
             ChunkRadiationManager.handler.clearSystem(level);
         }
-        Exploder.ALL.forEach(Exploder::cancel);
     }
 
     @SubscribeEvent
     public void serverStopped(ServerStoppedEvent event) {
         PipeNetManager.clear(event);
         CableNetManager.clear(event);
-        Exploder.ALL.clear();
+        LevelActiveExplosions.clear(event);
     }
 
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent

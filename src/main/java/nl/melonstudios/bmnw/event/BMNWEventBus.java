@@ -154,18 +154,6 @@ public class BMNWEventBus {
 
             }
         }
-        int msBudget;
-        if (!Exploder.ALL.isEmpty()) {
-            msBudget = (int)(45 - (System.currentTimeMillis() - tickTracker));
-            if (msBudget > 0) {
-                Exploder.ALL.getFirst().cacheChunksTick(msBudget);
-            }
-            msBudget = (int)(45 - (System.currentTimeMillis() - tickTracker));
-            if (msBudget > 0) {
-                Exploder.ALL.getFirst().destructionTick(msBudget);
-            }
-            Exploder.ALL.removeIf(Exploder::isComplete);
-        }
     }
     //endregion
 

@@ -37,10 +37,7 @@ import nl.melonstudios.bmnw.logistics.pipes.PipeNetManager;
 import nl.melonstudios.bmnw.misc.Books;
 import nl.melonstudios.bmnw.misc.FireMarbleManager;
 import nl.melonstudios.bmnw.registries.BMNWResourceKeys;
-import nl.melonstudios.bmnw.weapon.explosion.Exploder;
-import nl.melonstudios.bmnw.weapon.explosion.ExplosionHelperEntity;
-import nl.melonstudios.bmnw.weapon.explosion.ExplosionProps;
-import nl.melonstudios.bmnw.weapon.explosion.PlagiarizedExplosionHandlerBatched;
+import nl.melonstudios.bmnw.weapon.explosion.*;
 import nl.melonstudios.bmnw.weapon.missile.MissileBlueprint;
 import nl.melonstudios.bmnw.weapon.missile.MissileSystem;
 import nl.melonstudios.bmnw.weapon.missile.entity.CustomizableMissileEntity;
@@ -340,15 +337,7 @@ public class BMNWCommands {
                                 )
                         ).then(Commands.literal("explode")
                                 .then(Commands.argument("str", DoubleArgumentType.doubleArg(2.0))
-                                    .then(Commands.argument("nr", FloatArgumentType.floatArg(0.0F))
-                                            .then(Commands.argument("ct", FloatArgumentType.floatArg(0.0F))
-                                                    .then(Commands.argument("if", FloatArgumentType.floatArg(0.0F))
-                                                            .then(Commands.argument("e", FloatArgumentType.floatArg(0.0F))
-                                                                    .executes(BMNWCommands::explodeCommand)
-                                                            )
-                                                    )
-                                            )
-                                    )
+                                        .executes(BMNWCommands::explodeCommand)
                                 )
                         ).then(Commands.literal("cloud")
                                 .then(Commands.argument("soul", BoolArgumentType.bool())
@@ -436,27 +425,23 @@ public class BMNWCommands {
         return Command.SINGLE_SUCCESS;
     }
 
-    private static int explodeCommand(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
-        ExplosionProps params = new ExplosionProps.Builder()
-                .setNuclearRemains(FloatArgumentType.getFloat(context, "nr"))
-                .setCharredTrees(FloatArgumentType.getFloat(context, "ct"))
-                .setIrradiatedFoliage(FloatArgumentType.getFloat(context, "if"))
-                .setEvaporation(FloatArgumentType.getFloat(context, "e"))
-                .build();
-
+    private static int explodeCommand(CommandContext<CommandSourceStack> context) {
+        ServerLevel level = context.getSource().getLevel();
         Vec3 pos = context.getSource().getPosition();
-        Exploder.ALL.add(
+        LevelActiveExplosions explosions = LevelActiveExplosions.get(level);
+        explosions.add(
                 new PlagiarizedExplosionHandlerBatched(
-                        context.getSource().getLevel(),
+                        level,
                         (int)pos.x,
                         (int)pos.y,
                         (int)pos.z,
                         (int)DoubleArgumentType.getDouble(context, "str"),
                         BMNWServerConfig.explosionCalculationFactor(),
-                        (int)(DoubleArgumentType.getDouble(context, "str") / 2)
+                        (int)(DoubleArgumentType.getDouble(context, "str") / 2),
+                        null
                 )
         );
-        context.getSource().sendSuccess(() -> Component.literal("summoned the thing, active = " + Exploder.ALL.size()),
+        context.getSource().sendSuccess(() -> Component.literal("summoned the thing, active = " + explosions.size()),
                 false);
 
         return Command.SINGLE_SUCCESS;

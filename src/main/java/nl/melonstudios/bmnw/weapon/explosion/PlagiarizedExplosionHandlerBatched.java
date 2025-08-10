@@ -1,15 +1,21 @@
 package nl.melonstudios.bmnw.weapon.explosion;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.*;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.level.entity.LevelEntityGetter;
 import net.minecraft.world.phys.Vec3;
+import nl.melonstudios.bmnw.cfg.BMNWServerConfig;
 import org.joml.Vector3f;
 
+import javax.annotation.Nullable;
 import java.util.*;
 
 public class PlagiarizedExplosionHandlerBatched implements Exploder {
@@ -19,7 +25,7 @@ public class PlagiarizedExplosionHandlerBatched implements Exploder {
     private final int posX;
     private final int posY;
     private final int posZ;
-    private final Level level;
+    public ServerLevel level;
 
     private final float strength;
     private final int length;
@@ -30,15 +36,111 @@ public class PlagiarizedExplosionHandlerBatched implements Exploder {
 
     public boolean collectionComplete = false;
 
-    private final long startMs;
+    private final UUID parentUUID;
 
-    public Runnable onFinish = null;
-    public PlagiarizedExplosionHandlerBatched setOnFinish(Runnable func) {
-        this.onFinish = func;
-        return this;
+    public void writeNBT(CompoundTag nbt) {
+        if (!this.perChunk.isEmpty()) {
+            System.out.println("writing " + this.perChunk.size() + " per-chunks");
+            ListTag list = new ListTag(this.perChunk.size());
+
+            for (Map.Entry<ChunkPos, List<Vector3f>> entry : this.perChunk.entrySet()) {
+                CompoundTag tag = new CompoundTag();
+
+                tag.putInt("cX", entry.getKey().x);
+                tag.putInt("cZ", entry.getKey().z);
+
+                ListTag floats = new ListTag(entry.getValue().size());
+                for (Vector3f vec : entry.getValue()) {
+                    floats.add(new IntArrayTag(
+                            new int[]{
+                                    Float.floatToRawIntBits(vec.x),
+                                    Float.floatToRawIntBits(vec.y),
+                                    Float.floatToRawIntBits(vec.z),
+                            }
+                    ));
+                }
+                tag.put("Vectors", floats);
+
+                list.add(tag);
+            }
+
+            nbt.put("PerChunk", list);
+        }
+
+        if (!this.orderedChunks.isEmpty()) {
+            long[] packed = new long[this.orderedChunks.size()];
+            for (int i = 0; i < this.orderedChunks.size(); i++) {
+                packed[i] = this.orderedChunks.get(i).toLong();
+            }
+            nbt.putLongArray("OrderedChunks", packed);
+        }
+
+        nbt.putInt("posX", this.posX);
+        nbt.putInt("posY", this.posY);
+        nbt.putInt("posZ", this.posZ);
+
+        nbt.putFloat("strength", this.strength);
+        nbt.putInt("length", this.length);
+        nbt.putInt("gspNumMax", this.gspNumMax);
+        nbt.putInt("gspNum", this.gspNum);
+        nbt.putDouble("gspX", this.gspX);
+        nbt.putDouble("gspY", this.gspY);
+
+        nbt.putBoolean("collectionComplete", this.collectionComplete);
+
+        if (this.parentUUID != null) nbt.putUUID("ParentUUID", this.parentUUID);
     }
 
-    public PlagiarizedExplosionHandlerBatched(Level level, int x, int y, int z, float strength, int speed, int length) {
+    public PlagiarizedExplosionHandlerBatched(CompoundTag nbt) {
+        if (nbt.contains("PerChunk", Tag.TAG_LIST)) {
+            ListTag list = nbt.getList("PerChunk", Tag.TAG_COMPOUND);
+
+            for (int i = 0; i < list.size(); i++) {
+                CompoundTag tag = list.getCompound(i);
+
+                ChunkPos pos = new ChunkPos(tag.getInt("cX"), tag.getInt("cZ"));
+                ListTag floats = tag.getList("Vectors", Tag.TAG_INT_ARRAY);
+
+                List<Vector3f> vector3fs = new ArrayList<>(floats.size());
+                for (int j = 0; j < floats.size(); j++) {
+                    int[] array = floats.getIntArray(j);
+                    vector3fs.add(new Vector3f(
+                            Float.intBitsToFloat(array[0]),
+                            Float.intBitsToFloat(array[1]),
+                            Float.intBitsToFloat(array[2])
+                    ));
+                }
+
+                this.perChunk.put(pos, vector3fs);
+            }
+        }
+
+        if (nbt.contains("OrderedChunks", Tag.TAG_LONG_ARRAY)) {
+            long[] packed = nbt.getLongArray("OrderedChunks");
+            for (long l : packed) {
+                this.orderedChunks.add(new ChunkPos(l));
+            }
+        }
+
+        this.posX = nbt.getInt("posX");
+        this.posY = nbt.getInt("posY");
+        this.posZ = nbt.getInt("posZ");
+
+        this.strength = nbt.getFloat("strength");
+        this.speed = BMNWServerConfig.explosionCalculationFactor();
+        this.length = nbt.getInt("length");
+        this.gspNumMax = nbt.getInt("gspNumMax");
+        this.gspNum = nbt.getInt("gspNum");
+        this.gspX = nbt.getDouble("gspX");
+        this.gspY = nbt.getDouble("gspY");
+
+        this.collectionComplete = nbt.getBoolean("collectionComplete");
+
+        if (nbt.contains("ParentUUID")) this.parentUUID = nbt.getUUID("ParentUUID");
+        else this.parentUUID = null;
+    }
+
+    public PlagiarizedExplosionHandlerBatched(ServerLevel level, int x, int y, int z, float strength, int speed, int length, @Nullable UUID parentUUID) {
         this.level = level;
         this.posX = x;
         this.posY = y;
@@ -53,7 +155,9 @@ public class PlagiarizedExplosionHandlerBatched implements Exploder {
         this.gspX = Math.PI;
         this.gspY = 0.0;
 
-        this.startMs = System.currentTimeMillis();
+        this.parentUUID = parentUUID;
+
+        LevelActiveExplosions.get(this.level).setDirty();
     }
 
     private void generateGspUp() {
@@ -82,6 +186,8 @@ public class PlagiarizedExplosionHandlerBatched implements Exploder {
     public void collectTip(int count) {
         BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
         int amountProcessed = 0;
+
+        LevelActiveExplosions.get(this.level).setDirty();
 
         while(this.gspNumMax >= this.gspNum){
             // Get Cartesian coordinates for spherical coordinates
@@ -170,6 +276,8 @@ public class PlagiarizedExplosionHandlerBatched implements Exploder {
 
     public void processChunk() {
         if (this.perChunk.isEmpty()) return;
+
+        LevelActiveExplosions.get(this.level).setDirty();
 
         BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
 
@@ -273,10 +381,16 @@ public class PlagiarizedExplosionHandlerBatched implements Exploder {
 
     @Override
     public void onRemoveDebug() {
-        if (this.onFinish != null) {
-            this.onFinish.run();
+        if (this.parentUUID != null) {
+            if (this.level instanceof ServerLevel level) {
+                LevelEntityGetter<Entity> entityLevelEntityGetter = level.getEntities();
+                Entity candidate = entityLevelEntityGetter.get(this.parentUUID);
+                if (candidate != null) {
+                    ((ExploderParent)candidate).notifyExplosionFinished();
+                }
+            }
         }
-        long ms = System.currentTimeMillis() - this.startMs;
-        System.out.println("Explosion took " + ms + " milliseconds");
+
+        LevelActiveExplosions.get(this.level).setDirty();
     }
 }
