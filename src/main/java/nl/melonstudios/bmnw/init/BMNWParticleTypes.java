@@ -96,6 +96,22 @@ public class BMNWParticleTypes {
                 }
             }
     );
+
+    public static final Supplier<ParticleType<ResizableParticleOptions>> FLASH = PARTICLE_TYPES.register(
+            "flash",
+            () -> new ParticleType<ResizableParticleOptions>(true) {
+                @Override
+                public MapCodec<ResizableParticleOptions> codec() {
+                    return ResizableParticleOptions.codec(this);
+                }
+
+                @Override
+                public StreamCodec<? super RegistryFriendlyByteBuf, ResizableParticleOptions> streamCodec() {
+                    return ResizableParticleOptions.streamCodec(this);
+                }
+            }
+    );
+
     public static final Supplier<SimpleParticleType> DUST_TRAIL = PARTICLE_TYPES.register(
             "dust_trail",
             () -> new SimpleParticleType(true)

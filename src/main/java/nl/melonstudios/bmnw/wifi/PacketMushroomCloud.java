@@ -43,6 +43,8 @@ public record PacketMushroomCloud(boolean soul, double x, double y, double z, fl
         ResizableParticleOptions optionsParticle = new ResizableParticleOptions(particle, packet.size * 0.1F);
         ParticleType<ResizableParticleOptions> smoke = BMNWParticleTypes.MUSHROOM_SMOKE.get();
         ResizableParticleOptions optionsSmoke = new ResizableParticleOptions(smoke, packet.size * 0.1F);
+        ParticleType<ResizableParticleOptions> flash = BMNWParticleTypes.FLASH.get();
+        ResizableParticleOptions optionsFlash = new ResizableParticleOptions(flash, packet.size*10);
         double degreePerPart = 1;
         final double x = packet.x;
         final double y = packet.y;
@@ -91,6 +93,8 @@ public record PacketMushroomCloud(boolean soul, double x, double y, double z, fl
             level.addParticle(optionsSmoke, x, y, z, vx, ringPos, vz);
             yaw += degreePerPart;
         }
+
+        level.addParticle(optionsFlash, x, y, z, 0, 0, 0);
     }
 
     private static double relativeX(double y, double p, double r) {

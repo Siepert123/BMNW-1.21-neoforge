@@ -487,6 +487,7 @@ public class BMNWEventBus {
         event.registerSpriteSet(BMNWParticleTypes.MUSHROOM_CLOUD.get(), MushroomCloudParticle.Provider::new);
         event.registerSpriteSet(BMNWParticleTypes.SOUL_MUSHROOM_CLOUD.get(), SoulMushroomCloudParticle.Provider::new);
         event.registerSpriteSet(BMNWParticleTypes.MUSHROOM_SMOKE.get(), MushroomSmokeParticle.Provider::new);
+        event.registerSpriteSet(BMNWParticleTypes.FLASH.get(), FlashParticle.Provider::new);
         event.registerSpriteSet(BMNWParticleTypes.VOLCANO_SMOKE.get(), VolcanoSmokeParticle.Provider::new);
         event.registerSpriteSet(BMNWParticleTypes.FLUID_VAPOR.get(), FluidVaporParticle.Provider::new);
     }

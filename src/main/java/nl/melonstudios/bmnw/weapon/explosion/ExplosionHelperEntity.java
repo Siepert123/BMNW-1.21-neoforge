@@ -196,7 +196,11 @@ public class ExplosionHelperEntity extends Entity implements ExploderParent, IEn
         this.age++;
         if (this.nukeType == null) return;
         if (this.level().isClientSide) {
-            if (this.nukeType.brightensSky()) this.level().setSkyFlashTime(20);
+            if (this.nukeType.brightensSky()) {
+                if (this.age <= this.nukeType.getMushroomCloudSize() * 25.0F) {
+                    this.level().setSkyFlashTime(20);
+                }
+            }
             return;
         }
 
