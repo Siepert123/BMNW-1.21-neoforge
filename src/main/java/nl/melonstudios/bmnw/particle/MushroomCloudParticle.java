@@ -86,9 +86,9 @@ public class MushroomCloudParticle extends TextureSheetParticle {
                     Mth.lerp(d, this.yellowness, this.darkness),
                     Mth.lerp(d, 0.1F, this.darkness)
             );
-
-            this.quadSize += (0.01F * this.size);
         }
+
+        this.quadSize += (0.01F * this.size);
 
         this.setSpriteFromAge(this.spriteSet);
 

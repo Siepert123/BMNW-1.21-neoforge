@@ -76,9 +76,9 @@ public class MushroomSmokeParticle extends TextureSheetParticle {
                     Mth.lerp(d, 0.8F, this.darkness),
                     Mth.lerp(d, 0.8F, this.darkness)
             );
-
-            this.quadSize += (0.005F * this.size);
         }
+
+        this.quadSize += (0.005F * this.size);
 
         this.setSpriteFromAge(this.spriteSet);
 
