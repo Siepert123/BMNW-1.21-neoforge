@@ -2,6 +2,7 @@ package nl.melonstudios.bmnw.weapon.explosion;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.core.QuartPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
@@ -19,9 +20,12 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkAccess;
+import net.minecraft.world.level.chunk.status.ChunkStatus;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.AABB;
@@ -30,6 +34,7 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.entity.IEntityWithComplexSpawn;
 import net.neoforged.neoforge.network.PacketDistributor;
+import nl.melonstudios.bmnw.cfg.BMNWCommonConfig;
 import nl.melonstudios.bmnw.cfg.BMNWServerConfig;
 import nl.melonstudios.bmnw.init.*;
 import nl.melonstudios.bmnw.registries.BMNWResourceKeys;
@@ -121,6 +126,7 @@ public class ExplosionHelperEntity extends Entity implements ExploderParent, IEn
         nbt.putBoolean("leavesDestroyed", this.leavesDestroyed);
         nbt.putBoolean("treesCharred", this.treesCharred);
         nbt.putBoolean("radiationReleased", this.radiationReleased);
+        nbt.putBoolean("biomeConverted", this.biomeConverted);
         nbt.putBoolean("nuclearRemainsPlaced", this.nuclearRemainsPlaced);
         nbt.putBoolean("waterRefilled", this.waterRefilled);
 
@@ -160,6 +166,7 @@ public class ExplosionHelperEntity extends Entity implements ExploderParent, IEn
         this.leavesDestroyed = nbt.getBoolean("leavesDestroyed");
         this.treesCharred = nbt.getBoolean("treesCharred");
         this.radiationReleased = nbt.getBoolean("radiationReleased");
+        this.biomeConverted = nbt.getBoolean("biomeConverted");
         this.nuclearRemainsPlaced = nbt.getBoolean("nuclearRemainsPlaced");
         this.waterRefilled = nbt.getBoolean("waterRefilled");
 
@@ -189,6 +196,7 @@ public class ExplosionHelperEntity extends Entity implements ExploderParent, IEn
     private boolean leavesDestroyed = false;
     private boolean treesCharred = false;
     private boolean radiationReleased = false;
+    private boolean biomeConverted = false;
     private boolean nuclearRemainsPlaced = false;
     private boolean waterRefilled = false;
 
@@ -325,8 +333,82 @@ public class ExplosionHelperEntity extends Entity implements ExploderParent, IEn
                 if (this.nukeType.getReleasedRadiation() > 0.0F) {
                     level.addFreshEntity(new RadiationLingerEntity(level, this.position(), this.nukeType));
                 }
-                this.setBiome();
                 this.radiationReleased = true;
+                return;
+            }
+            if (!this.biomeConverted) {
+                if (this.orderedChunks == null) {
+                    LOGGER.debug("[{}] starting biome conversion", this.getId());
+                    float max = Math.max(Math.max(
+                            this.nukeType.getMinimalBiomeRadius(),
+                            this.nukeType.getNormalBiomeRadius()
+                    ), this.nukeType.getSevereBiomeRadius());
+                    int c = (Mth.ceil(max) + 15) >> 4;
+                    this.affectedMinCX = this.chunkPosition().x - c;
+                    this.affectedMaxCX = this.chunkPosition().x + c;
+                    this.affectedMinCZ = this.chunkPosition().z - c;
+                    this.affectedMaxCZ = this.chunkPosition().z + c;
+                    this.orderedChunks = new ArrayList<>();
+                    for (int x = this.affectedMinCX; x <= this.affectedMaxCX; x++) {
+                        for (int z = this.affectedMinCZ; z <= this.affectedMaxCZ; z++) {
+                            this.orderedChunks.add(new ChunkPos(x, z));
+                        }
+                    }
+
+                    this.orderedChunks.sort((cp1, cp2) -> {
+                        int d1 = this.chunkPosition().getChessboardDistance(cp1);
+                        int d2 = this.chunkPosition().getChessboardDistance(cp2);
+
+                        return d1 - d2;
+                    });
+                    return;
+                }
+                if (this.orderedChunks.isEmpty()) {
+                    this.orderedChunks = null;
+                    this.biomeConverted = true;
+                } else {
+                    int max = Math.max(BMNWServerConfig.explosionCalculationFactor() / 10, 1);
+                    List<ChunkAccess> chunks = new ArrayList<>();
+                    for (int i = 0; i < max && !this.orderedChunks.isEmpty(); i++) {
+                        ChunkPos pos = this.orderedChunks.removeFirst();
+                        ChunkAccess access = level.getChunk(pos.x, pos.z, ChunkStatus.FULL, true);
+                        if (access != null) chunks.add(access);
+                        else {
+                            if (!BMNWCommonConfig.suppressErrors()) throw new IllegalStateException("Could not get chunk at X:" + pos.x + " Z:" + pos.z);
+                        }
+                    }
+
+                    int rangeMin = this.nukeType.getMinimalBiomeRadius() * this.nukeType.getMinimalBiomeRadius();
+                    int rangeNor = this.nukeType.getNormalBiomeRadius() * this.nukeType.getNormalBiomeRadius();
+                    int rangeSev = this.nukeType.getSevereBiomeRadius() * this.nukeType.getSevereBiomeRadius();
+
+                    Holder<Biome> minimal = BMNWBiomes.nuclear_wastes_minimal(level);
+                    Holder<Biome> normal = BMNWBiomes.nuclear_wastes(level);
+                    Holder<Biome> severe = BMNWBiomes.nuclear_wastes_severe(level);
+
+                    for (ChunkAccess chunk : chunks) {
+                        chunk.fillBiomesFromNoise((x, y, z, sampler) -> {
+                            this.mutable1.set(QuartPos.toBlock(x), QuartPos.toBlock(y), QuartPos.toBlock(z));
+                            double dist = this.mutable1.distToCenterSqr(this.position());
+                            if (dist <= rangeSev) {
+                                return severe;
+                            }
+                            Holder<Biome> original = chunk.getNoiseBiome(x, y, z);
+                            if (dist <= rangeNor) {
+                                if (original == severe) return original;
+                                return normal;
+                            }
+                            if (dist <= rangeMin) {
+                                if (original == severe || original == normal) return original;
+                                return minimal;
+                            }
+                            return original;
+                        }, level.getChunkSource().randomState().sampler());
+                        chunk.setUnsaved(true);
+                    }
+
+                    level.getChunkSource().chunkMap.resendBiomesForChunks(chunks);
+                }
                 return;
             }
             if (!this.leavesDestroyed) {
