@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "bmnw:example_missile"
+          "name": "bmnw:tsar_bomba"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "bmnw:blocks/example_missile"
+  "random_sequence": "bmnw:blocks/tsar_bomba"
 }
