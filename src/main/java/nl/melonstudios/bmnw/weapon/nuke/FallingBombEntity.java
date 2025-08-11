@@ -6,9 +6,11 @@ import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.TicketType;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MoverType;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -19,6 +21,8 @@ import nl.melonstudios.bmnw.init.BMNWEntityTypes;
 import nl.melonstudios.bmnw.weapon.explosion.ExplosionHelperEntity;
 import nl.melonstudios.bmnw.wifi.PacketSendNuclearSound;
 
+import java.util.Comparator;
+import java.util.UUID;
 import java.util.function.Consumer;
 
 public class FallingBombEntity extends Entity implements IEntityWithComplexSpawn {
@@ -26,10 +30,15 @@ public class FallingBombEntity extends Entity implements IEntityWithComplexSpawn
         super(entityType, level);
     }
 
+    public static final TicketType<UUID> LOADING_TICKET = TicketType.create("falling_bomb", UUID::compareTo, 20);
+
     public FallingBombEntity(Level level, Vec3 pos, BlockState nuke) {
         this(BMNWEntityTypes.FALLING_BOMB.get(), level);
         this.setPos(pos);
         this.nukeState = nuke;
+        if (level instanceof ServerLevel serverLevel) {
+            serverLevel.getChunkSource().addRegionTicket(LOADING_TICKET, this.chunkPosition(), 2, this.getUUID(), true);
+        }
     }
 
     private BlockState nukeState;
@@ -42,6 +51,9 @@ public class FallingBombEntity extends Entity implements IEntityWithComplexSpawn
 
     @Override
     public void tick() {
+        if (this.level() instanceof ServerLevel serverLevel) {
+            serverLevel.getChunkSource().addRegionTicket(LOADING_TICKET, this.chunkPosition(), 2, this.getUUID(), true);
+        }
         if (this.onGround()) {
             if (!this.level().isClientSide) {
                 this.detonate();

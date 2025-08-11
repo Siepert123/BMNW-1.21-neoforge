@@ -36,7 +36,7 @@ public class MushroomCloudParticle extends TextureSheetParticle {
         this.startX = x;
         this.startY = y;
         this.startZ = z;
-        this.quadSize = (1.8f + (level.random.nextFloat() * 0.4f)) * this.size;
+        this.quadSize = (2.6f + (level.random.nextFloat() * 0.4f)) * this.size;
         this.lifetime = Mth.ceil(LIFETIME * this.size);
         this.myGrowthTicks = Mth.ceil(GROWTH_TICKS * this.size);
         this.myExtinguishTicks = Mth.ceil(EXTINGUISH_TICKS * this.size);
@@ -88,7 +88,7 @@ public class MushroomCloudParticle extends TextureSheetParticle {
             );
         }
 
-        this.quadSize += (0.01F * this.size);
+        //this.quadSize += (0.01F * this.size);
 
         this.setSpriteFromAge(this.spriteSet);
 

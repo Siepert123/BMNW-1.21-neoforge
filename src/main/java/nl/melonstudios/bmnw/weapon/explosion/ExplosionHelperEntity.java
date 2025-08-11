@@ -9,8 +9,11 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.Ticket;
+import net.minecraft.server.level.TicketType;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
+import net.minecraft.util.Unit;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.ChunkPos;
@@ -36,14 +39,12 @@ import nl.melonstudios.bmnw.wifi.PacketMushroomCloud;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class ExplosionHelperEntity extends Entity implements ExploderParent, IEntityWithComplexSpawn {
     private static final Logger LOGGER = LogManager.getLogger("ExplosionHelperEntity");
 
+    public static final TicketType<UUID> LOADING_TICKET = TicketType.create("explosion_helper", UUID::compareTo, 20);
     public ExplosionHelperEntity(EntityType<?> entityType, Level level) {
         super(entityType, level);
 
@@ -80,6 +81,11 @@ public class ExplosionHelperEntity extends Entity implements ExploderParent, IEn
 
         LOGGER.debug("New explosion created with ID {}", this.getId());
         this.start = System.currentTimeMillis();
+
+        if (level instanceof ServerLevel serverLevel) {
+            serverLevel.getChunkSource().addRegionTicket(LOADING_TICKET, this.chunkPosition(),
+                    (this.nukeType.getBlastRadius()+31) >> 4, this.getUUID(), true);
+        }
     }
 
     @Override
@@ -206,6 +212,8 @@ public class ExplosionHelperEntity extends Entity implements ExploderParent, IEn
 
         if (this.level() instanceof ServerLevel level) {
             if (this.age >= 10) {
+                level.getChunkSource().addRegionTicket(LOADING_TICKET, this.chunkPosition(),
+                        (this.nukeType.getBlastRadius()+31) >> 4, this.getUUID(), true);
                 this.age = 0;
                 int r = this.nukeType.getEntityBlowRadius();
                 int r2 = r * r;

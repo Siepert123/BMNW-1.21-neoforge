@@ -78,7 +78,7 @@ public class MushroomSmokeParticle extends TextureSheetParticle {
             );
         }
 
-        this.quadSize += (0.005F * this.size);
+        //this.quadSize += (0.005F * this.size);
 
         this.setSpriteFromAge(this.spriteSet);
 
