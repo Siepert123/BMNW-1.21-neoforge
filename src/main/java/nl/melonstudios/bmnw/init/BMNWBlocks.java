@@ -284,11 +284,14 @@ public class BMNWBlocks {
     public static final DeferredBlock<NuclearChargeNukeBlock> NUCLEAR_CHARGE = BLOCKS.register("nuclear_charge",
             () -> new NuclearChargeNukeBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get())));
     public static final DeferredBlock<LittleBoyNukeBlock> LITTLE_BOY = BLOCKS.register("little_boy",
-            () -> new LittleBoyNukeBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get())));
+            () -> new LittleBoyNukeBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get())
+                    .strength(8.0F, 20.0F)));
     public static final DeferredBlock<CaseohNukeBlock> CASEOH = BLOCKS.register("caseoh",
-            () -> new CaseohNukeBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get())));
+            () -> new CaseohNukeBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get())
+                    .strength(10.0F, 40.0F)));
     public static final DeferredBlock<TsarBombaNukeBlock> TSAR_BOMBA = BLOCKS.register("tsar_bomba",
-            () -> new TsarBombaNukeBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get())));
+            () -> new TsarBombaNukeBlock(BlockBehaviour.Properties.ofFullCopy(STEEL_BLOCK.get())
+                    .strength(12.0F, 60.0F)));
 
     public static final DeferredBlock<MissileLaunchPadBlock> MISSILE_LAUNCH_PAD = BLOCKS.register("missile_launch_pad",
             () -> new MissileLaunchPadBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)));
