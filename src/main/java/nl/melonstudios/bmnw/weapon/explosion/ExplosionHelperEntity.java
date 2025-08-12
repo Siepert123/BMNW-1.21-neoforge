@@ -34,6 +34,7 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.entity.IEntityWithComplexSpawn;
 import net.neoforged.neoforge.network.PacketDistributor;
+import nl.melonstudios.bmnw.block.state.BMNWStateProperties;
 import nl.melonstudios.bmnw.cfg.BMNWCommonConfig;
 import nl.melonstudios.bmnw.cfg.BMNWServerConfig;
 import nl.melonstudios.bmnw.init.*;
@@ -82,7 +83,7 @@ public class ExplosionHelperEntity extends Entity implements ExploderParent, IEn
         int r = this.nukeType.getEntityBlowRadius();
         this.entitySearch = new AABB(this.position().add(-r, -r, -r), this.position().add(r, r, r));
 
-        this.waterRefilled = BMNWServerConfig.experimentalWaterRefill();
+        this.waterRefilled = !BMNWServerConfig.experimentalWaterRefill();
 
         LOGGER.debug("New explosion created with ID {}", this.getId());
         this.start = System.currentTimeMillis();
@@ -299,6 +300,8 @@ public class ExplosionHelperEntity extends Entity implements ExploderParent, IEn
                                 for (y = this.evaporationMin; y < this.evaporationMax; y++) {
                                     mutable.set(pos.getBlockX(x), y, pos.getBlockZ(z));
                                     if (level.getFluidState(mutable).is(Tags.Fluids.WATER)) {
+                                        level.setBlock(mutable, Blocks.AIR.defaultBlockState(), 2 | 16 | 32);
+                                    } else if (level.getBlockState(mutable).is(BMNWTags.Blocks.MELTABLES)) {
                                         level.setBlock(mutable, Blocks.AIR.defaultBlockState(), 2 | 16 | 32);
                                     }
                                 }
@@ -552,6 +555,9 @@ public class ExplosionHelperEntity extends Entity implements ExploderParent, IEn
                     this.orderedChunks = null;
                     this.nuclearRemainsPlaced = true;
                 } else {
+                    float quart = this.nukeType.getNuclearRemainsRadius() * 0.25F;
+                    float quart2 = quart * 2.0F;
+                    float quart3 = quart * 3.0F;
                     int max = Math.max(BMNWServerConfig.explosionCalculationFactor() / 20, 1);
                     for (int i = 0; (i < max && !this.orderedChunks.isEmpty()); i++) {
                         ChunkPos pos = this.orderedChunks.removeFirst();
@@ -562,13 +568,28 @@ public class ExplosionHelperEntity extends Entity implements ExploderParent, IEn
                         int d3 = (d + 16) * (d + 16);
                         for (int x = 0; x < 16; x++) {
                             for (int z = 0; z < 16; z++) {
+                                int darkness;
                                 {
                                     int x1 = (x + pos.getMinBlockX() - this.getBlockX());
                                     int z1 = (z + pos.getMinBlockZ() - this.getBlockZ());
                                     int sqr = x1 * x1 + z1 * z1;
                                     if (sqr > d3) continue;
                                     if (sqr > d2 && this.random.nextBoolean()) continue;
+                                    if (this.nukeType.hasDarkenedNuclearRemains()) {
+                                        float dist = Mth.sqrt(sqr);
+                                        if (dist < quart) {
+                                            darkness = 3;
+                                        } else if (dist < quart2) {
+                                            darkness = 2;
+                                        } else if (dist < quart3) {
+                                            darkness = 1;
+                                        } else darkness = 0;
+                                    } else {
+                                        darkness = 0;
+                                    }
                                 }
+                                BlockState remains = BMNWBlocks.SLAKED_NUCLEAR_REMAINS.get().defaultBlockState()
+                                        .setValue(BMNWStateProperties.DARKNESS, darkness);
                                 y = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x + pos.getMinBlockX(), z + pos.getMinBlockZ()) - 1;
                                 mutable.set(x + pos.getMinBlockX(), y, z + pos.getMinBlockZ());
                                 if (!level.isInWorldBounds(mutable)) continue;
@@ -581,7 +602,9 @@ public class ExplosionHelperEntity extends Entity implements ExploderParent, IEn
                                                         Blocks.DIAMOND_ORE.defaultBlockState(), 3
                                         );
                                     } else {
-                                        level.setBlock(mutable, BMNWBlocks.SLAKED_NUCLEAR_REMAINS.get().defaultBlockState(), 3);
+                                        if (!state.is(BMNWBlocks.SLAKED_NUCLEAR_REMAINS.get()) || state.getValue(BMNWStateProperties.DARKNESS) < darkness) {
+                                            level.setBlock(mutable, remains, 3);
+                                        }
                                     }
                                     mutable.move(0, -1, 0);
                                     if (this.validNuclearRemainsState(state = level.getBlockState(mutable), 150.0F)) {
@@ -592,7 +615,9 @@ public class ExplosionHelperEntity extends Entity implements ExploderParent, IEn
                                                             Blocks.DIAMOND_ORE.defaultBlockState(), 3
                                             );
                                         } else {
-                                            level.setBlock(mutable, BMNWBlocks.SLAKED_NUCLEAR_REMAINS.get().defaultBlockState(), 3);
+                                            if (!state.is(BMNWBlocks.SLAKED_NUCLEAR_REMAINS.get()) || state.getValue(BMNWStateProperties.DARKNESS) < darkness) {
+                                                level.setBlock(mutable, remains, 3);
+                                            }
                                         }
                                         mutable.move(0, -1, 0);
                                         if (this.validNuclearRemainsState(state = level.getBlockState(mutable), 50.0F)) {
@@ -603,7 +628,9 @@ public class ExplosionHelperEntity extends Entity implements ExploderParent, IEn
                                                                 Blocks.DIAMOND_ORE.defaultBlockState(), 3
                                                 );
                                             } else {
-                                                level.setBlock(mutable, BMNWBlocks.SLAKED_NUCLEAR_REMAINS.get().defaultBlockState(), 3);
+                                                if (!state.is(BMNWBlocks.SLAKED_NUCLEAR_REMAINS.get()) || state.getValue(BMNWStateProperties.DARKNESS) < darkness) {
+                                                    level.setBlock(mutable, remains, 3);
+                                                }
                                             }
                                         }
                                     }

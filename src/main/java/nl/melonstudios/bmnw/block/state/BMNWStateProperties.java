@@ -1,6 +1,7 @@
 package nl.melonstudios.bmnw.block.state;
 
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import nl.melonstudios.bmnw.block.doors.MetalLockableDoorBlock;
 
 public class BMNWStateProperties {
@@ -9,6 +10,8 @@ public class BMNWStateProperties {
     public static final BooleanProperty MIRRORED = MetalLockableDoorBlock.MIRRORED;
     public static final BooleanProperty UPPER_HALF = MetalLockableDoorBlock.UPPER_HALF;
     public static final BooleanProperty ACTIVE = BooleanProperty.create("active");
+
+    public static final IntegerProperty DARKNESS = IntegerProperty.create("darkness", 0, 3);
 
     public static final PipeConnectionProperty PIPE_UP = PipeConnectionProperty.create("up");
     public static final PipeConnectionProperty PIPE_DOWN = PipeConnectionProperty.create("down");

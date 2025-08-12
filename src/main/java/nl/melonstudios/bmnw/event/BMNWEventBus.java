@@ -56,6 +56,7 @@ import net.neoforged.neoforge.fluids.capability.templates.FluidHandlerItemStack;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import nl.melonstudios.bmnw.BMNW;
+import nl.melonstudios.bmnw.block.client.NuclearRemainsColorizer;
 import nl.melonstudios.bmnw.block.container.fluid.FluidBarrelBlock;
 import nl.melonstudios.bmnw.block.energy.EnergyStorageBlock;
 import nl.melonstudios.bmnw.block.energy.EnergyStorageBlockEntity;
@@ -707,6 +708,12 @@ public class BMNWEventBus {
                 PacketWorkbenchCraft.STREAM_CODEC,
                 PacketWorkbenchCraft::handle
         );
+    }
+
+    @SubscribeEvent
+    @OnlyIn(Dist.CLIENT)
+    public static void registerColorHandlersBlock(RegisterColorHandlersEvent.Block event) {
+        event.register(new NuclearRemainsColorizer(), BMNWBlocks.SLAKED_NUCLEAR_REMAINS.get());
     }
 
     @SubscribeEvent

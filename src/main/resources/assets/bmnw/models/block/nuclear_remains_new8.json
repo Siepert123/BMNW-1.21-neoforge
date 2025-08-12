@@ -1,5 +1,5 @@
 {
-  "parent": "block/cube_all",
+  "parent": "bmnw:block/nuclear_remains_base",
   "textures": {
     "all": "bmnw:block/nuclear_remains_new8"
   }

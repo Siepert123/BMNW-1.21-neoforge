@@ -244,14 +244,14 @@ public class BMNWBlocks {
     //endregion
 
     //region Nuclear after effect blocks
-    public static final DeferredBlock<Block> SLAKED_NUCLEAR_REMAINS = BLOCKS.register("slaked_nuclear_remains",
-            () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).mapColor(MapColor.COLOR_GRAY)));
-    public static final DeferredBlock<NuclearRemainsBlock> NUCLEAR_REMAINS = BLOCKS.register("nuclear_remains",
-            () -> new NuclearRemainsBlock(BlockBehaviour.Properties.ofFullCopy(SLAKED_NUCLEAR_REMAINS.get()).randomTicks()
+    public static final DeferredBlock<NuclearRemainsBlock> SLAKED_NUCLEAR_REMAINS = BLOCKS.register("slaked_nuclear_remains",
+            () -> new NuclearRemainsBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).mapColor(MapColor.COLOR_GRAY)));
+    public static final DeferredBlock<LegacyNuclearRemainsBlock> NUCLEAR_REMAINS = BLOCKS.register("nuclear_remains",
+            () -> new LegacyNuclearRemainsBlock(BlockBehaviour.Properties.ofFullCopy(SLAKED_NUCLEAR_REMAINS.get()).randomTicks()
                     .mapColor(MapColor.COLOR_GREEN),
                     5, SLAKED_NUCLEAR_REMAINS.get().defaultBlockState()));
-    public static final DeferredBlock<NuclearRemainsBlock> BLAZING_NUCLEAR_REMAINS = BLOCKS.register("blazing_nuclear_remains",
-            () -> new NuclearRemainsBlock(BlockBehaviour.Properties.ofFullCopy(SLAKED_NUCLEAR_REMAINS.get()).randomTicks()
+    public static final DeferredBlock<LegacyNuclearRemainsBlock> BLAZING_NUCLEAR_REMAINS = BLOCKS.register("blazing_nuclear_remains",
+            () -> new LegacyNuclearRemainsBlock(BlockBehaviour.Properties.ofFullCopy(SLAKED_NUCLEAR_REMAINS.get()).randomTicks()
                     .mapColor(MapColor.COLOR_LIGHT_GREEN),
                     10, NUCLEAR_REMAINS.get().defaultBlockState()));
     
