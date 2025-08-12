@@ -44,11 +44,9 @@ import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
+@SuppressWarnings({"unchecked", "unused"})
 public class BMNWBlocks {
-    @SuppressWarnings("deprecation")
-    private static final float obsidian_blast_res = Blocks.OBSIDIAN.getExplosionResistance();
     private static final float concrete_blast_res = 84;
-    private static final float obsidian_hardness = Blocks.OBSIDIAN.defaultDestroyTime();
     private static final float concrete_hardness = 15;
 
     private static DeferredBlock<Block> ore(String name) {
