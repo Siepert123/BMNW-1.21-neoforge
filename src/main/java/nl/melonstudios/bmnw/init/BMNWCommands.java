@@ -35,7 +35,6 @@ import nl.melonstudios.bmnw.interfaces.IBatteryItem;
 import nl.melonstudios.bmnw.logistics.cables.CableNetManager;
 import nl.melonstudios.bmnw.logistics.pipes.PipeNetManager;
 import nl.melonstudios.bmnw.misc.Books;
-import nl.melonstudios.bmnw.misc.FireMarbleManager;
 import nl.melonstudios.bmnw.registries.BMNWResourceKeys;
 import nl.melonstudios.bmnw.weapon.explosion.ExplosionHelperEntity;
 import nl.melonstudios.bmnw.weapon.explosion.LevelActiveExplosions;
@@ -220,39 +219,6 @@ public class BMNWCommands {
                                             MeteoriteEntity.spawn(player);
                                         } catch (Throwable ignored) {}
                                     }).start();
-                                    return Command.SINGLE_SUCCESS;
-                                })
-                        ).then(Commands.literal("fire_marble")
-                                .executes(context -> {
-                                    CommandSourceStack src = context.getSource();
-                                    src.sendSuccess(
-                                            () -> Component.literal("Fire marble optimal frequencies:"),
-                                            false
-                                    );
-                                    src.sendSuccess(
-                                            () -> Component.literal(" Type 0 opt. freq.: " + FireMarbleManager.getOptimalFrequency(0)),
-                                            false
-                                    );
-                                    src.sendSuccess(
-                                            () -> Component.literal(" Type 1 opt. freq.: " + FireMarbleManager.getOptimalFrequency(1)),
-                                            false
-                                    );
-                                    src.sendSuccess(
-                                            () -> Component.literal(" Type 2 opt. freq.: " + FireMarbleManager.getOptimalFrequency(2)),
-                                            false
-                                    );
-                                    src.sendSuccess(
-                                            () -> Component.literal(" Type 3 opt. freq.: " + FireMarbleManager.getOptimalFrequency(3)),
-                                            false
-                                    );
-                                    src.sendSuccess(
-                                            () -> Component.literal(" Type 4 opt. freq.: " + FireMarbleManager.getOptimalFrequency(4)),
-                                            false
-                                    );
-                                    src.sendSuccess(
-                                            () -> Component.literal(" Type 5 opt. freq.: " + FireMarbleManager.getOptimalFrequency(5)),
-                                            false
-                                    );
                                     return Command.SINGLE_SUCCESS;
                                 })
                         ).then(Commands.literal("shockwave")

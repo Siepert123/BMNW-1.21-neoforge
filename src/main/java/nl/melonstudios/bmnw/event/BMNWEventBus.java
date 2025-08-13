@@ -81,7 +81,6 @@ import nl.melonstudios.bmnw.hazard.radiation.RadiationTools;
 import nl.melonstudios.bmnw.init.*;
 import nl.melonstudios.bmnw.interfaces.IExtremelyHotOverride;
 import nl.melonstudios.bmnw.interfaces.IScopeableItem;
-import nl.melonstudios.bmnw.item.client.FireMarbleColorizer;
 import nl.melonstudios.bmnw.item.client.FluidContainerColorizer;
 import nl.melonstudios.bmnw.item.client.FluidIdentifierColorizer;
 import nl.melonstudios.bmnw.item.client.SmallLampColorizer;
@@ -719,7 +718,6 @@ public class BMNWEventBus {
     @SubscribeEvent
     @OnlyIn(Dist.CLIENT)
     public static void registerColorHandlersItem(RegisterColorHandlersEvent.Item event) {
-        event.register(new FireMarbleColorizer(), BMNWItems.FIRE_MARBLE);
         event.register(new FluidContainerColorizer(), BMNWItems.PORTABLE_FLUID_TANK);
         event.register(new FluidIdentifierColorizer(), BMNWItems.FLUID_IDENTIFIER);
         event.register(new SmallLampColorizer(), SmallLampBlockItem.ALL.toArray(ItemLike[]::new));

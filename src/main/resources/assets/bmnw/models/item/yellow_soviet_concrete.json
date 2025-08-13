@@ -1,0 +1,6 @@
+{
+  "parent": "bmnw:item/soviet_concrete_base",
+  "textures": {
+    "texture": "bmnw:block/yellow_soviet_concrete"
+  }
+}

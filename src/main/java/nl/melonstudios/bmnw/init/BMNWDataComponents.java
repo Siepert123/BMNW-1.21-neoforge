@@ -44,20 +44,6 @@ public class BMNWDataComponents {
                     .networkSynchronized(ByteBufCodecs.BOOL)
     );
 
-
-    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Float>> FIRE_MARBLE_CHARGE = COMPONENTS.registerComponentType(
-            "fire_marble_charge",
-            builder -> builder
-                    .persistent(Codec.FLOAT)
-                    .networkSynchronized(ByteBufCodecs.FLOAT)
-    );
-    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> FIRE_MARBLE_TYPE = COMPONENTS.registerComponentType(
-            "fire_marble_type",
-            builder -> builder
-                    .persistent(Codec.INT)
-                    .networkSynchronized(ByteBufCodecs.INT)
-    );
-
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<SimpleFluidContent>> STORED_FLUID = COMPONENTS.registerComponentType(
             "stored_fluid",
             builder -> builder

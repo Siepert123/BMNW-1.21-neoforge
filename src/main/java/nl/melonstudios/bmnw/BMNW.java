@@ -299,7 +299,6 @@ public class BMNW {
                 CableNetManager.createIfNecessary(level);
             }
             Structures.validCache = true;
-            FireMarbleManager.create(Structures.seedCache);
         }
 
         event.getServer().addTickable(LevelActiveExplosions::tick);

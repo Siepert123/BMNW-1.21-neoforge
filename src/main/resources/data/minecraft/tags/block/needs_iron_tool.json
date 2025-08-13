@@ -29,7 +29,8 @@
     "bmnw:metal_sliding_door",
     "bmnw:chainlink_fence",
     "bmnw:large_shredder",
-    "bmnw:missile_launch_pad"
+    "bmnw:missile_launch_pad",
+    "#bmnw:soviet_concrete"
   ],
   "replace": false
 }

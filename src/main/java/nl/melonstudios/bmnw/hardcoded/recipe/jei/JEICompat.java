@@ -15,7 +15,6 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.ItemLike;
 import nl.melonstudios.bmnw.BMNW;
-import nl.melonstudios.bmnw.hardcoded.recipe.jei.subtype.FireMarbleSubtypeInterpreter;
 import nl.melonstudios.bmnw.hardcoded.recipe.jei.subtype.FluidContainerSubtype;
 import nl.melonstudios.bmnw.hardcoded.recipe.jei.subtype.FluidIdentifierSubtype;
 import nl.melonstudios.bmnw.init.BMNWItems;
@@ -195,7 +194,6 @@ public class JEICompat implements IModPlugin {
 
     @Override
     public void registerItemSubtypes(ISubtypeRegistration registration) {
-        registration.registerSubtypeInterpreter(BMNWItems.FIRE_MARBLE.get(), new FireMarbleSubtypeInterpreter());
         registration.registerSubtypeInterpreter(BMNWItems.FLUID_IDENTIFIER.get(), FluidIdentifierSubtype.interpreter());
         for (FluidContainerItem item : FluidContainerItem.getAllFluidContainers()) {
             registration.registerSubtypeInterpreter(item, FluidContainerSubtype.interpreter());

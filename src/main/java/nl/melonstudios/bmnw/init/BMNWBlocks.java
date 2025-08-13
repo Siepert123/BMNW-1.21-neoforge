@@ -22,9 +22,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import nl.melonstudios.bmnw.block.container.fluid.FluidBarrelBlock;
 import nl.melonstudios.bmnw.block.container.fluid.FluidTankProperties;
 import nl.melonstudios.bmnw.block.decoration.*;
-import nl.melonstudios.bmnw.block.defense.BarbedWireBlock;
-import nl.melonstudios.bmnw.block.defense.ChainlinkFenceBlock;
-import nl.melonstudios.bmnw.block.defense.ReinforcedGlassBlock;
+import nl.melonstudios.bmnw.block.defense.*;
 import nl.melonstudios.bmnw.block.doors.MetalLockableDoorBlock;
 import nl.melonstudios.bmnw.block.doors.MetalSlidingDoorBlock;
 import nl.melonstudios.bmnw.block.doors.SealedHatchBlock;
@@ -240,6 +238,13 @@ public class BMNWBlocks {
             () -> new ExtendableCatwalkControlBlock(BlockBehaviour.Properties.ofFullCopy(EXTENDABLE_CATWALK.get())));
     public static final DeferredBlock<ExtendableCatwalkDummyBlock> EXTENDABLE_CATWALK_DUMMY = BLOCKS.register("extendable_catwalk_dummy",
             ExtendableCatwalkDummyBlock::new);
+
+    public static final DeferredBlock<RebarBlock> REBAR = BLOCKS.register("rebar",
+            () -> new RebarBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)));
+
+    public static final DeferredBlock<SovietConcreteBlock> SOVIET_CONCRETE = BLOCKS.register("soviet_concrete",
+            () -> new SovietConcreteBlock(BlockBehaviour.Properties.ofFullCopy(FOUNDATION_CONCRETE.get())));
+    public static final DeferredBlock<SovietConcreteBlock>[] COLORED_SOVIET_CONCRETE = new DeferredBlock[16];
 
     //endregion
 
@@ -464,6 +469,9 @@ public class BMNWBlocks {
             FIXTURES_INVERTED[id] = BLOCKS.register(name + "_inverted",
                     () -> new FixtureBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).noOcclusion(),
                             true, color));
+
+            COLORED_SOVIET_CONCRETE[id] = BLOCKS.register(color.getName() + "_soviet_concrete",
+                    () -> new SovietConcreteBlock(BlockBehaviour.Properties.ofFullCopy(FOUNDATION_CONCRETE.get())));
         }
     }
 

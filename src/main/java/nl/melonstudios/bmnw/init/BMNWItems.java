@@ -24,6 +24,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 import java.util.Optional;
 
+@SuppressWarnings({"unchecked", "unused"})
 public class BMNWItems {
     private static DeferredItem<Item> item(String name) {
         return ITEMS.register(name, () -> new Item(new Item.Properties()));
@@ -417,6 +418,13 @@ public class BMNWItems {
     public static final DeferredItem<BlockItem> EXTENDABLE_CATWALK = ITEMS.register("extendable_catwalk",
             () -> new BlockItem(BMNWBlocks.EXTENDABLE_CATWALK.get(), new Item.Properties()));
 
+    public static final DeferredItem<BlockItem> REBAR = ITEMS.register("rebar",
+            () -> new BlockItem(BMNWBlocks.REBAR.get(), new Item.Properties()));
+
+    public static final DeferredItem<BlockItem> SOVIET_CONCRETE = ITEMS.register("soviet_concrete",
+            () -> new BlockItem(BMNWBlocks.SOVIET_CONCRETE.get(), new Item.Properties()));
+    public static final DeferredItem<BlockItem>[] COLORED_SOVIET_CONCRETE = new DeferredItem[16];
+
     //endregion
 
 
@@ -568,6 +576,9 @@ public class BMNWItems {
                     () -> new SmallLampBlockItem(BMNWBlocks.FIXTURES[id].get(), new Item.Properties()));
             FIXTURES_INVERTED[id] = ITEMS.register(name + "_inverted",
                     () -> new SmallLampBlockItem(BMNWBlocks.FIXTURES_INVERTED[id].get(), new Item.Properties()));
+
+            COLORED_SOVIET_CONCRETE[id] = ITEMS.register(color.getName() + "_soviet_concrete",
+                    () -> new BlockItem(BMNWBlocks.COLORED_SOVIET_CONCRETE[id].get(), new Item.Properties()));
         }
     }
 

@@ -1,0 +1,61 @@
+{
+	"ambientocclusion": false,
+	"textures": {
+		"rust": "bmnw:block/rust",
+		"particle": "#rust"
+	},
+	"elements": [
+		{
+			"name": "rebar",
+			"from": [2, 16, 2],
+			"to": [4, 18, 4],
+			"rotation": {"angle": 0, "axis": "y", "origin": [2, 16, 2]},
+			"faces": {
+				"north": {"uv": [12, 14, 14, 16], "texture": "#rust", "cullface": "up"},
+				"east": {"uv": [12, 14, 14, 16], "texture": "#rust", "cullface": "up"},
+				"south": {"uv": [2, 14, 4, 16], "texture": "#rust", "cullface": "up"},
+				"west": {"uv": [2, 14, 4, 16], "texture": "#rust", "cullface": "up"},
+				"up": {"uv": [2, 2, 4, 4], "texture": "#rust", "cullface": "up"}
+			}
+		},
+		{
+			"name": "rebar",
+			"from": [2, 16, 12],
+			"to": [4, 20, 14],
+			"rotation": {"angle": 0, "axis": "y", "origin": [2, 16, 12]},
+			"faces": {
+				"north": {"uv": [12, 12, 14, 16], "texture": "#rust", "cullface": "up"},
+				"east": {"uv": [2, 12, 4, 16], "texture": "#rust", "cullface": "up"},
+				"south": {"uv": [2, 12, 4, 16], "texture": "#rust", "cullface": "up"},
+				"west": {"uv": [12, 12, 14, 16], "texture": "#rust", "cullface": "up"},
+				"up": {"uv": [2, 12, 4, 14], "texture": "#rust", "cullface": "up"}
+			}
+		},
+		{
+			"name": "rebar",
+			"from": [12, 16, 2],
+			"to": [14, 19, 4],
+			"rotation": {"angle": 0, "axis": "y", "origin": [12, 16, 2]},
+			"faces": {
+				"north": {"uv": [2, 13, 4, 16], "texture": "#rust", "cullface": "up"},
+				"east": {"uv": [12, 13, 14, 16], "texture": "#rust", "cullface": "up"},
+				"south": {"uv": [12, 13, 14, 16], "texture": "#rust", "cullface": "up"},
+				"west": {"uv": [2, 13, 4, 16], "texture": "#rust", "cullface": "up"},
+				"up": {"uv": [13, 2, 15, 4], "texture": "#rust", "cullface": "up"}
+			}
+		},
+		{
+			"name": "rebar",
+			"from": [12, 16, 12],
+			"to": [14, 18, 14],
+			"rotation": {"angle": 0, "axis": "y", "origin": [12, 16, 12]},
+			"faces": {
+				"north": {"uv": [2, 14, 4, 16], "texture": "#rust", "cullface": "up"},
+				"east": {"uv": [2, 14, 4, 16], "texture": "#rust", "cullface": "up"},
+				"south": {"uv": [12, 14, 14, 16], "texture": "#rust", "cullface": "up"},
+				"west": {"uv": [12, 14, 14, 16], "texture": "#rust", "cullface": "up"},
+				"up": {"uv": [12, 12, 14, 14], "texture": "#rust", "cullface": "up"}
+			}
+		}
+	]
+}
