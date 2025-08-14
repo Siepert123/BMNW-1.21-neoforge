@@ -207,7 +207,7 @@ public class BMNWItems {
     //region Batteries & tanks
 
     public static final DeferredItem<BucketItem> VOLCANIC_LAVA_BUCKET = ITEMS.register("volcanic_lava_bucket",
-            () -> new BucketItem(BMNWFluids.VOLCANIC_LAVA.get(), new Item.Properties().stacksTo(1)));
+            () -> new BucketItem(BMNWFluids.VOLCANIC_LAVA.get(), new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
 
     public static final DeferredItem<BatteryItem> LEAD_ACID_BATTERY = ITEMS.register("lead_acid_battery",
             () -> new BatteryItem(new Item.Properties(), 10000, 25));

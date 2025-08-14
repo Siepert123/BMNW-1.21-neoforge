@@ -243,7 +243,8 @@ public class BMNWBlocks {
             () -> new RebarBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)));
 
     public static final DeferredBlock<SovietConcreteBlock> SOVIET_CONCRETE = BLOCKS.register("soviet_concrete",
-            () -> new SovietConcreteBlock(BlockBehaviour.Properties.ofFullCopy(FOUNDATION_CONCRETE.get())));
+            () -> new SovietConcreteBlock(BlockBehaviour.Properties.ofFullCopy(FOUNDATION_CONCRETE.get())
+                    .strength(20.0F, 108.0F)));
     public static final DeferredBlock<SovietConcreteBlock>[] COLORED_SOVIET_CONCRETE = new DeferredBlock[16];
 
     //endregion
@@ -363,11 +364,11 @@ public class BMNWBlocks {
 
     public static final DeferredBlock<ChainlinkFenceBlock> CHAINLINK_FENCE = BLOCKS.register("chainlink_fence",
             () -> new ChainlinkFenceBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).sound(SoundType.CHAIN)
-                    .strength(10.0F, 100.0F)));
+                    .strength(10.0F, 50.0F)));
 
     public static final DeferredBlock<BarbedWireBlock> BARBED_WIRE = BLOCKS.register("barbed_wire",
             () -> new BarbedWireBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).noOcclusion()
-                    .strength(10, 100.0F), (entity, entityMoving) -> {
+                    .strength(10.0F, 50.0F), (entity, entityMoving) -> {
                 if (entityMoving && !(entity instanceof ItemEntity item && item.getAge() < 20)) {
                     entity.hurt(entity.damageSources().cactus(), 5);
                 }
@@ -471,7 +472,7 @@ public class BMNWBlocks {
                             true, color));
 
             COLORED_SOVIET_CONCRETE[id] = BLOCKS.register(color.getName() + "_soviet_concrete",
-                    () -> new SovietConcreteBlock(BlockBehaviour.Properties.ofFullCopy(FOUNDATION_CONCRETE.get())));
+                    () -> new SovietConcreteBlock(BlockBehaviour.Properties.ofFullCopy(SOVIET_CONCRETE.get())));
         }
     }
 
