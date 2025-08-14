@@ -47,8 +47,6 @@ public final class CableNet {
             throw new CableNetException("CableNet missing network ID");
         }
         this.networkID = nbt.getLong("networkID");
-        LOGGER.debug("Loading CableNet (ID:{})\n{}", Long.toHexString(this.networkID),
-                new SnbtPrinterTagVisitor("  ", 0, new ArrayList<>()).visit(nbt));
 
         if (nbt.contains("CablePositions", Tag.TAG_LIST)) {
             ListTag list = nbt.getList("CablePositions", Tag.TAG_LONG);
@@ -94,9 +92,6 @@ public final class CableNet {
             }
             nbt.put("EnergyStorageLocations", list);
         }
-
-        LOGGER.debug("Serialized CableNet (ID:{})\n{}", Long.toHexString(this.networkID),
-                new SnbtPrinterTagVisitor("  ", 0, new ArrayList<>()).visit(nbt));
         return nbt;
     }
 

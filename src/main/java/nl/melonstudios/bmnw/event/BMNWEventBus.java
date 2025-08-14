@@ -298,7 +298,8 @@ public class BMNWEventBus {
             }
             if (HazardRegistry.shouldSkinContact(player)) {
                 if (stack.is(BMNWTags.Items.EXTREMELY_HOT) ||
-                        item instanceof IExtremelyHotOverride override && override.isExtremelyHot(stack)) {
+                        item instanceof IExtremelyHotOverride override && override.isExtremelyHot(stack)
+                        || FluidContainerItem.getContents(stack).is(BMNWTags.Fluids.EXTREMELY_HOT)) {
                     player.setRemainingFireTicks(20);
                 }
                 if (stack.is(BMNWTags.Items.WP)) {
@@ -351,7 +352,8 @@ public class BMNWEventBus {
                 }
             }
             if (stack.is(BMNWTags.Items.EXTREMELY_HOT) ||
-                    item instanceof IExtremelyHotOverride override && override.isExtremelyHot(stack)) {
+                    item instanceof IExtremelyHotOverride override && override.isExtremelyHot(stack)
+                    || FluidContainerItem.getContents(stack).is(BMNWTags.Fluids.EXTREMELY_HOT)) {
                 event.addTooltipLines(Component.translatable("tooltip.bmnw.burning").withColor(0xFFFF00));
             }
             if (HazardRegistry.getBlindingRegistry(item)) {

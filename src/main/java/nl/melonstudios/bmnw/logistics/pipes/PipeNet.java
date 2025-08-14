@@ -46,8 +46,6 @@ public final class PipeNet {
             throw new PipeNetException("PipeNet NBT missing network ID");
         }
         this.networkID = nbt.getLong("networkID");
-        LOGGER.debug("Loading PipeNet (ID:{})\n{}", Long.toHexString(this.networkID),
-                new SnbtPrinterTagVisitor("  ", 0, new ArrayList<>()).visit(nbt));
 
         if (nbt.contains("PipePositions", Tag.TAG_LIST)) {
             ListTag list = nbt.getList("PipePositions", Tag.TAG_LONG);
@@ -93,9 +91,6 @@ public final class PipeNet {
             }
             nbt.put("FluidHandlerLocations", list);
         }
-
-        LOGGER.debug("Serialized PipeNet (ID:{})\n{}", Long.toHexString(this.networkID),
-                new SnbtPrinterTagVisitor("  ", 0, new ArrayList<>()).visit(nbt));
         return nbt;
     }
 
