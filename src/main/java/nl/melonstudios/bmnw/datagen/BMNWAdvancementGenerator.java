@@ -1,5 +1,6 @@
 package nl.melonstudios.bmnw.datagen;
 
+import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementRequirements;
@@ -16,16 +17,18 @@ import net.minecraft.world.item.Items;
 import net.neoforged.neoforge.common.data.AdvancementProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import nl.melonstudios.bmnw.critereon.NukeTriggerInstance;
-import nl.melonstudios.bmnw.init.BMNWAdvancementTriggers;
 import nl.melonstudios.bmnw.init.BMNWItems;
 import nl.melonstudios.bmnw.init.BMNWTags;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 import java.util.function.Consumer;
 
+@ParametersAreNonnullByDefault
+@MethodsReturnNonnullByDefault
+@SuppressWarnings("unused")
 public class BMNWAdvancementGenerator implements AdvancementProvider.AdvancementGenerator {
     @Override
-    @SuppressWarnings("removal")
     public void generate(HolderLookup.Provider registries, Consumer<AdvancementHolder> saver, ExistingFileHelper existingFileHelper) {
         AdvancementHolder root = Advancement.Builder.advancement()
                 .display(

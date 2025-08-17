@@ -83,7 +83,7 @@ public class ExplosionHelperEntity extends Entity implements ExploderParent, IEn
         int r = this.nukeType.getEntityBlowRadius();
         this.entitySearch = new AABB(this.position().add(-r, -r, -r), this.position().add(r, r, r));
 
-        this.waterRefilled = !BMNWServerConfig.experimentalWaterRefill();
+        this.waterRefilled = this.waterRefilled2 = this.waterRefilled3 = this.waterRefilled4 = !BMNWServerConfig.experimentalWaterRefill();
 
         LOGGER.debug("New explosion created with ID {}", this.getId());
         this.start = System.currentTimeMillis();
@@ -130,6 +130,9 @@ public class ExplosionHelperEntity extends Entity implements ExploderParent, IEn
         nbt.putBoolean("biomeConverted", this.biomeConverted);
         nbt.putBoolean("nuclearRemainsPlaced", this.nuclearRemainsPlaced);
         nbt.putBoolean("waterRefilled", this.waterRefilled);
+        nbt.putBoolean("waterRefilled2", this.waterRefilled2);
+        nbt.putBoolean("waterRefilled3", this.waterRefilled3);
+        nbt.putBoolean("waterRefilled4", this.waterRefilled4);
 
         nbt.putInt("age", this.age);
     }
@@ -170,6 +173,9 @@ public class ExplosionHelperEntity extends Entity implements ExploderParent, IEn
         this.biomeConverted = nbt.getBoolean("biomeConverted");
         this.nuclearRemainsPlaced = nbt.getBoolean("nuclearRemainsPlaced");
         this.waterRefilled = nbt.getBoolean("waterRefilled");
+        this.waterRefilled2 = nbt.getBoolean("waterRefilled2");
+        this.waterRefilled3 = nbt.getBoolean("waterRefilled3");
+        this.waterRefilled4 = nbt.getBoolean("waterRefilled4");
 
         this.age = nbt.getInt("age");
 
@@ -200,6 +206,9 @@ public class ExplosionHelperEntity extends Entity implements ExploderParent, IEn
     private boolean biomeConverted = false;
     private boolean nuclearRemainsPlaced = false;
     private boolean waterRefilled = false;
+    private boolean waterRefilled2 = false;
+    private boolean waterRefilled3 = false;
+    private boolean waterRefilled4 = false;
 
     private final HashSet<Block> plant, logs, planks, coals;
     private AABB entitySearch;
@@ -663,6 +672,114 @@ public class ExplosionHelperEntity extends Entity implements ExploderParent, IEn
                     int y;
                     for (int x = 0; x < 16; x++) {
                         for (int z = 0; z < 16; z++) {
+                            for (y = this.evaporationMax - 1; y >= this.evaporationMin; y--) {
+                                mutable.set(pos.getBlockX(x), y, pos.getBlockZ(z));
+                                BlockState state = level.getBlockState(mutable);
+                                if (state.canBeReplaced(Fluids.WATER)) {
+                                    if (this.checkWater(level, mutable)) {
+                                        level.setBlock(mutable, Blocks.WATER.defaultBlockState(), 2 | 16 | 32);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                return;
+            }
+            if (!this.waterRefilled2) {
+                if (this.orderedChunks == null) {
+                    LOGGER.debug("[{}] starting refill 2", this.getId());
+                    int c = (this.nukeType.getBlastRadius() + 15) >> 4;
+                    this.affectedMinCX = this.chunkPosition().x + c;
+                    this.affectedMaxCX = this.chunkPosition().x - c;
+                    this.affectedMinCZ = this.chunkPosition().z - c;
+                    this.affectedMaxCZ = this.chunkPosition().z + c;
+                    this.orderedChunks = new ArrayList<>();
+                    ChunkPos.rangeClosed(new ChunkPos(this.affectedMinCX, this.affectedMinCZ), new ChunkPos(this.affectedMaxCX, this.affectedMaxCZ))
+                            .forEach(this.orderedChunks::add);
+                    return;
+                }
+                if (this.orderedChunks.isEmpty()) {
+                    this.orderedChunks = null;
+                    this.waterRefilled2 = true;
+                } else {
+                    ChunkPos pos = this.orderedChunks.removeFirst();
+                    BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
+                    int y;
+                    for (int x = 15; x >= 0; x--) {
+                        for (int z = 0; z < 16; z++) {
+                            for (y = this.evaporationMax - 1; y >= this.evaporationMin; y--) {
+                                mutable.set(pos.getBlockX(x), y, pos.getBlockZ(z));
+                                BlockState state = level.getBlockState(mutable);
+                                if (state.canBeReplaced(Fluids.WATER)) {
+                                    if (this.checkWater(level, mutable)) {
+                                        level.setBlock(mutable, Blocks.WATER.defaultBlockState(), 2 | 16 | 32);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                return;
+            }
+            if (!this.waterRefilled3) {
+                if (this.orderedChunks == null) {
+                    LOGGER.debug("[{}] starting refill 3", this.getId());
+                    int c = (this.nukeType.getBlastRadius() + 15) >> 4;
+                    this.affectedMinCX = this.chunkPosition().x - c;
+                    this.affectedMaxCX = this.chunkPosition().x + c;
+                    this.affectedMinCZ = this.chunkPosition().z + c;
+                    this.affectedMaxCZ = this.chunkPosition().z - c;
+                    this.orderedChunks = new ArrayList<>();
+                    ChunkPos.rangeClosed(new ChunkPos(this.affectedMinCX, this.affectedMinCZ), new ChunkPos(this.affectedMaxCX, this.affectedMaxCZ))
+                            .forEach(this.orderedChunks::add);
+                    return;
+                }
+                if (this.orderedChunks.isEmpty()) {
+                    this.orderedChunks = null;
+                    this.waterRefilled3 = true;
+                } else {
+                    ChunkPos pos = this.orderedChunks.removeFirst();
+                    BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
+                    int y;
+                    for (int x = 0; x < 16; x++) {
+                        for (int z = 15; z >= 0; z--) {
+                            for (y = this.evaporationMax - 1; y >= this.evaporationMin; y--) {
+                                mutable.set(pos.getBlockX(x), y, pos.getBlockZ(z));
+                                BlockState state = level.getBlockState(mutable);
+                                if (state.canBeReplaced(Fluids.WATER)) {
+                                    if (this.checkWater(level, mutable)) {
+                                        level.setBlock(mutable, Blocks.WATER.defaultBlockState(), 2 | 16 | 32);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                return;
+            }
+            if (!this.waterRefilled4) {
+                if (this.orderedChunks == null) {
+                    LOGGER.debug("[{}] starting refill 4", this.getId());
+                    int c = (this.nukeType.getBlastRadius() + 15) >> 4;
+                    this.affectedMinCX = this.chunkPosition().x + c;
+                    this.affectedMaxCX = this.chunkPosition().x - c;
+                    this.affectedMinCZ = this.chunkPosition().z + c;
+                    this.affectedMaxCZ = this.chunkPosition().z - c;
+                    this.orderedChunks = new ArrayList<>();
+                    ChunkPos.rangeClosed(new ChunkPos(this.affectedMinCX, this.affectedMinCZ), new ChunkPos(this.affectedMaxCX, this.affectedMaxCZ))
+                            .forEach(this.orderedChunks::add);
+                    return;
+                }
+                if (this.orderedChunks.isEmpty()) {
+                    this.orderedChunks = null;
+                    this.waterRefilled4 = true;
+                } else {
+                    ChunkPos pos = this.orderedChunks.removeFirst();
+                    BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
+                    int y;
+                    for (int x = 15; x >= 0; x--) {
+                        for (int z = 15; z >= 0; z--) {
                             for (y = this.evaporationMax - 1; y >= this.evaporationMin; y--) {
                                 mutable.set(pos.getBlockX(x), y, pos.getBlockZ(z));
                                 BlockState state = level.getBlockState(mutable);
