@@ -1,7 +1,7 @@
 {
-  "parent": "bmnw:main/circuit",
+  "parent": "bmnw:main/nuke_obtained",
   "criteria": {
-    "nuke": {
+    "nuke_victim": {
       "conditions": {
         "player": []
       },
@@ -10,21 +10,21 @@
   },
   "display": {
     "description": {
-      "translate": "advancement.bmnw.nuke.desc"
+      "translate": "advancement.bmnw.nuke_victim.desc"
     },
     "frame": "challenge",
     "hidden": true,
     "icon": {
       "count": 1,
-      "id": "bmnw:nuclear_charge"
+      "id": "bmnw:caseoh"
     },
     "title": {
-      "translate": "advancement.bmnw.nuke"
+      "translate": "advancement.bmnw.nuke_victim"
     }
   },
   "requirements": [
     [
-      "nuke"
+      "nuke_victim"
     ]
   ],
   "sends_telemetry_event": true

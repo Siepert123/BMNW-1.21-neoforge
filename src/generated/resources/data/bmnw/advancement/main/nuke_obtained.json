@@ -1,0 +1,35 @@
+{
+  "parent": "bmnw:main/circuit",
+  "criteria": {
+    "nuke_obtained": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#bmnw:grants_nuke_achievement"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancement.bmnw.nuke_obtained.desc"
+    },
+    "frame": "challenge",
+    "icon": {
+      "count": 1,
+      "id": "bmnw:little_boy"
+    },
+    "title": {
+      "translate": "advancement.bmnw.nuke_obtained"
+    }
+  },
+  "requirements": [
+    [
+      "nuke_obtained"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

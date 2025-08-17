@@ -73,6 +73,8 @@ public class BMNWTags {
 
         public static final TagKey<Item> REACHERS = itemTag("bmnw:reachers");
         public static final TagKey<Item> INFINITE_FUEL_SOURCES = itemTag("bmnw:infinite_fuel_sources");
+
+        public static final TagKey<Item> GRANTS_NUKE_ACHIEVEMENT = itemTag("bmnw:grants_nuke_achievement");
     }
     public static class Biomes {
         public static final TagKey<Biome> HAS_RADIO_ANTENNA = biomeTag("bmnw:has_structure/radio_antenna");

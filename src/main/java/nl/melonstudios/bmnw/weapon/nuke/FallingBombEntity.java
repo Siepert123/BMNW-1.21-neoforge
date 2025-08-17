@@ -77,19 +77,20 @@ public class FallingBombEntity extends Entity implements IEntityWithComplexSpawn
             override.accept(this);
         } else {
             if (this.level() instanceof ServerLevel level) {
-                if (this.getNukeBlock().getNukeType().getSoundDistance() > 0) {
+                NukeType type = this.getNukeBlock().getNukeType();
+                if (type.getSoundDistance() > 0) {
                     PacketDistributor.sendToPlayersInDimension(level,
-                            new PacketSendNuclearSound(this.position(), this.getNukeBlock().getNukeType())
+                            new PacketSendNuclearSound(this.position(), type)
                     );
                 }
                 level.addFreshEntity(
                         new ExplosionHelperEntity(
-                                this.level(), this.position(), this.getNukeBlock().getNukeType()
+                                this.level(), this.position(), type
                         )
                 );
                 if (this.getNukeBlock().getNukeType().grantsAchievement()) {
                     for (ServerPlayer player : level.players()) {
-                        if (player.distanceTo(this) < this.getNukeBlock().getNukeType().getSoundDistance()) {
+                        if (player.distanceTo(this) < type.getEntityBlowRadius()) {
                             BMNWAdvancementTriggers.NUKE.get().trigger(player);
                         }
                     }
