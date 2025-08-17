@@ -34,7 +34,7 @@ public class MushroomSmokeParticle extends TextureSheetParticle {
         this.startY = y;
         this.startZ = z;
         this.quadSize = (0.9f + (level.random.nextFloat() * 0.2f)) * this.size;
-        this.lifetime = Mth.ceil(LIFETIME * this.size);
+        this.lifetime = Mth.ceil(LIFETIME * this.size * (level.random.nextFloat() * 0.2F + 1.0F));
         this.myGrowthTicks = Mth.ceil(GROWTH_TICKS * this.size);
         this.myExtinguishTicks = Mth.ceil(EXTINGUISH_TICKS * this.size);
         this.myAlphaExchange = 1.0F / (this.lifetime-this.myExtinguishTicks);
