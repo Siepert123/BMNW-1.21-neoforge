@@ -6,6 +6,7 @@ import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.level.TicketType;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -17,6 +18,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.entity.IEntityWithComplexSpawn;
 import net.neoforged.neoforge.network.PacketDistributor;
+import nl.melonstudios.bmnw.init.BMNWAdvancementTriggers;
 import nl.melonstudios.bmnw.init.BMNWEntityTypes;
 import nl.melonstudios.bmnw.weapon.explosion.ExplosionHelperEntity;
 import nl.melonstudios.bmnw.wifi.PacketSendNuclearSound;
@@ -85,6 +87,13 @@ public class FallingBombEntity extends Entity implements IEntityWithComplexSpawn
                                 this.level(), this.position(), this.getNukeBlock().getNukeType()
                         )
                 );
+                if (this.getNukeBlock().getNukeType().grantsAchievement()) {
+                    for (ServerPlayer player : level.players()) {
+                        if (player.distanceTo(this) < this.getNukeBlock().getNukeType().getSoundDistance()) {
+                            BMNWAdvancementTriggers.NUKE.get().trigger(player);
+                        }
+                    }
+                }
             }
         }
     }

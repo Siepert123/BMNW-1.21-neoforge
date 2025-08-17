@@ -4,7 +4,7 @@ import com.mojang.serialization.Codec;
 import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
 import net.minecraft.server.level.ServerPlayer;
 
-public class NukeCritereonTrigger extends SimpleCriterionTrigger<NukeTriggerInstance> {
+public class NukeCriterionTrigger extends SimpleCriterionTrigger<NukeTriggerInstance> {
     @Override
     public Codec<NukeTriggerInstance> codec() {
         return NukeTriggerInstance.CODEC;

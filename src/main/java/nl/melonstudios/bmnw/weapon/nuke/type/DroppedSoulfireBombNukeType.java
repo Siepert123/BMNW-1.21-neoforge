@@ -96,6 +96,11 @@ public class DroppedSoulfireBombNukeType extends NukeType {
         return false;
     }
 
+    @Override
+    public boolean grantsAchievement() {
+        return false;
+    }
+
     public DroppedSoulfireBombNukeType() {
 
     }

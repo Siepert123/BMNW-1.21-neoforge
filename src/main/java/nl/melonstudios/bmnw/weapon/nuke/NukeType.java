@@ -60,4 +60,8 @@ public abstract class NukeType {
     public double lightBeamMultiplier() {
         return this.getBlastRadius();
     }
+
+    public boolean grantsAchievement() {
+        return true;
+    }
 }

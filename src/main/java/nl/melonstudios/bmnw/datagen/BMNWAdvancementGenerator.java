@@ -4,6 +4,7 @@ import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementType;
+import net.minecraft.advancements.critereon.ContextAwarePredicate;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.core.HolderLookup;
@@ -14,6 +15,8 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Items;
 import net.neoforged.neoforge.common.data.AdvancementProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import nl.melonstudios.bmnw.critereon.NukeTriggerInstance;
+import nl.melonstudios.bmnw.init.BMNWAdvancementTriggers;
 import nl.melonstudios.bmnw.init.BMNWItems;
 
 import java.util.List;
@@ -113,6 +116,21 @@ public class BMNWAdvancementGenerator implements AdvancementProvider.Advancement
                 .addCriterion("circuit", InventoryChangeTrigger.TriggerInstance.hasItems(BMNWItems.BASIC_CIRCUIT))
                 .requirements(simpleRequirement("circuit"))
                 .save(saver, ResourceLocation.parse("bmnw:main/circuit"), existingFileHelper);
+        AdvancementHolder nuke = Advancement.Builder.advancement()
+                .display(
+                        BMNWItems.NUCLEAR_CHARGE,
+                        Component.translatable("advancement.bmnw.nuke"),
+                        Component.translatable("advancement.bmnw.nuke.desc"),
+                        null,
+                        AdvancementType.CHALLENGE,
+                        true,
+                        true,
+                        true
+                )
+                .parent(circuit)
+                .addCriterion("nuke", NukeTriggerInstance.instance(ContextAwarePredicate.create()))
+                .requirements(simpleRequirement("nuke"))
+                .save(saver, ResourceLocation.parse("bmnw:main/nuke"), existingFileHelper);
         AdvancementHolder fire_marble = Advancement.Builder.advancement()
                 .display(
                         BMNWItems.FIRE_MARBLE,

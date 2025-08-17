@@ -1,0 +1,31 @@
+{
+  "parent": "bmnw:main/circuit",
+  "criteria": {
+    "nuke": {
+      "conditions": {
+        "player": []
+      },
+      "trigger": "bmnw:nuke"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.bmnw.nuke.desc"
+    },
+    "frame": "challenge",
+    "hidden": true,
+    "icon": {
+      "count": 1,
+      "id": "bmnw:nuclear_charge"
+    },
+    "title": {
+      "translate": "advancement.bmnw.nuke"
+    }
+  },
+  "requirements": [
+    [
+      "nuke"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
