@@ -17,6 +17,7 @@ import nl.melonstudios.bmnw.blockentity.VolcanoCoreBlockEntity;
 import nl.melonstudios.bmnw.weapon.nuke.block.CaseohBE;
 import nl.melonstudios.bmnw.weapon.nuke.block.DroppedSoulfireBombBE;
 import nl.melonstudios.bmnw.weapon.nuke.block.LittleBoyBE;
+import nl.melonstudios.bmnw.weapon.nuke.block.TsarBombaBE;
 
 import java.util.Set;
 import java.util.function.Supplier;
@@ -87,6 +88,13 @@ public class BMNWBlockEntities {
             () -> BlockEntityType.Builder.of(
                     CaseohBE::new,
                     BMNWBlocks.CASEOH.get()
+            ).build(null)
+    );
+    public static final Supplier<BlockEntityType<TsarBombaBE>> TSAR_BOMBA = BLOCK_ENTITIES.register(
+            "tsar_bomba",
+            () -> BlockEntityType.Builder.of(
+                    TsarBombaBE::new,
+                    BMNWBlocks.TSAR_BOMBA.get()
             ).build(null)
     );
 
