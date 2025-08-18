@@ -11,7 +11,7 @@ import net.neoforged.api.distmarker.OnlyIn;
 import java.util.Collection;
 
 public abstract class WireAttachedBlockEntity extends SyncedBlockEntity {
-    public WireAttachedBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState) {
+    public WireAttachedBlockEntity(BlockEntityType<? extends WireAttachedBlockEntity> type, BlockPos pos, BlockState blockState) {
         super(type, pos, blockState);
     }
 

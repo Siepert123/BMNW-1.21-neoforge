@@ -41,6 +41,7 @@ public abstract class NukeBlock extends Block implements RemoteActivateable {
         if (this.isReady(level, pos)) {
             if (!level.isClientSide) {
                 FallingBombEntity entity = new FallingBombEntity(level, pos.getBottomCenter(), level.getBlockState(pos));
+                level.removeBlockEntity(pos);
                 level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
                 level.addFreshEntity(entity);
             }

@@ -13,8 +13,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class SyncedBlockEntity extends OptimizedBlockEntity {
-    public SyncedBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState) {
-        super(type, pos, blockState);
+    public SyncedBlockEntity(BlockEntityType<? extends SyncedBlockEntity> type, BlockPos pos, BlockState state) {
+        super(type, pos, state);
     }
 
     protected abstract void save(CompoundTag nbt, HolderLookup.Provider registries, boolean packet);

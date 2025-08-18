@@ -15,6 +15,7 @@ import nl.melonstudios.bmnw.block.logistics.FluidPipeBlockEntity;
 import nl.melonstudios.bmnw.blockentity.FluidBarrelBlockEntity;
 import nl.melonstudios.bmnw.blockentity.VolcanoCoreBlockEntity;
 import nl.melonstudios.bmnw.weapon.nuke.block.DroppedSoulfireBombBE;
+import nl.melonstudios.bmnw.weapon.nuke.block.LittleBoyBE;
 
 import java.util.Set;
 import java.util.function.Supplier;
@@ -32,6 +33,8 @@ public class BMNWBlockEntities {
                     null
             )
     );
+
+    //region energy & fluid handling
 
     public static final Supplier<BlockEntityType<CableBlockEntity>> CABLE = BLOCK_ENTITIES.register(
             "cable",
@@ -59,6 +62,8 @@ public class BMNWBlockEntities {
             )
     );
 
+    //endregion
+
     // region nuke BE
 
     public static final Supplier<BlockEntityType<DroppedSoulfireBombBE>> DROPPED_SOULFIRE_BOMB = BLOCK_ENTITIES.register(
@@ -66,6 +71,14 @@ public class BMNWBlockEntities {
             () -> BlockEntityType.Builder.of(
                     DroppedSoulfireBombBE::new,
                     BMNWBlocks.DROPPED_SOULFIRE_BOMB.get()
+            ).build(null)
+    );
+
+    public static final Supplier<BlockEntityType<LittleBoyBE>> LITTLE_BOY = BLOCK_ENTITIES.register(
+            "little_boy",
+            () -> BlockEntityType.Builder.of(
+                    LittleBoyBE::new,
+                    BMNWBlocks.LITTLE_BOY.get()
             ).build(null)
     );
 
@@ -172,6 +185,8 @@ public class BMNWBlockEntities {
             )
     );
 
+    //region Ze Machines
+
     public static final Supplier<BlockEntityType<PressBlockEntity>> PRESS = BLOCK_ENTITIES.register(
             "press",
             () -> new BlockEntityType<>(
@@ -250,6 +265,8 @@ public class BMNWBlockEntities {
                     null
             )
     );
+
+    //endregion
 
     public static final Supplier<BlockEntityType<FluidBarrelBlockEntity>> FLUID_BARREL = BLOCK_ENTITIES.register(
             "fluid_barrel",

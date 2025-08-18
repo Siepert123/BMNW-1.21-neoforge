@@ -7,6 +7,7 @@ import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import nl.melonstudios.bmnw.screen.*;
+import nl.melonstudios.bmnw.screen.nuke.LittleBoyMenu;
 
 public class BMNWMenuTypes {
     private static final DeferredRegister<MenuType<?>> MENU_TYPES =
@@ -48,6 +49,15 @@ public class BMNWMenuTypes {
             "fluid_barrel",
             () -> IMenuTypeExtension.create(FluidBarrelMenu::new)
     );
+
+    //region NUKES!!
+
+    public static final DeferredHolder<MenuType<?>, MenuType<LittleBoyMenu>> LITTLE_BOY = MENU_TYPES.register(
+            "little_boy",
+            () -> IMenuTypeExtension.create(LittleBoyMenu::new)
+    );
+
+    //endregion
 
     public static void register(IEventBus eventBus) {
         MENU_TYPES.register(eventBus);

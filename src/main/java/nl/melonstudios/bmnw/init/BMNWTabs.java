@@ -586,6 +586,16 @@ public class BMNWTabs {
                         items.accept(MISSILE_LAUNCH_PAD);
                         items.accept(TARGET_DESIGNATOR);
                         items.accept(LASER_TARGET_DESIGNATOR);
+
+                        items.accept(COMPLEX_WIRING);
+
+                        addItems(items,
+                                ELECTRIC_IGNITER,
+                                CORDITE_PROPELLANT,
+                                U235_PROJECTILE_RINGS,
+                                SUBCRITICAL_U235_TARGET_RINGS,
+                                TUNGSTEN_CARBIDE_CYLINDER_SLEEVE
+                        );
                     })
                     .build()
     );

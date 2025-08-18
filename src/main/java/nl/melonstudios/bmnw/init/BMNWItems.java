@@ -704,6 +704,24 @@ public class BMNWItems {
             () -> new BlockItem(BMNWBlocks.BASALT_BAUXITE_ORE.get(), new Item.Properties()));
     //endregion
 
+    //region Nuke parts
+
+    public static final DeferredItem<Item> COMPLEX_WIRING = ITEMS.register("complex_wiring",
+            () -> new Item(new Item.Properties()));
+
+    public static final DeferredItem<Item> ELECTRIC_IGNITER = ITEMS.register("electric_igniter",
+            () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> CORDITE_PROPELLANT = ITEMS.register("cordite_propellant",
+            () -> new Item(new Item.Properties()));
+    public static final DeferredItem<SimpleRadioactiveItem> U235_PROJECTILE_RINGS = ITEMS.register("u235_projectile_rings",
+            () -> new SimpleRadioactiveItem(new Item.Properties(), 1.0F));
+    public static final DeferredItem<SimpleRadioactiveItem> SUBCRITICAL_U235_TARGET_RINGS = ITEMS.register("subcritical_u235_target_rings",
+            () -> new SimpleRadioactiveItem(new Item.Properties(), 4.0F));
+    public static final DeferredItem<Item> TUNGSTEN_CARBIDE_CYLINDER_SLEEVE = ITEMS.register("tungsten_carbide_cylinder_sleeve",
+            () -> new Item(new Item.Properties()));
+
+    //endregion
+
     public static final DeferredItem<SimpleRadioactiveBlockItem> NUCLEAR_WASTE_BARREL = ITEMS.register("nuclear_waste_barrel",
             () -> new SimpleRadioactiveBlockItem(BMNWBlocks.NUCLEAR_WASTE_BARREL.get(), new Item.Properties()));
 
