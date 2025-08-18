@@ -596,6 +596,12 @@ public class BMNWTabs {
                                 SUBCRITICAL_U235_TARGET_RINGS,
                                 TUNGSTEN_CARBIDE_CYLINDER_SLEEVE
                         );
+
+                        addItems(items,
+                                IMPLOSION_LENS,
+                                IMPLOSION_LENS_ARRAY,
+                                PLUTONIUM_CORE
+                        );
                     })
                     .build()
     );

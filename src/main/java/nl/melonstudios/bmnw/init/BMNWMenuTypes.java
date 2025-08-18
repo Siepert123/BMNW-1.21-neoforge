@@ -7,6 +7,7 @@ import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import nl.melonstudios.bmnw.screen.*;
+import nl.melonstudios.bmnw.screen.nuke.CaseohMenu;
 import nl.melonstudios.bmnw.screen.nuke.LittleBoyMenu;
 
 public class BMNWMenuTypes {
@@ -55,6 +56,10 @@ public class BMNWMenuTypes {
     public static final DeferredHolder<MenuType<?>, MenuType<LittleBoyMenu>> LITTLE_BOY = MENU_TYPES.register(
             "little_boy",
             () -> IMenuTypeExtension.create(LittleBoyMenu::new)
+    );
+    public static final DeferredHolder<MenuType<?>, MenuType<CaseohMenu>> CASEOH = MENU_TYPES.register(
+            "caseoh",
+            () -> IMenuTypeExtension.create(CaseohMenu::new)
     );
 
     //endregion

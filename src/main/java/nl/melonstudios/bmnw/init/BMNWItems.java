@@ -720,6 +720,13 @@ public class BMNWItems {
     public static final DeferredItem<Item> TUNGSTEN_CARBIDE_CYLINDER_SLEEVE = ITEMS.register("tungsten_carbide_cylinder_sleeve",
             () -> new Item(new Item.Properties()));
 
+    public static final DeferredItem<Item> IMPLOSION_LENS = ITEMS.register("implosion_lens",
+            () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> IMPLOSION_LENS_ARRAY = ITEMS.register("implosion_lens_array",
+            () -> new Item(new Item.Properties()));
+    public static final DeferredItem<SimpleRadioactiveItem> PLUTONIUM_CORE = ITEMS.register("plutonium_core",
+            () -> new SimpleRadioactiveItem(new Item.Properties().stacksTo(1), 10.0F));
+
     //endregion
 
     public static final DeferredItem<SimpleRadioactiveBlockItem> NUCLEAR_WASTE_BARREL = ITEMS.register("nuclear_waste_barrel",

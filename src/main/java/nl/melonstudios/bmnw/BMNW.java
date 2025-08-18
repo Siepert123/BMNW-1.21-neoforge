@@ -46,6 +46,7 @@ import nl.melonstudios.bmnw.logistics.pipes.PipeNetManager;
 import nl.melonstudios.bmnw.misc.*;
 import nl.melonstudios.bmnw.registries.BMNWResourceKeys;
 import nl.melonstudios.bmnw.screen.*;
+import nl.melonstudios.bmnw.screen.nuke.CaseohScreen;
 import nl.melonstudios.bmnw.screen.nuke.LittleBoyScreen;
 import nl.melonstudios.bmnw.weapon.explosion.LevelActiveExplosions;
 import nl.melonstudios.bmnw.weapon.missile.registry.BMNWMissileParts;
@@ -276,6 +277,7 @@ public class BMNW {
         event.register(BMNWMenuTypes.FLUID_BARREL.get(), FluidBarrelScreen::new);
 
         event.register(BMNWMenuTypes.LITTLE_BOY.get(), LittleBoyScreen::new);
+        event.register(BMNWMenuTypes.CASEOH.get(), CaseohScreen::new);
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call

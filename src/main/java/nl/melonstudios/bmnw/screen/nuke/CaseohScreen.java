@@ -11,21 +11,21 @@ import net.minecraft.world.entity.player.Inventory;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import nl.melonstudios.bmnw.BMNW;
-import nl.melonstudios.bmnw.weapon.nuke.block.LittleBoyBE;
+import nl.melonstudios.bmnw.weapon.nuke.block.CaseohBE;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @OnlyIn(Dist.CLIENT)
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-    public class LittleBoyScreen extends AbstractContainerScreen<LittleBoyMenu> {
-        public static final ResourceLocation GUI_TEXTURE = BMNW.namespace("textures/gui/nuke/little_boy.png");
+public class CaseohScreen extends AbstractContainerScreen<CaseohMenu> {
+    public static final ResourceLocation GUI_TEXTURE = BMNW.namespace("textures/gui/nuke/caseoh.png");
 
-    public LittleBoyScreen(LittleBoyMenu menu, Inventory playerInventory, Component title) {
+    public CaseohScreen(CaseohMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
 
         this.imageWidth = 176;
-        this.imageHeight = 191;
+        this.imageHeight = 249;
     }
 
     @Override
@@ -39,18 +39,18 @@ import javax.annotation.ParametersAreNonnullByDefault;
         graphics.blit(GUI_TEXTURE, x, y, 0, 0, imageWidth, imageHeight);
 
         graphics.setColor(1.0F, 1.0F, 1.0F, 0.5F);
-        graphics.renderItem(LittleBoyBE.PATTERN[0].asItem().getDefaultInstance(), x+35, y+72);
-        graphics.renderItem(LittleBoyBE.PATTERN[1].asItem().getDefaultInstance(), x+53, y+72);
-        graphics.renderItem(LittleBoyBE.PATTERN[2].asItem().getDefaultInstance(), x+71, y+72);
-        graphics.renderItem(LittleBoyBE.PATTERN[3].asItem().getDefaultInstance(), x+89, y+72);
-        graphics.renderItem(LittleBoyBE.PATTERN[4].asItem().getDefaultInstance(), x+107, y+72);
-        graphics.renderItem(LittleBoyBE.PATTERN[5].asItem().getDefaultInstance(), x+125, y+72);
+        graphics.renderItem(CaseohBE.PATTERN[0].asItem().getDefaultInstance(), x+35, y+130);
+        graphics.renderItem(CaseohBE.PATTERN[1].asItem().getDefaultInstance(), x+53, y+130);
+        graphics.renderItem(CaseohBE.PATTERN[2].asItem().getDefaultInstance(), x+71, y+130);
+        graphics.renderItem(CaseohBE.PATTERN[3].asItem().getDefaultInstance(), x+89, y+130);
+        graphics.renderItem(CaseohBE.PATTERN[4].asItem().getDefaultInstance(), x+107, y+130);
+        graphics.renderItem(CaseohBE.PATTERN[5].asItem().getDefaultInstance(), x+125, y+130);
         graphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
 
         if (this.menu.be.compareInventoryToPattern()) {
-            graphics.blit(GUI_TEXTURE, x+152, y+72, 16, 191, 16, 16);
+            graphics.blit(GUI_TEXTURE, x+152, y+130, 240, 0, 16, 16);
         } else {
-            graphics.blit(GUI_TEXTURE, x+152, y+72, 0, 191, 16, 16);
+            graphics.blit(GUI_TEXTURE, x+152, y+130, 224, 0, 16, 16);
         }
     }
 
@@ -63,7 +63,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
         this.renderTooltip(graphics, mouseX, mouseY);
 
         if (this.menu.getCarried().isEmpty()) {
-            if (mouseX >= x + 151 && mouseY >= y + 71 && mouseX < x + 169 && mouseY < y + 89) {
+            if (mouseX >= x + 151 && mouseY >= y + 129 && mouseX < x + 169 && mouseY < y + 157) {
                 graphics.renderComponentTooltip(this.font, this.menu.be.collectInformation(), mouseX, mouseY);
             }
         }

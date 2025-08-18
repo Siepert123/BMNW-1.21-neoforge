@@ -4,13 +4,13 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -18,25 +18,25 @@ import net.neoforged.neoforge.items.ItemStackHandler;
 import nl.melonstudios.bmnw.block.entity.SyncedBlockEntity;
 import nl.melonstudios.bmnw.init.BMNWBlockEntities;
 import nl.melonstudios.bmnw.init.BMNWItems;
-import nl.melonstudios.bmnw.screen.nuke.LittleBoyMenu;
+import nl.melonstudios.bmnw.screen.nuke.CaseohMenu;
 import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LittleBoyBE extends SyncedBlockEntity implements MenuProvider {
+public class CaseohBE extends SyncedBlockEntity implements MenuProvider {
     public static final ItemLike[] PATTERN = {
-            BMNWItems.TUNGSTEN_CARBIDE_CYLINDER_SLEEVE,
-            BMNWItems.SUBCRITICAL_U235_TARGET_RINGS,
-            BMNWItems.U235_PROJECTILE_RINGS,
-            BMNWItems.CORDITE_PROPELLANT,
-            BMNWItems.ELECTRIC_IGNITER,
+            BMNWItems.IMPLOSION_LENS_ARRAY,
+            BMNWItems.IMPLOSION_LENS_ARRAY,
+            BMNWItems.IMPLOSION_LENS_ARRAY,
+            BMNWItems.IMPLOSION_LENS_ARRAY,
+            BMNWItems.PLUTONIUM_CORE,
             BMNWItems.COMPLEX_WIRING,
     };
 
-    public LittleBoyBE(BlockPos pos, BlockState state) {
-        super(BMNWBlockEntities.LITTLE_BOY.get(), pos, state);
+    public CaseohBE(BlockPos pos, BlockState state) {
+        super(BMNWBlockEntities.CASEOH.get(), pos, state);
     }
 
     public final ItemStackHandler inventory = new ItemStackHandler(6) {
@@ -59,13 +59,13 @@ public class LittleBoyBE extends SyncedBlockEntity implements MenuProvider {
     @Override
     @Nonnull
     public Component getDisplayName() {
-        return Component.translatable("block.bmnw.little_boy");
+        return Component.translatable("block.bmnw.caseoh");
     }
 
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int containerId, Inventory playerInventory, Player player) {
-        return new LittleBoyMenu(containerId, playerInventory, this);
+        return new CaseohMenu(containerId, playerInventory, this);
     }
 
     public boolean compareInventoryToPattern() {
@@ -82,9 +82,18 @@ public class LittleBoyBE extends SyncedBlockEntity implements MenuProvider {
         } else {
             ArrayList<Component> list = new ArrayList<>();
             list.add(Component.literal("Missing the following components:"));
-            for (int i = 0; i < PATTERN.length; i++) {
-                if (this.inventory.getStackInSlot(i).is(PATTERN[i].asItem())) continue;
-                list.add(Component.literal(" 1× ").append(PATTERN[i].asItem().getDefaultInstance().getHoverName()));
+            int lenses = 0;
+            for (int i = 0; i < 4; i++) {
+                if (!this.inventory.getStackInSlot(i).is(PATTERN[i].asItem())) lenses++;
+            }
+            if (lenses > 0) {
+                list.add(Component.literal(" " + lenses + "× ").append(PATTERN[0].asItem().getDefaultInstance().getHoverName()));
+            }
+            if (!this.inventory.getStackInSlot(4).is(PATTERN[4].asItem())) {
+                list.add(Component.literal(" 1× ").append(PATTERN[4].asItem().getDefaultInstance().getHoverName()));
+            }
+            if (!this.inventory.getStackInSlot(5).is(PATTERN[5].asItem())) {
+                list.add(Component.literal(" 1× ").append(PATTERN[5].asItem().getDefaultInstance().getHoverName()));
             }
             return list;
         }

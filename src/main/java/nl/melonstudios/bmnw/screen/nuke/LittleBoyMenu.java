@@ -1,5 +1,6 @@
 package nl.melonstudios.bmnw.screen.nuke;
 
+import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -10,6 +11,9 @@ import nl.melonstudios.bmnw.init.BMNWMenuTypes;
 import nl.melonstudios.bmnw.screen.AbstractBMNWContainerMenu;
 import nl.melonstudios.bmnw.screen.slot.NukeComponentSlot;
 import nl.melonstudios.bmnw.weapon.nuke.block.LittleBoyBE;
+
+import javax.annotation.Nonnull;
+import javax.annotation.ParametersAreNonnullByDefault;
 
 public class LittleBoyMenu extends AbstractBMNWContainerMenu {
     public final LittleBoyBE be;
@@ -37,7 +41,7 @@ public class LittleBoyMenu extends AbstractBMNWContainerMenu {
     }
 
     @Override
-    public boolean stillValid(Player player) {
+    public boolean stillValid(@Nonnull Player player) {
         return stillValid(this.access, player, BMNWBlocks.LITTLE_BOY.get());
     }
 }

@@ -14,6 +14,7 @@ import nl.melonstudios.bmnw.block.logistics.FluidPipeBlock;
 import nl.melonstudios.bmnw.block.logistics.FluidPipeBlockEntity;
 import nl.melonstudios.bmnw.blockentity.FluidBarrelBlockEntity;
 import nl.melonstudios.bmnw.blockentity.VolcanoCoreBlockEntity;
+import nl.melonstudios.bmnw.weapon.nuke.block.CaseohBE;
 import nl.melonstudios.bmnw.weapon.nuke.block.DroppedSoulfireBombBE;
 import nl.melonstudios.bmnw.weapon.nuke.block.LittleBoyBE;
 
@@ -79,6 +80,13 @@ public class BMNWBlockEntities {
             () -> BlockEntityType.Builder.of(
                     LittleBoyBE::new,
                     BMNWBlocks.LITTLE_BOY.get()
+            ).build(null)
+    );
+    public static final Supplier<BlockEntityType<CaseohBE>> CASEOH = BLOCK_ENTITIES.register(
+            "caseoh",
+            () -> BlockEntityType.Builder.of(
+                    CaseohBE::new,
+                    BMNWBlocks.CASEOH.get()
             ).build(null)
     );
 
