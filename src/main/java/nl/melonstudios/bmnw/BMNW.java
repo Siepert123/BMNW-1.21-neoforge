@@ -34,6 +34,7 @@ import net.neoforged.neoforge.event.server.ServerStoppingEvent;
 import nl.melonstudios.bmnw.cfg.BMNWClientConfig;
 import nl.melonstudios.bmnw.cfg.BMNWCommonConfig;
 import nl.melonstudios.bmnw.cfg.BMNWServerConfig;
+import nl.melonstudios.bmnw.event.BMNWEventBus;
 import nl.melonstudios.bmnw.hardcoded.structure.*;
 import nl.melonstudios.bmnw.hardcoded.structure.coded.*;
 import nl.melonstudios.bmnw.hazard.HazardRegistry;
@@ -309,6 +310,7 @@ public class BMNW {
         }
 
         event.getServer().addTickable(LevelActiveExplosions::tick);
+        event.getServer().addTickable(BMNWEventBus::delegateStructuresTick);
 
         Commands commands = event.getServer().getCommands();
         BMNWCommands.register(commands);

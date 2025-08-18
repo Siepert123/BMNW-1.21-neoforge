@@ -46,7 +46,7 @@ public abstract class NukeType {
     }
 
     public int getMinimalBiomeRadius() {
-        return Mth.ceil(this.getBlastRadius() * 1.5F);
+        return Mth.ceil(this.getBlastRadius() * 2.0F);
     }
     public int getNormalBiomeRadius() {
         return this.getBlastRadius();

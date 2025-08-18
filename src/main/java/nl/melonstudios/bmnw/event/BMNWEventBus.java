@@ -1,5 +1,6 @@
 package nl.melonstudios.bmnw.event;
 
+import io.netty.util.internal.ConcurrentSet;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
@@ -102,11 +103,10 @@ import nl.melonstudios.bmnw.wifi.*;
 import org.joml.Vector3f;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.function.Supplier;
 
 /**
@@ -124,34 +124,6 @@ public class BMNWEventBus {
             BMNWClient.tick();
         } catch (Throwable throwable) {
             throw new RuntimeException("Error in BMNW client tick", throwable);
-        }
-    }
-
-    private static long tickTracker;
-
-    @SubscribeEvent
-    public static void serverTickEvenPre(ServerTickEvent.Pre event) {
-        tickTracker = System.currentTimeMillis();
-    }
-
-    @SubscribeEvent
-    @SuppressWarnings("all")
-    public static void serverTickEventPost(ServerTickEvent.Post event) {
-        while (!DELEGATE_STRUCTURES.isEmpty()) {
-            try {
-                if (DELEGATE_STRUCTURES.keySet().size() > 0) {
-                    Object[] array = DELEGATE_STRUCTURES.keySet().toArray();
-                    if (array.length != 0) {
-                        LevelAccessor level = (LevelAccessor) array[0];
-                        List<ChunkPos> list = DELEGATE_STRUCTURES.remove(level);
-                        for (ChunkPos pos : list) {
-                            Structures.tryGenerate(level, pos, Structures.seedCache);
-                        }
-                    }
-                }
-            } catch (Throwable e) {
-
-            }
         }
     }
     //endregion
@@ -198,7 +170,11 @@ public class BMNWEventBus {
         CompoundTag nbt = entity.getPersistentData();
 
         float rads = nbt.getFloat("bmnw_RAD");
-        if (rads > 15000 || rads < 0) rads = 15000.0f;
+        if (rads > 25000 || rads < 0) rads = 25000.0f;
+        if (rads >= 25000.0F) {
+            entity.kill();
+            return;
+        }
 
         if (rads > 1000) {
             if (entity.level().getGameTime() % 20 == 0) {
@@ -249,10 +225,25 @@ public class BMNWEventBus {
     @SubscribeEvent
     public static void chunkEventLoad(ChunkEvent.Load event) {
         if (!DELEGATE_STRUCTURES.containsKey(event.getLevel())) {
-            DELEGATE_STRUCTURES.put(event.getLevel(), new ArrayList<>());
+            DELEGATE_STRUCTURES.put(event.getLevel(), ConcurrentHashMap.newKeySet());
         }
         if (event.isNewChunk()) {
             DELEGATE_STRUCTURES.get(event.getLevel()).add(event.getChunk().getPos());
+        }
+    }
+
+    private static final Map<LevelAccessor, Set<ChunkPos>> DELEGATE_STRUCTURES = new ConcurrentHashMap<>();
+
+    public static void delegateStructuresTick() {
+        for (LevelAccessor level : DELEGATE_STRUCTURES.keySet()) {
+            Set<ChunkPos> set = DELEGATE_STRUCTURES.get(level);
+            while (!set.isEmpty()) {
+                for (ChunkPos pos : set) {
+                    set.remove(pos);
+
+                    Structures.tryGenerate(level, pos, Structures.seedCache);
+                }
+            }
         }
     }
 
@@ -271,8 +262,6 @@ public class BMNWEventBus {
             }
         }
     }
-
-    private static final Map<LevelAccessor, List<ChunkPos>> DELEGATE_STRUCTURES = new HashMap<>();
 
     /**
      * Handles evil item effects.

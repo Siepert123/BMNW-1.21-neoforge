@@ -229,7 +229,7 @@ public class ExplosionHelperEntity extends Entity implements ExploderParent, IEn
         }
 
         if (this.level() instanceof ServerLevel level) {
-            if (this.age % 10 == 0) {
+            if (this.age % 10 == 0 && !(this.waterRefilled || this.waterRefilled2 || this.waterRefilled3 || this.waterRefilled4)) {
                 level.getChunkSource().addRegionTicket(LOADING_TICKET, this.chunkPosition(),
                         (this.nukeType.getBlastRadius()+31) >> 4, this.getUUID(), true);
                 int r = this.nukeType.getEntityBlowRadius();
