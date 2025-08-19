@@ -7,6 +7,7 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -38,13 +39,16 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
         graphics.blit(GUI_TEXTURE, x, y, 0, 0, imageWidth, imageHeight);
 
-        graphics.setColor(1.0F, 1.0F, 1.0F, 0.5F);
+        graphics.setColor(1.0F, 1.0F, 1.0F,
+                (Mth.sin(Mth.DEG_TO_RAD * (System.currentTimeMillis() % 3600) * 0.1F)+1) * 0.15F + 0.1F);
+
         graphics.renderItem(LittleBoyBE.PATTERN[0].asItem().getDefaultInstance(), x+35, y+72);
         graphics.renderItem(LittleBoyBE.PATTERN[1].asItem().getDefaultInstance(), x+53, y+72);
         graphics.renderItem(LittleBoyBE.PATTERN[2].asItem().getDefaultInstance(), x+71, y+72);
         graphics.renderItem(LittleBoyBE.PATTERN[3].asItem().getDefaultInstance(), x+89, y+72);
         graphics.renderItem(LittleBoyBE.PATTERN[4].asItem().getDefaultInstance(), x+107, y+72);
         graphics.renderItem(LittleBoyBE.PATTERN[5].asItem().getDefaultInstance(), x+125, y+72);
+
         graphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
 
         if (this.menu.be.compareInventoryToPattern()) {

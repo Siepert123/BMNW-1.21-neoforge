@@ -23,13 +23,13 @@ public class TsarBombaMenu extends AbstractBMNWContainerMenu {
 
     public TsarBombaMenu(int containerId, Inventory inv, BlockEntity be) {
         super(BMNWMenuTypes.TSAR_BOMBA.get(), containerId);
-        this.setSlotCount(6);
+        this.setSlotCount(12);
 
         this.be = (TsarBombaBE) be;
         this.access = ContainerLevelAccess.create(inv.player.level(), this.be.getBlockPos());
 
-        this.addPlayerInventory(inv, 8, 107);
-        this.addPlayerHotbar(inv, 8, 165);
+        this.addPlayerInventory(inv, 8, 125);
+        this.addPlayerHotbar(inv, 8, 183);
 
         this.addSlot(new NukeComponentSlot(this.be.inventory, 0, 35, 70, TsarBombaBE.PATTERN[0].asItem()));
         this.addSlot(new NukeComponentSlot(this.be.inventory, 1, 53, 70, TsarBombaBE.PATTERN[1].asItem()));
@@ -37,6 +37,13 @@ public class TsarBombaMenu extends AbstractBMNWContainerMenu {
         this.addSlot(new NukeComponentSlot(this.be.inventory, 3, 89, 70, TsarBombaBE.PATTERN[3].asItem()));
         this.addSlot(new NukeComponentSlot(this.be.inventory, 4, 107, 70, TsarBombaBE.PATTERN[4].asItem()));
         this.addSlot(new NukeComponentSlot(this.be.inventory, 5, 125, 70, TsarBombaBE.PATTERN[5].asItem()));
+
+        this.addSlot(new NukeComponentSlot(this.be.inventory, 6, 35, 88, TsarBombaBE.PATTERN[6].asItem()));
+        this.addSlot(new NukeComponentSlot(this.be.inventory, 7, 53, 88, TsarBombaBE.PATTERN[7].asItem()));
+        this.addSlot(new NukeComponentSlot(this.be.inventory, 8, 71, 88, TsarBombaBE.PATTERN[8].asItem()));
+        this.addSlot(new NukeComponentSlot(this.be.inventory, 9, 89, 88, TsarBombaBE.PATTERN[9].asItem()));
+        this.addSlot(new NukeComponentSlot(this.be.inventory, 10, 107, 88, TsarBombaBE.PATTERN[10].asItem()));
+        this.addSlot(new NukeComponentSlot(this.be.inventory, 11, 125, 88, TsarBombaBE.PATTERN[11].asItem()));
     }
 
     @Override

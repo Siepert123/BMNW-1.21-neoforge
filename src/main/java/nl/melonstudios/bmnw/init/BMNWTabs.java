@@ -602,6 +602,12 @@ public class BMNWTabs {
                                 IMPLOSION_LENS_ARRAY,
                                 PLUTONIUM_CORE
                         );
+
+                        addItems(items,
+                                U238_TAMPER,
+                                LI6_DEUTERIDE_TANK,
+                                PLUTONIUM_SPARKPLUG
+                        );
                     })
                     .build()
     );

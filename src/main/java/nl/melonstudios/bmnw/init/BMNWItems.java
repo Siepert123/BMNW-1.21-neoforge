@@ -727,6 +727,13 @@ public class BMNWItems {
     public static final DeferredItem<SimpleRadioactiveItem> PLUTONIUM_CORE = ITEMS.register("plutonium_core",
             () -> new SimpleRadioactiveItem(new Item.Properties().stacksTo(1), 10.0F));
 
+    public static final DeferredItem<SimpleRadioactiveItem> U238_TAMPER = ITEMS.register("u238_tamper",
+            () -> new SimpleRadioactiveItem(new Item.Properties().stacksTo(1), 2.5F));
+    public static final DeferredItem<Item> LI6_DEUTERIDE_TANK = ITEMS.register("li6_deuteride_tank",
+            () -> new Item(new Item.Properties().stacksTo(1)));
+    public static final DeferredItem<SimpleRadioactiveItem> PLUTONIUM_SPARKPLUG = ITEMS.register("plutonium_sparkplug",
+            () -> new SimpleRadioactiveItem(new Item.Properties().stacksTo(1), 7.5F));
+
     //endregion
 
     public static final DeferredItem<SimpleRadioactiveBlockItem> NUCLEAR_WASTE_BARREL = ITEMS.register("nuclear_waste_barrel",

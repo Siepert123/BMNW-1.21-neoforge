@@ -7,6 +7,8 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Inventory;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -38,13 +40,16 @@ public class CaseohScreen extends AbstractContainerScreen<CaseohMenu> {
 
         graphics.blit(GUI_TEXTURE, x, y, 0, 0, imageWidth, imageHeight);
 
-        graphics.setColor(1.0F, 1.0F, 1.0F, 0.5F);
+        graphics.setColor(1.0F, 1.0F, 1.0F,
+                (Mth.sin(Mth.DEG_TO_RAD * (System.currentTimeMillis() % 3600) * 0.1F)+1) * 0.15F + 0.1F);
+
         graphics.renderItem(CaseohBE.PATTERN[0].asItem().getDefaultInstance(), x+35, y+130);
         graphics.renderItem(CaseohBE.PATTERN[1].asItem().getDefaultInstance(), x+53, y+130);
         graphics.renderItem(CaseohBE.PATTERN[2].asItem().getDefaultInstance(), x+71, y+130);
         graphics.renderItem(CaseohBE.PATTERN[3].asItem().getDefaultInstance(), x+89, y+130);
         graphics.renderItem(CaseohBE.PATTERN[4].asItem().getDefaultInstance(), x+107, y+130);
         graphics.renderItem(CaseohBE.PATTERN[5].asItem().getDefaultInstance(), x+125, y+130);
+
         graphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
 
         if (this.menu.be.compareInventoryToPattern()) {
@@ -63,7 +68,7 @@ public class CaseohScreen extends AbstractContainerScreen<CaseohMenu> {
         this.renderTooltip(graphics, mouseX, mouseY);
 
         if (this.menu.getCarried().isEmpty()) {
-            if (mouseX >= x + 151 && mouseY >= y + 129 && mouseX < x + 169 && mouseY < y + 157) {
+            if (mouseX >= x + 151 && mouseY >= y + 129 && mouseX < x + 169 && mouseY < y + 147) {
                 graphics.renderComponentTooltip(this.font, this.menu.be.collectInformation(), mouseX, mouseY);
             }
         }
