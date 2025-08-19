@@ -28,7 +28,7 @@ public abstract class NukeType {
     public abstract float getMushroomCloudSize();
     public abstract int getSoundDistance();
     public int getEntityBlowRadius() {
-        return this.getBlastRadius() * 4;
+        return this.getBlastRadius() * 2;
     }
     public int getEntityFireTicks() {
         return 200;
