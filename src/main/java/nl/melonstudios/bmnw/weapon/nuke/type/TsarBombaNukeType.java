@@ -21,22 +21,22 @@ public class TsarBombaNukeType extends NukeType {
 
     @Override
     public float getReleasedRadiation() {
-        return 2_000_000F;
+        return 0.0F;
     }
 
     @Override
     public int getReleasedRadiationLingerTicks() {
-        return 25600;
+        return 0;
     }
 
     @Override
     public Easing getReleasedRadiationDropOff() {
-        return Easing.OUT_SINE;
+        return Easing.LINEAR;
     }
 
     @Override
     public int getFalloutRadius() {
-        return 1280;
+        return 0;
     }
 
     @Override
