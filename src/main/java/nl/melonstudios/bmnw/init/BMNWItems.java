@@ -707,23 +707,23 @@ public class BMNWItems {
     //region Nuke parts
 
     public static final DeferredItem<Item> COMPLEX_WIRING = ITEMS.register("complex_wiring",
-            () -> new Item(new Item.Properties()));
+            () -> new Item(new Item.Properties().stacksTo(1)));
 
     public static final DeferredItem<Item> ELECTRIC_IGNITER = ITEMS.register("electric_igniter",
-            () -> new Item(new Item.Properties()));
+            () -> new Item(new Item.Properties().stacksTo(1)));
     public static final DeferredItem<Item> CORDITE_PROPELLANT = ITEMS.register("cordite_propellant",
-            () -> new Item(new Item.Properties()));
+            () -> new Item(new Item.Properties().stacksTo(1)));
     public static final DeferredItem<SimpleRadioactiveItem> U235_PROJECTILE_RINGS = ITEMS.register("u235_projectile_rings",
-            () -> new SimpleRadioactiveItem(new Item.Properties(), 1.0F));
+            () -> new SimpleRadioactiveItem(new Item.Properties().stacksTo(1), 1.0F));
     public static final DeferredItem<SimpleRadioactiveItem> SUBCRITICAL_U235_TARGET_RINGS = ITEMS.register("subcritical_u235_target_rings",
-            () -> new SimpleRadioactiveItem(new Item.Properties(), 4.0F));
+            () -> new SimpleRadioactiveItem(new Item.Properties().stacksTo(1), 4.0F));
     public static final DeferredItem<Item> TUNGSTEN_CARBIDE_CYLINDER_SLEEVE = ITEMS.register("tungsten_carbide_cylinder_sleeve",
-            () -> new Item(new Item.Properties()));
+            () -> new Item(new Item.Properties().stacksTo(1)));
 
     public static final DeferredItem<Item> IMPLOSION_LENS = ITEMS.register("implosion_lens",
             () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> IMPLOSION_LENS_ARRAY = ITEMS.register("implosion_lens_array",
-            () -> new Item(new Item.Properties()));
+            () -> new Item(new Item.Properties().stacksTo(1)));
     public static final DeferredItem<SimpleRadioactiveItem> PLUTONIUM_CORE = ITEMS.register("plutonium_core",
             () -> new SimpleRadioactiveItem(new Item.Properties().stacksTo(1), 10.0F));
 

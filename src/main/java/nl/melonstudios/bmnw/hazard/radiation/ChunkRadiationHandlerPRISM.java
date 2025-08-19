@@ -73,10 +73,10 @@ public class ChunkRadiationHandlerPRISM extends ChunkRadiationHandler {
         cycles++;
 
         for (ServerLevel level : server.getAllLevels()) {
-            level.getProfiler().push("radiation update system");
             RadPerWorld system = perWorld.get(level);
 
             if (system == null) continue;
+            level.getProfiler().push("radiation update system");
 
             int rebuildAllowance = 25;
 
