@@ -1,6 +1,7 @@
 package nl.melonstudios.bmnw.block.entity;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -23,7 +24,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
+import nl.melonstudios.bmnw.block.machines.AlloyBlastFurnaceBlock;
 import nl.melonstudios.bmnw.hardcoded.recipe.WrappedUnorderedDoubleRecipeInput;
 import nl.melonstudios.bmnw.init.BMNWBlockEntities;
 import nl.melonstudios.bmnw.init.BMNWRecipes;
@@ -209,5 +212,159 @@ public class AlloyBlastFurnaceBlockEntity extends BlockEntity implements MenuPro
         RecipeHolder<AlloyingRecipe> recipe = this.getRecipe().orElse(null);
         if (recipe == null) return ItemStack.EMPTY;
         return recipe.value().result().copy();
+    }
+
+    private final IItemHandler fuelInterface = new IItemHandler() {
+        private ItemStackHandler inventory() {
+            return AlloyBlastFurnaceBlockEntity.this.inventory;
+        }
+
+        @Override
+        public int getSlots() {
+            return 1;
+        }
+
+        @Override
+        public ItemStack getStackInSlot(int slot) {
+            return this.inventory().getStackInSlot(0);
+        }
+
+        @Override
+        public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
+            return this.inventory().insertItem(0, stack, simulate);
+        }
+
+        @Override
+        public ItemStack extractItem(int slot, int amount, boolean simulate) {
+            return ItemStack.EMPTY;
+        }
+
+        @Override
+        public int getSlotLimit(int slot) {
+            return 64;
+        }
+
+        @Override
+        public boolean isItemValid(int slot, ItemStack stack) {
+            return stack.getBurnTime(null)/4 > 0;
+        }
+    };
+    public final IItemHandler outputInterface = new IItemHandler() {
+        private ItemStackHandler inventory() {
+            return AlloyBlastFurnaceBlockEntity.this.inventory;
+        }
+
+        @Override
+        public int getSlots() {
+            return 1;
+        }
+
+        @Override
+        public ItemStack getStackInSlot(int slot) {
+            return this.inventory().getStackInSlot(3);
+        }
+
+        @Override
+        public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
+            return stack;
+        }
+
+        @Override
+        public ItemStack extractItem(int slot, int amount, boolean simulate) {
+            return this.inventory().extractItem(3, amount, simulate);
+        }
+
+        @Override
+        public int getSlotLimit(int slot) {
+            return 64;
+        }
+
+        @Override
+        public boolean isItemValid(int slot, ItemStack stack) {
+            return false;
+        }
+    };
+
+    public final IItemHandler leftInputInterface = new IItemHandler() {
+        private ItemStackHandler inventory() {
+            return AlloyBlastFurnaceBlockEntity.this.inventory;
+        }
+
+        @Override
+        public int getSlots() {
+            return 1;
+        }
+
+        @Override
+        public ItemStack getStackInSlot(int slot) {
+            return this.inventory().getStackInSlot(1);
+        }
+
+        @Override
+        public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
+            return this.inventory().insertItem(1, stack, simulate);
+        }
+
+        @Override
+        public ItemStack extractItem(int slot, int amount, boolean simulate) {
+            return ItemStack.EMPTY;
+        }
+
+        @Override
+        public int getSlotLimit(int slot) {
+            return 64;
+        }
+
+        @Override
+        public boolean isItemValid(int slot, ItemStack stack) {
+            return true;
+        }
+    };
+    public final IItemHandler rightInputInterface = new IItemHandler() {
+        private ItemStackHandler inventory() {
+            return AlloyBlastFurnaceBlockEntity.this.inventory;
+        }
+
+        @Override
+        public int getSlots() {
+            return 1;
+        }
+
+        @Override
+        public ItemStack getStackInSlot(int slot) {
+            return this.inventory().getStackInSlot(2);
+        }
+
+        @Override
+        public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
+            return this.inventory().insertItem(2, stack, simulate);
+        }
+
+        @Override
+        public ItemStack extractItem(int slot, int amount, boolean simulate) {
+            return ItemStack.EMPTY;
+        }
+
+        @Override
+        public int getSlotLimit(int slot) {
+            return 64;
+        }
+
+        @Override
+        public boolean isItemValid(int slot, ItemStack stack) {
+            return true;
+        }
+    };
+
+    @Nullable
+    public IItemHandler getInventory(@Nullable Direction side) {
+        if (side == null) return this.inventory;
+        if (side == Direction.UP) return this.fuelInterface;
+        if (side == Direction.DOWN) return this.outputInterface;
+        Direction front = this.getBlockState().getValue(AlloyBlastFurnaceBlock.FACING);
+        if (side == front.getClockWise()) return this.leftInputInterface;
+        if (side == front.getCounterClockWise()) return this.rightInputInterface;
+
+        return null;
     }
 }

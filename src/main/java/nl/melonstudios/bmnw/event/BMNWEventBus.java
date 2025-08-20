@@ -552,6 +552,12 @@ public class BMNWEventBus {
                         be instanceof PressBlockEntity press ? press.getItems(context) : null),
                 BMNWBlocks.PRESS.get()
         );
+        event.registerBlock(
+                Capabilities.ItemHandler.BLOCK,
+                ((level, pos, state, be, context) ->
+                        be instanceof AlloyBlastFurnaceBlockEntity furnace ? furnace.getInventory(context) : null),
+                BMNWBlocks.ALLOY_BLAST_FURNACE.get()
+        );
 
         event.registerBlock(
                 Capabilities.ItemHandler.BLOCK,

@@ -18,6 +18,7 @@ import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
@@ -45,6 +46,7 @@ import nl.melonstudios.bmnw.interfaces.IOpensCatwalkRails;
 import nl.melonstudios.bmnw.logistics.cables.CableNetManager;
 import nl.melonstudios.bmnw.logistics.pipes.PipeNetManager;
 import nl.melonstudios.bmnw.misc.*;
+import nl.melonstudios.bmnw.ponder.BMNWPonder;
 import nl.melonstudios.bmnw.registries.BMNWResourceKeys;
 import nl.melonstudios.bmnw.screen.*;
 import nl.melonstudios.bmnw.screen.nuke.CaseohScreen;
@@ -65,6 +67,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Supplier;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(BMNW.MODID)
@@ -198,6 +201,18 @@ public class BMNW {
 
     private static void clientInit() {
         BMNWPartialModels.init();
+        if (ModList.get().isLoaded("ponder")) {
+            runContained(() -> BMNW::bouncePonder);
+        }
+    }
+
+    private static void runContained(Supplier<Runnable> run) {
+        run.get().run();
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    private static void bouncePonder() {
+        BMNWPonder.init();
     }
 
     private static void clientModEventBusPassthrough(IEventBus modEventBus) {

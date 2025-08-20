@@ -37,6 +37,9 @@ repositories {
     maven {
         url = "https://api.modrinth.com/maven"
     }
+
+    maven { url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/" }
+    maven { url = "https://maven.createmod.net" }
 }
 
 base {
@@ -45,6 +48,8 @@ base {
 
 // Mojang ships Java 21 to end users starting in 1.20.5, so mods should target Java 21.
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+
+jarJar.setEnabled(true)
 
 neoForge {
     // Specify the version of NeoForge to use.
@@ -138,7 +143,16 @@ dependencies {
     compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
     localRuntime "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
 
-    runtimeOnly "curse.maven:ctm-267602:5587515"
+    jarJar(group: "net.createmod.ponder", name: "Ponder-NeoForge-${minecraft_version}", version: "[${ponder_version},)")
+    jarJar(group: "dev.engine-room.flywheel", name: "flywheel-neoforge-${minecraft_version}", version: "[${flywheel_version},)")
+
+    compileOnly "dev.engine-room.flywheel:flywheel-neoforge-${minecraft_version}:${flywheel_version}"
+    localRuntime "dev.engine-room.flywheel:flywheel-neoforge-${minecraft_version}:${flywheel_version}"
+
+    compileOnly "net.createmod.ponder:Ponder-NeoForge-${minecraft_version}:${ponder_version}"
+    localRuntime "net.createmod.ponder:Ponder-NeoForge-${minecraft_version}:${ponder_version}"
+
+    localRuntime "curse.maven:ctm-267602:5587515"
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.
