@@ -1,5 +1,6 @@
 package nl.melonstudios.bmnw.ponder;
 
+import nl.melonstudios.bmnw.BMNW;
 import net.createmod.ponder.api.level.PonderLevel;
 import net.createmod.ponder.api.registration.*;
 import net.createmod.ponder.foundation.PonderIndex;
@@ -17,7 +18,7 @@ public class BMNWPonder implements PonderPlugin {
 
     @Override
     public String getModId() {
-        return "bmnw";
+        return BMNW.MODID;
     }
 
     @Override
